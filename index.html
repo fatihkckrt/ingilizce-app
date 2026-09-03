@@ -4,13 +4,24 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="theme-color" content="#4f46e5">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>İngilizce Öğren</title>
   
+  <!-- BEYAZ EKRAN YERİNE HATAYI GÖSTEREN DEDEKTİF KOD -->
+  <script>
+    window.onerror = function(message, source, lineno, colno, error) {
+      document.body.innerHTML = '<div style="color:#dc2626; padding:20px; font-family:sans-serif; background-color:#fef2f2; height:100vh;">' +
+        '<h3 style="font-size:24px; font-weight:bold;">Bir Hata Oluştu!</h3>' +
+        '<p style="margin-top:10px; font-size:16px;">Lütfen bu yazıyı bana gönder:</p>' +
+        '<pre style="background:#fecaca; padding:15px; border-radius:8px; margin-top:10px; white-space:pre-wrap;">' + message + '<br><br>Satır: ' + lineno + '</pre>' +
+        '</div>';
+      return true;
+    };
+  </script>
+
   <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
-  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+  <!-- Daha stabil çalışan güncel Babel sürümü -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
@@ -20,12 +31,16 @@
   </style>
 </head>
 <body>
-  <div id="root"></div>
+  <div id="root">
+    <div style="display:flex; justify-content:center; align-items:center; height:100vh; font-family:sans-serif; color:#4f46e5; font-weight:bold; font-size:18px;">
+      Uygulama Yükleniyor... Lütfen Bekleyin ⏳<br><br>
+      (Eğer bu ekranda takılırsa Gizli Sekmeden girmeyi unutma!)
+    </div>
+  </div>
 
   <script type="text/babel">
     const { useState, useRef, useEffect } = React;
 
-    // --- SÖZLÜK ---
     const dictionary = {
       "i": "ben", "you": "sen/siz", "he": "o (erkek)", "she": "o (kadın)", "it": "o", "we": "biz", "they": "onlar",
       "my": "benim", "your": "senin", "his": "onun", "her": "onun", "our": "bizim", "their": "onların",
@@ -68,7 +83,6 @@
 
     const levels = ['A1', 'A2', 'B1'];
 
-    // --- METİNLER ---
     const texts = [
       { id: 1, level: 'A1', length: 'short', title: 'My Morning Routine',
         sentences: [
@@ -479,8 +493,10 @@
                 
                 <div className="w-full space-y-3">
                   {levels.map(level => (
-                    <button key={level} onClick={() => { setSelectedLevel(level); setCurrentView('levels'); }} className="w-full bg-white border-2 border-indigo-100 p-4 rounded-2xl flex items-center justify-between hover:bg-indigo-50 shadow-sm">
-                      <span className="font-bold text-xl text-indigo-900">{level} Seviyesi</span>
+                    <button key={level} onClick={() => { setSelectedLevel(level); setCurrentView('levels'); }} className="w-full bg-white border-2 border-indigo-100 p-4 rounded-2xl flex items-center justify-between hover:bg-indigo-50 shadow-sm group">
+                      <div className="flex flex-col items-start">
+                        <span className="font-bold text-xl text-indigo-900">{level} Seviyesi</span>
+                      </div>
                       <span className="text-xl rotate-180 text-indigo-400">⬅️</span>
                     </button>
                   ))}
@@ -554,7 +570,8 @@
       );
     }
 
-    const root = ReactDOM.createRoot(document.getElementById('root'));
+    const rootElement = document.getElementById('root');
+    const root = ReactDOM.createRoot(rootElement);
     root.render(<App />);
   </script>
 </body>
