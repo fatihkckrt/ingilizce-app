@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="theme-color" content="#312e81">
+<meta name="theme-color" content="#1e1b4b">
 <title>İngilizce Öğren</title>
 <script>
 window.onerror = function(msg, url, line) {
@@ -22,7 +22,7 @@ window.onerror = function(msg, url, line) {
 body { 
   margin: 0; 
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
-  background: linear-gradient(rgba(15, 23, 42, 0.55), rgba(15, 23, 42, 0.75)), 
+  background: linear-gradient(rgba(15, 23, 42, 0.65), rgba(15, 23, 42, 0.85)), 
               url('https://images.unsplash.com/photo-1511497584788-87676104235f?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat fixed;
   touch-action: manipulation; 
   min-height: 100vh;
@@ -31,14 +31,11 @@ body {
 .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
 .word-highlight { background-color: #c7d2fe; border-radius: 4px; }
 .glass-container {
-  background: rgba(255, 255, 255, 0.93);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
 }
 .card-glass {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.88);
 }
 </style>
 </head>
@@ -62,12 +59,141 @@ setTimeout(function() {
 const { useState, useEffect } = React;
 
 const dictionary = {
+// Temel Zamirler ve Fiiller
 "i": "ben", "you": "sen/siz", "he": "o (erkek)", "she": "o (kadın)", "it": "o", "we": "biz", "they": "onlar",
 "my": "benim", "your": "senin", "his": "onun", "her": "onun", "our": "bizim", "their": "onların",
 "is": "dır/dir", "are": "dır/dir", "am": "yım/yim", "was": "idi", "were": "idiler", "will": "ecek/acak",
 "a": "bir", "an": "bir", "the": "(belirteç)", "and": "ve", "but": "ama", "because": "çünkü",
 "in": "içinde", "on": "üzerinde", "at": "-de/-da", "to": "-e/-a", "from": "-den", "with": "ile",
-"morning": "sabah", "wake": "uyanmak", "up": "kalkmak", "wash": "yıkamak", "eat": "yemek", "breakfast": "kahvaltı",
+"o'clock": "saat (tam)", "oclock": "saat",
+
+// ===== METİNLERDEKİ TÜM KELİME GRUPLARI (PHRASES & COLLOCATIONS) =====
+"outside the city": "şehir dışında", "summer holiday": "yaz tatili", "wake up": "uyanmak",
+"early in the morning": "sabah erkenden", "in the morning": "sabahleyin", "fresh and clean": "taze ve temiz",
+"every day": "her gün", "green field": "yeşil tarla", "before breakfast": "kahvaltıdan önce",
+"oak tree": "meşe ağacı", "eat lunch": "öğle yemeği yemek", "goat cheese": "keçi peyniri",
+"in the afternoon": "öğleden sonra", "farm life": "çiftlik hayatı", "until sunset": "gün batımına kadar",
+"at night": "geceleyin", "wooden house": "ahşap ev", "warm tea": "sıcak çay", "clear sky": "berrak gökyüzü",
+"spend time": "vakit geçirmek", "spending my time": "vaktimi geçirmek",
+
+"primary school": "ilkokul", "close to": "-e yakın", "every morning": "her sabah",
+"with my friends": "arkadaşlarımla", "eight o'clock": "saat sekiz", "full of light": "ışık dolu",
+"comfortable chairs": "rahat sandalyeler", "on the board": "tahtada", "favorite subject": "en sevilen ders",
+"new vocabulary": "yeni kelimeler", "short stories": "kısa hikayeler", "before noon": "öğleden önce",
+"math class": "matematik dersi", "twelve o'clock": "saat on iki", "lunch bell": "öğle yemeği zili",
+"cheese sandwich": "peynirli sandviç", "after lunch": "öğle yemeğinden sonra", "play football": "futbol oynamak",
+"art class": "resim dersi", "draw pictures": "resim çizmek", "three o'clock": "saat üç",
+"say goodbye": "veda etmek", "walk back home": "eve geri yürümek", "back home": "eve geri",
+
+"sunday morning": "pazar sabahı", "go shopping": "alışverişe gitmek", "shopping list": "alışveriş listesi",
+"shopping cart": "alışveriş arabası", "vegetable section": "sebze reyonu", "bakery section": "fırın reyonu",
+"warm bread": "sıcak ekmek", "loaves of bread": "somun ekmek", "dairy aisle": "süt ürünleri reyonu",
+"dark chocolate": "bitter çikolata", "cash register": "kasa", "credit card": "kredi kartı",
+"cloth bags": "bez çantalar", "carry home": "eve taşımak",
+
+"last saturday": "geçen cumartesi", "city zoo": "şehir hayvanat bahçesi", "ten o'clock": "saat on",
+"colorful birds": "renkli kuşlar", "african elephants": "afrika filleri", "wooden bench": "ahşap bank",
+"cold lemonade": "soğuk limonata", "ice cream": "dondurma", "chocolate ice cream": "çikolatalı dondurma",
+"family photos": "aile fotoğrafları", "return home": "eve dönmek", "returned home": "eve döndü",
+
+"peaceful town": "huzurlu kasaba", "high mountains": "yüksek dağlar", "stone houses": "taş evler",
+"main square": "ana meydan", "traditional bakery": "geleneksel fırın", "fresh bread": "taze ekmek",
+"good morning": "günaydın", "ride bicycles": "bisiklet sürmek", "heavy traffic": "yoğun trafik",
+"city noise": "şehir gürültüsü", "clean river": "temiz nehir", "catch fish": "balık tutmak",
+"bright stars": "parlak yıldızlar", "wood smoke": "odun dumanı", "big cities": "büyük şehirler", "feel safe": "güvende hissetmek",
+
+"go camping": "kampa gitmek", "went camping": "kampa gitti", "warm clothes": "sıcak giysiler",
+"sleeping bags": "uyku tulumları", "sleeping bag": "uyku tulumu", "weather forecast": "hava durumu tahmini",
+"set up": "kurmak", "pitch tents": "çadır kurmak", "pitched our tents": "çadırlarımızı kurduk",
+"forest trail": "orman patikası", "hidden waterfall": "gizli şelale", "dry firewood": "kuru yakacak odun",
+"campfire": "kamp ateşi", "warm campfire": "sıcak kamp ateşi", "baked potatoes": "közde patates",
+"eat outdoors": "açık havada yemek", "night sky": "gece gökyüzü", "black coffee": "sade kahve",
+
+"last month": "geçen ay", "move into": "-e taşınmak", "moved into": "-e taşındı",
+"new apartment": "yeni daire", "too far from": "-den çok uzak", "third floor": "üçüncü kat",
+"grocery stores": "bakkallar/marketler", "cardboard boxes": "karton kutular", "heavy furniture": "ağır mobilya",
+"direct sunlight": "doğrudan güneş ışığı", "next morning": "ertesi sabah", "knock on": "kapıyı çalmak",
+"fresh cookies": "taze kurabiyeler", "unpacking boxes": "kutuları açmak", "closer to": "-e daha yakın",
+
+"science museum": "bilim müzesi", "friendly robot": "dost canlısı robot", "dinosaur hall": "dinozor salonu",
+"skeleton fossils": "iskelet fosilleri", "space exploration": "uzay keşfi", "astronaut suit": "astronot giysisi",
+"zero gravity": "sıfır yerçekimi", "outer space": "uzay", "physics laboratory": "fizik laboratuvarı",
+"museum café": "müze kafesi", "3d movie": "3 boyutlu film", "giant whales": "dev balinalar",
+
+"surprise party": "sürpriz parti", "secret surprise party": "gizli sürpriz parti", "chat group": "sohbet grubu",
+"chocolate cake": "çikolatalı pasta", "keep busy": "oyalamak/meşgul etmek", "six o'clock": "saat altı",
+"turn off": "kapatmak (ışık vb.)", "turned off": "kapattı", "living room": "oturma odası", "front door": "ön kapı",
+"happy birthday": "iyi ki doğdun", "blow out": "üfleyip söndürmek", "blew out": "üfleyip söndürdü",
+"make a wish": "dilek tutmak", "party games": "parti oyunları", "until midnight": "gece yarısına kadar",
+
+"learn to drive": "araba sürmeyi öğrenmek", "driving academy": "sürücü kursu", "theory classes": "teorik dersler",
+"traffic signs": "trafik işaretleri", "speed limits": "hız sınırları", "written test": "yazılı sınav",
+"practical lessons": "direksiyon dersleri", "driver's seat": "sürücü koltuğu", "rear mirrors": "dikiz aynaları",
+"fasten seatbelt": "emniyet kemeri bağlamak", "parking lot": "otopark", "real traffic": "gerçek trafik",
+"parallel parking": "paralel park", "driving test": "direksiyon sınavı", "safety rules": "güvenlik kuralları",
+"driving license": "sürücü belgesi/ehliyet",
+
+"renewable energy": "yenilenebilir enerji", "fossil fuels": "fosil yakıtlar", "natural gas": "doğal gaz",
+"greenhouse gas emissions": "sera gazı salımları", "greenhouse gas": "sera gazı", "climate change": "iklim değişikliği",
+"clean energy": "temiz enerji", "solar power": "güneş enerjisi", "solar panels": "güneş panelleri",
+"wind power": "rüzgar enerjisi", "wind turbines": "rüzgar türbinleri", "offshore wind": "açık deniz rüzgarı",
+"offshore wind farms": "açık deniz rüzgar çiftlikleri", "energy storage": "enerji depolama",
+"power grid": "elektrik şebekesi", "smart grids": "akıllı şebekeler", "tax credits": "vergi indirimleri",
+"electric vehicles": "elektrikli araçlar", "future generations": "gelecek nesiller",
+
+"habit formation": "alışkanlık oluşumu", "daily behavior": "günlük davranış", "cognitive energy": "bilişsel enerji",
+"behavioral research": "davranışsal araştırma", "neurological loop": "nörolojik döngü", "three steps": "üç adım",
+"environmental trigger": "çevresel tetikleyici", "time of day": "günün saati", "emotional state": "duygusal durum",
+"in response to": "-e yanıt olarak", "bad habits": "kötü alışkanlıklar", "junk food": "abur cubur",
+"brisk walk": "tempolu yürüyüş", "starting tiny": "küçük başlamak", "personal goals": "kişisel hedefler",
+
+"global travel": "küresel seyahat", "mass tourism": "kitle turizmi", "historic cities": "tarihi şehirler",
+"overtourism": "aşırı turizm", "sustainable tourism": "sürdürülebilir turizm", "cultural heritage": "kültürel miras",
+"natural environment": "doğal çevre", "carbon footprints": "karbon ayak izi", "locally owned": "yerel mülkiyette",
+"social customs": "sosyal gelenekler", "native language": "ana dil", "leave no trace": "iz bırakmamak",
+"leave-no-trace principle": "iz bırakmama ilkesi", "coral reefs": "mercan resifleri", "water bottle": "su şişesi",
+"off-season travel": "sezon dışı seyahat",
+
+"public speaking": "topluluk önünde konuşma", "public speech": "topluluk önünde konuşma", "live audience": "canlı dinleyici kitlesi",
+"clear structure": "net yapı", "body language": "beden dili", "eye contact": "göz teması", "vocal control": "ses kontrolü",
+"deliberate pauses": "bilinçli duraklamalar", "presentation slides": "sunum slaytları", "filler words": "dolgu kelimeleri",
+"constructive feedback": "yapıcı geri bildirim",
+
+"financial literacy": "finansal okuryazarlık", "money management": "para yönetimi", "life skill": "yaşam becerisi",
+"personal income": "kişisel gelir", "credit debt": "kredi borcu", "monthly budget": "aylık bütçe",
+"50/30/20 rule": "50/30/20 kuralı", "emergency fund": "acil durum fonu", "living expenses": "yaşam masrafları",
+"consumer debt": "tüketici borcu", "credit cards": "kredi kartları", "compound interest": "bileşik faiz",
+"index funds": "endeks fonları", "assets and liabilities": "varlıklar ve borçlar", "delayed gratification": "ertelemeli tatmin",
+"financial freedom": "finansal özgürlük",
+
+"decision fatigue": "karar yorgunluğu", "cognitive evaluation": "bilişsel değerlendirme", "willpower": "irade gücü",
+"grant parole": "şartlı tahliye vermek", "mental exhaustion": "zihinsel tükenmişlik", "checkout stands": "kasa tezgahları",
+"workplace productivity": "iş yeri verimliliği", "strategic dilemmas": "stratejik ikilemler", "uniform wardrobe": "tek tip gardırop",
+"prefrontal cortex": "prefrontal korteks", "basal ganglia": "bazal ganglionlar", "self-regulation": "özdenetim",
+"blood glucose": "kan şekeri",
+
+"green spaces": "yeşil alanlar", "mental well-being": "ruh sağlığı", "urban residents": "kent sakinleri",
+"chronic stress": "kronik stres", "urban planners": "şehir plancıları", "forest bathing": "orman banyosu",
+"particulate pollutants": "partikül kirleticiler", "heat island": "ısı adası", "heat island effect": "ısı adası etkisi",
+"social unity": "sosyal birlik", "attention deficit": "dikkat eksikliği", "vertical forests": "dikey ormanlar",
+"public health": "halk sağlığı",
+
+"supply chains": "tedarik zincirleri", "world economy": "dünya ekonomisi", "just-in-time": "tam zamanında",
+"just-in-time manufacturing": "tam zamanında üretim", "systemic fragility": "sistemik kırılganlık", "semiconductor shortages": "yarı iletken kıtlığı",
+"automobile assembly": "otomobil montajı", "nearshoring": "yakın ülkeye taşıma", "friendshoring": "dost ülkeye taşıma",
+"machine learning": "makine öğrenimi",
+
+"artificial intelligence": "yapay zeka", "algorithmic bias": "algoritmik önyargı", "facial recognition": "yüz tanıma",
+"black box": "kara kutu", "deep neural networks": "derin sinir ağları", "due process": "adil yargılanma hakkı",
+"autonomous vehicles": "otonom araçlar", "workplace automation": "iş yeri otomasyonu", "universal basic income": "evrensel temel gelir",
+"human dignity": "insan onuru",
+
+"brain plasticity": "beyin plastisitesi", "language learning": "dil öğrenimi", "cognitive longevity": "bilişsel uzun ömürlülük",
+"synaptic connections": "sinaptik bağlantılar", "executive function": "yürütücü işlev", "bilingual individuals": "iki dilli bireyler",
+"metalinguistic awareness": "üst-dilsel farkındalık", "cognitive reserve": "bilişsel rezerv", "white matter": "beyaz cevher",
+
+// Bireysel Kelimeler
+"morning": "sabah", "wake": "uyanmak", "wash": "yıkamak", "eat": "yemek", "breakfast": "kahvaltı",
 "drink": "içmek", "coffee": "kahve", "go": "gitmek", "work": "iş", "bus": "otobüs", "day": "gün", "every": "her",
 "friend": "arkadaş", "tall": "uzun", "boy": "çocuk", "football": "futbol", "like": "sevmek", "pizza": "pizza",
 "watch": "izlemek", "city": "şehir", "live": "yaşamak", "big": "büyük", "cars": "arabalar", "people": "insanlar",
@@ -86,13 +212,13 @@ const dictionary = {
 "fossil": "fosil", "fuels": "yakıtlar", "climate": "iklim", "grid": "şebeke", "batteries": "piller", "storage": "depolama",
 "habit": "alışkanlık", "routine": "rutin", "trigger": "tetikleyici", "reward": "ödül", "brain": "beyin", "willpower": "irade gücü",
 "tourism": "turizm", "travel": "seyahat", "sustainable": "sürdürülebilir", "local": "yerel", "nature": "doğa", "emissions": "salınımlar",
-"public": "halka açık/topluluk", "speaking": "konuşma", "speech": "konuşma", "audience": "dinleyici", "confidence": "özgüven",
+"public": "topluluk/halk", "speaking": "konuşma", "speech": "konuşma", "audience": "dinleyici", "confidence": "özgüven",
 "financial": "finansal", "literacy": "okuryazarlık", "budget": "bütçe", "savings": "tasarruflar", "debt": "borç", "investing": "yatırım",
 "decision": "karar", "fatigue": "yorgunluk", "mental": "zihinsel", "exhaustion": "tükenmişlik", "shortcuts": "kestirmeler",
 "green": "yeşil", "spaces": "alanlar", "stress": "stres", "health": "sağlık", "cortisol": "kortizol", "community": "topluluk",
 "supply": "tedarik", "chain": "zincir", "global": "küresel", "logistics": "lojistik", "manufacturing": "üretim", "resilience": "direnç",
 "artificial": "yapay", "intelligence": "zeka", "ethics": "etik", "bias": "önyargı", "automation": "otomasyon", "dignity": "onur",
-"bilingual": "iki dilli", "plasticity": "esneklik/plastisite", "languages": "diller", "memory": "hafıza", "dementia": "demans"
+"bilingual": "iki dilli", "plasticity": "plastisite/esneklik", "languages": "diller", "memory": "hafıza", "dementia": "demans"
 };
 
 const wordLevelMap = {
@@ -839,7 +965,8 @@ function App() {
     let foundPhraseData = null;
     let matchedIndices = [index];
 
-    for (let len = 3; len >= 2; len--) {
+    // 4 kelimelikten 2 kelimeliğe kadar öbek taraması
+    for (let len = 4; len >= 2; len--) {
       for (let start = Math.max(0, index - len + 1); start <= index; start++) {
         if (start + len <= cleanWords.length) {
           const phraseCandidate = cleanWords.slice(start, start + len).join(' ');
@@ -1042,10 +1169,10 @@ function App() {
 
   return (
     <div className="min-h-screen flex justify-center w-full px-0 sm:px-4 py-0 sm:py-6">
-      <div className="w-full max-w-md glass-container shadow-2xl min-h-screen sm:min-h-[92vh] sm:rounded-3xl relative flex flex-col overflow-hidden border border-white/30">
+      <div className="w-full max-w-md glass-container shadow-2xl min-h-screen sm:min-h-[92vh] sm:rounded-3xl relative flex flex-col overflow-hidden border border-white/40">
 
         {/* Header */}
-        <div className="bg-indigo-900/90 backdrop-blur-md text-white p-4 flex items-center shadow-md shrink-0 sticky top-0 z-40 border-b border-indigo-700/40">
+        <div className="bg-indigo-950/90 text-white p-4 flex items-center shadow-md shrink-0 sticky top-0 z-40 border-b border-indigo-800/50">
           {currentView !== 'home' && (
             <button onClick={goBack} className="p-2 mr-1 hover:bg-indigo-800 rounded-full transition text-lg">⬅️</button>
           )}
@@ -1064,7 +1191,7 @@ function App() {
 
         {/* Toast Bildirimi */}
         {toastMessage && (
-          <div className="fixed top-16 left-4 right-4 max-w-md mx-auto bg-slate-900/95 backdrop-blur-lg text-white px-4 py-3 rounded-2xl shadow-xl z-50 flex items-center gap-2 border border-slate-700 animate-bounce">
+          <div className="fixed top-16 left-4 right-4 max-w-md mx-auto bg-slate-900 text-white px-4 py-3 rounded-2xl shadow-xl z-50 flex items-center gap-2 border border-slate-700 animate-bounce">
             <span className="text-lg">🌿</span>
             <p className="text-sm font-medium">{toastMessage}</p>
           </div>
@@ -1074,7 +1201,7 @@ function App() {
         {currentView === 'home' && (
           <div className="flex-1 p-5 flex flex-col space-y-4 overflow-y-auto">
             <div className="text-center my-3">
-              <div className="bg-indigo-600/10 backdrop-blur-md w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-3 border border-indigo-500/20 shadow-inner">
+              <div className="bg-indigo-600/10 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-3 border border-indigo-500/20 shadow-inner">
                 <span className="text-4xl">🌲</span>
               </div>
               <h2 className="text-2xl font-black text-slate-800">Seviyeni Seç</h2>
@@ -1087,7 +1214,7 @@ function App() {
                 const count = allAvailableTexts.filter(t => t.level === level).length;
                 return (
                   <button key={level} onClick={() => { setSelectedLevel(level); setCurrentView('levels'); }}
-                    className="w-full card-glass border border-slate-200/80 p-4 rounded-2xl flex items-center justify-between hover:border-indigo-400 hover:shadow-md transition active:scale-[0.99] group">
+                    className="w-full card-glass border border-slate-200 p-4 rounded-2xl flex items-center justify-between hover:border-indigo-400 hover:shadow-md transition active:scale-[0.99] group">
                     <div className="flex items-center gap-3">
                       <span className={`w-9 h-9 rounded-xl font-bold flex items-center justify-center text-sm border shadow-sm ${getBadgeStyle(level)}`}>
                         {level}
@@ -1106,9 +1233,9 @@ function App() {
             {/* Kendi Metnini Ekle */}
             <div className="pt-2">
               <button onClick={() => setCurrentView('addText')}
-                className="w-full bg-gradient-to-r from-indigo-700/90 to-purple-800/90 text-white p-4 rounded-2xl flex items-center justify-between shadow-lg hover:from-indigo-800 hover:to-purple-900 transition active:scale-[0.98] border border-white/20">
+                className="w-full bg-gradient-to-r from-indigo-700 to-purple-800 text-white p-4 rounded-2xl flex items-center justify-between shadow-lg hover:from-indigo-800 hover:to-purple-900 transition active:scale-[0.98]">
                 <div className="flex items-center gap-3">
-                  <span className="text-2xl bg-white/20 p-2 rounded-xl backdrop-blur-sm">✏️</span>
+                  <span className="text-2xl bg-white/20 p-2 rounded-xl">✏️</span>
                   <div className="text-left">
                     <span className="font-bold text-base block">Kendi Metnini Ekle</span>
                     <span className="text-xs text-indigo-100">İnternetten makale veya haber yapıştır</span>
@@ -1121,7 +1248,7 @@ function App() {
             {/* Özel Metinlerim */}
             {customTexts.length > 0 && (
               <button onClick={() => setCurrentView('customList')}
-                className="w-full card-glass border border-purple-300/60 p-4 rounded-2xl flex items-center justify-between hover:border-purple-400 text-purple-900 shadow-sm transition">
+                className="w-full card-glass border border-purple-300 p-4 rounded-2xl flex items-center justify-between hover:border-purple-400 text-purple-900 shadow-sm transition">
                 <div className="flex items-center gap-3">
                   <span className="text-2xl">📑</span>
                   <div className="text-left">
@@ -1135,7 +1262,7 @@ function App() {
 
             {/* Kelime Defterim */}
             <button onClick={() => setCurrentView('savedWords')}
-              className="w-full card-glass border border-orange-300/60 p-4 rounded-2xl flex items-center justify-between hover:border-orange-500 shadow-sm text-orange-950 transition">
+              className="w-full card-glass border border-orange-300 p-4 rounded-2xl flex items-center justify-between hover:border-orange-500 shadow-sm text-orange-950 transition">
               <div className="flex items-center gap-3">
                 <span className="text-2xl">📚</span>
                 <div className="text-left">
@@ -1158,7 +1285,7 @@ function App() {
                 const isCompleted = completedTexts.includes(text.id);
                 return (
                   <button key={text.id} onClick={() => startReading(text)}
-                    className={`w-full text-left card-glass p-4 rounded-2xl shadow-sm border flex gap-3.5 items-center hover:shadow-md active:scale-[0.98] transition ${isCompleted ? 'border-green-300/80 bg-green-50/60' : 'border-slate-200/80'}`}>
+                    className={`w-full text-left card-glass p-4 rounded-2xl shadow-sm border flex gap-3.5 items-center hover:shadow-md active:scale-[0.98] transition ${isCompleted ? 'border-green-300 bg-green-50/70' : 'border-slate-200'}`}>
                     <div className={`${isCompleted ? 'bg-green-100 text-green-700' : 'bg-indigo-100 text-indigo-700'} p-3 rounded-xl shrink-0 flex items-center justify-center w-11 h-11 shadow-sm`}>
                       <span className="text-xl">{isCompleted ? '✅' : '📄'}</span>
                     </div>
@@ -1206,7 +1333,7 @@ function App() {
         {/* ADD CUSTOM TEXT VIEW */}
         {currentView === 'addText' && (
           <div className="flex-1 p-5 space-y-4 overflow-y-auto pb-10">
-            <div className="card-glass p-4 rounded-2xl border border-slate-200/90 shadow-sm space-y-3">
+            <div className="card-glass p-4 rounded-2xl border border-slate-200 shadow-sm space-y-3">
               <div>
                 <label className="block text-xs font-bold text-slate-600 uppercase mb-1">Metin Başlığı</label>
                 <input
@@ -1214,7 +1341,7 @@ function App() {
                   placeholder="Örn: A Calm Journey"
                   value={newTitle}
                   onChange={(e) => setNewTitle(e.target.value)}
-                  className="w-full p-3 text-sm rounded-xl border border-slate-300 bg-white/90 focus:outline-none focus:border-indigo-500"
+                  className="w-full p-3 text-sm rounded-xl border border-slate-300 bg-white focus:outline-none focus:border-indigo-500"
                 />
               </div>
 
@@ -1226,7 +1353,7 @@ function App() {
                       key={lvl}
                       type="button"
                       onClick={() => setNewLevel(lvl)}
-                      className={`py-2 text-xs font-bold rounded-lg border transition ${newLevel === lvl ? 'bg-indigo-700 text-white border-indigo-700 shadow' : 'bg-white/80 text-slate-700 border-slate-200'}`}
+                      className={`py-2 text-xs font-bold rounded-lg border transition ${newLevel === lvl ? 'bg-indigo-700 text-white border-indigo-700 shadow' : 'bg-white text-slate-700 border-slate-200'}`}
                     >
                       {lvl}
                     </button>
@@ -1241,7 +1368,7 @@ function App() {
                   placeholder="İngilizce metninizi buraya yapıştırın..."
                   value={newEngText}
                   onChange={(e) => setNewEngText(e.target.value)}
-                  className="w-full p-3 text-sm rounded-xl border border-slate-300 bg-white/90 focus:outline-none focus:border-indigo-500 leading-relaxed"
+                  className="w-full p-3 text-sm rounded-xl border border-slate-300 bg-white focus:outline-none focus:border-indigo-500 leading-relaxed"
                 ></textarea>
               </div>
 
@@ -1252,7 +1379,7 @@ function App() {
                   placeholder="Varsa Türkçe çeviriyi yapıştırın..."
                   value={newTrText}
                   onChange={(e) => setNewTrText(e.target.value)}
-                  className="w-full p-3 text-sm rounded-xl border border-slate-300 bg-white/90 focus:outline-none focus:border-indigo-500 leading-relaxed"
+                  className="w-full p-3 text-sm rounded-xl border border-slate-300 bg-white focus:outline-none focus:border-indigo-500 leading-relaxed"
                 ></textarea>
               </div>
 
@@ -1274,7 +1401,7 @@ function App() {
                 const sentenceWords = sentence.eng.split(' ');
                 const isHighlighted = activeHighlight && activeHighlight.sentenceId === sentence.id;
                 return (
-                  <div key={sentence.id} className="relative card-glass p-3.5 rounded-2xl border border-slate-200/90 shadow-sm hover:shadow transition">
+                  <div key={sentence.id} className="relative card-glass p-3.5 rounded-2xl border border-slate-200 shadow-sm hover:shadow transition">
                     <div className="text-base leading-relaxed text-slate-800 flex flex-wrap items-center gap-y-2">
                       <div className="flex-1">
                         {sentenceWords.map((word, idx) => {
@@ -1283,7 +1410,7 @@ function App() {
                             <span key={idx}>
                               <button
                                 onClick={() => handleWordClick(word, idx, sentenceWords, sentence.id)}
-                                className={`rounded px-1 py-0.5 hover:bg-indigo-100/90 transition font-medium ${isWordHighlighted ? 'word-highlight font-bold text-indigo-950' : ''}`}
+                                className={`rounded px-1 py-0.5 hover:bg-indigo-100 transition font-medium ${isWordHighlighted ? 'word-highlight font-bold text-indigo-950' : ''}`}
                               >
                                 {word}
                               </button>{' '}
@@ -1305,7 +1432,7 @@ function App() {
                       </div>
                     </div>
                     {(revealedSentences[sentence.id] || showFullTranslation) && (
-                      <div className="mt-2.5 p-2.5 bg-indigo-50/90 border-l-4 border-indigo-600 text-xs rounded-r-lg text-slate-700 leading-relaxed font-medium shadow-inner">
+                      <div className="mt-2.5 p-2.5 bg-indigo-50 border-l-4 border-indigo-600 text-xs rounded-r-lg text-slate-700 leading-relaxed font-medium shadow-inner">
                         {sentence.tr}
                       </div>
                     )}
@@ -1315,7 +1442,7 @@ function App() {
             </div>
 
             {/* Alt İşlem Çubuğu */}
-            <div className="absolute bottom-0 left-0 right-0 p-3.5 bg-white/95 backdrop-blur-md border-t border-slate-200/80 shadow-2xl flex gap-2.5 z-30">
+            <div className="absolute bottom-0 left-0 right-0 p-3.5 bg-white/95 border-t border-slate-200 shadow-2xl flex gap-2.5 z-30">
               <button
                 onClick={() => setShowFullTranslation(!showFullTranslation)}
                 className={`flex-1 py-3 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 transition ${showFullTranslation ? 'bg-slate-200 text-slate-700' : 'bg-indigo-100 text-indigo-900'}`}
@@ -1338,7 +1465,7 @@ function App() {
             </div>
             <div className="space-y-4">
               {activeText.questions.map((q, qIdx) => (
-                <div key={qIdx} className="card-glass p-4 rounded-2xl shadow-sm border border-slate-200/90">
+                <div key={qIdx} className="card-glass p-4 rounded-2xl shadow-sm border border-slate-200">
                   <p className="font-bold text-sm text-slate-800 mb-3">{qIdx + 1}. {q.q}</p>
                   <div className="space-y-2">
                     {q.options.map((opt, oIdx) => {
@@ -1347,7 +1474,7 @@ function App() {
                       const isCorrect = q.answer === oIdx;
                       let btnClass = "w-full text-left p-3 rounded-xl border text-sm font-medium transition ";
                       if (!showResult) {
-                        btnClass += isSelected ? "border-indigo-600 bg-indigo-50 text-indigo-900 font-bold" : "border-slate-200 bg-white/70 text-slate-700";
+                        btnClass += isSelected ? "border-indigo-600 bg-indigo-50 text-indigo-900 font-bold" : "border-slate-200 bg-white text-slate-700";
                       } else {
                         if (isCorrect) btnClass += "border-green-500 bg-green-50 text-green-900 font-bold";
                         else if (isSelected && !isCorrect) btnClass += "border-red-500 bg-red-50 text-red-900";
@@ -1384,7 +1511,7 @@ function App() {
         {/* SAVED WORDS VIEW */}
         {currentView === 'savedWords' && (
           <div className="flex-1 flex flex-col">
-            <div className="p-4 card-glass border-b border-slate-200/80 shrink-0">
+            <div className="p-4 card-glass border-b border-slate-200 shrink-0">
               <div className="flex justify-between items-center mb-3">
                 <div>
                   <h3 className="font-bold text-slate-800">Kaydedilen Kelimeler</h3>
@@ -1404,7 +1531,7 @@ function App() {
                     <button
                       key={lvl}
                       onClick={() => setWordFilterLevel(lvl)}
-                      className={`px-3 py-1.5 rounded-lg text-xs font-bold shrink-0 transition flex items-center gap-1 ${wordFilterLevel === lvl ? 'bg-indigo-700 text-white shadow-sm' : 'bg-white/70 text-slate-600 hover:bg-white'}`}
+                      className={`px-3 py-1.5 rounded-lg text-xs font-bold shrink-0 transition flex items-center gap-1 ${wordFilterLevel === lvl ? 'bg-indigo-700 text-white shadow-sm' : 'bg-white text-slate-600 hover:bg-slate-100'}`}
                     >
                       <span>{lvl === 'ALL' ? 'Tümü' : lvl}</span>
                       <span className={`text-[10px] px-1.5 py-0.2 rounded-full ${wordFilterLevel === lvl ? 'bg-indigo-800 text-white' : 'bg-slate-200 text-slate-600'}`}>{count}</span>
@@ -1424,7 +1551,7 @@ function App() {
                 </div>
               ) : (
                 filteredSavedWords.map((wordObj, idx) => (
-                  <div key={idx} className="card-glass p-3.5 rounded-2xl shadow-sm border border-slate-200/80 flex justify-between items-center">
+                  <div key={idx} className="card-glass p-3.5 rounded-2xl shadow-sm border border-slate-200 flex justify-between items-center">
                     <div className="flex items-center gap-3">
                       <span className={`text-[11px] font-black px-2 py-1 rounded-md border ${getBadgeStyle(wordObj.level)}`}>
                         {wordObj.level || 'B1'}
@@ -1489,66 +1616,67 @@ function App() {
           </div>
         )}
 
-        {/* ÇEVİRİ VE SEVİYE ETİKETLEME MODALI */}
-        {selectedTranslation && (
-          <div className="fixed bottom-3 left-3 right-3 max-w-md mx-auto bg-slate-900/95 backdrop-blur-xl text-white p-4 rounded-3xl shadow-2xl z-50 border border-slate-700">
-            <button
-              onClick={() => { setSelectedTranslation(null); setActiveHighlight(null); }}
-              className="absolute top-3 right-3 p-1 text-slate-400 hover:text-white text-base"
-            >✕</button>
+      </div>
 
-            <div className="mb-3 flex items-center gap-2">
-              <span className="text-[10px] font-bold uppercase text-slate-400">Seviye Etiketi:</span>
-              <div className="flex gap-1">
-                {['A1', 'A2', 'B1', 'B2'].map(lvl => (
-                  <button
-                    key={lvl}
-                    onClick={() => setSelectedLevelTag(lvl)}
-                    className={`text-[10px] font-black px-2 py-0.5 rounded border transition ${selectedLevelTag === lvl ? 'bg-indigo-600 text-white border-indigo-400' : 'bg-slate-800 text-slate-400 border-slate-700'}`}
-                  >
-                    {lvl}
-                  </button>
-                ))}
-              </div>
-            </div>
+      {/* VIEWPORT-FIXED ÇEVİRİ MODALI (SAYFA BOYUTUNDAN BAĞIMSIZ DOĞRUDAN AKTİF EKRANDA ÇIKAR) */}
+      {selectedTranslation && (
+        <div className="fixed bottom-3 inset-x-3 max-w-md mx-auto bg-slate-900/98 text-white p-4 rounded-3xl shadow-2xl z-50 border border-slate-700">
+          <button
+            onClick={() => { setSelectedTranslation(null); setActiveHighlight(null); }}
+            className="absolute top-3 right-3 p-1 text-slate-400 hover:text-white text-base"
+          >✕</button>
 
-            {selectedTranslation.phrase && (
-              <div className="mb-3 pb-3 border-b border-slate-800 pr-6">
-                <div className="flex items-center gap-2 mb-0.5">
-                  <span className="text-[10px] text-indigo-400 font-bold uppercase">Kelime Grubu</span>
-                  <button onClick={() => speak(selectedTranslation.phrase.original)} className="text-xs">🔊</button>
-                </div>
-                <div className="text-lg font-bold text-white leading-snug">{selectedTranslation.phrase.original}</div>
-                <div className="text-sm text-indigo-200 mb-2 font-medium">{selectedTranslation.phrase.translated}</div>
+          <div className="mb-3 flex items-center gap-2">
+            <span className="text-[10px] font-bold uppercase text-slate-400">Seviye Etiketi:</span>
+            <div className="flex gap-1">
+              {['A1', 'A2', 'B1', 'B2'].map(lvl => (
                 <button
-                  onClick={() => toggleSaveWord(selectedTranslation.phrase, selectedLevelTag)}
-                  className={`text-xs px-3 py-1.5 rounded-lg font-bold flex items-center gap-1.5 transition ${isWordSaved(selectedTranslation.phrase.original) ? 'bg-indigo-600 text-white' : 'bg-slate-800 hover:bg-slate-700 text-slate-200'}`}
+                  key={lvl}
+                  onClick={() => setSelectedLevelTag(lvl)}
+                  className={`text-[10px] font-black px-2 py-0.5 rounded border transition ${selectedLevelTag === lvl ? 'bg-indigo-600 text-white border-indigo-400' : 'bg-slate-800 text-slate-400 border-slate-700'}`}
                 >
-                  {isWordSaved(selectedTranslation.phrase.original) ? `⭐ [${getSavedWordLevel(selectedTranslation.phrase.original) || selectedLevelTag}] Kaydedildi` : `🔖 ${selectedLevelTag} Olarak Kaydet`}
+                  {lvl}
                 </button>
-              </div>
-            )}
-
-            <div className="pr-6">
-              <div className="flex items-center gap-2 mb-0.5">
-                <span className="text-[10px] text-slate-400 font-bold uppercase">
-                  {selectedTranslation.phrase ? "Tıkladığınız Kelime" : "Kelime Çevirisi"}
-                </span>
-                <button onClick={() => speak(selectedTranslation.word.original)} className="text-xs">🔊</button>
-              </div>
-              <div className="text-base font-bold text-slate-100">{selectedTranslation.word.original}</div>
-              <div className="text-xs text-slate-400 mb-2 font-medium">{selectedTranslation.word.translated}</div>
-              <button
-                onClick={() => toggleSaveWord(selectedTranslation.word, selectedLevelTag)}
-                className={`text-xs px-3 py-1.5 rounded-lg font-bold flex items-center gap-1.5 transition ${isWordSaved(selectedTranslation.word.original) ? 'bg-indigo-600 text-white' : 'bg-slate-800 hover:bg-slate-700 text-slate-200'}`}
-              >
-                {isWordSaved(selectedTranslation.word.original) ? `⭐ [${getSavedWordLevel(selectedTranslation.word.original) || selectedLevelTag}] Kaydedildi` : `🔖 ${selectedLevelTag} Olarak Kaydet`}
-              </button>
+              ))}
             </div>
           </div>
-        )}
 
-      </div>
+          {selectedTranslation.phrase && (
+            <div className="mb-3 pb-3 border-b border-slate-800 pr-6">
+              <div className="flex items-center gap-2 mb-0.5">
+                <span className="text-[10px] text-indigo-400 font-bold uppercase">Kelime Grubu</span>
+                <button onClick={() => speak(selectedTranslation.phrase.original)} className="text-xs">🔊</button>
+              </div>
+              <div className="text-lg font-bold text-white leading-snug">{selectedTranslation.phrase.original}</div>
+              <div className="text-sm text-indigo-200 mb-2 font-medium">{selectedTranslation.phrase.translated}</div>
+              <button
+                onClick={() => toggleSaveWord(selectedTranslation.phrase, selectedLevelTag)}
+                className={`text-xs px-3 py-1.5 rounded-lg font-bold flex items-center gap-1.5 transition ${isWordSaved(selectedTranslation.phrase.original) ? 'bg-indigo-600 text-white' : 'bg-slate-800 hover:bg-slate-700 text-slate-200'}`}
+              >
+                {isWordSaved(selectedTranslation.phrase.original) ? `⭐ [${getSavedWordLevel(selectedTranslation.phrase.original) || selectedLevelTag}] Kaydedildi` : `🔖 ${selectedLevelTag} Olarak Kaydet`}
+              </button>
+            </div>
+          )}
+
+          <div className="pr-6">
+            <div className="flex items-center gap-2 mb-0.5">
+              <span className="text-[10px] text-slate-400 font-bold uppercase">
+                {selectedTranslation.phrase ? "Tıkladığınız Kelime" : "Kelime Çevirisi"}
+              </span>
+              <button onClick={() => speak(selectedTranslation.word.original)} className="text-xs">🔊</button>
+            </div>
+            <div className="text-base font-bold text-slate-100">{selectedTranslation.word.original}</div>
+            <div className="text-xs text-slate-400 mb-2 font-medium">{selectedTranslation.word.translated}</div>
+            <button
+              onClick={() => toggleSaveWord(selectedTranslation.word, selectedLevelTag)}
+              className={`text-xs px-3 py-1.5 rounded-lg font-bold flex items-center gap-1.5 transition ${isWordSaved(selectedTranslation.word.original) ? 'bg-indigo-600 text-white' : 'bg-slate-800 hover:bg-slate-700 text-slate-200'}`}
+            >
+              {isWordSaved(selectedTranslation.word.original) ? `⭐ [${getSavedWordLevel(selectedTranslation.word.original) || selectedLevelTag}] Kaydedildi` : `🔖 ${selectedLevelTag} Olarak Kaydet`}
+            </button>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }
