@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="theme-color" content="#4f46e5">
+<meta name="theme-color" content="#312e81">
 <title>İngilizce Öğren</title>
 <script>
 window.onerror = function(msg, url, line) {
@@ -19,15 +19,32 @@ window.onerror = function(msg, url, line) {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.10/babel.min.js"></script>
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
-body { margin: 0; font-family: sans-serif; background-color: #f8fafc; touch-action: manipulation; }
+body { 
+  margin: 0; 
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+  background: linear-gradient(rgba(15, 23, 42, 0.55), rgba(15, 23, 42, 0.75)), 
+              url('https://images.unsplash.com/photo-1511497584788-87676104235f?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat fixed;
+  touch-action: manipulation; 
+  min-height: 100vh;
+}
 .scrollbar-hide::-webkit-scrollbar { display: none; }
 .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
 .word-highlight { background-color: #c7d2fe; border-radius: 4px; }
+.glass-container {
+  background: rgba(255, 255, 255, 0.93);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+.card-glass {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
 </style>
 </head>
 <body>
 <div id="root">
-  <div style="display:flex; justify-content:center; align-items:center; height:100vh; font-family:sans-serif; color:#4f46e5; font-weight:bold; font-size:18px; text-align:center; padding:20px;">
+  <div style="display:flex; justify-content:center; align-items:center; height:100vh; font-family:sans-serif; color:#ffffff; font-weight:bold; font-size:18px; text-align:center; padding:20px;">
     Uygulama Yükleniyor... Lütfen Bekleyin ⏳
   </div>
 </div>
@@ -1024,15 +1041,15 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-100 text-slate-800 flex justify-center w-full">
-      <div className="w-full max-w-md bg-white shadow-xl min-h-screen relative flex flex-col">
+    <div className="min-h-screen flex justify-center w-full px-0 sm:px-4 py-0 sm:py-6">
+      <div className="w-full max-w-md glass-container shadow-2xl min-h-screen sm:min-h-[92vh] sm:rounded-3xl relative flex flex-col overflow-hidden border border-white/30">
 
         {/* Header */}
-        <div className="bg-indigo-600 text-white p-4 flex items-center shadow-md shrink-0 sticky top-0 z-40">
+        <div className="bg-indigo-900/90 backdrop-blur-md text-white p-4 flex items-center shadow-md shrink-0 sticky top-0 z-40 border-b border-indigo-700/40">
           {currentView !== 'home' && (
-            <button onClick={goBack} className="p-2 mr-1 hover:bg-indigo-500 rounded-full transition text-lg">⬅️</button>
+            <button onClick={goBack} className="p-2 mr-1 hover:bg-indigo-800 rounded-full transition text-lg">⬅️</button>
           )}
-          <h1 className="text-lg font-bold flex-1 text-center truncate">
+          <h1 className="text-lg font-bold flex-1 text-center truncate tracking-wide">
             {currentView === 'home' && "İngilizce Öğren"}
             {currentView === 'levels' && `${selectedLevel} Seviye Metinleri`}
             {currentView === 'reading' && (activeText ? activeText.title : 'Okuma')}
@@ -1047,8 +1064,8 @@ function App() {
 
         {/* Toast Bildirimi */}
         {toastMessage && (
-          <div className="fixed top-16 left-4 right-4 max-w-md mx-auto bg-slate-900 text-white px-4 py-3 rounded-2xl shadow-xl z-50 flex items-center gap-2 border border-slate-700 animate-bounce">
-            <span className="text-lg">⚡</span>
+          <div className="fixed top-16 left-4 right-4 max-w-md mx-auto bg-slate-900/95 backdrop-blur-lg text-white px-4 py-3 rounded-2xl shadow-xl z-50 flex items-center gap-2 border border-slate-700 animate-bounce">
+            <span className="text-lg">🌿</span>
             <p className="text-sm font-medium">{toastMessage}</p>
           </div>
         )}
@@ -1057,11 +1074,11 @@ function App() {
         {currentView === 'home' && (
           <div className="flex-1 p-5 flex flex-col space-y-4 overflow-y-auto">
             <div className="text-center my-3">
-              <div className="bg-indigo-50 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-3 shadow-inner">
-                <span className="text-4xl">🌍</span>
+              <div className="bg-indigo-600/10 backdrop-blur-md w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-3 border border-indigo-500/20 shadow-inner">
+                <span className="text-4xl">🌲</span>
               </div>
               <h2 className="text-2xl font-black text-slate-800">Seviyeni Seç</h2>
-              <p className="text-xs text-slate-500 mt-1">Her seviyede dengeli ve seviyeli metinler</p>
+              <p className="text-xs text-slate-500 mt-1 font-medium">Huzurlu ve göz yormayan okuma deneyimi</p>
             </div>
 
             {/* Seviye Butonları (A1, A2, B1, B2) */}
@@ -1070,17 +1087,17 @@ function App() {
                 const count = allAvailableTexts.filter(t => t.level === level).length;
                 return (
                   <button key={level} onClick={() => { setSelectedLevel(level); setCurrentView('levels'); }}
-                    className="w-full bg-white border-2 border-slate-100 p-4 rounded-2xl flex items-center justify-between hover:border-indigo-400 hover:bg-indigo-50/50 shadow-sm transition active:scale-[0.99]">
+                    className="w-full card-glass border border-slate-200/80 p-4 rounded-2xl flex items-center justify-between hover:border-indigo-400 hover:shadow-md transition active:scale-[0.99] group">
                     <div className="flex items-center gap-3">
-                      <span className={`w-9 h-9 rounded-xl font-bold flex items-center justify-center text-sm border ${getBadgeStyle(level)}`}>
+                      <span className={`w-9 h-9 rounded-xl font-bold flex items-center justify-center text-sm border shadow-sm ${getBadgeStyle(level)}`}>
                         {level}
                       </span>
                       <div className="text-left">
-                        <span className="font-bold text-base text-slate-800 block">{level} Seviyesi</span>
+                        <span className="font-bold text-base text-slate-800 block group-hover:text-indigo-900 transition">{level} Seviyesi</span>
                         <span className="text-xs text-slate-400 font-medium">{count} Metin Mevcut</span>
                       </div>
                     </div>
-                    <span className="text-lg text-slate-300">➔</span>
+                    <span className="text-lg text-slate-400 group-hover:translate-x-1 transition">➔</span>
                   </button>
                 );
               })}
@@ -1089,9 +1106,9 @@ function App() {
             {/* Kendi Metnini Ekle */}
             <div className="pt-2">
               <button onClick={() => setCurrentView('addText')}
-                className="w-full bg-gradient-to-r from-indigo-500 to-purple-600 text-white p-4 rounded-2xl flex items-center justify-between shadow-md hover:from-indigo-600 hover:to-purple-700 transition active:scale-[0.98]">
+                className="w-full bg-gradient-to-r from-indigo-700/90 to-purple-800/90 text-white p-4 rounded-2xl flex items-center justify-between shadow-lg hover:from-indigo-800 hover:to-purple-900 transition active:scale-[0.98] border border-white/20">
                 <div className="flex items-center gap-3">
-                  <span className="text-2xl bg-white/20 p-2 rounded-xl">✏️</span>
+                  <span className="text-2xl bg-white/20 p-2 rounded-xl backdrop-blur-sm">✏️</span>
                   <div className="text-left">
                     <span className="font-bold text-base block">Kendi Metnini Ekle</span>
                     <span className="text-xs text-indigo-100">İnternetten makale veya haber yapıştır</span>
@@ -1104,29 +1121,29 @@ function App() {
             {/* Özel Metinlerim */}
             {customTexts.length > 0 && (
               <button onClick={() => setCurrentView('customList')}
-                className="w-full bg-purple-50 border-2 border-purple-200 p-4 rounded-2xl flex items-center justify-between hover:border-purple-400 text-purple-900 shadow-sm transition">
+                className="w-full card-glass border border-purple-300/60 p-4 rounded-2xl flex items-center justify-between hover:border-purple-400 text-purple-900 shadow-sm transition">
                 <div className="flex items-center gap-3">
                   <span className="text-2xl">📑</span>
                   <div className="text-left">
                     <span className="font-bold text-base block">Eklediğim Metinler</span>
-                    <span className="text-xs text-purple-600">{customTexts.length} özel metin</span>
+                    <span className="text-xs text-purple-600 font-medium">{customTexts.length} özel metin</span>
                   </div>
                 </div>
-                <span className="bg-purple-600 text-white text-xs font-bold px-2.5 py-1 rounded-full">{customTexts.length}</span>
+                <span className="bg-purple-600 text-white text-xs font-bold px-2.5 py-1 rounded-full shadow">{customTexts.length}</span>
               </button>
             )}
 
             {/* Kelime Defterim */}
             <button onClick={() => setCurrentView('savedWords')}
-              className="w-full bg-orange-50 border-2 border-orange-200 p-4 rounded-2xl flex items-center justify-between hover:border-orange-500 shadow-sm text-orange-900 transition">
+              className="w-full card-glass border border-orange-300/60 p-4 rounded-2xl flex items-center justify-between hover:border-orange-500 shadow-sm text-orange-950 transition">
               <div className="flex items-center gap-3">
                 <span className="text-2xl">📚</span>
                 <div className="text-left">
                   <span className="font-bold text-base block">Kelime Defterim</span>
-                  <span className="text-xs text-orange-600">Seviyeli kayıtlar ve test</span>
+                  <span className="text-xs text-orange-700 font-medium">Seviyeli kayıtlar ve test</span>
                 </div>
               </div>
-              <div className="bg-orange-600 text-white text-xs font-bold px-2.5 py-1 rounded-full">{savedWords.length}</div>
+              <div className="bg-orange-600 text-white text-xs font-bold px-2.5 py-1 rounded-full shadow">{savedWords.length}</div>
             </button>
           </div>
         )}
@@ -1135,22 +1152,22 @@ function App() {
         {currentView === 'levels' && (
           <div className="flex-1 p-4 space-y-3 overflow-y-auto pb-6">
             {filteredTexts.length === 0 ? (
-              <div className="text-center text-slate-400 mt-12">Bu seviyede henüz metin yok.</div>
+              <div className="text-center text-slate-400 mt-12 font-medium">Bu seviyede henüz metin yok.</div>
             ) : (
               filteredTexts.map(text => {
                 const isCompleted = completedTexts.includes(text.id);
                 return (
                   <button key={text.id} onClick={() => startReading(text)}
-                    className={`w-full text-left bg-white p-4 rounded-2xl shadow-sm border flex gap-3.5 items-center hover:shadow-md active:scale-[0.98] transition ${isCompleted ? 'border-green-300 bg-green-50/50' : 'border-slate-200'}`}>
-                    <div className={`${isCompleted ? 'bg-green-100 text-green-600' : 'bg-indigo-100 text-indigo-600'} p-3 rounded-xl shrink-0 flex items-center justify-center w-11 h-11`}>
+                    className={`w-full text-left card-glass p-4 rounded-2xl shadow-sm border flex gap-3.5 items-center hover:shadow-md active:scale-[0.98] transition ${isCompleted ? 'border-green-300/80 bg-green-50/60' : 'border-slate-200/80'}`}>
+                    <div className={`${isCompleted ? 'bg-green-100 text-green-700' : 'bg-indigo-100 text-indigo-700'} p-3 rounded-xl shrink-0 flex items-center justify-center w-11 h-11 shadow-sm`}>
                       <span className="text-xl">{isCompleted ? '✅' : '📄'}</span>
                     </div>
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-1">
-                        <h3 className={`font-bold text-base leading-tight ${isCompleted ? 'text-green-900' : 'text-slate-800'}`}>{text.title}</h3>
+                        <h3 className={`font-bold text-base leading-tight ${isCompleted ? 'text-green-950' : 'text-slate-800'}`}>{text.title}</h3>
                         {text.isCustom && <span className="bg-purple-100 text-purple-800 text-[10px] font-bold px-1.5 py-0.5 rounded">ÖZEL</span>}
                       </div>
-                      <span className="text-xs text-slate-400 font-medium">{text.sentences.length} Cümle</span>
+                      <span className="text-xs text-slate-500 font-semibold">{text.sentences.length} Cümle</span>
                     </div>
                   </button>
                 );
@@ -1163,23 +1180,23 @@ function App() {
         {currentView === 'customList' && (
           <div className="flex-1 p-4 space-y-3 overflow-y-auto pb-6">
             <div className="flex justify-between items-center mb-2">
-              <span className="text-xs font-bold text-slate-500">Kendi Eklediğin Metinler</span>
-              <button onClick={() => setCurrentView('addText')} className="text-xs bg-indigo-600 text-white font-bold px-3 py-1.5 rounded-lg">➕ Yeni Ekle</button>
+              <span className="text-xs font-bold text-slate-600">Kendi Eklediğin Metinler</span>
+              <button onClick={() => setCurrentView('addText')} className="text-xs bg-indigo-700 hover:bg-indigo-800 text-white font-bold px-3 py-1.5 rounded-lg shadow">➕ Yeni Ekle</button>
             </div>
             {customTexts.map(text => {
               const isCompleted = completedTexts.includes(text.id);
               return (
                 <div key={text.id} onClick={() => startReading(text)}
-                  className="w-full text-left bg-white p-4 rounded-2xl shadow-sm border border-slate-200 flex justify-between items-center hover:border-indigo-300 cursor-pointer">
+                  className="w-full text-left card-glass p-4 rounded-2xl shadow-sm border border-slate-200 flex justify-between items-center hover:border-indigo-400 cursor-pointer transition">
                   <div>
                     <div className="flex items-center gap-2 mb-1">
                       <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded border ${getBadgeStyle(text.level)}`}>{text.level}</span>
                       <h4 className="font-bold text-slate-800">{text.title}</h4>
                       {isCompleted && <span className="text-green-600 text-xs">✓</span>}
                     </div>
-                    <p className="text-xs text-slate-400">{text.sentences.length} Cümle</p>
+                    <p className="text-xs text-slate-500 font-medium">{text.sentences.length} Cümle</p>
                   </div>
-                  <button onClick={(e) => deleteCustomText(e, text.id)} className="p-2 text-slate-300 hover:text-red-500 text-base">🗑️</button>
+                  <button onClick={(e) => deleteCustomText(e, text.id)} className="p-2 text-slate-400 hover:text-red-500 text-base">🗑️</button>
                 </div>
               );
             })}
@@ -1188,16 +1205,16 @@ function App() {
 
         {/* ADD CUSTOM TEXT VIEW */}
         {currentView === 'addText' && (
-          <div className="flex-1 p-5 space-y-4 overflow-y-auto pb-10 bg-slate-50">
-            <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+          <div className="flex-1 p-5 space-y-4 overflow-y-auto pb-10">
+            <div className="card-glass p-4 rounded-2xl border border-slate-200/90 shadow-sm space-y-3">
               <div>
                 <label className="block text-xs font-bold text-slate-600 uppercase mb-1">Metin Başlığı</label>
                 <input
                   type="text"
-                  placeholder="Örn: A Great Day"
+                  placeholder="Örn: A Calm Journey"
                   value={newTitle}
                   onChange={(e) => setNewTitle(e.target.value)}
-                  className="w-full p-3 text-sm rounded-xl border border-slate-300 focus:outline-none focus:border-indigo-500"
+                  className="w-full p-3 text-sm rounded-xl border border-slate-300 bg-white/90 focus:outline-none focus:border-indigo-500"
                 />
               </div>
 
@@ -1209,7 +1226,7 @@ function App() {
                       key={lvl}
                       type="button"
                       onClick={() => setNewLevel(lvl)}
-                      className={`py-2 text-xs font-bold rounded-lg border transition ${newLevel === lvl ? 'bg-indigo-600 text-white border-indigo-600 shadow' : 'bg-slate-50 text-slate-700 border-slate-200'}`}
+                      className={`py-2 text-xs font-bold rounded-lg border transition ${newLevel === lvl ? 'bg-indigo-700 text-white border-indigo-700 shadow' : 'bg-white/80 text-slate-700 border-slate-200'}`}
                     >
                       {lvl}
                     </button>
@@ -1224,7 +1241,7 @@ function App() {
                   placeholder="İngilizce metninizi buraya yapıştırın..."
                   value={newEngText}
                   onChange={(e) => setNewEngText(e.target.value)}
-                  className="w-full p-3 text-sm rounded-xl border border-slate-300 focus:outline-none focus:border-indigo-500 leading-relaxed"
+                  className="w-full p-3 text-sm rounded-xl border border-slate-300 bg-white/90 focus:outline-none focus:border-indigo-500 leading-relaxed"
                 ></textarea>
               </div>
 
@@ -1235,13 +1252,13 @@ function App() {
                   placeholder="Varsa Türkçe çeviriyi yapıştırın..."
                   value={newTrText}
                   onChange={(e) => setNewTrText(e.target.value)}
-                  className="w-full p-3 text-sm rounded-xl border border-slate-300 focus:outline-none focus:border-indigo-500 leading-relaxed"
+                  className="w-full p-3 text-sm rounded-xl border border-slate-300 bg-white/90 focus:outline-none focus:border-indigo-500 leading-relaxed"
                 ></textarea>
               </div>
 
               <button
                 onClick={handleSaveCustomText}
-                className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3.5 rounded-xl shadow-lg transition active:scale-[0.98] flex items-center justify-center gap-2"
+                className="w-full bg-indigo-700 hover:bg-indigo-800 text-white font-bold py-3.5 rounded-xl shadow-lg transition active:scale-[0.98] flex items-center justify-center gap-2"
               >
                 <span>📖</span> Metni Kaydet ve Oku
               </button>
@@ -1252,12 +1269,12 @@ function App() {
         {/* READING VIEW */}
         {currentView === 'reading' && activeText && (
           <div className="flex-1 flex flex-col relative">
-            <div className="p-5 flex-1 overflow-y-auto space-y-6 pb-36">
+            <div className="p-5 flex-1 overflow-y-auto space-y-4 pb-36">
               {activeText.sentences.map((sentence) => {
                 const sentenceWords = sentence.eng.split(' ');
                 const isHighlighted = activeHighlight && activeHighlight.sentenceId === sentence.id;
                 return (
-                  <div key={sentence.id} className="relative bg-white p-3.5 rounded-2xl border border-slate-100 shadow-sm">
+                  <div key={sentence.id} className="relative card-glass p-3.5 rounded-2xl border border-slate-200/90 shadow-sm hover:shadow transition">
                     <div className="text-base leading-relaxed text-slate-800 flex flex-wrap items-center gap-y-2">
                       <div className="flex-1">
                         {sentenceWords.map((word, idx) => {
@@ -1266,7 +1283,7 @@ function App() {
                             <span key={idx}>
                               <button
                                 onClick={() => handleWordClick(word, idx, sentenceWords, sentence.id)}
-                                className={`rounded px-1 py-0.5 hover:bg-indigo-100 transition font-medium ${isWordHighlighted ? 'word-highlight font-bold text-indigo-900' : ''}`}
+                                className={`rounded px-1 py-0.5 hover:bg-indigo-100/90 transition font-medium ${isWordHighlighted ? 'word-highlight font-bold text-indigo-950' : ''}`}
                               >
                                 {word}
                               </button>{' '}
@@ -1278,17 +1295,17 @@ function App() {
                         <button
                           onClick={() => speak(sentence.eng)}
                           title="Cümleyi Dinle"
-                          className="w-7 h-7 rounded-full bg-indigo-50 text-indigo-600 flex items-center justify-center text-xs hover:bg-indigo-100"
+                          className="w-7 h-7 rounded-full bg-indigo-50 text-indigo-700 flex items-center justify-center text-xs hover:bg-indigo-100 shadow-sm"
                         >🔊</button>
                         <button
                           onClick={() => setRevealedSentences(prev => ({ ...prev, [sentence.id]: !prev[sentence.id] }))}
                           title="Çeviriyi Gör"
-                          className="w-7 h-7 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center text-xs hover:bg-slate-200"
+                          className="w-7 h-7 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center text-xs hover:bg-slate-200 shadow-sm"
                         >🌐</button>
                       </div>
                     </div>
                     {(revealedSentences[sentence.id] || showFullTranslation) && (
-                      <div className="mt-2.5 p-2.5 bg-indigo-50/70 border-l-4 border-indigo-500 text-xs rounded-r-lg text-slate-700 leading-relaxed font-medium">
+                      <div className="mt-2.5 p-2.5 bg-indigo-50/90 border-l-4 border-indigo-600 text-xs rounded-r-lg text-slate-700 leading-relaxed font-medium shadow-inner">
                         {sentence.tr}
                       </div>
                     )}
@@ -1298,14 +1315,14 @@ function App() {
             </div>
 
             {/* Alt İşlem Çubuğu */}
-            <div className="absolute bottom-0 left-0 right-0 p-3.5 bg-white/95 backdrop-blur border-t border-slate-200 shadow-lg flex gap-2.5 z-30">
+            <div className="absolute bottom-0 left-0 right-0 p-3.5 bg-white/95 backdrop-blur-md border-t border-slate-200/80 shadow-2xl flex gap-2.5 z-30">
               <button
                 onClick={() => setShowFullTranslation(!showFullTranslation)}
-                className={`flex-1 py-3 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 transition ${showFullTranslation ? 'bg-slate-200 text-slate-700' : 'bg-indigo-100 text-indigo-800'}`}
+                className={`flex-1 py-3 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 transition ${showFullTranslation ? 'bg-slate-200 text-slate-700' : 'bg-indigo-100 text-indigo-900'}`}
               >
                 <span>🌐</span> {showFullTranslation ? "Gizle" : "Tam Çeviri"}
               </button>
-              <button onClick={handleFinishReading} className="flex-[1.4] py-3 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 bg-green-600 text-white shadow hover:bg-green-700 transition">
+              <button onClick={handleFinishReading} className="flex-[1.4] py-3 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 bg-green-600 text-white shadow-md hover:bg-green-700 transition">
                 <span>✅</span> {activeText.questions?.length > 0 ? "Sınava Geç" : "Metni Bitir"}
               </button>
             </div>
@@ -1314,14 +1331,14 @@ function App() {
 
         {/* READING QUIZ VIEW */}
         {currentView === 'textQuiz' && activeText && activeText.questions && (
-          <div className="flex-1 p-5 bg-slate-50 overflow-y-auto pb-10">
+          <div className="flex-1 p-5 overflow-y-auto pb-10">
             <div className="text-center mb-5">
               <h2 className="text-lg font-bold text-slate-800">Okuduğunu Anlama Sınavı</h2>
-              <p className="text-xs text-slate-400">Metne göre soruları cevaplayın</p>
+              <p className="text-xs text-slate-500 font-medium">Metne göre soruları cevaplayın</p>
             </div>
-            <div className="space-y-5">
+            <div className="space-y-4">
               {activeText.questions.map((q, qIdx) => (
-                <div key={qIdx} className="bg-white p-4 rounded-2xl shadow-sm border border-slate-200">
+                <div key={qIdx} className="card-glass p-4 rounded-2xl shadow-sm border border-slate-200/90">
                   <p className="font-bold text-sm text-slate-800 mb-3">{qIdx + 1}. {q.q}</p>
                   <div className="space-y-2">
                     {q.options.map((opt, oIdx) => {
@@ -1330,10 +1347,10 @@ function App() {
                       const isCorrect = q.answer === oIdx;
                       let btnClass = "w-full text-left p-3 rounded-xl border text-sm font-medium transition ";
                       if (!showResult) {
-                        btnClass += isSelected ? "border-indigo-600 bg-indigo-50 text-indigo-800 font-bold" : "border-slate-200 text-slate-600";
+                        btnClass += isSelected ? "border-indigo-600 bg-indigo-50 text-indigo-900 font-bold" : "border-slate-200 bg-white/70 text-slate-700";
                       } else {
-                        if (isCorrect) btnClass += "border-green-500 bg-green-50 text-green-800 font-bold";
-                        else if (isSelected && !isCorrect) btnClass += "border-red-500 bg-red-50 text-red-800";
+                        if (isCorrect) btnClass += "border-green-500 bg-green-50 text-green-900 font-bold";
+                        else if (isSelected && !isCorrect) btnClass += "border-red-500 bg-red-50 text-red-900";
                         else btnClass += "border-slate-200 opacity-40";
                       }
                       return (
@@ -1349,14 +1366,14 @@ function App() {
             {quizScore === null ? (
               <button onClick={checkTextQuiz}
                 disabled={Object.keys(quizAnswers).length < activeText.questions.length}
-                className={`w-full mt-6 py-3.5 rounded-xl font-bold text-sm text-white transition ${Object.keys(quizAnswers).length < activeText.questions.length ? 'bg-slate-300 cursor-not-allowed' : 'bg-indigo-600 shadow-md'}`}>
+                className={`w-full mt-6 py-3.5 rounded-xl font-bold text-sm text-white transition shadow-md ${Object.keys(quizAnswers).length < activeText.questions.length ? 'bg-slate-400 cursor-not-allowed' : 'bg-indigo-700 hover:bg-indigo-800'}`}>
                 Cevapları Kontrol Et
               </button>
             ) : (
-              <div className="mt-6 bg-white p-5 rounded-2xl shadow border-t-4 border-indigo-600 text-center">
+              <div className="mt-6 card-glass p-5 rounded-2xl shadow border-t-4 border-indigo-600 text-center">
                 <h3 className="text-xl font-black text-slate-800 mb-1">Skorun: {quizScore} / {activeText.questions.length}</h3>
                 <p className="text-xs text-slate-500 mb-4">{quizScore === activeText.questions.length ? "Mükemmel! Hepsini doğru cevapladın." : "Biraz daha tekrar yapabilirsin."}</p>
-                <button onClick={completeTextAndGoBack} className="w-full py-3 bg-indigo-600 text-white rounded-xl font-bold text-sm">
+                <button onClick={completeTextAndGoBack} className="w-full py-3 bg-indigo-700 hover:bg-indigo-800 text-white rounded-xl font-bold text-sm shadow">
                   Menüye Dön
                 </button>
               </div>
@@ -1366,15 +1383,15 @@ function App() {
 
         {/* SAVED WORDS VIEW */}
         {currentView === 'savedWords' && (
-          <div className="flex-1 flex flex-col bg-slate-50">
-            <div className="p-4 bg-white border-b border-slate-200 shrink-0">
+          <div className="flex-1 flex flex-col">
+            <div className="p-4 card-glass border-b border-slate-200/80 shrink-0">
               <div className="flex justify-between items-center mb-3">
                 <div>
                   <h3 className="font-bold text-slate-800">Kaydedilen Kelimeler</h3>
-                  <p className="text-xs text-slate-400">{filteredSavedWords.length} kelime listeleniyor</p>
+                  <p className="text-xs text-slate-400 font-medium">{filteredSavedWords.length} kelime listeleniyor</p>
                 </div>
                 <button onClick={startVocabTest} disabled={filteredSavedWords.length < 3}
-                  className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl font-bold text-xs ${filteredSavedWords.length < 3 ? 'bg-slate-200 text-slate-400' : 'bg-indigo-600 text-white shadow'}`}>
+                  className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl font-bold text-xs ${filteredSavedWords.length < 3 ? 'bg-slate-200 text-slate-400' : 'bg-indigo-700 text-white shadow'}`}>
                   <span>▶️</span> Test Et
                 </button>
               </div>
@@ -1387,10 +1404,10 @@ function App() {
                     <button
                       key={lvl}
                       onClick={() => setWordFilterLevel(lvl)}
-                      className={`px-3 py-1.5 rounded-lg text-xs font-bold shrink-0 transition flex items-center gap-1 ${wordFilterLevel === lvl ? 'bg-indigo-600 text-white shadow-sm' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}
+                      className={`px-3 py-1.5 rounded-lg text-xs font-bold shrink-0 transition flex items-center gap-1 ${wordFilterLevel === lvl ? 'bg-indigo-700 text-white shadow-sm' : 'bg-white/70 text-slate-600 hover:bg-white'}`}
                     >
                       <span>{lvl === 'ALL' ? 'Tümü' : lvl}</span>
-                      <span className={`text-[10px] px-1.5 py-0.2 rounded-full ${wordFilterLevel === lvl ? 'bg-indigo-700 text-white' : 'bg-slate-200 text-slate-600'}`}>{count}</span>
+                      <span className={`text-[10px] px-1.5 py-0.2 rounded-full ${wordFilterLevel === lvl ? 'bg-indigo-800 text-white' : 'bg-slate-200 text-slate-600'}`}>{count}</span>
                     </button>
                   );
                 })}
@@ -1407,7 +1424,7 @@ function App() {
                 </div>
               ) : (
                 filteredSavedWords.map((wordObj, idx) => (
-                  <div key={idx} className="bg-white p-3.5 rounded-2xl shadow-sm border border-slate-100 flex justify-between items-center">
+                  <div key={idx} className="card-glass p-3.5 rounded-2xl shadow-sm border border-slate-200/80 flex justify-between items-center">
                     <div className="flex items-center gap-3">
                       <span className={`text-[11px] font-black px-2 py-1 rounded-md border ${getBadgeStyle(wordObj.level)}`}>
                         {wordObj.level || 'B1'}
@@ -1415,12 +1432,12 @@ function App() {
                       <div>
                         <div className="flex items-center gap-2">
                           <h4 className="font-bold text-base text-slate-800">{wordObj.original}</h4>
-                          <button onClick={() => speak(wordObj.original)} className="text-xs text-indigo-500">🔊</button>
+                          <button onClick={() => speak(wordObj.original)} className="text-xs text-indigo-600">🔊</button>
                         </div>
                         <p className="text-xs text-slate-500 font-medium">{wordObj.translated}</p>
                       </div>
                     </div>
-                    <button onClick={() => toggleSaveWord(wordObj, wordObj.level)} className="p-2 text-slate-300 hover:text-red-500 text-sm">✕</button>
+                    <button onClick={() => toggleSaveWord(wordObj, wordObj.level)} className="p-2 text-slate-400 hover:text-red-500 text-sm">✕</button>
                   </div>
                 ))
               )}
@@ -1430,7 +1447,7 @@ function App() {
 
         {/* VOCAB TEST VIEW */}
         {currentView === 'vocabTest' && vocabQuestions.length > 0 && (
-          <div className="flex-1 flex flex-col p-6 bg-slate-50">
+          <div className="flex-1 flex flex-col p-6">
             {!vocabTestFinished ? (
               <div className="flex-1 flex flex-col">
                 <div className="flex justify-between items-center text-xs font-bold text-slate-400 mb-6">
@@ -1440,16 +1457,16 @@ function App() {
                   </span>
                 </div>
                 <div className="flex-1 flex flex-col items-center justify-center mb-6">
-                  <span className="text-xs text-indigo-500 font-bold uppercase tracking-wider mb-2">Bu kelimenin anlamı nedir?</span>
+                  <span className="text-xs text-indigo-700 font-bold uppercase tracking-wider mb-2">Bu kelimenin anlamı nedir?</span>
                   <h2 className="text-3xl font-black text-slate-800 text-center flex items-center gap-2">
                     {vocabQuestions[currentVocabIdx]?.word || ''}
-                    <button onClick={() => speak(vocabQuestions[currentVocabIdx]?.word)} className="text-lg text-indigo-500">🔊</button>
+                    <button onClick={() => speak(vocabQuestions[currentVocabIdx]?.word)} className="text-lg text-indigo-600">🔊</button>
                   </h2>
                 </div>
                 <div className="space-y-2.5 mb-8">
                   {(vocabQuestions[currentVocabIdx]?.options || []).map((opt, idx) => (
                     <button key={idx} onClick={() => handleVocabAnswer(idx)}
-                      className="w-full bg-white p-3.5 rounded-2xl border-2 border-indigo-100 text-base font-semibold text-slate-700 text-center hover:border-indigo-400 active:scale-[0.98] transition shadow-sm">
+                      className="w-full card-glass p-3.5 rounded-2xl border-2 border-indigo-100 text-base font-semibold text-slate-700 text-center hover:border-indigo-400 active:scale-[0.98] transition shadow-sm">
                       {opt}
                     </button>
                   ))}
@@ -1457,14 +1474,14 @@ function App() {
               </div>
             ) : (
               <div className="flex-1 flex flex-col items-center justify-center text-center space-y-5">
-                <div className="bg-green-100 w-20 h-20 rounded-full flex items-center justify-center">
+                <div className="bg-green-100 w-20 h-20 rounded-full flex items-center justify-center shadow-inner">
                   <span className="text-4xl">🎉</span>
                 </div>
                 <div>
                   <h2 className="text-2xl font-bold text-slate-800 mb-1">Test Tamamlandı!</h2>
-                  <p className="text-sm text-slate-600">Puanın: <strong className="text-indigo-600 font-black text-lg">{vocabScore} / {vocabQuestions.length}</strong></p>
+                  <p className="text-sm text-slate-600">Puanın: <strong className="text-indigo-700 font-black text-lg">{vocabScore} / {vocabQuestions.length}</strong></p>
                 </div>
-                <button onClick={() => setCurrentView('savedWords')} className="w-full bg-indigo-600 text-white py-3.5 rounded-xl font-bold text-sm shadow-md">
+                <button onClick={() => setCurrentView('savedWords')} className="w-full bg-indigo-700 hover:bg-indigo-800 text-white py-3.5 rounded-xl font-bold text-sm shadow-md">
                   Deftere Dön
                 </button>
               </div>
@@ -1474,7 +1491,7 @@ function App() {
 
         {/* ÇEVİRİ VE SEVİYE ETİKETLEME MODALI */}
         {selectedTranslation && (
-          <div className="fixed bottom-3 left-3 right-3 max-w-md mx-auto bg-slate-900/95 backdrop-blur text-white p-4 rounded-3xl shadow-2xl z-50 border border-slate-700">
+          <div className="fixed bottom-3 left-3 right-3 max-w-md mx-auto bg-slate-900/95 backdrop-blur-xl text-white p-4 rounded-3xl shadow-2xl z-50 border border-slate-700">
             <button
               onClick={() => { setSelectedTranslation(null); setActiveHighlight(null); }}
               className="absolute top-3 right-3 p-1 text-slate-400 hover:text-white text-base"
