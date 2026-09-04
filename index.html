@@ -36,13 +36,13 @@ body { margin: 0; font-family: sans-serif; background-color: #f8fafc; touch-acti
 setTimeout(function() {
   var root = document.getElementById('root');
   if (root && root.innerHTML.indexOf('Bekleyin') !== -1) {
-    root.innerHTML = '<div style="background:#dc2626; color:white; padding:20px; font-family:sans-serif; font-weight:bold; margin:20px; border-radius:10px; text-align:center;">Bağlantı Hatası: Sistem dosyaları indirilemedi. Lütfen internetinizi kontrol edip sayfayı yenileyin.</div>';
+    root.innerHTML = '<div style="background:#dc2626; color:white; padding:20px; font-family:sans-serif; font-weight:bold; margin:20px; border-radius:10px; text-align:center;">Bağlantı Hatası: Sistem dosyaları indirilemedi. Sayfayı yenileyin.</div>';
   }
 }, 6000);
 </script>
 
 <script type="text/babel">
-const { useState, useRef, useEffect } = React;
+const { useState, useEffect } = React;
 
 const dictionary = {
 "i": "ben", "you": "sen/siz", "he": "o (erkek)", "she": "o (kadın)", "it": "o", "we": "biz", "they": "onlar",
@@ -51,502 +51,676 @@ const dictionary = {
 "a": "bir", "an": "bir", "the": "(belirteç)", "and": "ve", "but": "ama", "because": "çünkü",
 "in": "içinde", "on": "üzerinde", "at": "-de/-da", "to": "-e/-a", "from": "-den", "with": "ile",
 "morning": "sabah", "wake": "uyanmak", "up": "kalkmak", "wash": "yıkamak", "eat": "yemek", "breakfast": "kahvaltı",
-"drink": "içmek", "coffee": "kahve", "go": "gitmek", "work": "iş", "bus": "otobüs",
-"friend": "arkadaş", "best": "en iyi", "name": "isim", "tom": "Tom", "tall": "uzun", "boy": "çocuk",
-"play": "oynamak", "football": "futbol", "every": "her", "day": "gün", "like": "hoşlanmak", "pizza": "pizza",
-"watch": "izlemek", "movies": "filmler", "together": "birlikte", "weekend": "hafta sonu",
-"city": "şehir", "live": "yaşamak", "big": "büyük", "many": "birçok", "cars": "arabalar", "people": "insanlar",
-"street": "sokak", "shops": "dükkanlar", "buy": "satın almak", "clothes": "kıyafetler", "food": "yiyecek",
+"drink": "içmek", "coffee": "kahve", "go": "gitmek", "work": "iş", "bus": "otobüs", "day": "gün", "every": "her",
+"friend": "arkadaş", "tall": "uzun", "boy": "çocuk", "football": "futbol", "like": "sevmek", "pizza": "pizza",
+"watch": "izlemek", "city": "şehir", "live": "yaşamak", "big": "büyük", "cars": "arabalar", "people": "insanlar",
 "park": "park", "trees": "ağaçlar", "flowers": "çiçekler", "beautiful": "güzel", "walk": "yürümek", "evening": "akşam",
-"travel": "seyahat", "next": "gelecek", "year": "yıl", "want": "istemek", "visit": "ziyaret etmek", "japan": "Japonya",
-"country": "ülke", "rich": "zengin", "culture": "kültür", "stay": "kalmak", "tokyo": "Tokyo", "two": "iki",
-"weeks": "hafta", "hope": "umut etmek", "see": "görmek", "mount": "dağ", "fuji": "Fuji",
-"beach": "plaj", "summer": "yaz", "sun": "güneş", "shining": "parlayan", "sky": "gökyüzü", "swim": "yüzmek",
-"ocean": "okyanus", "water": "su", "cold": "soğuk", "sand": "kum", "relaxing": "rahatlatıcı", "read": "okumak",
-"book": "kitap", "listen": "dinlemek", "music": "müzik", "happy": "mutlu", "feel": "hissetmek",
-"hobby": "hobi", "new": "yeni", "start": "başlamak", "learn": "öğrenmek", "guitar": "gitar",
-"difficult": "zor", "fun": "eğlenceli", "practice": "pratik yapmak", "hour": "saat", "teacher": "öğretmen",
-"helps": "yardım eder", "songs": "şarkılar", "sing": "şarkı söylemek", "band": "müzik grubu", "someday": "bir gün",
-"remote": "uzaktan", "now": "şimdi", "allow": "izin vermek", "employees": "çalışanlar", "home": "ev",
-"save": "tasarruf etmek", "time": "zaman", "commute": "işe gidip gelme", "miss": "özlemek",
-"office": "ofis", "communication": "iletişim",
-"healthy": "sağlıklı", "lifestyle": "yaşam tarzı", "important": "önemli", "regular": "düzenli", "exercise": "egzersiz",
-"balanced": "dengeli", "diet": "diyet", "help": "yardım etmek", "body": "vücut", "mind": "zihin", "strong": "güçlü",
-"sleep": "uyku", "hours": "saatler", "energy": "enerji", "sugar": "şeker", "bad": "kötü", "health": "sağlık",
-"future": "gelecek", "technology": "teknoloji", "artificial": "yapay", "intelligence": "zeka", "change": "değişim",
-"world": "dünya", "rapidly": "hızla", "believe": "inanmak", "create": "yaratmak", "jobs": "meslekler",
-"however": "ancak", "others": "diğerleri", "worry": "endişelenmek", "about": "hakkında", "unemployment": "işsizlik",
-"adapt": "adapte olmak", "necessary": "gerekli", "skills": "beceriler", "education": "eğitim", "key": "anahtar",
-
-// Kelime Grupları (Phrases)
-"renewable energy": "yenilenebilir enerji", "fossil fuels": "fosil yakıtlar", "greenhouse gases": "sera gazları",
-"solar power": "güneş enerjisi", "solar panels": "güneş panelleri", "wind energy": "rüzgar enerjisi",
-"wind turbines": "rüzgar türbinleri", "clean energy": "temiz enerji", "power grid": "elektrik şebekesi",
-"energy storage": "enerji depolama", "electric vehicles": "elektrikli araçlar", "habit formation": "alışkanlık oluşumu",
-"three-step loop": "üç adımlı döngü", "neurological loop": "nörolojik döngü", "sustainable tourism": "sürdürülebilir turizm",
-"mass tourism": "kitle turizmi", "carbon emissions": "karbon emisyonları", "local communities": "yerel topluluklar",
-"leave no trace": "iz bırakmamak", "public speaking": "topluluk önünde konuşma", "body language": "beden dili",
-"eye contact": "göz teması", "vocal delivery": "ses tonlaması/sunumu", "presentation slides": "sunum slaytları",
-"financial literacy": "finansal okuryazarlık", "emergency fund": "acil durum fonu", "compound interest": "bileşik faiz",
-"credit card": "kredi kartı", "low-cost index funds": "düşük maliyetli endeks fonları", "delayed gratification": "ertelemeli doyum/haz",
-"decision fatigue": "karar yorgunluğu", "willpower": "irade gücü", "urban dwellers": "kent sakinleri",
-
-// B1 Yeni Kelimeleri
-"heavily": "yoğun şekilde", "relied": "güvendi/bağımlı oldu", "rely": "güvenmek/bağlanmak", "coal": "kömür", "oil": "petrol/yağ", "fossil": "fosil", "fuels": "yakıtlar", "fuel": "yakıt", "emissions": "salınımlar", "emission": "salınım", "accelerate": "hızlandırmak", "climate": "iklim", "sectors": "sektörler", "sector": "sektör", "convert": "dönüştürmek", "manufacturing": "üretim", "decreased": "azaldı", "decrease": "azalmak", "alternative": "alternatif", "generates": "üretir", "generate": "üretmek", "scale": "ölçek", "installed": "monte edildi/kuruldu", "install": "kurmak", "offshore": "kıyıdan uzak/açık deniz", "turbines": "türbinler", "turbine": "türbin", "steady": "istikrarlı/sürekli", "hydroelectric": "hidroelektrik", "mountainous": "dağlık", "flowing": "akan", "flow": "akmak", "variability": "değişkenlik", "reliability": "güvenilirlik", "lithium-ion": "lityum-iyon", "sodium": "sodyum", "excess": "fazla/aşırı", "surplus": "fazlalık/artan", "grid": "şebeke", "modernizing": "modernize etmek", "sensors": "sensörler", "sensor": "sensör", "incentives": "teşvikler", "incentive": "teşvik", "transitioning": "geçiş yapmak", "petroleum": "petrol", "lifetime": "yaşam süresi",
-
-"driven": "yönlendirilen/güdülen", "automatic": "otomatik", "conscious": "bilinçli", "discovered": "keşfetti", "discover": "keşfetmek", "neurological": "nörolojik", "loop": "döngü", "cue": "işaret/ipucu", "trigger": "tetikleyici/tetiklemek", "routine": "rutin", "reward": "ödül", "boost": "artış/canlanma", "pleasant": "hoş", "repeated": "tekrar edildi", "repeat": "tekrarlamak", "frequently": "sıklıkla", "pathway": "yol/patika", "eliminate": "ortadan kaldırmak/yok etmek", "unwanted": "istenmeyen", "effective": "etkili", "behavioral": "davranışsal", "psychologists": "psikologlar", "relief": "rahatlama", "consequences": "sonuçlar", "consequence": "sonuç", "commitment": "bağlılık/taahhüt", "motivation": "motivasyon", "compound": "katlanarak büyümek/birleşmek", "shaping": "şekillendirmek", "shape": "şekillendirmek", "temptations": "cazibeler/ayartmalar", "temptation": "ayartma", "consistency": "tutarlılık/istikrar", "intensity": "yoğunluk", "establishing": "kurmak/oturtmak",
-
-"destinations": "varış noktaları", "destination": "varış noktası", "exceed": "aşmak", "capacity": "kapasite", "residents": "sakinler/oturanlar", "resident": "yerleşik sakin", "forced": "zorlandı", "landlords": "ev sahipleri", "landlord": "ev sahibi", "rentals": "kiralıklar", "rental": "kiralama", "fragile": "kırılgan/hassas", "disturb": "rahatsız etmek", "emerged": "ortaya çıktı", "emerge": "ortaya çıkmak", "responsible": "sorumlu", "meaningful": "anlamlı", "practices": "uygulamalar", "practice": "uygulama", "scenic": "manzaralı", "locally": "yerel olarak", "owned": "sahip olunan", "resort": "tatil köyü", "chains": "zincirler", "chain": "zincir", "profits": "karlar", "profit": "kar", "eateries": "lokantalar", "eatery": "lokanta", "traditions": "gelenekler", "tradition": "gelenek", "codes": "kurallar/kodlar", "code": "kural/kod", "polite": "kibar/nazik", "trash": "çöp", "reusable": "yeniden kullanılabilir", "container": "kap/kutu", "lesser-known": "daha az bilinen", "hotspots": "popüler yerler", "off-season": "sezon dışı", "infrastructure": "altyapı", "lodging": "konaklama", "mindful": "özenli/bilinçli", "heritage": "miras", "ambassadors": "elçiler", "ambassador": "elçi", "empathy": "empati",
-
-"ranked": "sıralandı", "rank": "sıralamak", "glossophobia": "topluluk önünde konuşma korkusu", "nervous": "sinir", "system": "sistem", "fight-or-flight": "savaş ya da kaç", "response": "tepki/yanıt", "palms": "avuç içleri", "palm": "avuç içi", "sweat": "terlemek", "tremble": "titremek", "anxiety": "kaygı/endişe", "delivering": "sunmak/iletmek", "deliver": "sunmak/teslim etmek", "thorough": "kapsamlı/titiz", "confidence": "özgüven", "panicking": "paniklemek", "panic": "panik yapmak", "solid": "sağlam", "captures": "yakalar", "capture": "yakalamak", "compelling": "etkileyici/ikna edici", "projects": "yansıtır/gösterir", "project": "yansıtmak", "authority": "otorite", "trustworthiness": "güvenilirlik", "defensive": "savunmacı", "impression": "izlenim", "vocal": "sesli/sözel", "mastery": "ustalık", "pauses": "duraklamalar", "pause": "duraklamak", "absorb": "özümsemek/emmek", "pitch": "ses perdesi/ton", "aids": "yardımcılar", "aid": "yardımcı", "slides": "slaytlar", "slide": "slayt", "complement": "tamamlamak", "script": "metin/senaryo", "recording": "kaydetmek", "record": "kaydetmek", "filler": "dolgu", "constructive": "yapıcı", "feedback": "geri bildirim", "transforms": "dönüşür", "transform": "dönüşmek", "terrifying": "korkutucu", "ordeal": "çile/zorlu sınav", "rewarding": "tatmin edici",
-
-"literacy": "okuryazarlık", "curriculums": "müfredatlar", "curriculum": "müfredat", "workforce": "iş gücü", "debt": "borç", "realistic": "gerçekçi", "budget": "bütçe", "track": "takip etmek", "income": "gelir", "dollar": "dolar/para", "method": "yöntem", "after-tax": "vergi sonrası", "cover": "karşılamak/örtmek", "essential": "temel/gerekli", "utilities": "faturalar/hizmetler", "utility": "fatura", "allocated": "ayrılmış/tahsis edilmiş", "allocate": "ayırmak", "dining": "yemek yeme", "remaining": "kalan", "dedicated": "adanmış", "strictly": "kesinlikle/sıkı şekilde", "repayment": "geri ödeme", "savings": "tasarruflar", "investments": "yatırımlar", "investment": "yatırım", "milestone": "kilometre taşı", "consists": "oluşur", "consist": "oluşmak", "safety": "güvenlik", "net": "ağ/file", "unexpected": "beklenmedik", "consumer": "tüketici", "balance": "bakiye", "charges": "ücretler", "charge": "ücret", "accumulating": "birikmek", "accumulate": "birikmek", "compound": "bileşik", "interest": "faiz", "eighth": "sekizinci", "wonder": "harika/mucize", "exponentially": "katlanarak/geometrik olarak", "diversified": "çeşitlendirilmiş", "assets": "varlıklar/aktifler", "asset": "varlık", "liabilities": "yükümlülükler/borçlar", "liability": "yükümlülük", "purchase": "satın alma", "delayed": "gecikmeli", "gratification": "tatmin/doyum", "prosperous": "müreffeh/zengin"
+"farm": "çiftlik", "feed": "beslemek", "chickens": "tavuklar", "eggs": "yumurtalar", "cows": "inekler", "milk": "süt",
+"school": "okul", "lessons": "dersler", "teacher": "öğretmen", "lunch": "öğle yemeği", "math": "matematik",
+"shopping": "alışveriş", "list": "liste", "supermarket": "süpermarket", "fresh": "taze", "cart": "araba", "pay": "ödemek",
+"zoo": "hayvanat bahçesi", "animals": "hayvanlar", "birds": "kuşlar", "monkeys": "maymunlar", "lions": "aslanlar",
+"hometown": "memleket", "quiet": "sessiz", "clean": "temiz", "river": "nehir", "mountains": "dağlar", "stars": "yıldızlar",
+"camping": "kamp", "tents": "çadırlar", "campfire": "kamp ateşi", "forest": "orman", "trail": "patika", "wood": "odun",
+"apartment": "daire", "move": "taşınmak", "boxes": "kutular", "truck": "kamyon", "furniture": "mobilya", "sofa": "kanepe",
+"museum": "müze", "robot": "robot", "fossils": "fosiller", "space": "uzay", "science": "bilim", "experiments": "deneyler",
+"party": "parti", "birthday": "doğum günü", "surprise": "sürpriz", "cake": "pasta", "candles": "mumlar", "balloons": "balonlar",
+"driving": "araba sürme", "license": "ehliyet", "rules": "kurallar", "mirrors": "aynalar", "parking": "park etme", "speed": "hız",
+"renewable": "yenilenebilir", "energy": "enerji", "solar": "güneş", "panels": "paneller", "wind": "rüzgar", "turbines": "türbinler",
+"fossil": "fosil", "fuels": "yakıtlar", "climate": "iklim", "grid": "şebeke", "batteries": "piller", "storage": "depolama",
+"habit": "alışkanlık", "routine": "rutin", "trigger": "tetikleyici", "reward": "ödül", "brain": "beyin", "willpower": "irade gücü",
+"tourism": "turizm", "travel": "seyahat", "sustainable": "sürdürülebilir", "local": "yerel", "nature": "doğa", "emissions": "salınımlar",
+"public": "halka açık/topluluk", "speaking": "konuşma", "speech": "konuşma", "audience": "dinleyici", "confidence": "özgüven",
+"financial": "finansal", "literacy": "okuryazarlık", "budget": "bütçe", "savings": "tasarruflar", "debt": "borç", "investing": "yatırım",
+"decision": "karar", "fatigue": "yorgunluk", "mental": "zihinsel", "exhaustion": "tükenmişlik", "shortcuts": "kestirmeler",
+"green": "yeşil", "spaces": "alanlar", "stress": "stres", "health": "sağlık", "cortisol": "kortizol", "community": "topluluk",
+"supply": "tedarik", "chain": "zincir", "global": "küresel", "logistics": "lojistik", "manufacturing": "üretim", "resilience": "direnç",
+"artificial": "yapay", "intelligence": "zeka", "ethics": "etik", "bias": "önyargı", "automation": "otomasyon", "dignity": "onur",
+"bilingual": "iki dilli", "plasticity": "esneklik/plastisite", "languages": "diller", "memory": "hafıza", "dementia": "demans"
 };
 
-// Seviye Haritası
 const wordLevelMap = {
-  "renewable": "B1", "energy": "B1", "fossil": "B1", "fuels": "B1", "emissions": "B1",
-  "accelerate": "B1", "climate": "B1", "solar": "B1", "turbines": "B1", "offshore": "B1",
-  "hydroelectric": "B1", "variability": "B1", "storage": "B1", "surplus": "B1", "grid": "B1",
-  "incentives": "B1", "transitioning": "B1", "petroleum": "B1", "habit": "B1", "formation": "B1",
-  "automatic": "B1", "conscious": "B1", "neurological": "B1", "cue": "B1", "routine": "B1",
-  "reward": "B1", "pathway": "B1", "eliminate": "B1", "behavioral": "B1", "commitment": "B1",
-  "consistency": "B1", "sustainable": "B1", "tourism": "B1", "overtourism": "B1", "capacity": "B1",
-  "residents": "B1", "landlords": "B1", "fragile": "B1", "eco-friendly": "B1", "scenic": "B1",
-  "reusable": "B1", "infrastructure": "B1", "ambassadors": "B1", "empathy": "B1", "glossophobia": "B1",
-  "anxiety": "B1", "thorough": "B1", "confidence": "B1", "compelling": "B1", "authority": "B1",
-  "trustworthiness": "B1", "vocal": "B1", "slides": "B1", "constructive": "B1", "feedback": "B1",
-  "literacy": "B1", "curriculums": "B1", "workforce": "B1", "debt": "B1", "budget": "B1",
-  "utilities": "B1", "savings": "B1", "investments": "B1", "milestone": "B1", "compound": "B1",
-  "interest": "B1", "exponentially": "B1", "diversified": "B1", "assets": "B1", "liabilities": "B1",
-  "gratification": "B1", "prosperous": "B1"
+  "morning": "A1", "breakfast": "A1", "friend": "A1", "football": "A1", "farm": "A1", "school": "A1", "shopping": "A1",
+  "camping": "A2", "apartment": "A2", "museum": "A2", "party": "A2", "driving": "A2", "license": "A2",
+  "renewable": "B1", "habit": "B1", "tourism": "B1", "speech": "B1", "budget": "B1", "savings": "B1",
+  "fatigue": "B2", "exhaustion": "B2", "logistics": "B2", "resilience": "B2", "ethics": "B2", "plasticity": "B2", "dementia": "B2"
 };
 
 const levels = ['A1', 'A2', 'B1', 'B2'];
 
 const defaultTexts = [
-/* --- A1 SEVİYESİ METİNLERİ --- */
-{ id: 1, level: 'A1', length: 'short', title: 'My Morning Routine',
+/* ==================== A1 SEVİYESİ (5 METİN) ==================== */
+{ id: 1, level: 'A1', length: 'long', title: 'A Day on the Farm',
 sentences: [
-{ id: 1, eng: "I wake up at seven o'clock.", tr: "Saat yedide uyanırım." },
-{ id: 2, eng: "Then I wash my face and eat breakfast.", tr: "Sonra yüzümü yıkarım ve kahvaltı yaparım." },
-{ id: 3, eng: "I drink coffee and read the news.", tr: "Kahve içerim ve haberleri okurum." },
-{ id: 4, eng: "I go to work by bus.", tr: "İşe otobüsle giderim." },
-{ id: 5, eng: "I like my morning routine.", tr: "Sabah rutinimi severim." }
+{id:1, eng:"My grandfather has a small farm outside the city.", tr:"Büyükbabamın şehir dışında küçük bir çiftliği var."},
+{id:2, eng:"I visit the farm every summer holiday.", tr:"Her yaz tatilinde çiftliği ziyaret ederim."},
+{id:3, eng:"We wake up early in the morning.", tr:"Sabahları erken uyanırız."},
+{id:4, eng:"The air is very fresh and clean.", tr:"Hava çok taze ve temizdir."},
+{id:5, eng:"First, we feed the hungry chickens.", tr:"İlk önce aç tavukları besleriz."},
+{id:6, eng:"The chickens give us fresh eggs every day.", tr:"Tavuklar bize her gün taze yumurta verir."},
+{id:7, eng:"I collect the eggs in a wooden basket.", tr:"Yumurtaları ahşap bir sepette toplarım."},
+{id:8, eng:"Next, we visit the cows in the green field.", tr:"Sonra yeşil tarladaki inekleri ziyaret ederiz."},
+{id:9, eng:"The cows eat grass and make white milk.", tr:"İnekler çimen yer ve beyaz süt yapar."},
+{id:10, eng:"My grandfather milks the cows before breakfast.", tr:"Büyükbabam kahvaltıdan önce inekleri sağar."},
+{id:11, eng:"There is also a friendly brown dog named Max.", tr:"Max adında arkadaş canlısı kahverengi bir köpek de var."},
+{id:12, eng:"Max loves running with me in the garden.", tr:"Max bahçede benimle koşmayı çok sever."},
+{id:13, eng:"At noon, we eat lunch under a large oak tree.", tr:"Öğlen büyük bir meşe ağacının altında öğle yemeği yeriz."},
+{id:14, eng:"We eat bread, goat cheese, and red tomatoes.", tr:"Ekmek, keçi peyniri ve kırmızı domates yeriz."},
+{id:15, eng:"In the afternoon, we water the young vegetables.", tr:"Öğleden sonra genç sebzeleri sularız."},
+{id:16, eng:"Farm life is hard, but it is very peaceful.", tr:"Çiftlik hayatı zordur ama çok huzurludur."},
+{id:17, eng:"The birds sing sweet songs until sunset.", tr:"Kuşlar gün batımına kadar tatlı şarkılar söyler."},
+{id:18, eng:"At night, we sit near the small wooden house.", tr:"Geceleri küçük ahşap evin yanında otururuz."},
+{id:19, eng:"We drink warm tea and watch the clear sky.", tr:"Sıcak çay içer ve berrak gökyüzünü izleriz."},
+{id:20, eng:"I love spending my time on this beautiful farm.", tr:"Zamanımı bu güzel çiftlikte geçirmeyi çok seviyorum."}
 ],
 questions: [
-{ q: "What time does he wake up?", options: ["Six", "Seven", "Eight"], answer: 1 },
-{ q: "What does he drink?", options: ["Tea", "Water", "Coffee"], answer: 2 },
-{ q: "How does he go to work?", options: ["By bus", "By car", "By train"], answer: 0 }
-]
-},
-{ id: 16, level: 'A1', length: 'long', title: 'A Day on the Farm',
-sentences: [
-{ id: 1, eng: "My grandfather has a small farm.", tr: "Büyükbabamın küçük bir çiftliği var." },
-{ id: 2, eng: "The farm is outside the city.", tr: "Çiftlik şehrin dışındadır." },
-{ id: 3, eng: "I visit the farm every summer.", tr: "Her yaz çiftliği ziyaret ederim." },
-{ id: 4, eng: "There are many animals on the farm.", tr: "Çiftlikte birçok hayvan var." },
-{ id: 5, eng: "We wake up early in the morning.", tr: "Sabahları erken uyanırız." },
-{ id: 6, eng: "The air is fresh and clean.", tr: "Hava taze ve temizdir." },
-{ id: 7, eng: "First, we feed the chickens.", tr: "İlk olarak tavukları besleriz." },
-{ id: 8, eng: "The chickens give us fresh eggs.", tr: "Tavuklar bize taze yumurta verir." },
-{ id: 9, eng: "I collect the eggs in a small basket.", tr: "Yumurtaları küçük bir sepette toplarım." },
-{ id: 10, eng: "Then, we see the cows in the field.", tr: "Sonra tarladaki inekleri görürüz." },
-{ id: 11, eng: "The cows eat green grass.", tr: "İnekler yeşil çimen yer." },
-{ id: 12, eng: "They produce good white milk.", tr: "Onlar iyi beyaz süt üretir." },
-{ id: 13, eng: "My grandfather milks the cows every day.", tr: "Büyükbabam her gün inekleri sağar." },
-{ id: 14, eng: "There is also a friendly dog named Max.", tr: "Max adında arkadaş canlısı bir köpek de var." },
-{ id: 15, eng: "Max runs with me in the garden.", tr: "Max bahçede benimle koşar." },
-{ id: 16, eng: "We eat lunch under a big tree.", tr: "Büyük bir ağacın altında öğle yemeği yeriz." },
-{ id: 17, eng: "We eat cheese, bread, and fresh tomatoes.", tr: "Peynir, ekmek ve taze domates yeriz." },
-{ id: 18, eng: "In the afternoon, we water the vegetables.", tr: "Öğleden sonra sebzeleri sularız." },
-{ id: 19, eng: "Working on the farm is hard work.", tr: "Çiftlikte çalışmak zor bir iştir." },
-{ id: 20, eng: "But it is very peaceful and fun.", tr: "Ama çok huzurlu ve eğlencelidir." },
-{ id: 21, eng: "I love spending time on the farm.", tr: "Çiftlikte vakit geçirmeyi çok seviyorum." }
-],
-questions: [
-{ q: "What do the chickens give them?", options: ["Fresh eggs", "Cold water", "Sweet apples"], answer: 0 },
-{ q: "What is the friendly dog's name?", options: ["Tom", "Max", "Leo"], answer: 1 },
-{ q: "Where do they eat lunch?", options: ["In the house", "Under a big tree", "In the car"], answer: 1 }
-]
-},
+{q:"What does the author collect in a basket?", options:["Apples", "Fresh eggs", "Flowers"], answer:1},
+{q:"What is the dog's name?", options:["Max", "Tom", "Leo"], answer:0},
+{q:"Where do they eat lunch?", options:["In the kitchen", "Under an oak tree", "In the barn"], answer:1}
+]},
 
-/* --- A2 SEVİYESİ METİNLERİ --- */
-{ id: 21, level: 'A2', length: 'long', title: 'A Weekend Camping Trip',
+{ id: 2, level: 'A1', length: 'long', title: 'My School Day',
 sentences: [
-{ id: 1, eng: "Last Saturday, my friends and I went camping in the mountains.", tr: "Geçen cumartesi arkadaşlarım ve ben dağlarda kamp yapmaya gittik." },
-{ id: 2, eng: "We packed our backpacks with warm clothes, flashlights, and sleeping bags.", tr: "Sırt çantalarımızı sıcak giysiler, el fenerleri ve uyku tulumlarıyla doldurduk." },
-{ id: 3, eng: "The weather forecast said it would be sunny, so we were very excited.", tr: "Hava durumu güneşli olacağını söyledi, bu yüzden çok heyecanlıydık." },
-{ id: 4, eng: "We drove for two hours until we reached the edge of the forest.", tr: "Ormanın kenarına ulaşana kadar iki saat araba sürdük." },
-{ id: 5, eng: "The air was cool and smelled of fresh pine trees.", tr: "Hava serindi ve taze çam ağaçları gibi kokuyordu." },
-{ id: 6, eng: "First, we had to find a flat and dry area for our tents.", tr: "İlk olarak çadırlarımız için düz ve kuru bir alan bulmamız gerekiyordu." },
-{ id: 7, eng: "It took us forty minutes to pitch the tents because the wind was strong.", tr: "Rüzgar güçlü olduğu için çadırları kurmamız kırk dakika sürdü." },
-{ id: 8, eng: "After setting up the camp, we decided to explore the area.", tr: "Kampı kurduktan sonra bölgeyi keşfetmeye karar verdik." },
-{ id: 9, eng: "We followed a narrow hiking trail that led to a small waterfall.", tr: "Küçük bir şelaleye çıkan dar bir yürüyüş patikasını takip ettik." },
-{ id: 10, eng: "The sound of running water was incredibly peaceful.", tr: "Akan suyun sesi inanılmaz derecede huzur vericiydi." },
-{ id: 11, eng: "We took many beautiful photos of the waterfall and the rocks.", tr: "Şelalenin ve kayaların birçok güzel fotoğrafını çektik." },
-{ id: 12, eng: "When the sun began to go down, we walked back to our campsite.", tr: "Güneş batmaya başladığında kamp alanımıza geri yürüdük." },
-{ id: 13, eng: "Gathering dry wood was our next important task.", tr: "Kuru odun toplamak sıradaki önemli görevimizdi." },
-{ id: 14, eng: "My friend Alex successfully made a warm campfire.", tr: "Arkadaşım Alex başarılı bir şekilde sıcak bir kamp ateşi yaktı." },
-{ id: 15, eng: "We grilled sausages and baked potatoes over the fire.", tr: "Ateşin üzerinde sosis ızgara yaptık ve patates pişirdik." },
-{ id: 16, eng: "Food always tastes much better when you cook it outdoors.", tr: "Açık havada pişirdiğinizde yemeklerin tadı her zaman çok daha güzel olur." },
-{ id: 17, eng: "Later in the evening, we sat around the fire and shared funny stories.", tr: "Akşamın ilerleyen saatlerinde ateşin etrafında oturduk ve komik hikayeler paylaştık." },
-{ id: 18, eng: "Looking up, we could see thousands of bright stars in the dark sky.", tr: "Yukarı baktığımızda, karanlık gökyüzünde binlerce parlak yıldız görebiliyorduk." },
-{ id: 19, eng: "During the night, I woke up because I heard unfamiliar animal sounds.", tr: "Gece boyunca tanıdık olmayan hayvan sesleri duyduğum için uyandım." },
-{ id: 20, eng: "However, everything was safe, and I fell back asleep quickly.", tr: "Ancak her şey güvendeydi ve hızla yeniden uykuya daldım." },
-{ id: 21, eng: "In the morning, we drank hot coffee while watching the sunrise.", tr: "Sabah gün doğumunu izlerken sıcak kahve içtik." },
-{ id: 22, eng: "It was one of the most memorable weekends of my life.", tr: "Hayatımın en unutulmaz hafta sonlarından biriydi." }
+{id:1, eng:"I am a student at a primary school.", tr:"Ben bir ilkokulda öğrenciyim."},
+{id:2, eng:"My school is close to my home.", tr:"Okulum evime yakındır."},
+{id:3, eng:"I walk to school every morning with my friends.", tr:"Her sabah arkadaşlarımla okula yürürüm."},
+{id:4, eng:"Lessons start at eight o'clock sharp.", tr:"Dersler tam saat sekizde başlar."},
+{id:5, eng:"Our classroom is large and full of light.", tr:"Sınıfımız geniş ve ışık doludur."},
+{id:6, eng:"There are twenty students in my class.", tr:"Sınıfımda yirmi öğrenci var."},
+{id:7, eng:"We have blue desks and comfortable chairs.", tr:"Mavi sıralarımız ve rahat sandalyelerimiz var."},
+{id:8, eng:"The teacher writes English words on the board.", tr:"Öğretmen tahtaya İngilizce kelimeler yazar."},
+{id:9, eng:"English is my favorite subject this term.", tr:"İngilizce bu dönem en sevdiğim derstir."},
+{id:10, eng:"I like learning new vocabulary and reading short stories.", tr:"Yeni kelimeler öğrenmeyi ve kısa hikayeler okumayı severim."},
+{id:11, eng:"Before noon, we have a forty-minute math class.", tr:"Öğleden önce kırk dakikalık bir matematik dersimiz var."},
+{id:12, eng:"Math is difficult, but our teacher is very patient.", tr:"Matematik zordur ama öğretmenimiz çok sabırlıdır."},
+{id:13, eng:"At twelve o'clock, the lunch bell rings loudly.", tr:"Saat on ikide öğle yemeği zili yüksek sesle çalar."},
+{id:14, eng:"I eat an apple and a cheese sandwich.", tr:"Bir elma ve peynirli bir sandviç yerim."},
+{id:15, eng:"After lunch, we play football in the garden.", tr:"Öğle yemeğinden sonra bahçede futbol oynarız."},
+{id:16, eng:"We laugh and run together until the bell rings.", tr:"Zil çalana kadar birlikte güler ve koşarız."},
+{id:17, eng:"In the afternoon, we draw pictures in art class.", tr:"Öğleden sonra resim dersinde resimler çizeriz."},
+{id:18, eng:"School finishes at three o'clock in the afternoon.", tr:"Okul öğleden sonra saat üçte biter."},
+{id:19, eng:"I say goodbye to my teacher and classmates.", tr:"Öğretmenime ve sınıf arkadaşlarıma veda ederim."},
+{id:20, eng:"Then I walk back home happily.", tr:"Sonra mutlu bir şekilde eve geri yürürüm."}
 ],
 questions: [
-{ q: "How did they travel to the forest?", options: ["By bus", "By car", "On foot"], answer: 1 },
-{ q: "Where did the hiking trail lead?", options: ["To a lake", "To a small waterfall", "To a cave"], answer: 1 },
-{ q: "What did they drink while watching the sunrise?", options: ["Hot coffee", "Cold tea", "Fresh juice"], answer: 0 }
-]
-},
+{q:"What time do lessons start?", options:["At seven", "At eight", "At nine"], answer:1},
+{q:"What is the author's favorite subject?", options:["English", "Math", "History"], answer:0},
+{q:"What do they play after lunch?", options:["Tennis", "Football", "Basketball"], answer:1}
+]},
 
-/* --- B1 SEVİYESİ METİNLERİ (5 YENİ UZUN METİN - EN AZ 25 CÜMLE) --- */
-{ id: 31, level: 'B1', length: 'long', title: 'The Rise of Renewable Energy',
+{ id: 3, level: 'A1', length: 'long', title: 'Shopping at the Supermarket',
 sentences: [
-{ id: 1, eng: "For more than a century, human society has heavily relied on coal, oil, and natural gas.", tr: "Bir asırdan fazla bir süredir insan toplumu yoğun bir şekilde kömür, petrol ve doğal gaza bağımlı olmuştur." },
-{ id: 2, eng: "These fossil fuels have powered our cities, factories, and transportation networks.", tr: "Bu fosil yakıtlar şehirlerimize, fabrikalarımıza ve ulaşım ağlarımıza güç sağlamıştır." },
-{ id: 3, eng: "However, burning fossil fuels produces massive amounts of greenhouse gases.", tr: "Ancak fosil yakıtların yakılması muazzam miktarda sera gazı üretir." },
-{ id: 4, eng: "These emissions trap heat in the atmosphere and accelerate global climate change.", tr: "Bu salınımlar ısıyı atmosferde hapseder ve küresel iklim değişikliğini hızlandırır." },
-{ id: 5, eng: "In recent decades, many countries have started investing heavily in renewable energy sources.", tr: "Son yıllarda birçok ülke yenilenebilir enerji kaynaklarına yoğun yatırımlar yapmaya başladı." },
-{ id: 6, eng: "Solar power is currently one of the fastest-growing clean energy sectors in the world.", tr: "Güneş enerjisi şu anda dünyadaki en hızlı büyüyen temiz enerji sektörlerinden biridir." },
-{ id: 7, eng: "Solar panels convert natural sunlight directly into electrical energy without creating pollution.", tr: "Güneş panelleri, doğal güneş ışığını kirlilik yaratmadan doğrudan elektrik enerjisine dönüştürür." },
-{ id: 8, eng: "The manufacturing cost of solar panels has decreased dramatically over the last ten years.", tr: "Güneş panellerinin üretim maliyeti son on yılda çarpıcı bir şekilde azaldı." },
-{ id: 9, eng: "Wind energy is another powerful alternative that generates clean electricity on a large scale.", tr: "Rüzgar enerjisi, büyük ölçekte temiz elektrik üreten bir diğer güçlü alternatiftir." },
-{ id: 10, eng: "Giant wind turbines are placed on open hills or installed off ocean coasts.", tr: "Dev rüzgar türbinleri açık tepelere yerleştirilir veya okyanus kıyılarının açığına kurulur." },
-{ id: 11, eng: "Offshore wind farms take advantage of strong and steady ocean winds.", tr: "Açık deniz rüzgar çiftlikleri, güçlü ve istikrarlı okyanus rüzgarlarından faydalanır." },
-{ id: 12, eng: "Hydroelectric power is also widely used in mountainous areas with flowing rivers.", tr: "Hidroelektrik enerjisi de akan nehirleri olan dağlık bölgelerde yaygın olarak kullanılmaktadır." },
-{ id: 13, eng: "Despite these advantages, renewable energy systems face some critical technical challenges.", tr: "Bu avantajlara rağmen yenilenebilir enerji sistemleri bazı kritik teknik zorluklarla karşı karşıyadır." },
-{ id: 14, eng: "Solar panels cannot generate electricity at night, and wind turbines stop when there is no wind.", tr: "Güneş panelleri geceleri elektrik üretemez ve rüzgar olmadığında rüzgar türbinleri durur." },
-{ id: 15, eng: "This variability means that energy storage systems are essential for reliability.", tr: "Bu değişkenlik, enerji depolama sistemlerinin güvenilirlik için vazgeçilmez olduğu anlamına gelir." },
-{ id: 16, eng: "Engineers are developing large-scale lithium-ion and sodium batteries to store excess power.", tr: "Mühendisler, fazla enerjiyi depolamak için büyük ölçekli lityum-iyon ve sodyum piller geliştiriyor." },
-{ id: 17, eng: "When the sun is shining brightly, surplus electricity is stored in these battery systems.", tr: "Güneş parlak bir şekilde parlarken, fazla elektrik bu pil sistemlerinde depolanır." },
-{ id: 18, eng: "Later, the stored energy is released into the electrical grid during peak evening hours.", tr: "Daha sonra depolanan enerji, yoğun akşam saatlerinde elektrik şebekesine verilir." },
-{ id: 19, eng: "Modernizing the power grid is another necessary step for managing distributed energy.", tr: "Elektrik şebekesini modernize etmek, dağıtılmış enerjiyi yönetmek için gerekli bir diğer adımdır." },
-{ id: 20, eng: "Smart grids use digital sensors to distribute electricity efficiently across regions.", tr: "Akıllı şebekeler, elektriği bölgeler arasında verimli bir şekilde dağıtmak için dijital sensörler kullanır." },
-{ id: 21, eng: "Many governments now provide tax incentives to encourage homeowners to install solar panels.", tr: "Artık birçok hükümet, ev sahiplerini güneş paneli kurmaya teşvik etmek için vergi teşvikleri sağlıyor." },
-{ id: 22, eng: "In addition, transitioning to green energy creates millions of high-tech jobs worldwide.", tr: "Ayrıca yeşil enerjiye geçiş dünya çapında milyonlarca yüksek teknolojili iş imkanı yaratıyor." },
-{ id: 23, eng: "Electric vehicles are also becoming common, reducing our dependence on imported petroleum.", tr: "Elektrikli araçlar da yaygınlaşarak ithal petrole olan bağımlılığımızı azaltıyor." },
-{ id: 24, eng: "If nations work together, clean energy can replace most fossil fuels within our lifetime.", tr: "Uluslar birlikte çalışırsa, temiz enerji yaşam süremiz içinde çoğu fosil yakıtın yerini alabilir." },
-{ id: 25, eng: "A cleaner and greener future depends on the investments and choices we make today.", tr: "Daha temiz ve daha yeşil bir gelecek, bugün yaptığımız yatırımlara ve seçimlere bağlıdır." }
+{id:1, eng:"Every Sunday morning, my mother and I go shopping.", tr:"Her pazar sabahı annem ve ben alışverişe gideriz."},
+{id:2, eng:"We visit a large supermarket in our town.", tr:"Kasabamızdaki büyük bir süpermarketi ziyaret ederiz."},
+{id:3, eng:"First, my mother writes a clear shopping list.", tr:"İlk önce annem net bir alışveriş listesi yazar."},
+{id:4, eng:"The list helps us buy only necessary food.", tr:"Liste sadece gerekli yiyecekleri almamıza yardımcı olur."},
+{id:5, eng:"I take a metal shopping cart at the entrance.", tr:"Girişte metal bir alışveriş arabası alırım."},
+{id:6, eng:"We walk to the fruit and vegetable section first.", tr:"İlk olarak meyve ve sebze reyonuna yürürüz."},
+{id:7, eng:"We choose yellow bananas, fresh oranges, and red apples.", tr:"Sarı muzlar, taze portakallar ve kırmızı elmalar seçeriz."},
+{id:8, eng:"The vegetables look very fresh today.", tr:"Sebzeler bugün çok taze görünüyor."},
+{id:9, eng:"We put green cucumbers and big tomatoes into the cart.", tr:"Arabaya yeşil salatalıklar ve büyük domatesler koyarız."},
+{id:10, eng:"Next, we visit the bakery section near the corner.", tr:"Sırada köşeye yakın fırın reyonunu ziyaret ederiz."},
+{id:11, eng:"The smell of warm bread is wonderful.", tr:"Sıcak ekmeğin kokusu harikadır."},
+{id:12, eng:"We take two loaves of bread and some cookies.", tr:"İki somun ekmek ve biraz kurabiye alırız."},
+{id:13, eng:"Then we find milk, butter, and cheese in the dairy aisle.", tr:"Sonra süt ürünleri reyonunda süt, tereyağı ve peynir buluruz."},
+{id:14, eng:"I check the dates on the milk bottles carefully.", tr:"Süt şişelerinin üzerindeki tarihleri dikkatlice kontrol ederim."},
+{id:15, eng:"My mother allows me to choose one dark chocolate.", tr:"Annem bir adet bitter çikolata seçmeme izin verir."},
+{id:16, eng:"We finally walk towards the cash register.", tr:"Sonunda kasaya doğru yürürüz."},
+{id:17, eng:"The cashier scans our items with a smile.", tr:"Kasiyer ürünlerimizi bir gülümsemeyle tarar."},
+{id:18, eng:"My mother pays with her credit card.", tr:"Annem kredi kartıyla öder."},
+{id:19, eng:"We pack our groceries into reusable cloth bags.", tr:"Yiyeceklerimizi yeniden kullanılabilir bez çantalara koyarız."},
+{id:20, eng:"Then we carry the heavy bags home together.", tr:"Sonra ağır çantaları eve birlikte taşırız."}
 ],
 questions: [
-{ q: "Why are energy storage systems essential for renewable energy?", options: ["Because solar and wind energy are variable", "Because batteries look nice", "To make electricity more expensive"], answer: 0 },
-{ q: "Where are offshore wind farms typically installed?", options: ["In deep caves", "Off ocean coasts", "Inside large warehouses"], answer: 1 },
-{ q: "How do smart grids improve electricity distribution?", options: ["By using digital sensors", "By shutting down factories", "By burning extra coal"], answer: 0 }
-]
-},
-{ id: 32, level: 'B1', length: 'long', title: 'The Psychology of Habit Formation',
-sentences: [
-{ id: 1, eng: "Almost half of our daily actions are driven by automatic habits rather than conscious decisions.", tr: "Günlük eylemlerimizin neredeyse yarısı, bilinçli kararlardan ziyade otomatik alışkanlıklar tarafından yönlendirilir." },
-{ id: 2, eng: "When you wake up, brush your teeth, or check your phone, your brain is following a routine.", tr: "Uyandığınızda, dişlerinizi fırçaladığınızda veya telefonunuzu kontrol ettiğinizde beyniniz bir rutini takip eder." },
-{ id: 3, eng: "Habits exist because the human brain is always looking for ways to save effort and energy.", tr: "Alışkanlıklar vardır çünkü insan beyni her zaman çaba ve enerji tasarrufu yapmanın yollarını arar." },
-{ id: 4, eng: "Scientists have discovered that every habit follows a three-step neurological loop.", tr: "Bilim insanları her alışkanlığın üç adımlı nörolojik bir döngüyü takip ettiğini keşfettiler." },
-{ id: 5, eng: "The first stage of this loop is the cue, which acts as a trigger for your behavior.", tr: "Bu döngünün ilk aşaması, davranışınız için bir tetikleyici görevi gören ipucudur." },
-{ id: 6, eng: "A cue can be a specific time of day, a physical location, or an emotional state like stress.", tr: "Bir ipucu günün belirli bir saati, fiziksel bir konum veya stres gibi duygusal bir durum olabilir." },
-{ id: 7, eng: "The second stage is the routine, which is the actual physical or mental action you perform.", tr: "İkinci aşama, gerçekleştirdiğiniz gerçek fiziksel veya zihinsel eylem olan rutindir." },
-{ id: 8, eng: "The third stage is the reward, which tells your brain that this action is worth remembering.", tr: "Üçüncü aşama, beyninize bu eylemin hatırlanmaya değer olduğunu söyleyen ödüldür." },
-{ id: 9, eng: "For example, feeling tired in the afternoon acts as a cue to drink a cup of coffee.", tr: "Örneğin, öğleden sonra yorgun hissetmek bir fincan kahve içmek için bir ipucu görevi görür." },
-{ id: 10, eng: "The routine is walking to the kitchen and preparing the coffee.", tr: "Rutin, mutfağa yürümek ve kahveyi hazırlamaktır." },
-{ id: 11, eng: "The reward is the boost of energy and pleasant taste that follows shortly after.", tr: "Ödül, hemen ardından gelen enerji artışı ve hoş tattır." },
-{ id: 12, eng: "If this pattern is repeated frequently, a strong neurological pathway forms in the brain.", tr: "Bu kalıp sık sık tekrarlanırsa, beyinde güçlü bir nörolojik yol oluşur." },
-{ id: 13, eng: "Trying to eliminate an unwanted habit through pure willpower alone is rarely effective.", tr: "İstenmeyen bir alışkanlığı yalnızca saf irade gücüyle ortadan kaldırmaya çalışmak nadiren etkilidir." },
-{ id: 14, eng: "Instead, behavioral psychologists suggest keeping the same cue and reward while changing the routine.", tr: "Bunun yerine davranış psikologları, rutini değiştirirken aynı ipucunu ve ödülü korumayı önerir." },
-{ id: 15, eng: "If stress makes you eat unhealthy snacks, you can replace the snacking with a short walk.", tr: "Stres sağlıksız atıştırmalıklar yemenize neden oluyorsa, atıştırmayı kısa bir yürüyüşle değiştirebilirsiniz." },
-{ id: 16, eng: "The walk provides a similar relief from stress without the negative physical consequences.", tr: "Yürüyüş, olumsuz fiziksel sonuçlar olmadan stresten benzer bir rahatlama sağlar." },
-{ id: 17, eng: "When building positive new habits, starting with extremely small actions is recommended.", tr: "Olumlu yeni alışkanlıklar edinirken, son derece küçük eylemlerle başlamak önerilir." },
-{ id: 18, eng: "For instance, reading just two pages of a book every night is an easy commitment.", tr: "Örneğin her gece bir kitabın sadece iki sayfasını okumak kolay bir taahhüttür." },
-{ id: 19, eng: "Small habits are easy to maintain because they do not require high levels of motivation.", tr: "Küçük alışkanlıkları sürdürmek kolaydır çünkü yüksek düzeyde motivasyon gerektirmezler." },
-{ id: 20, eng: "Over time, these small actions compound into significant personal and professional growth.", tr: "Zamanla bu küçük eylemler katlanarak önemli kişisel ve profesyonel gelişime dönüşür." },
-{ id: 21, eng: "Your physical environment also plays a vital role in shaping your everyday routines.", tr: "Fiziksel çevreniz de günlük rutinlerinizi şekillendirmede hayati bir rol oynar." },
-{ id: 22, eng: "If you want to exercise in the morning, place your gym clothes right next to your bed.", tr: "Sabahları spor yapmak istiyorsanız, spor kıyafetlerinizi doğrudan yatağınızın yanına koyun." },
-{ id: 23, eng: "Removing temptations from your sight makes it much easier to avoid bad habits.", tr: "Ayartıcı unsurları görüş alanınızdan kaldırmak, kötü alışkanlıklardan kaçınmayı çok daha kolaylaştırır." },
-{ id: 24, eng: "Consistency is far more important than intensity when establishing long-term behavioral changes.", tr: "Uzun vadeli davranış değişiklikleri oluştururken tutarlılık, yoğunluktan çok daha önemlidir." },
-{ id: 25, eng: "By mastering your daily habits, you gain the power to design your own future.", tr: "Günlük alışkanlıklarınızda ustalaşarak kendi geleceğinizi tasarlama gücünü kazanırsınız." }
-],
-questions: [
-{ q: "What are the three stages of the habit loop?", options: ["Cue, routine, reward", "Plan, action, result", "Start, middle, finish"], answer: 0 },
-{ q: "Why is starting with very small habits recommended?", options: ["They do not require high motivation", "They cost less money", "They can be done while sleeping"], answer: 0 },
-{ q: "What is more important than intensity when building habits?", options: ["Speed", "Consistency", "Strictness"], answer: 1 }
-]
-},
-{ id: 33, level: 'B1', length: 'long', title: 'Sustainable Tourism and Travel',
-sentences: [
-{ id: 1, eng: "International tourism has grown rapidly over the past few decades, connecting people across the globe.", tr: "Uluslararası turizm son birkaç on yılda hızla büyüyerek dünya çapındaki insanları birbirine bağladı." },
-{ id: 2, eng: "Traveling allows us to explore foreign cultures, taste unique cuisines, and admire historical monuments.", tr: "Seyahat etmek yabancı kültürleri keşfetmemizi, benzersiz lezzetleri tatmamızı ve tarihi anıtlara hayran kalmamızı sağlar." },
-{ id: 3, eng: "However, the rise of mass tourism has created severe environmental and social problems.", tr: "Ancak kitle turizminin yükselişi ciddi çevresel ve sosyal sorunlar yaratmıştır." },
-{ id: 4, eng: "Popular destinations often suffer from overtourism, where visitor numbers exceed local capacity.", tr: "Popüler destinasyonlar genellikle ziyaretçi sayısının yerel kapasiteyi aştığı aşırı turizmden muzdariptir." },
-{ id: 5, eng: "Historic cities like Venice and Amsterdam face overcrowded streets and rising housing prices.", tr: "Venedik ve Amsterdam gibi tarihi şehirler aşırı kalabalık sokaklar ve artan konut fiyatlarıyla karşı karşıyadır." },
-{ id: 6, eng: "Local residents are sometimes forced to move away because landlords turn apartments into tourist rentals.", tr: "Yerel sakinler bazen ev sahipleri daireleri turist kiralıklarına dönüştürdüğü için taşınmak zorunda kalıyor." },
-{ id: 7, eng: "In natural areas, heavy foot traffic can damage fragile ecosystems and disturb wild animals.", tr: "Doğal alanlarda yoğun yaya trafiği kırılgan ekosistemlere zarar verebilir ve vahşi hayvanları rahatsız edebilir." },
-{ id: 8, eng: "In response to these growing concerns, the concept of sustainable tourism has emerged.", tr: "Giderek artan bu endişelere yanıt olarak sürdürülebilir turizm kavramı ortaya çıkmıştır." },
-{ id: 9, eng: "Sustainable tourism aims to minimize negative impacts while maximizing benefits for local communities.", tr: "Sürdürülebilir turizm, yerel topluluklar için faydaları en üst düzeye çıkarırken olumsuz etkileri en aza indirmeyi amaçlar." },
-{ id: 10, eng: "Responsible travelers can make a meaningful difference by adopting eco-friendly travel practices.", tr: "Sorumlu gezginler, çevre dostu seyahat uygulamalarını benimseyerek anlamlı bir fark yaratabilirler." },
-{ id: 11, eng: "First, choosing public transportation like trains instead of short flights reduces carbon emissions.", tr: "İlk olarak kısa uçuşlar yerine tren gibi toplu taşıma araçlarını seçmek karbon emisyonlarını azaltır." },
-{ id: 12, eng: "Trains offer scenic views and are often much more comfortable than sitting in crowded airports.", tr: "Trenler manzaralı görüntüler sunar ve genellikle kalabalık havaalanlarında oturmaktan çok daha konforludur." },
-{ id: 13, eng: "Second, supporting locally owned hotels and restaurants ensures that your money benefits the community.", tr: "İkinci olarak yerel işletmelere ait otel ve restoranları desteklemek, paranızın topluluğa fayda sağlamasını garantiler." },
-{ id: 14, eng: "Large multinational resort chains often transfer their profits out of the destination country.", tr: "Büyük çok uluslu tatil köyü zincirleri karlarını genellikle destinasyon ülkesinin dışına aktarırlar." },
-{ id: 15, eng: "In contrast, eating at local family-run eateries supports small business owners directly.", tr: "Buna karşılık, yerel aile işletmesi lokantalarda yemek yemek küçük işletme sahiplerini doğrudan destekler." },
-{ id: 16, eng: "Respecting local cultural traditions and dress codes is another fundamental ethical duty.", tr: "Yerel kültürel geleneklere ve giyim kurallarına saygı duymak bir diğer temel ahlaki görevdir." },
-{ id: 17, eng: "Before traveling to a new country, learning a few basic phrases in the local language is polite.", tr: "Yeni bir ülkeye seyahat etmeden önce yerel dilde birkaç temel ifade öğrenmek kibar bir davranıştır." },
-{ id: 18, eng: "In fragile natural parks, travelers should always follow the rule of leaving no trace.", tr: "Kırılgan milli parklarda gezginler her zaman geride hiçbir iz bırakmama kuralına uymalıdır." },
-{ id: 19, eng: "This means carrying all your trash back with you and never removing rocks, flowers, or shells.", tr: "Bu, tüm çöplerinizi yanınızda geri taşımak ve kayaları, çiçekleri veya deniz kabuklarını asla almamak anlamına gelir." },
-{ id: 20, eng: "Avoiding plastic bottles by carrying a reusable water container helps reduce plastic pollution.", tr: "Yeniden kullanılabilir bir su kabı taşıyarak plastik şişelerden kaçınmak, plastik kirliliğini azaltmaya yardımcı olur." },
-{ id: 21, eng: "Travelers can also visit lesser-known towns rather than only popular tourist hotspots.", tr: "Gezginler sadece popüler turistik noktalar yerine daha az bilinen kasabaları da ziyaret edebilirler." },
-{ id: 22, eng: "Traveling during the off-season reduces pressure on local infrastructure and offers a quieter experience.", tr: "Sezon dışı seyahat etmek yerel altyapı üzerindeki baskıyı azaltır ve daha sakin bir deneyim sunar." },
-{ id: 23, eng: "Off-season travel is also significantly cheaper, saving you money on flights and lodging.", tr: "Sezon dışı seyahat aynı zamanda önemli ölçüde daha ucuzdur; uçuşlar ve konaklamada tasarruf etmenizi sağlar." },
-{ id: 24, eng: "Mindful travel helps protect natural wonders and heritage sites for future generations to enjoy.", tr: "Bilinçli seyahat, gelecek nesillerin keyif alabilmesi için doğa harikalarını ve miras alanlarını korumaya yardımcı olur." },
-{ id: 25, eng: "When we travel with respect and curiosity, we become global ambassadors of peace and empathy.", tr: "Saygı ve merakla seyahat ettiğimizde, küresel barış ve empati elçileri haline geliriz." }
-],
-questions: [
-{ q: "What is a major problem caused by overtourism in historic cities?", options: ["Streets become too quiet", "Rising housing prices for locals", "Too many wild animals"], answer: 1 },
-{ q: "Why is eating at locally owned eateries beneficial?", options: ["It supports small business owners directly", "It is always free", "It takes less time to eat"], answer: 0 },
-{ q: "What does the 'leave no trace' rule mean?", options: ["Never taking photos", "Carrying all trash back and leaving nature undisturbed", "Walking without shoes"], answer: 1 }
-]
-},
-{ id: 34, level: 'B1', length: 'long', title: 'The Art of Public Speaking',
-sentences: [
-{ id: 1, eng: "Public speaking is frequently ranked as one of the most common fears among adults worldwide.", tr: "Topluluk önünde konuşma, dünya çapındaki yetişkinler arasında en yaygın korkulardan biri olarak sıklıkla üst sıralarda yer alır." },
-{ id: 2, eng: "This fear of speaking in front of an audience is known scientifically as glossophobia.", tr: "Bir dinleyici kitlesi önünde konuşma korkusu bilimsel olarak glossofobi olarak bilinir." },
-{ id: 3, eng: "When standing before a crowd, the human nervous system often triggers a fight-or-flight response.", tr: "Bir kalabalığın önünde dururken, insan sinir sistemi sıklıkla bir savaş ya da kaç tepkisini tetikler." },
-{ id: 4, eng: "Your heart beats faster, your palms sweat, and your voice may begin to tremble slightly.", tr: "Kalbiniz daha hızlı çarpar, avuçlarınız terler ve sesiniz hafifçe titremeye başlayabilir." },
-{ id: 5, eng: "Despite this natural anxiety, effective public speaking is a skill that anyone can develop with practice.", tr: "Bu doğal kaygıya rağmen, etkili topluluk önünde konuşma herkesin pratikle geliştirebileceği bir beceridir." },
-{ id: 6, eng: "The most crucial factor in delivering a successful speech is thorough preparation.", tr: "Başarılı bir konuşma yapmanın en önemli faktörü kapsamlı bir hazırlıktır." },
-{ id: 7, eng: "Knowing your topic deeply gives you confidence and prevents you from panicking on stage.", tr: "Konunuzu derinlemesine bilmek size özgüven verir ve sahnede paniklemenizi engeller." },
-{ id: 8, eng: "You should always research your audience to understand their expectations, background, and interests.", tr: "Beklentilerini, geçmişlerini ve ilgi alanlarını anlamak için her zaman dinleyici kitlenizi araştırmalısınız." },
-{ id: 9, eng: "A speech should have a clear structure: an engaging introduction, a solid body, and a memorable conclusion.", tr: "Bir konuşmanın net bir yapısı olmalıdır: ilgi çekici bir giriş, sağlam bir gövde ve akılda kalıcı bir sonuç." },
-{ id: 10, eng: "Opening with an interesting question, a surprising fact, or a personal story captures immediate attention.", tr: "İlginç bir soruyla, şaşırtıcı bir gerçekle veya kişisel bir hikayeyle başlamak anında dikkat çeker." },
-{ id: 11, eng: "Audiences rarely remember raw statistics, but they remember emotionally compelling human stories.", tr: "Dinleyiciler ham istatistikleri nadiren hatırlar ama duygusal olarak etkileyici insan hikayelerini hatırlarlar." },
-{ id: 12, eng: "Body language is just as important as the spoken words in communicating your message.", tr: "Beden dili, mesajınızı iletmede konuşulan kelimeler kadar önemlidir." },
-{ id: 13, eng: "Standing upright with relaxed shoulders projects authority, confidence, and trustworthiness.", tr: "Rahat omuzlarla dik durmak otorite, güven ve güvenilirlik yansıtır." },
-{ id: 14, eng: "Making steady eye contact with different sections of the room helps build a personal connection.", tr: "Odanın farklı bölümleriyle düzenli göz teması kurmak kişisel bir bağ kurmaya yardımcı olur." },
-{ id: 15, eng: "Avoid crossing your arms or hiding your hands in your pockets, as this creates a defensive impression.", tr: "Kollarınızı kavuşturmaktan veya ellerinizi ceplerinize saklamaktan kaçının çünkü bu savunmacı bir izlenim yaratır." },
-{ id: 16, eng: "Controlling your vocal delivery is another essential element of public speaking mastery.", tr: "Sesinizi kontrol etmek, topluluk önünde konuşma ustalığının bir diğer temel unsurudur." },
-{ id: 17, eng: "Speaking too quickly is a common mistake caused by nervousness and adrenaline.", tr: "Çok hızlı konuşmak, gerginlik ve adrenalinin neden olduğu yaygın bir hatadır." },
-{ id: 18, eng: "Deliberate pauses allow the audience to absorb important points and give you time to breathe.", tr: "Bilinçli duraklamalar, dinleyicilerin önemli noktaları kavramasını sağlar ve size nefes alacak zaman tanır." },
-{ id: 19, eng: "Varying your tone and pitch keeps the audience engaged and prevents your speech from sounding monotonous.", tr: "Tonunuzu ve ses perdenizi çeşitlendirmek dinleyicilerin ilgisini canlı tutar ve konuşmanızın tekdüze çıkmasını önler." },
-{ id: 20, eng: "Visual aids, such as presentation slides, should be simple, clean, and free of long text paragraphs.", tr: "Sunum slaytları gibi görsel yardımcılar basit, temiz ve uzun metin paragraflarından arındırılmış olmalıdır." },
-{ id: 21, eng: "Slides should complement your spoken words rather than serve as a script for you to read.", tr: "Slaytlar okumanız için bir metin işlevi görmek yerine konuşulan kelimelerinizi tamamlamalıdır." },
-{ id: 22, eng: "Practicing your speech out loud multiple times in front of a mirror or friend reduces anxiety significantly.", tr: "Konuşmanızı bir ayna veya arkadaşınızın önünde defalarca sesli olarak çalışmak kaygıyı önemli ölçüde azaltır." },
-{ id: 23, eng: "Recording your presentation on your smartphone allows you to identify filler words like 'um' and 'uh'.", tr: "Sunumunuzu akıllı telefonunuza kaydetmek 'ııı' ve 'şey' gibi dolgu kelimeleri belirlemenizi sağlar." },
-{ id: 24, eng: "With continuous practice and constructive feedback, public speaking transforms from a terrifying ordeal into a rewarding opportunity.", tr: "Sürekli pratik ve yapıcı geri bildirimle, topluluk önünde konuşma korkutucu bir çileden tatmin edici bir fırsata dönüşür." },
-{ id: 25, eng: "Strong communication skills empower you to share your ideas, inspire others, and advance your career.", tr: "Güçlü iletişim becerileri fikirlerinizi paylaşmanız, başkalarına ilham vermeniz ve kariyerinizde ilerlemeniz için size güç verir." }
-],
-questions: [
-{ q: "What is glossophobia?", options: ["Fear of flying", "Fear of public speaking", "Fear of closed spaces"], answer: 1 },
-{ q: "Why should a speaker make deliberate pauses?", options: ["To let the audience absorb points and breathe", "To check the clock", "To drink a full glass of water"], answer: 0 },
-{ q: "How should presentation slides be designed?", options: ["Full of long paragraphs", "Simple, clean, and complementary", "With tiny, unreadable fonts"], answer: 1 }
-]
-},
-{ id: 35, level: 'B1', length: 'long', title: 'Financial Literacy for Young Adults',
-sentences: [
-{ id: 1, eng: "Financial literacy is one of the most vital life skills, yet it is rarely taught in regular school curriculums.", tr: "Finansal okuryazarlık en hayati yaşam becerilerinden biridir, ancak normal okul müfredatlarında nadiren öğretilir." },
-{ id: 2, eng: "Many young adults enter university or the workforce without knowing how to manage their money effectively.", tr: "Birçok genç yetişkin, paralarını nasıl etkili bir şekilde yöneteceklerini bilmeden üniversiteye veya iş gücüne girer." },
-{ id: 3, eng: "As a result, they often fall into unnecessary debt, make poor investment choices, and suffer financial stress.", tr: "Sonuç olarak sıklıkla gereksiz borçlara girerler, kötü yatırım seçimleri yaparlar ve finansal stres yaşarlar." },
-{ id: 4, eng: "Developing healthy financial habits early in life creates long-term financial security and freedom.", tr: "Hayatın erken dönemlerinde sağlıklı finansal alışkanlıklar geliştirmek, uzun vadeli finansal güvenlik ve özgürlük yaratır." },
-{ id: 5, eng: "The foundation of personal financial management begins with creating a realistic monthly budget.", tr: "Kişisel finans yönetiminin temeli, gerçekçi bir aylık bütçe oluşturmakla başlar." },
-{ id: 6, eng: "A budget allows you to track where your income comes from and where every single dollar goes.", tr: "Bir bütçe gelirinizin nereden geldiğini ve her bir liranın nereye gittiğini takip etmenizi sağlar." },
-{ id: 7, eng: "A popular and effective budgeting method is known as the 50/30/20 rule.", tr: "Popüler ve etkili bir bütçeleme yöntemi 50/30/20 kuralı olarak bilinir." },
-{ id: 8, eng: "According to this rule, 50 percent of your after-tax income should cover essential needs like rent, groceries, and utilities.", tr: "Bu kurala göre, vergi sonrası gelirinizin yüzde 50'si kira, market ve faturalar gibi temel ihtiyaçları karşılamalıdır." },
-{ id: 9, eng: "30 percent can be allocated to personal wants, such as dining out, hobbies, and entertainment.", tr: "Yüzde 30'u dışarıda yemek, hobiler ve eğlence gibi kişisel isteklere ayrılabilir." },
-{ id: 10, eng: "The remaining 20 percent should be dedicated strictly to debt repayment, savings, and investments.", tr: "Kalan yüzde 20'si ise kesinlikle borç geri ödemesine, tasarruflara ve yatırımlara ayrılmalıdır." },
-{ id: 11, eng: "Building an emergency fund is the first financial milestone every young adult should achieve.", tr: "Bir acil durum fonu oluşturmak, her genç yetişkinin ulaşması gereken ilk finansal kilometre taşıdır." },
-{ id: 12, eng: "An emergency fund consists of three to six months' worth of basic living expenses kept in a safe bank account.", tr: "Acil durum fonu, güvenli bir banka hesabında tutulan üç ila altı aylık temel yaşam masraflarından oluşur." },
-{ id: 13, eng: "This money provides a safety net during unexpected events like medical emergencies or sudden job loss.", tr: "Bu para tıbbi acil durumlar veya ani iş kaybı gibi beklenmedik olaylar sırasında bir güvenlik ağı sağlar." },
-{ id: 14, eng: "Another crucial lesson in financial literacy is avoiding high-interest consumer debt.", tr: "Finansal okuryazarlıktaki bir diğer önemli ders, yüksek faizli tüketici borçlarından kaçınmaktır." },
-{ id: 15, eng: "Credit cards offer convenient rewards, but carrying a balance from month to month generates high interest charges.", tr: "Kredi kartları kullanışlı ödüller sunar, ancak aydan aya bakiye devretmek yüksek faiz giderleri doğurur." },
-{ id: 16, eng: "Paying off your credit card balance in full every single month prevents debt from accumulating rapidly.", tr: "Kredi kartı bakiyenizi her ay tam olarak ödemek, borcun hızla birikmesini önler." },
-{ id: 17, eng: "Understanding the power of compound interest is essential for building wealth over time.", tr: "Bileşik faizin gücünü anlamak zamanla zenginlik inşa etmek için esastır." },
-{ id: 18, eng: "Compound interest occurs when the interest earned on your money begins earning its own interest.", tr: "Bileşik faiz, paranızdan kazanılan faizin kendi faizini kazanmaya başlamasıyla gerçekleşir." },
-{ id: 19, eng: "Albert Einstein reportedly called compound interest the eighth wonder of the modern world.", tr: "Albert Einstein'ın bileşik faizi modern dünyanın sekizinci harikası olarak adlandırdığı söylenir." },
-{ id: 20, eng: "The earlier you start investing, the more time your money has to grow exponentially.", tr: "Yatırım yapmaya ne kadar erken başlarsanız, paranızın katlanarak büyümesi için o kadar çok zamanı olur." },
-{ id: 21, eng: "Investing in diversified low-cost index funds is often recommended for long-term passive investors.", tr: "Çeşitlendirilmiş düşük maliyetli endeks fonlarına yatırım yapmak, uzun vadeli pasif yatırımcılar için sıklıkla önerilir." },
-{ id: 22, eng: "It is important to distinguish between assets that gain value and liabilities that cost you money.", tr: "Değer kazanan varlıklar ile size para harcatan yükümlülükler arasında ayrım yapmak önemlidir." },
-{ id: 23, eng: "A vehicle loses value immediately after purchase, while quality investments generate passive income.", tr: "Bir araç satın alındıktan hemen sonra değer kaybederken, kaliteli yatırımlar pasif gelir üretir." },
-{ id: 24, eng: "Financial education requires discipline, continuous learning, and delayed gratification.", tr: "Finansal eğitim disiplin, sürekli öğrenme ve ertelemeli doyum gerektirir." },
-{ id: 25, eng: "By taking control of your personal finances today, you build a prosperous and stress-free tomorrow.", tr: "Bugün kişisel finansınızın kontrolünü ele alarak müreffeh ve stressiz bir yarın inşa edersiniz." }
-],
-questions: [
-{ q: "In the 50/30/20 rule, what does the 20% represent?", options: ["Vacations", "Debt repayment, savings, and investments", "Restaurants and clothing"], answer: 1 },
-{ q: "How many months of expenses should an emergency fund ideally cover?", options: ["One week", "Three to six months", "Five years"], answer: 1 },
-{ q: "What did Albert Einstein allegedly call compound interest?", options: ["A dangerous trap", "The eighth wonder of the world", "A useless formula"], answer: 1 }
-]
-},
+{q:"What day do they go shopping?", options:["Friday", "Saturday", "Sunday"], answer:2},
+{q:"What sweet treat does the author choose?", options:["Ice cream", "Dark chocolate", "Cake"], answer:1},
+{q:"How does the mother pay?", options:["With cash", "With credit card", "With coins"], answer:1}
+]},
 
-/* --- B2 SEVİYESİ METİNLERİ (5 UZUN METİN - 25 CÜMLE) --- */
-{ id: 26, level: 'B2', length: 'long', title: 'The Psychology of Decision Fatigue',
+{ id: 4, level: 'A1', length: 'long', title: 'A Visit to the Zoo',
 sentences: [
-{ id: 1, eng: "Throughout each day, human beings are confronted with hundreds of decisions ranging from trivial choices to life-altering dilemmas.", tr: "Her gün boyunca insanlar, önemsiz seçimlerden hayat değiştiren ikilemlere kadar yüzlerce kararla karşı karşıya kalırlar." },
-{ id: 2, eng: "Psychologists refer to the deteriorating quality of decisions made after a long session of decision-making as decision fatigue.", tr: "Psikologlar, uzun bir karar verme sürecinin ardından verilen kararların kalitesinin düşmesini karar yorgunluğu olarak adlandırırlar." },
-{ id: 3, eng: "Unlike physical fatigue, mental exhaustion caused by making continuous choices often goes unnoticed until significant errors occur.", tr: "Fiziksel yorgunluğun aksine, sürekli seçim yapmanın neden olduğu zihinsel tükenmişlik, büyük hatalar ortaya çıkana kadar genellikle fark edilmez." },
-{ id: 4, eng: "When willpower is depleted, individuals tend to take shortcuts, either by acting impulsively or by avoiding choices altogether.", tr: "İrade gücü tükendiğinde, bireyler ya dürtüsel hareket ederek ya da seçimlerden tamamen kaçınarak kestirme yollara başvurma eğilimi gösterirler." },
-{ id: 5, eng: "A classic study on judicial rulings revealed that judges were significantly more likely to grant parole early in the morning.", tr: "Yargı kararları üzerine yapılan klasik bir araştırma, yargıçların sabahın erken saatlerinde şartlı tahliye verme olasılıklarının çok daha yüksek olduğunu ortaya koydu." },
-{ id: 6, eng: "As hours passed and mental energy diminished, the likelihood of an inmate receiving parole dropped dramatically.", tr: "Saatler geçtikçe ve zihinsel enerji azaldıkça, bir mahkumun şartlı tahliye alma olasılığı çarpıcı bir şekilde düştü." },
-{ id: 7, eng: "Furthermore, consumer behavior illustrates how retailers exploit this cognitive vulnerability in everyday environments.", tr: "Dahası, tüketici davranışları perakendecilerin günlük ortamlarda bu bilişsel kırılganlığı nasıl istismar ettiğini gösterir." },
-{ id: 8, eng: "Supermarkets strategically place sweets, sodas, and impulse buys near the checkout counters where shoppers wait.", tr: "Süpermarketler tatlıları, gazlı içecekleri ve anlık satın alma ürünlerini stratejik olarak müşterilerin beklediği kasa yanlarına yerleştirir." },
-{ id: 9, eng: "Having navigated crowded aisles and compared countless prices, tired shoppers are far more prone to giving in to temptation.", tr: "Kalabalık koridorlarda dolaşıp sayısız fiyatı karşılaştıran yorgun müşteriler, ayartmalara yenik düşmeye çok daha meyillidir." },
-{ id: 10, eng: "Decision fatigue also severely undermines productivity in corporate and professional environments.", tr: "Karar yorgunluğu ayrıca kurumsal ve profesyonel ortamlarda verimliliği de ciddi şekilde baltalar." },
-{ id: 11, eng: "Executives who spend hours answering trivial emails often lack the analytical clarity needed for high-stakes strategic planning.", tr: "Önemsiz e-postaları yanıtlamak için saatler harcayan yöneticiler, genellikle yüksek riskli stratejik planlama için gereken analitik netlikten yoksundur." },
-{ id: 12, eng: "Several prominent entrepreneurs, such as Steve Jobs and Mark Zuckerberg, famously adopted monotonous wardrobes to eliminate wardrobe dilemmas.", tr: "Steve Jobs ve Mark Zuckerberg gibi bazı önde gelen girişimciler, gardırop ikilemlerini ortadan kaldırmak için tekdüze kıyafet tarzını benimsemeleriyle ünlüdür." },
-{ id: 13, eng: "By automating insignificant daily routines, they preserved their cognitive bandwidth for complex problem-solving later in the day.", tr: "Önemsiz günlük rutinleri otomatikleştirerek, günün ilerleyen saatlerindeki karmaşık problem çözümleri için bilişsel kapasitelerini korudular." },
-{ id: 14, eng: "Establishing structured habits is widely considered one of the most effective strategies to counteract this phenomenon.", tr: "Yapılandırılmış alışkanlıklar geliştirmek, bu fenomene karşı koymak için en etkili stratejilerden biri olarak kabul edilir." },
-{ id: 15, eng: "When a behavior becomes habitual, the brain operates on automated pathways rather than deliberate cognitive effort.", tr: "Bir davranış alışkanlık haline geldiğinde, beyin kasıtlı bilişsel çaba yerine otomatik yollar üzerinden çalışır." },
-{ id: 16, eng: "Another practical technique involves prioritizing demanding intellectual tasks during peak morning hours.", tr: "Diğer bir pratik teknik, zorlu entelektüel görevleri sabahın en verimli saatlerinde önceliklendirmeyi içerir." },
-{ id: 17, eng: "Postponing critical negotiations or financial planning until late in the evening frequently leads to sub-optimal outcomes.", tr: "Kritik müzakereleri veya finansal planlamayı akşam geç saatlere ertelemek sıklıkla idealin altında sonuçlara yol açar." },
-{ id: 18, eng: "In addition, adequate nutrition and stable blood glucose levels play a crucial role in maintaining executive function.", tr: "Ayrıca yeterli beslenme ve dengeli kan şekeri seviyeleri, yürütücü işlevlerin sürdürülmesinde çok önemli bir rol oynar." },
-{ id: 19, eng: "Research confirms that the prefrontal cortex consumes substantial glucose while engaging in self-control and analytical reasoning.", tr: "Araştırmalar, prefrontal korteksin özdenetim ve analitik akıl yürütmeyle meşgul olurken önemli miktarda glikoz tükettiğini doğrulamaktadır." },
-{ id: 20, eng: "Taking brief breaks and having a light, protein-rich snack can restore cognitive endurance when working on exhausting projects.", tr: "Yorucu projeler üzerinde çalışırken kısa molalar vermek ve hafif, protein açısından zengin bir atıştırmalık tüketmek bilişsel dayanıklılığı geri kazandırabilir." },
-{ id: 21, eng: "Delegating minor responsibilities to colleagues or team members also protects leadership personnel from cognitive overload.", tr: "Küçük sorumlulukları meslektaşlara veya ekip üyelerine devretmek, liderlik personelini bilişsel aşırı yüklenmeden de korur." },
-{ id: 22, eng: "In personal life, simplifying daily meal choices through weekly meal prep can free up surprising amounts of mental clarity.", tr: "Kişisel yaşamda, haftalık yemek hazırlığı yoluyla günlük yemek seçimlerini basitleştirmek şaşırtıcı derecede zihinsel berraklık sağlayabilir." },
-{ id: 23, eng: "Recognizing personal limitations and acknowledging that willpower is a finite biological resource is essential.", tr: "Kişisel sınırları tanımak ve iradenin sınırlı bir biyolojik kaynak olduğunu kabul etmek son derece önemlidir." },
-{ id: 24, eng: "In an increasingly complex society saturated with options, protecting our attention is becoming a vital skill.", tr: "Seçeneklerle dolu, giderek karmaşıklaşan bir toplumda dikkatimizi korumak hayati bir beceri haline gelmektedir." },
-{ id: 25, eng: "Ultimately, learning to manage decision fatigue enables us to make deliberate, rational, and fulfilling long-term choices.", tr: "Nihayetinde, karar yorgunluğunu yönetmeyi öğrenmek bilinçli, mantıklı ve tatmin edici uzun vadeli seçimler yapmamızı sağlar." }
+{id:1, eng:"Last Saturday, my family went to the city zoo.", tr:"Geçen cumartesi ailem şehir hayvanat bahçesine gitti."},
+{id:2, eng:"The weather was warm, dry, and sunny.", tr:"Hava ılık, kuru ve güneşliydi."},
+{id:3, eng:"We arrived at the zoo gates at ten o'clock.", tr:"Hayvanat bahçesi kapısına saat onda vardık."},
+{id:4, eng:"My father bought tickets for all of us.", tr:"Babam hepimiz için bilet aldı."},
+{id:5, eng:"First, we walked to see the colorful birds.", tr:"İlk önce renkli kuşları görmeye yürüdük."},
+{id:6, eng:"The parrots had green, red, and blue feathers.", tr:"Papağanların yeşil, kırmızı ve mavi tüyleri vardı."},
+{id:7, eng:"One clever parrot repeated simple words.", tr:"Akıllı bir papağan basit kelimeleri tekrarladı."},
+{id:8, eng:"Next, we watched the tall giraffes eating green leaves.", tr:"Sonra yeşil yaprakları yiyen uzun boylu zürafaları izledik."},
+{id:9, eng:"Their necks were extremely long and graceful.", tr:"Boyunları son derece uzun ve zarifti."},
+{id:10, eng:"Then we walked to the monkey area.", tr:"Sonra maymun alanına yürüdük."},
+{id:11, eng:"The little monkeys jumped between high ropes.", tr:"Küçük maymunlar yüksek ipler arasında zıpladı."},
+{id:12, eng:"They were very funny and energetic.", tr:"Çok komik ve enerjiktiler."},
+{id:13, eng:"After that, we visited the two African elephants.", tr:"Ondan sonra iki Afrika filini ziyaret ettik."},
+{id:14, eng:"A huge elephant drank water with its long trunk.", tr:"Devasa bir fil uzun hortumuyla su içti."},
+{id:15, eng:"We sat on a wooden bench and rested.", tr:"Ahşap bir bankta oturduk ve dinlendik."},
+{id:16, eng:"I drank cold lemonade and ate chocolate ice cream.", tr:"Soğuk limonata içtim ve çikolatalı dondurma yedim."},
+{id:17, eng:"In the afternoon, we saw the sleeping lions.", tr:"Öğleden sonra uyuyan aslanları gördük."},
+{id:18, eng:"A big lion slept quietly under a shady tree.", tr:"Büyük bir aslan gölgeli bir ağacın altında sessizce uyudu."},
+{id:19, eng:"We took wonderful family photos before leaving.", tr:"Ayrılmadan önce harika aile fotoğrafları çektik."},
+{id:20, eng:"We returned home tired but very happy.", tr:"Eve yorgun ama çok mutlu döndük."}
 ],
 questions: [
-{ q: "What happens when willpower is depleted?", options: ["People become energetic", "People take shortcuts or avoid choices", "People remember past events clearly"], answer: 1 },
-{ q: "Why did Steve Jobs adopt a monotonous wardrobe?", options: ["To save money", "To preserve cognitive bandwidth", "To impress journalists"], answer: 1 },
-{ q: "What biological resource does the prefrontal cortex consume during analytical tasks?", options: ["Adrenaline", "Glucose", "Cortisol"], answer: 1 }
-]
-},
-{ id: 27, level: 'B2', length: 'long', title: 'Urban Green Spaces and Mental Well-being',
+{q:"What time did they arrive at the zoo?", options:["At eight", "At ten", "At noon"], answer:1},
+{q:"What did the elephant drink water with?", options:["Its long trunk", "A bucket", "A bottle"], answer:0},
+{q:"What was the big lion doing?", options:["Roaring", "Eating meat", "Sleeping under a tree"], answer:2}
+]},
+
+{ id: 5, level: 'A1', length: 'long', title: 'My Small Hometown',
 sentences: [
-{ id: 1, eng: "As urban populations expand rapidly, modern city dwellers are increasingly disconnected from the natural environment.", tr: "Kent nüfusu hızla arttıkça, modern şehir sakinlerinin doğal çevreyle olan bağlantısı giderek kopmaktadır." },
-{ id: 2, eng: "High-density urban living is frequently associated with heightened stress levels, chronic anxiety, and cardiovascular ailments.", tr: "Yüksek yoğunluklu şehir yaşamı, sıklıkla yüksek stres seviyeleri, kronik kaygı ve kardiyovasküler rahatsızlıklarla ilişkilendirilir." },
-{ id: 3, eng: "Consequently, urban planners and public health officials have begun re-evaluating the vital role of green spaces in metropolitan areas.", tr: "Sonuç olarak, şehir plancıları ve halk sağlığı yetkilileri yeşil alanların metropol bölgelerindeki hayati rolünü yeniden değerlendirmeye başladılar." },
-{ id: 4, eng: "Parks, botanical gardens, and community forests serve as essential sanctuaries that mitigate the adverse effects of city life.", tr: "Parklar, botanik bahçeleri ve kent ormanları, şehir yaşamının olumsuz etkilerini hafifleten temel sığınaklar olarak hizmet verir." },
-{ id: 5, eng: "Exposure to greenery has been shown to lower salivary cortisol levels, which serves as a biological marker of stress.", tr: "Yeşilliğe maruz kalmanın, stresin biyolojik bir göstergesi olan tükürük kortizol seviyelerini düşürdüğü gösterilmiştir." },
-{ id: 6, eng: "In Japan, the therapeutic practice known as Shinrin-yoku, or forest bathing, is actively promoted for preventative healthcare.", tr: "Japonya'da, orman banyosu olarak bilinen terapötik uygulama Shinrin-yoku, koruyucu sağlık hizmetleri için aktif olarak teşvik edilmektedir." },
-{ id: 7, eng: "Spending as little as twenty minutes in an environment dominated by trees promotes parasympathetic nervous system activity.", tr: "Ağaçların hakim olduğu bir ortamda sadece yirmi dakika geçirmek bile parasempatik sinir sistemi aktivitesini destekler." },
-{ id: 8, eng: "Moreover, vegetation plays a monumental role in improving urban air quality by filtering airborne particulate pollutants.", tr: "Ayrıca bitki örtüsü, havada asılı duran partikül kirleticileri filtreleyerek kentsel hava kalitesini iyileştirmede muazzam bir rol oynar." },
-{ id: 9, eng: "Mature trees absorb toxic nitrogen dioxide and particulate matter emitted by heavy traffic on busy avenues.", tr: "Olgun ağaçlar, işlek caddelerdeki yoğun trafiğin yaydığı zehirli azot dioksiti ve partikül maddeleri emer." },
-{ id: 10, eng: "By creating canopy shade and releasing moisture through transpiration, urban vegetation substantially lowers ambient summer temperatures.", tr: "Kentsel bitki örtüsü, gölge oluşturarak ve terleme yoluyla nem salarak yazın ortam sıcaklıklarını önemli ölçüde düşürür." },
-{ id: 11, eng: "This counteracts the urban heat island effect, which often turns concrete corridors into dangerously hot microclimates.", tr: "Bu durum, beton koridorları tehlikeli derecede sıcak mikroklimlara dönüştüren kentsel ısı adası etkisine karşı koyar." },
-{ id: 12, eng: "Aside from direct physiological advantages, neighborhood parks cultivate social cohesion among diverse communities.", tr: "Doğrudan fizyolojik avantajların yanı sıra, mahalle parkları farklı topluluklar arasında sosyal uyumu geliştirir." },
-{ id: 13, eng: "Public plazas and green corridors provide welcoming communal areas where neighbors interact, exercise, and socialize.", tr: "Halka açık meydanlar ve yeşil koridorlar, komşuların etkileşimde bulunduğu, spor yaptığı ve sosyalleştiği sıcak toplumsal alanlar sağlar." },
-{ id: 14, eng: "Children who grow up with regular access to natural play areas develop stronger immune systems and better cognitive focus.", tr: "Doğal oyun alanlarına düzenli erişimle büyüyen çocuklar, daha güçlü bağışıklık sistemleri ve daha iyi bilişsel odaklanma geliştirirler." },
-{ id: 15, eng: "Studies indicate that green schoolyards significantly reduce behavioral problems and symptoms of attention deficit disorders.", tr: "Çalışmalar, yeşil okul bahçelerinin davranış problemlerini ve dikkat eksikliği bozukluğu semptomlarını önemli ölçüde azalttığını göstermektedir." },
-{ id: 16, eng: "Furthermore, psychological restoration occurs naturally when human senses observe natural patterns, such as leaves rustling in the breeze.", tr: "Dahası, insan duyuları rüzgarda hışırdayan yapraklar gibi doğal desenleri gözlemlediğinde psikolojik yenilenme kendiliğinden gerçekleşir." },
-{ id: 17, eng: "According to attention restoration theory, natural settings allow directed attention mechanisms to rest and recharge effortlessly.", tr: "Dikkat yenilenmesi teorisine göre doğal ortamlar, yönlendirilmiş dikkat mekanizmalarının zahmetsizce dinlenmesine ve şarj olmasına olanak tanır." },
-{ id: 18, eng: "In response to these compelling findings, progressive municipalities are integrating innovative architecture with living flora.", tr: "Bu çarpıcı bulgulara yanıt olarak ilerici belediyeler, yenilikçi mimariyi canlı bitki örtüsüyle bütünleştirmektedir." },
-{ id: 19, eng: "Vertical gardens, vegetated rooftops, and biodiverse corridors are transforming sterile skyscraper facades into vibrant ecosystems.", tr: "Dikey bahçeler, bitkili çatılar ve biyoçeşitli koridorlar, steril gökdelen cephelerini canlı ekosistemlere dönüştürüyor." },
-{ id: 20, eng: "Cities like Singapore have embraced the ambitious philosophy of transforming from a garden city into a city within a garden.", tr: "Singapur gibi şehirler, bir bahçe şehirden bahçe içinde bir şehre dönüşme yönündeki iddialı felsefeyi benimsemiştir." },
-{ id: 21, eng: "Nevertheless, socioeconomic disparities often determine who benefits from proximity to pristine natural spaces in large cities.", tr: "Bununla birlikte, sosyoekonomik eşitsizlikler genellikle büyük şehirlerde bozulmamış doğal alanlara yakınlıktan kimin yararlanacağını belirler." },
-{ id: 22, eng: "Low-income neighborhoods frequently suffer from a noticeable lack of tree canopy cover and public recreational facilities.", tr: "Düşük gelirli mahalleler sıklıkla belirgin bir ağaç gölgesi ve halka açık dinlenme tesisleri eksikliğinden muzdariptir." },
-{ id: 23, eng: "Achieving environmental justice requires equitable municipal investment to ensure that every resident enjoys access to greenery.", tr: "Çevresel adaleti sağlamak, her sakinin yeşilliğe erişebilmesini temin etmek için adil belediye yatırımları gerektirir." },
-{ id: 24, eng: "Integrating nature into dense urban design is no longer a cosmetic luxury, but an imperative public health necessity.", tr: "Doğayı yoğun kentsel tasarıma entegre etmek artık kozmetik bir lüks değil, zorunlu bir halk sağlığı gerekliliğidir." },
-{ id: 25, eng: "As urbanization continues, the preservation of our psychological harmony depends profoundly on preserving urban biodiversity.", tr: "Kentleşme sürdükçe, psikolojik dengemizin korunması büyük ölçüde kentsel biyoçeşitliliğin korunmasına bağlı olacaktır." }
+{id:1, eng:"I live in a peaceful town near high mountains.", tr:"Yüksek dağların yakınında huzurlu bir kasabada yaşıyorum."},
+{id:2, eng:"My hometown is quiet, clean, and green.", tr:"Memleketim sessiz, temiz ve yeşildir."},
+{id:3, eng:"Only four thousand people live here.", tr:"Burada sadece dört bin insan yaşar."},
+{id:4, eng:"Most neighbors know each other well.", tr:"Komşuların çoğu birbirini iyi tanır."},
+{id:5, eng:"The narrow streets have old stone houses.", tr:"Dar sokaklarda eski taş evler vardır."},
+{id:6, eng:"There is a traditional bakery in the main square.", tr:"Ana meydanda geleneksel bir fırın var."},
+{id:7, eng:"The friendly baker bakes fresh bread every morning.", tr:"Dost canlısı fırıncı her sabah taze ekmek pişirir."},
+{id:8, eng:"People say good morning with warm smiles.", tr:"İnsanlar sıcak gülümsemelerle günaydın derler."},
+{id:9, eng:"Children ride bicycles safely around the park.", tr:"Çocuklar parkın etrafında güvenle bisiklet sürerler."},
+{id:10, eng:"There is no heavy traffic or loud city noise.", tr:"Yoğun trafik veya yüksek şehir gürültüsü yoktur."},
+{id:11, eng:"A clean river flows right behind our garden.", tr:"Bahçemizin hemen arkasından temiz bir nehir akar."},
+{id:12, eng:"My brother and I catch small fish on Saturdays.", tr:"Erkek kardeşim ve ben cumartesi günleri küçük balıklar tutarız."},
+{id:13, eng:"The river water is cold and very clear.", tr:"Nehir suyu soğuk ve çok berraktır."},
+{id:14, eng:"At night, thousands of bright stars shine above us.", tr:"Geceleri üzerimizde binlerce parlak yıldız parlar."},
+{id:15, eng:"The evening air smells like pine and wood smoke.", tr:"Akşam havası çam ve odun dumanı gibi kokar."},
+{id:16, eng:"Life moves slowly and peacefully in this place.", tr:"Bu yerde hayat yavaş ve huzurlu akar."},
+{id:17, eng:"Sometimes I travel to big cities for shopping.", tr:"Bazen alışveriş için büyük şehirlere seyahat ederim."},
+{id:18, eng:"However, I always miss my quiet town.", tr:"Ancak her zaman sessiz kasabamı özlerim."},
+{id:19, eng:"It is the best place to relax and feel safe.", tr:"Dinlenmek ve güvende hissetmek için en iyi yerdir."},
+{id:20, eng:"I am very proud of my little hometown.", tr:"Küçük memleketimle çok gurur duyuyorum."}
 ],
 questions: [
-{ q: "What biological marker decreases when humans are exposed to greenery?", options: ["Salivary cortisol", "Blood sugar", "Insulin levels"], answer: 0 },
-{ q: "What is the Japanese therapeutic practice of forest bathing called?", options: ["Origami", "Shinrin-yoku", "Ikebana"], answer: 1 },
-{ q: "According to the text, why is urban greenery no longer a cosmetic luxury?", options: ["It attracts tourists", "It is an imperative public health necessity", "It increases real estate prices"], answer: 1 }
-]
-},
-{ id: 28, level: 'B2', length: 'long', title: 'The Evolution of Global Supply Chains',
+{q:"Where is the peaceful town located?", options:["Near high mountains", "In the desert", "By the ocean"], answer:0},
+{q:"What flows behind the author's garden?", options:["A highway", "A clean river", "A railway"], answer:1},
+{q:"What can you see in the sky at night?", options:["Thousands of bright stars", "Tall towers", "Only dark clouds"], answer:0}
+]},
+
+/* ==================== A2 SEVİYESİ (5 METİN) ==================== */
+{ id: 6, level: 'A2', length: 'long', title: 'A Weekend Camping Trip',
 sentences: [
-{ id: 1, eng: "Over the past four decades, advancements in telecommunications and shipping technology catalyzed unprecedented globalization.", tr: "Geçtiğimiz kırk yıl boyunca, telekomünikasyon ve deniz taşımacılığı teknolojisindeki gelişmeler benzeri görülmemiş bir küreselleşmeyi tetikledi." },
-{ id: 2, eng: "Multinational corporations dismantled localized production models in pursuit of operational efficiency and lower labor costs abroad.", tr: "Çok uluslu şirketler, operasyonel verimlilik ve yurtdışındaki daha düşük iş gücü maliyetleri arayışıyla yerelleştirilmiş üretim modellerini terk etti." },
-{ id: 3, eng: "This transformation gave rise to hyper-specialized global supply chains that span across continents and multiple oceans.", tr: "Bu dönüşüm, kıtaları ve birden fazla okyanusu aşan aşırı uzmanlaşmış küresel tedarik zincirlerinin doğmasına yol açtı." },
-{ id: 4, eng: "Under the prevailing philosophy of just-in-time manufacturing, inventory stockpiles were minimized to reduce warehousing expenses.", tr: "Tam zamanında üretim felsefesinin hakimiyeti altında, depolama masraflarını azaltmak için envanter stokları en aza indirildi." },
-{ id: 5, eng: "Components for complex consumer goods, such as smartphones and automobiles, were sourced from dozens of distinct nations.", tr: "Akıllı telefonlar ve otomobiller gibi karmaşık tüketim mallarının bileşenleri, düzinelerce farklı ülkeden tedarik edildi." },
-{ id: 6, eng: "While this lean operational paradigm lowered consumer prices worldwide, it introduced severe systemic fragility.", tr: "Bu yalın operasyonel paradigma dünya çapında tüketici fiyatlarını düşürürken, ciddi sistemik kırılganlıklar getirdi." },
-{ id: 7, eng: "The catastrophic disruptions caused by recent geopolitical crises exposed the vulnerabilities inherent in hyper-connected logistics.", tr: "Son jeopolitik krizlerin neden olduğu yıkıcı aksaklıklar, hiper-bağlantılı lojistiğin doğasında var olan kırılganlıkları açığa çıkardı." },
-{ id: 8, eng: "A single bottleneck at a critical maritime chokepoint, such as the Suez Canal, can immobilize billions of dollars in cargo.", tr: "Süveyş Kanalı gibi kritik bir deniz darboğazındaki tek bir tıkanıklık, milyarlarca dolarlık kargoyu hareketsiz kılabilir." },
-{ id: 9, eng: "Furthermore, international factory shutdowns revealed how dependent the global economy had become on concentrated semiconductor manufacturing.", tr: "Dahası, uluslararası fabrika kapanışları, küresel ekonominin yoğunlaşmış yarı iletken üretimine ne kadar bağımlı hale geldiğini ortaya çıkardı." },
-{ id: 10, eng: "When automotive plants lacked minuscule microchips, entire assembly lines ground to an abrupt and costly standstill.", tr: "Otomotiv fabrikaları küçücük mikroçiplerden yoksun kaldığında, tüm montaj hatları ani ve maliyetli bir durma noktasına geldi." },
-{ id: 11, eng: "In response to these alarming vulnerabilities, corporate leaders are fundamentally rethinking international logistics strategies.", tr: "Bu endişe verici kırılganlıklara yanıt olarak kurumsal liderler, uluslararası lojistik stratejilerini kökten yeniden değerlendiriyorlar." },
-{ id: 12, eng: "The former emphasis on pure cost minimization is rapidly being superseded by an urgent requirement for supply chain resilience.", tr: "Saf maliyet minimizasyonuna yapılan önceki vurgu, yerini hızla acil bir tedarik zinciri esnekliği ve dayanıklılığı gereksinimine bırakıyor." },
-{ id: 13, eng: "Companies are increasingly diversifying their supplier networks rather than relying exclusively on a single geographic region.", tr: "Şirketler yalnızca tek bir coğrafi bölgeye güvenmek yerine tedarikçi ağlarını giderek çeşitlendiriyorlar." },
-{ id: 14, eng: "The emerging practice of nearshoring involves relocating manufacturing facilities closer to domestic consumer markets.", tr: "Giderek yaygınlaşan 'nearshoring' (yakın ülkeye taşıma) uygulaması, üretim tesislerinin yerel tüketici pazarlarına daha yakın yerlere taşınmasını içerir." },
-{ id: 15, eng: "By moving production to neighboring countries, businesses shorten shipping transit times and circumvent volatile international tariffs.", tr: "Üretimi komşu ülkelere kaydırarak işletmeler, nakliye sürelerini kısaltır ve değişken uluslararası gümrük vergilerinden kaçınırlar." },
-{ id: 16, eng: "In parallel, friendshoring encourages partnerships between nations that share compatible political and regulatory values.", tr: "Buna paralel olarak 'friendshoring', uyumlu siyasi ve yasal değerleri paylaşan uluslar arasındaki ortaklıkları teşvik eder." },
-{ id: 17, eng: "Advanced technologies are also playing a transformative role in enhancing the visibility of complex distribution networks.", tr: "İleri teknolojiler de karmaşık dağıtım ağlarının görünürlüğünü artırmada dönüştürücü bir rol oynamaktadır." },
-{ id: 18, eng: "Real-time satellite tracking, predictive machine learning algorithms, and automated warehouses empower managers to anticipate logistical bottlenecks.", tr: "Gerçek zamanlı uydu takibi, öngörücü makine öğrenimi algoritmaları ve otomatik depolar yöneticilere lojistik darboğazları önceden tahmin etme gücü verir." },
-{ id: 19, eng: "Environmental sustainability represents another powerful catalyst driving the reconfiguration of international trade routes.", tr: "Çevresel sürdürülebilirlik, uluslararası ticaret yollarının yeniden yapılandırılmasını sağlayan bir diğer güçlü katalizördür." },
-{ id: 20, eng: "Maritime shipping vessels generate substantial greenhouse gas emissions, prompting international maritime authorities to implement stricter standards.", tr: "Deniz taşımacılığı gemileri önemli miktarda sera gazı emisyonu üretmekte, bu da uluslararası denizcilik otoritelerini daha katı standartlar uygulamaya yöneltmektedir." },
-{ id: 21, eng: "Consequently, forward-thinking enterprises are investing in greener logistics, alternative fuels, and circular economy practices.", tr: "Sonuç olarak, ileri görüşlü girişimler daha yeşil lojistiğe, alternatif yakıtlara ve döngüsel ekonomi uygulamalarına yatırım yapmaktadır." },
-{ id: 22, eng: "Transforming entrenched distribution networks requires substantial financial capital and years of meticulous strategic planning.", tr: "Kökleşmiş dağıtım ağlarını dönüştürmek, önemli miktarda finansal sermaye ve yıllarca sürecek titiz bir stratejik planlama gerektirir." },
-{ id: 23, eng: "Smaller enterprises that lack financial leverage often struggle to navigate these profound structural shifts in world trade.", tr: "Finansal güçten yoksun daha küçük işletmeler, dünya ticaretindeki bu derin yapısal değişimleri yönetmekte sıklıkla zorlanırlar." },
-{ id: 24, eng: "Nevertheless, agility and transparency have become decisive prerequisites for commercial survival in an volatile global market.", tr: "Yine de çeviklik ve şeffaflık, oynak bir küresel pazarda ticari hayatta kalmanın belirleyici ön koşulları haline gelmiştir." },
-{ id: 25, eng: "The future of international trade will belong to organizations that can balance economic efficiency with geopolitical foresight.", tr: "Uluslararası ticaretin geleceği, ekonomik verimlilik ile jeopolitik öngörüyü dengeleyebilen kuruluşlara ait olacaktır." }
+{id:1, eng:"Last Saturday, my friends and I went camping in the mountains.", tr:"Geçen cumartesi arkadaşlarım ve ben dağlarda kamp yapmaya gittik."},
+{id:2, eng:"We packed warm clothes, flashlights, and sleeping bags.", tr:"Sıcak giysiler, el fenerleri ve uyku tulumları hazırladık."},
+{id:3, eng:"The forecast predicted sunny weather, so we were excited.", tr:"Hava durumu güneşli bir hava öngördü, bu yüzden heyecanlıydık."},
+{id:4, eng:"We drove for two hours to reach the campsite.", tr:"Kamp alanına ulaşmak için iki saat araba sürdük."},
+{id:5, eng:"First, we pitched our tents on dry grass.", tr:"İlk olarak çadırlarımızı kuru çimlerin üzerine kurduk."},
+{id:6, eng:"Setting up the tents took thirty minutes.", tr:"Çadırları kurmak otuz dakika sürdü."},
+{id:7, eng:"After resting, we hiked along a narrow forest trail.", tr:"Dinlendikten sonra dar bir orman patikası boyunca yürüdük."},
+{id:8, eng:"The trail led us to a small, hidden waterfall.", tr:"Patika bizi küçük, gizli bir şelaleye götürdü."},
+{id:9, eng:"The water was freezing, but we washed our faces.", tr:"Su buz gibiydi ama yüzlerimizi yıkadık."},
+{id:10, eng:"We took many pictures of the rocks and trees.", tr:"Kayaların ve ağaçların birçok fotoğrafını çektik."},
+{id:11, eng:"When evening arrived, we returned to our tents.", tr:"Akşam geldiğinde çadırlarımıza geri döndük."},
+{id:12, eng:"Gathering dry firewood was our next task.", tr:"Kuru yakacak odun toplamak sıradaki görevimizdi."},
+{id:13, eng:"My friend Alex built a warm campfire safely.", tr:"Arkadaşım Alex güvenli bir şekilde sıcak bir kamp ateşi yaktı."},
+{id:14, eng:"We grilled sausages and baked potatoes over the flames.", tr:"Alevlerin üzerinde sosis ızgara yaptık ve patates pişirdik."},
+{id:15, eng:"Food always tastes better when you eat outdoors.", tr:"Dışarıda yediğinizde yemeklerin tadı her zaman daha güzeldir."},
+{id:16, eng:"Later, we sat around the fire and shared stories.", tr:"Daha sonra ateşin etrafında oturduk ve hikayeler paylaştık."},
+{id:17, eng:"The night sky was filled with bright stars.", tr:"Gece gökyüzü parlak yıldızlarla doluydu."},
+{id:18, eng:"I slept well in my thick sleeping bag.", tr:"Kalın uyku tulumumda iyi uyudum."},
+{id:19, eng:"In the morning, we drank hot black coffee together.", tr:"Sabah birlikte sıcak sade kahve içtik."},
+{id:20, eng:"It was an unforgettable weekend in nature.", tr:"Doğada unutulmaz bir hafta sonuydu."}
 ],
 questions: [
-{ q: "What is the primary goal of just-in-time manufacturing?", options: ["Maximizing warehouse space", "Minimizing inventory stockpiles", "Employing more manual workers"], answer: 1 },
-{ q: "What does the term 'nearshoring' describe?", options: ["Closing all international offices", "Relocating production closer to domestic markets", "Selling goods exclusively online"], answer: 1 },
-{ q: "Which shortage caused automobile assembly lines to stop?", options: ["Rubber tires", "Semiconductor microchips", "Glass windows"], answer: 1 }
-]
-},
-{ id: 29, level: 'B2', length: 'long', title: 'Ethical Dilemmas in AI and Automation',
+{q:"Where did the friends go camping?", options:["At the beach", "In the mountains", "In the desert"], answer:1},
+{q:"What did they cook over the fire?", options:["Fish and rice", "Sausages and potatoes", "Pizza and burgers"], answer:1},
+{q:"What was the night sky filled with?", options:["Rain clouds", "Bright stars", "Heavy smoke"], answer:1}
+]},
+
+{ id: 7, level: 'A2', length: 'long', title: 'Moving to a New Apartment',
 sentences: [
-{ id: 1, eng: "The rapid emergence of autonomous systems is profoundly reshaping contemporary industries, legal frameworks, and ethical philosophies.", tr: "Otonom sistemlerin hızlı yükselişi çağdaş endüstrileri, yasal çerçeveleri ve ahlaki felsefeleri derinden yeniden şekillendiriyor." },
-{ id: 2, eng: "Machine learning algorithms now influence critical societal outcomes, from loan approvals to medical diagnoses and criminal sentencing.", tr: "Makine öğrenimi algoritmaları artık kredi onaylarından tıbbi teşhislere ve ceza infazlarına kadar kritik toplumsal sonuçları etkilemektedir." },
-{ id: 3, eng: "While automated decision-making promises unmatched processing speed and analytical precision, it creates intricate moral quandaries.", tr: "Otomatik karar verme benzersiz bir işlem hızı ve analitik hassasiyet vaat etse de karmaşık ahlaki çıkmazlar yaratmaktadır." },
-{ id: 4, eng: "One fundamental concern revolves around algorithmic bias, which occurs when models inherit prejudices embedded in historical data.", tr: "Temel endişelerden biri, modellerin geçmiş verilere gömülü önyargıları miras almasıyla ortaya çıkan algoritmik önyargı etrafında dönmektedir." },
-{ id: 5, eng: "If training datasets reflect systemic discrimination, predictive algorithms inevitably perpetuate and amplify these historical injustices.", tr: "Eğitim veri setleri sistemsel ayrımcılığı yansıtıyorsa, öngörücü algoritmalar bu tarihsel adaletsizlikleri kaçınılmaz olarak sürdürür ve büyütür." },
-{ id: 6, eng: "For instance, facial recognition algorithms have historically demonstrated substantially higher error rates when identifying ethnic minorities.", tr: "Örneğin, yüz tanıma algoritmaları etnik azınlıkları tanımlarken geçmişte çok daha yüksek hata oranları göstermiştir." },
-{ id: 7, eng: "Such algorithmic discrepancies in law enforcement tools can result in wrongful arrests and severe infringements on civil liberties.", tr: "Kolluk kuvvetleri araçlarındaki bu tür algoritmik tutarsızlıklar, haksız tutuklamalara ve sivil özgürlüklerin ağır ihlallerine yol açabilir." },
-{ id: 8, eng: "Another perplexing challenge is the so-called black box problem, where deep neural networks cannot explain their reasoning.", tr: "Diğer bir kafa karıştırıcı zorluk, derin sinir ağlarının akıl yürütmelerini açıklayamadığı sözde kara kutu problemidir." },
-{ id: 9, eng: "When a computer vision system detects a rare pathology, physicians must decide whether to trust an unexplainable conclusion.", tr: "Bir bilgisayarlı görü sistemi nadir bir patoloji tespit ettiğinde, hekimler açıklanamayan bir sonuca güvenip güvenmeyeceklerine karar vermelidir." },
-{ id: 10, eng: "In legal proceedings, due process guarantees that individuals have the right to understand why an unfavorable decision was rendered.", tr: "Yasal süreçlerde adil yargılanma hakkı, bireylerin aleyhlerine verilen bir kararın gerekçesini anlama hakkını garanti eder." },
-{ id: 11, eng: "If a proprietary algorithm denies an individual parole or bail, that lack of transparency compromises foundational constitutional rights.", tr: "Tescilli bir algoritma bir bireye şartlı tahliye veya kefaleti reddederse, bu şeffaflık eksikliği temel anayasal hakları zedeler." },
-{ id: 12, eng: "The deployment of autonomous vehicles presents equally harrowing philosophical conundrums on public highways.", tr: "Otonom araçların yollara çıkması, halka açık otoyollarda aynı derecede sarsıcı felsefi muammalar sunmaktadır." },
-{ id: 13, eng: "In unavoidable collision scenarios, how should an onboard software program prioritize human lives across conflicting moral principles?", tr: "Kaçınılmaz çarpışma senaryolarında, yerleşik bir yazılım programı çatışan ahlaki ilkeler karşısında insan hayatlarına nasıl öncelik vermelidir?" },
-{ id: 14, eng: "Philosophers frequently invoke the classic trolley problem to debate whether programmers should prioritize passengers or pedestrians.", tr: "Filozoflar, programcıların yolculara mı yoksa yayalara mı öncelik vermesi gerektiğini tartışmak için sıklıkla klasik tramvay problemini anarlar." },
-{ id: 15, eng: "Furthermore, widespread workplace automation raises urgent economic questions concerning the future of human labor and dignity.", tr: "Ayrıca, yaygın iş yeri otomasyonu insan emeğinin ve onurunun geleceğine ilişkin acil ekonomik soruları gündeme getirmektedir." },
-{ id: 16, eng: "Generative models and autonomous robots are increasingly capable of replacing skilled knowledge workers as well as manual laborers.", tr: "Üretken modeller ve otonom robotlar, kol gücüyle çalışan işçilerin yanı sıra nitelikli bilgi çalışanlarının da yerini alabilme yeteneğini giderek artırıyor." },
-{ id: 17, eng: "Although technological revolutions historically generate novel industries, the unprecedented speed of AI adoption threatens widespread displacement.", tr: "Teknolojik devrimler tarihsel olarak yeni endüstriler üretse de, yapay zekanın benimsenmesindeki benzeri görülmemiş hız yaygın işsizlik tehdidi oluşturuyor." },
-{ id: 18, eng: "Economists fear that wealth could become unprecedentedly concentrated among a tiny elite of technology monopolists.", tr: "Ekonomistler, servetin benzeri görülmemiş bir şekilde küçük bir teknoloji tekelcisi elit arasında toplanmasından endişe etmektedir." },
-{ id: 19, eng: "To mitigate these prospective social crises, thinkers advocate for universal basic income and comprehensive retraining initiatives.", tr: "Bu olası sosyal krizleri hafifletmek için düşünürler, evrensel temel geliri ve kapsamlı yeniden eğitim girişimlerini savunmaktadır." },
-{ id: 20, eng: "Governments across the world are gradually recognizing the imperative need for enforceable legislative frameworks and oversight bodies.", tr: "Dünya genelindeki hükümetler, uygulanabilir yasal çerçevelere ve denetim organlarına duyulan zorunlu ihtiyacı giderek daha fazla kabul ediyor." },
-{ id: 21, eng: "The European Union has pioneered comprehensive regulatory architecture categorizing artificial intelligence applications by risk level.", tr: "Avrupa Birliği, yapay zeka uygulamalarını risk düzeyine göre sınıflandıran kapsamlı bir düzenleyici mimariye öncülük etmiştir." },
-{ id: 22, eng: "High-risk systems must undergo rigorous pre-market compliance testing and guarantee meaningful human oversight at all stages.", tr: "Yüksek riskli sistemler piyasa öncesi sıkı uyumluluk testlerinden geçmeli ve her aşamada anlamlı bir insan denetimini garanti etmelidir." },
-{ id: 23, eng: "Technologists, ethicists, and lawmakers must collaborate proactively rather than reacting retroactively to preventable technological catastrophes.", tr: "Teknoloji uzmanları, etikçiler ve yasa koyucular, önlenebilir teknolojik felaketlere sonradan tepki vermek yerine proaktif olarak iş birliği yapmalıdır." },
-{ id: 24, eng: "Innovation must ultimately serve human well-being rather than treating human beings as mere data points or economic collateral.", tr: "İnovasyon nihayetinde insanları yalnızca veri noktaları veya ekonomik birer tali hasar olarak görmek yerine insan refahına hizmet etmelidir." },
-{ id: 25, eng: "Establishing robust moral guardrails today will determine whether artificial intelligence becomes a blessing or an existential hazard.", tr: "Bugün sağlam ahlaki güvenceler oluşturmak, yapay zekanın bir lütuf mu yoksa varoluşsal bir tehlike mi olacağını belirleyecektir." }
+{id:1, eng:"Last month, I moved into a new apartment.", tr:"Geçen ay yeni bir daireye taşındım."},
+{id:2, eng:"My old flat was too far from my workplace.", tr:"Eski dairem iş yerimden çok uzaktı."},
+{id:3, eng:"I spent two weeks searching for the right place online.", tr:"İnternette doğru yeri aramak için iki hafta harcadım."},
+{id:4, eng:"Finally, I found a bright flat on the third floor.", tr:"Sonunda üçüncü katta aydınlık bir daire buldum."},
+{id:5, eng:"The neighborhood is very quiet with small grocery stores.", tr:"Mahalle küçük bakkallarla çok sessizdir."},
+{id:6, eng:"Packing my belongings was the hardest part.", tr:"Eşyalarımı paketlemek en zor kısımdı."},
+{id:7, eng:"I bought twenty cardboard boxes and heavy tape.", tr:"Yirmi karton kutu ve sağlam koli bandı aldım."},
+{id:8, eng:"I wrapped my glass dishes carefully in old newspapers.", tr:"Cam tabaklarımı eski gazetelere dikkatlice sardım."},
+{id:9, eng:"My brother helped me carry the heavy furniture downstairs.", tr:"Erkek kardeşim ağır mobilyaları aşağı taşımama yardım etti."},
+{id:10, eng:"We rented a small white truck for the day.", tr:"O gün için küçük beyaz bir kamyonet kiraladık."},
+{id:11, eng:"The blue sofa was difficult to carry down the stairs.", tr:"Mavi kanepeyi merdivenlerden aşağı taşımak zordu."},
+{id:12, eng:"Fortunately, nothing was broken during the move.", tr:"Neyse ki taşınma sırasında hiçbir şey kırılmadı."},
+{id:13, eng:"We arrived at the new building in the afternoon.", tr:"Öğleden sonra yeni binaya vardık."},
+{id:14, eng:"My new living room gets plenty of direct sunlight.", tr:"Yeni oturma odam bol miktarda doğrudan güneş ışığı alıyor."},
+{id:15, eng:"I ordered two large pizzas to thank my brother.", tr:"Kardeşime teşekkür etmek için iki büyük pizza sipariş ettim."},
+{id:16, eng:"The next morning, my neighbor knocked on my door.", tr:"Ertesi sabah komşum kapımı çaldı."},
+{id:17, eng:"She brought fresh cookies and welcomed me warmly.", tr:"Taze kurabiyeler getirdi ve beni sıcak bir şekilde karşıladı."},
+{id:18, eng:"I spent the rest of the week unpacking boxes.", tr:"Haftanın geri kalanını kutuları açarak geçirdim."},
+{id:19, eng:"Now my apartment feels cozy and truly comfortable.", tr:"Şimdi dairem samimi ve gerçekten rahat hissettiriyor."},
+{id:20, eng:"Living closer to work saves me valuable time.", tr:"İşe daha yakın yaşamak bana değerli zaman kazandırıyor."}
 ],
 questions: [
-{ q: "What is algorithmic bias in machine learning models?", options: ["A hardware malfunction in servers", "Inheriting prejudices from historical data", "High electricity consumption"], answer: 1 },
-{ q: "What challenge does the 'black box problem' describe?", options: ["Neural networks cannot explain their reasoning", "Computers overheating", "Software being too cheap"], answer: 0 },
-{ q: "What does the European Union regulatory framework classify AI by?", options: ["Country of origin", "Risk level", "Pricing tier"], answer: 1 }
-]
-},
-{ id: 30, level: 'B2', length: 'long', title: 'The Impact of Bilingualism on Brain Plasticity',
+{q:"Why did the author move?", options:["To live closer to work", "To live near parents", "To buy a car"], answer:0},
+{q:"What floor is the new flat on?", options:["First floor", "Second floor", "Third floor"], answer:2},
+{q:"What did the neighbor bring?", options:["Fresh cookies", "Hot coffee", "Flowers"], answer:0}
+]},
+
+{ id: 8, level: 'A2', length: 'long', title: 'Visiting a Science Museum',
 sentences: [
-{ id: 1, eng: "For many decades, traditional educational theory erroneously suggested that raising children bilingually would impede cognitive development.", tr: "Uzun yıllar boyunca geleneksel eğitim teorisi, çocukları iki dilli yetiştirmenin bilişsel gelişimi engelleyeceğini hatalı bir şekilde ileri sürmüştür." },
-{ id: 2, eng: "Skeptics claimed that managing two linguistic systems simultaneously would confuse young minds and delay grammatical mastery.", tr: "Şüpheciler, iki dil sistemini aynı anda yönetmenin genç zihinlerin kafasını karıştıracağını ve dilbilgisi hakimiyetini geciktireceğini iddia ettiler." },
-{ id: 3, eng: "However, extensive modern neuroimaging research has conclusively overturned these outdated linguistic misconceptions.", tr: "Bununla birlikte, modern nörogörüntüleme araştırmaları bu modası geçmiş dilsel yanılgıları kesin bir şekilde ortadan kaldırmıştır." },
-{ id: 4, eng: "Today, neuroscientists recognize that mastering multiple languages profoundly enhances cognitive flexibility and neural architecture.", tr: "Bugün sinirbilimciler, birden fazla dilde uzmanlaşmanın bilişsel esnekliği ve sinirsel mimariyi derinden geliştirdiğini kabul etmektedir." },
-{ id: 5, eng: "The human brain exhibits remarkable neuroplasticity, which is the capacity to reorganize and form novel synaptic connections.", tr: "İnsan beyni, yeni sinaptik bağlantılar oluşturma ve yeniden organize olma kapasitesi olan dikkate değer bir nöroplastisite sergiler." },
-{ id: 6, eng: "When a bilingual individual converses, both linguistic frameworks remain perpetually active and accessible in the background.", tr: "İki dilli bir birey konuştuğunda, her iki dilsel çerçeve de arka planda sürekli olarak aktif ve erişilebilir kalır." },
-{ id: 7, eng: "Consequently, the brain must continually suppress irrelevant vocabulary while retrieving appropriate syntactic structures in real time.", tr: "Sonuç olarak beyin, gerçek zamanlı olarak uygun sözdizimsel yapıları çağırırken alakasız kelimeleri sürekli olarak bastırmak zorundadır." },
-{ id: 8, eng: "This persistent mental workout strengthens executive functioning, which governs self-regulation, planning, and goal-oriented attention.", tr: "Bu aralıksız zihinsel antrenman; özdenetim, planlama ve hedefe yönelik dikkati yöneten yürütücü işlevleri güçlendirir." },
-{ id: 9, eng: "As a direct result, multilingual speakers often demonstrate superior aptitude in multitasking and filtering out environmental distractions.", tr: "Doğrudan bir sonuç olarak, çok dilli konuşmacılar genellikle çoklu görevlerde ve çevresel dikkat dağıtıcıları filtrelemede üstün yetenek sergilerler." },
-{ id: 10, eng: "They can transition between contrasting tasks more efficiently because their prefrontal cortex has undergone rigorous daily conditioning.", tr: "Farklı görevler arasında daha verimli bir şekilde geçiş yapabilirler çünkü prefrontal korteksleri sıkı bir günlük koşullanmadan geçmiştir." },
-{ id: 11, eng: "In addition, acquiring languages with distinct phonetic inventories substantially improves auditory processing and auditory memory.", tr: "Ek olarak, farklı fonetik envanterlere sahip dilleri edinmek işitsel işlemeyi ve işitsel hafızayı önemli ölçüde geliştirir." },
-{ id: 12, eng: "Bilingual children frequently exhibit enhanced metalinguistic awareness, enabling them to comprehend the abstract rules underlying language.", tr: "İki dilli çocuklar sıklıkla gelişmiş bir üst-dilsel farkındalık sergileyerek dilin altında yatan soyut kuralları kavramalarını sağlarlar." },
-{ id: 13, eng: "They realize at an earlier age that words are arbitrary symbols representing real-world concepts rather than inherent realities.", tr: "Kelimelerin doğuştan gelen gerçeklikler olmaktan ziyade gerçek dünya kavramlarını temsil eden keyfi semboller olduğunu daha erken yaşta anlarlar." },
-{ id: 14, eng: "This heightened conceptual awareness often fosters stronger reading comprehension skills and creative problem-solving capabilities.", tr: "Bu artan kavramsal farkındalık genellikle daha güçlü okuduğunu anlama becerilerini ve yaratıcı problem çözme yeteneklerini besler." },
-{ id: 15, eng: "The advantages of multilingualism extend far beyond early developmental milestones and academic achievement in childhood.", tr: "Çok dilliliğin avantajları, çocukluktaki erken gelişimsel kilometre taşlarının ve akademik başarının çok ötesine uzanır." },
-{ id: 16, eng: "Crucially, neuroprotective benefits persist throughout adulthood and provide tangible defense against neurodegenerative disorders.", tr: "Daha da önemlisi, nörokoruyucu faydalar yetişkinlik boyunca devam eder ve nörodejeneratif bozukluklara karşı somut bir savunma sağlar." },
-{ id: 17, eng: "Longitudinal epidemiological investigations demonstrate that lifelong bilingualism delays the symptomatic onset of dementia and Alzheimer's disease.", tr: "Boylamsal epidemiyolojik araştırmalar, yaşam boyu iki dilliliğin demans ve Alzheimer hastalığının semptomatik başlangıcını geciktirdiğini göstermektedir." },
-{ id: 18, eng: "While bilingual brains may still experience physical pathology, they possess substantially greater cognitive reserve to compensate.", tr: "İki dilli beyinler fiziksel patolojiyi yine de yaşayabilirken, bunu telafi etmek için önemli ölçüde daha büyük bir bilişsel rezerve sahiptirler." },
-{ id: 19, eng: "Cognitive reserve refers to the brain's ability to improvise alternative neural pathways to navigate structural damage.", tr: "Bilişsel rezerv, beynin yapısal hasarı bertaraf etmek için alternatif sinir yolları doğaçlama yeteneğini ifade eder." },
-{ id: 20, eng: "On average, active bilingual patients exhibit clinical symptoms of dementia four to five years later than monolingual counterparts.", tr: "Ortalama olarak, aktif iki dilli hastalar demansın klinik belirtilerini tek dilli emsallerine göre dört ila beş yıl daha geç gösterirler." },
-{ id: 21, eng: "Furthermore, recovering linguistic abilities after traumatic brain injuries or strokes is often more favorable among polyglots.", tr: "Dahası, travmatik beyin yaralanmaları veya felçlerden sonra dil yeteneklerini geri kazanmak, çok dilli olanlar arasında genellikle daha olumludur." },
-{ id: 22, eng: "Although learning a second language as an adult requires disciplined effort, neuroplastic remodeling occurs regardless of chronological age.", tr: "Bir yetişkin olarak ikinci bir dil öğrenmek disiplinli bir çaba gerektirse de, nöroplastik yeniden yapılanma kronolojik yaştan bağımsız olarak gerçekleşir." },
-{ id: 23, eng: "Adults who embark on foreign language acquisition stimulate white matter integrity and foster new neural connectivity.", tr: "Yabancı dil edinimine başlayan yetişkinler beyaz cevher bütünlüğünü uyarır ve yeni sinirsel bağlantıları beslerler." },
-{ id: 24, eng: "Language learning serves as an exceptional mental exercise that keeps neural circuits youthful, resilient, and adaptive.", tr: "Dil öğrenimi, sinir devrelerini genç, dayanıklı ve uyumlu tutan olağanüstü bir zihinsel egzersiz işlevi görür." },
-{ id: 25, eng: "Ultimately, embracing linguistic diversity not only enriches cultural understanding, but also fortifies the longevity of our minds.", tr: "Nihayetinde, dilsel çeşitliliği kucaklamak yalnızca kültürel anlayışı zenginleştirmekle kalmaz, aynı zamanda zihinlerimizin uzun ömürlülüğünü de pekiştirir." }
+{id:1, eng:"Yesterday, our school visited the capital science museum.", tr:"Dün okulumuz başkent bilim müzesini ziyaret etti."},
+{id:2, eng:"We traveled together on a large yellow bus.", tr:"Büyük sarı bir otobüsle birlikte seyahat ettik."},
+{id:3, eng:"The trip took one hour from our school.", tr:"Yolculuk okulumuzdan bir saat sürdü."},
+{id:4, eng:"When we entered, a friendly robot greeted all visitors.", tr:"İçeri girdiğimizde dost canlısı bir robot tüm ziyaretçileri selamladı."},
+{id:5, eng:"The robot answered simple questions in three languages.", tr:"Robot üç dilde basit soruları yanıtladı."},
+{id:6, eng:"First, our guide took us to the dinosaur hall.", tr:"İlk olarak rehberimiz bizi dinozor salonuna götürdü."},
+{id:7, eng:"We saw gigantic skeleton fossils of prehistoric creatures.", tr:"Tarih öncesi yaratıkların devasa iskelet fosillerini gördük."},
+{id:8, eng:"They looked terrifying yet fascinating.", tr:"Korkutucu ama büyüleyici görünüyorlardı."},
+{id:9, eng:"Next, we entered the dark space exploration room.", tr:"Sonra karanlık uzay keşif odasına girdik."},
+{id:10, eng:"There was a real astronaut suit on display.", tr:"Sergilenen gerçek bir astronot giysisi vardı."},
+{id:11, eng:"We learned how astronauts eat and sleep in zero gravity.", tr:"Astronotların sıfır yerçekiminde nasıl yemek yiyip uyuduklarını öğrendik."},
+{id:12, eng:"I even touched a real meteorite from outer space.", tr:"Uzaydan gelen gerçek bir göktaşına bile dokundum."},
+{id:13, eng:"It felt heavy, metallic, and surprisingly rough.", tr:"Ağır, metalik ve şaşırtıcı derecede pürüzlü hissettirdi."},
+{id:14, eng:"Then we visited the interactive physics laboratory.", tr:"Sonra etkileşimli fizik laboratuvarını ziyaret ettik."},
+{id:15, eng:"We pressed buttons to see electricity move through metals.", tr:"Elektriğin metaller içinden geçişini görmek için düğmelere bastık."},
+{id:16, eng:"At noon, we ate lunch in the museum café.", tr:"Öğlen müze kafesinde öğle yemeği yedik."},
+{id:17, eng:"After lunch, we watched a 3D movie about oceans.", tr:"Öğle yemeğinden sonra okyanuslar hakkında bir 3D film izledik."},
+{id:18, eng:"We felt like we were swimming with giant whales.", tr:"Dev balinalarla yüzüyormuşuz gibi hissettik."},
+{id:19, eng:"Before leaving, I bought a small toy robot.", tr:"Ayrılmadan önce küçük bir oyuncak robot aldım."},
+{id:20, eng:"Science proved to be much more exciting than expected.", tr:"Bilim beklenenden çok daha heyecan verici çıktı."}
 ],
 questions: [
-{ q: "What does modern neuroimaging prove about raising bilingual children?", options: ["It delays vocabulary permanently", "It enhances cognitive flexibility", "It has no impact on the brain"], answer: 1 },
-{ q: "By how many years does lifelong bilingualism delay dementia symptoms on average?", options: ["One to two years", "Four to five years", "Ten years"], answer: 1 },
-{ q: "What is cognitive reserve?", options: ["The brain's ability to improvise alternative neural pathways", "A type of physical vitamin", "A memory test score"], answer: 0 }
-]
-}
+{q:"What greeted visitors at the entrance?", options:["A large dinosaur", "A friendly robot", "An astronaut"], answer:1},
+{q:"What did the author touch in the space section?", options:["A real meteorite", "A rocket engine", "The Moon"], answer:0},
+{q:"What was the 3D movie about?", options:["Jungle animals", "Oceans and whales", "Volcanoes"], answer:1}
+]},
+
+{ id: 9, level: 'A2', length: 'long', title: 'Planning a Birthday Surprise',
+sentences: [
+{id:1, eng:"Next Friday is my best friend Lisa's birthday.", tr:"Gelecek cuma en iyi arkadaşım Lisa'nın doğum günü."},
+{id:2, eng:"We wanted to organize a secret surprise party.", tr:"Gizli bir sürpriz parti organize etmek istedik."},
+{id:3, eng:"We created a private chat group to plan everything.", tr:"Her şeyi planlamak için özel bir sohbet grubu kurduk."},
+{id:4, eng:"Everyone received a specific job for the party.", tr:"Parti için herkes belirli bir görev aldı."},
+{id:5, eng:"My responsibility was baking a chocolate cake.", tr:"Benim sorumluluğum çikolatalı bir pasta pişirmekti."},
+{id:6, eng:"I bought flour, organic eggs, dark cocoa, and strawberries.", tr:"Un, organik yumurta, bitter kakao ve çilek aldım."},
+{id:7, eng:"The cake baked for forty minutes and smelled wonderful.", tr:"Pasta kırk dakika pişti ve harika koktu."},
+{id:8, eng:"Meanwhile, David bought golden balloons and colorful banners.", tr:"Bu sırada David altın sarısı balonlar ve renkli afişler aldı."},
+{id:9, eng:"Emma agreed to keep Lisa busy all afternoon.", tr:"Emma bütün öğleden sonra Lisa'yı oyalamayı kabul etti."},
+{id:10, eng:"They went to the cinema to watch a comedy.", tr:"Bir komedi izlemek için sinemaya gittiler."},
+{id:11, eng:"At six o'clock, twelve guests arrived at my home.", tr:"Saat altıda on iki davetli evime geldi."},
+{id:12, eng:"We hung banners and prepared drinks on the table.", tr:"Afişleri astık ve masaya içecekler hazırladık."},
+{id:13, eng:"At seven, we turned off the living room lights.", tr:"Yedide oturma odasının ışıklarını kapattık."},
+{id:14, eng:"We hid behind the sofa and waited quietly.", tr:"Kanepenin arkasına saklandık ve sessizce bekledik."},
+{id:15, eng:"Lisa opened the front door and entered the room.", tr:"Lisa ön kapıyı açtı ve odaya girdi."},
+{id:16, eng:"We all jumped up and shouted happy birthday.", tr:"Hepimiz ayağa fırladık ve iyi ki doğdun diye bağırdık."},
+{id:17, eng:"Lisa was completely shocked and smiled with joy.", tr:"Lisa tamamen şoke oldu ve sevinçle gülümsedi."},
+{id:18, eng:"She blew out the candles and made a secret wish.", tr:"Mumları üfledi ve gizli bir dilek tuttu."},
+{id:19, eng:"We danced and played party games until midnight.", tr:"Gece yarısına kadar dans ettik ve parti oyunları oynadık."},
+{id:20, eng:"Keeping the secret was hard, but it was worth it.", tr:"Sırrı saklamak zordu ama buna değdi."}
+],
+questions: [
+{q:"What was the author's job for the party?", options:["Buying balloons", "Baking the cake", "Cleaning the house"], answer:1},
+{q:"How did Emma keep Lisa busy?", options:["Going to the cinema", "Going shopping", "Studying math"], answer:0},
+{q:"Where did the friends hide?", options:["Behind the sofa", "In the kitchen", "In the garden"], answer:0}
+]},
+
+{ id: 10, level: 'A2', length: 'long', title: 'Learning to Drive a Car',
+sentences: [
+{id:1, eng:"Learning to drive was always my biggest personal goal.", tr:"Araba kullanmayı öğrenmek her zaman en büyük kişisel hedefimdi."},
+{id:2, eng:"When I turned twenty, I joined a driving academy.", tr:"Yirmi yaşıma bastığımda bir sürücü kursuna katıldım."},
+{id:3, eng:"First, I attended theory classes for two weeks.", tr:"İlk olarak iki hafta boyunca teorik derslere katıldım."},
+{id:4, eng:"We studied traffic signs and speed limits carefully.", tr:"Trafik işaretlerini ve hız sınırlarını dikkatle çalıştık."},
+{id:5, eng:"After passing the written test, practical lessons began.", tr:"Yazılı sınavı geçtikten sonra direksiyon dersleri başladı."},
+{id:6, eng:"On the first day, my hands were sweating with anxiety.", tr:"İlk gün ellerim endişeden terliyordu."},
+{id:7, eng:"My instructor, Mr. Davis, was very patient and encouraging.", tr:"Eğitmenim Bay Davis çok sabırlı ve cesaret vericiydi."},
+{id:8, eng:"He showed me how to adjust the driver's seat.", tr:"Bana sürücü koltuğunu nasıl ayarlayacağımı gösterdi."},
+{id:9, eng:"Then I checked the rear mirrors and fastened my seatbelt.", tr:"Sonra dikiz aynalarını kontrol ettim ve emniyet kemerimi bağladım."},
+{id:10, eng:"Using the clutch smoothly was very hard at first.", tr:"Debriyajı sarsmadan kullanmak ilk başta çok zordu."},
+{id:11, eng:"The engine stopped twice, but I tried again calmly.", tr:"Motor iki kez stop etti ama sakince tekrar denedim."},
+{id:12, eng:"Soon, we moved from an empty parking lot into real traffic.", tr:"Kısa süre sonra boş bir park yerinden gerçek trafiğe geçtik."},
+{id:13, eng:"Driving among trucks and buses required fast concentration.", tr:"Kamyonlar ve otobüsler arasında araç sürmek hızlı konsantrasyon gerektiriyordu."},
+{id:14, eng:"Parallel parking between two vehicles was the hardest maneuver.", tr:"İki araç arasına paralel park etmek en zor manevraydı."},
+{id:15, eng:"I practiced parking every afternoon until I succeeded.", tr:"Başarana kadar her öğleden sonra park etme pratiği yaptım."},
+{id:16, eng:"Yesterday was the day of my official driving test.", tr:"Dün resmi direksiyon sınavımın günüydü."},
+{id:17, eng:"The examiner sat quietly next to me with a clipboard.", tr:"Sınav görevlisi elimde bir not tahtasıyla yanımda sessizce oturdu."},
+{id:18, eng:"I remembered all the safety rules and stayed calm.", tr:"Tüm güvenlik kurallarını hatırladım ve sakin kaldım."},
+{id:19, eng:"At the end, he smiled and said I passed.", tr:"Sonunda gülümsedi ve geçtiğimi söyledi."},
+{id:20, eng:"Holding my driving license gives me wonderful freedom.", tr:"Ehliyetimi tutmak bana harika bir özgürlük veriyor."}
+],
+questions: [
+{q:"How long did theory classes take?", options:["Two days", "Two weeks", "One month"], answer:1},
+{q:"What was the hardest maneuver?", options:["Parallel parking", "Turning right", "Stopping at lights"], answer:0},
+{q:"How did the author feel on the first day?", options:["Bored", "Nervous and sweating", "Angry"], answer:1}
+]},
+
+/* ==================== B1 SEVİYESİ (5 METİN - 25 CÜMLE, DENGELİ UZUNLUK) ==================== */
+{ id: 11, level: 'B1', length: 'long', title: 'The Rise of Renewable Energy',
+sentences: [
+{id:1, eng:"Energy powers modern human society.", tr:"Enerji modern insan toplumuna güç sağlar."},
+{id:2, eng:"For more than a century, countries have heavily relied on coal, oil, and natural gas.", tr:"Bir asırdan fazla bir süredir ülkeler kömür, petrol ve doğal gaza yoğun bir şekilde bağımlı olmuştur."},
+{id:3, eng:"However, this reliance creates serious environmental damage.", tr:"Ancak bu bağımlılık ciddi çevresel hasar yaratmaktadır."},
+{id:4, eng:"Burning fossil fuels releases massive greenhouse gas emissions that trap heat and accelerate global climate change.", tr:"Fosil yakıtların yakılması, ısıyı hapseden ve küresel iklim değişikliğini hızlandıran büyük sera gazı salımlarına yol açar."},
+{id:5, eng:"Clean energy is now an urgent priority.", tr:"Temiz enerji artık acil bir önceliktir."},
+{id:6, eng:"Many progressive nations are investing heavily in solar, wind, and water systems to replace polluting fuels.", tr:"Birçok ilerici ülke, kirletici yakıtların yerini almak üzere güneş, rüzgar ve su sistemlerine yoğun yatırımlar yapıyor."},
+{id:7, eng:"Solar power is expanding rapidly across continents.", tr:"Güneş enerjisi kıtalar genelinde hızla yayılıyor."},
+{id:8, eng:"Modern solar panels convert sunlight directly into clean electrical current without generating any toxic waste.", tr:"Modern güneş panelleri, güneş ışığını herhangi bir zehirli atık üretmeden doğrudan temiz elektrik akımına dönüştürür."},
+{id:9, eng:"Manufacturing costs have fallen dramatically.", tr:"Üretim maliyetleri çarpıcı bir şekilde düştü."},
+{id:10, eng:"Wind power represents another promising solution for utility companies.", tr:"Rüzgar enerjisi, kamu hizmeti şirketleri için bir diğer umut verici çözümü temsil ediyor."},
+{id:11, eng:"Massive wind turbines are installed in windy mountain passes and on stormy ocean shores.", tr:"Devasa rüzgar türbinleri rüzgarlı dağ geçitlerine ve fırtınalı okyanus kıyılarına kurulur."},
+{id:12, eng:"Offshore wind farms capture stronger, steadier breezes.", tr:"Açık deniz rüzgar çiftlikleri daha güçlü, daha istikrarlı rüzgarları yakalar."},
+{id:13, eng:"Yet, renewable power faces technical obstacles.", tr:"Yine de yenilenebilir enerji teknik engellerle karşılaşıyor."},
+{id:14, eng:"Because solar panels do not produce power at night, reliable energy storage becomes essential for communities.", tr:"Güneş panelleri geceleri enerji üretmediğinden, topluluklar için güvenilir enerji depolaması zorunlu hale gelir."},
+{id:15, eng:"Engineers are building giant industrial batteries.", tr:"Mühendisler devasa endüstriyel piller üretiyorlar."},
+{id:16, eng:"These lithium and sodium batteries store daytime surplus electricity and release it during peak evening hours.", tr:"Bu lityum ve sodyum piller gündüz artan elektriği depolar ve yoğun akşam saatlerinde serbest bırakır."},
+{id:17, eng:"The power grid also requires modern upgrades.", tr:"Elektrik şebekesi de modern güncellemelere ihtiyaç duyuyor."},
+{id:18, eng:"Smart digital grids use intelligent sensors to distribute clean electricity efficiently between cities and regions.", tr:"Akıllı dijital şebekeler, temiz elektriği şehirler ve bölgeler arasında verimli bir şekilde dağıtmak için akıllı sensörler kullanır."},
+{id:19, eng:"Governments provide helpful tax credits.", tr:"Hükümetler faydalı vergi indirimleri sağlıyor."},
+{id:20, eng:"Electric vehicles are also becoming popular, replacing gasoline engines on busy city streets.", tr:"Elektrikli araçlar da popüler hale geliyor ve kalabalık şehir sokaklarındaki benzinli motorların yerini alıyor."},
+{id:21, eng:"This transformation creates thousands of skilled jobs.", tr:"Bu dönüşüm binlerce nitelikli iş imkanı yaratıyor."},
+{id:22, eng:"Although complete transition will take decades, international commitment remains stronger than ever before.", tr:"Tam bir geçiş on yıllar alacak olsa da, uluslararası kararlılık her zamankinden daha güçlü kalmaktadır."},
+{id:23, eng:"Local communities are demanding cleaner air.", tr:"Yerel topluluklar daha temiz hava talep ediyor."},
+{id:24, eng:"Choosing clean renewable energy guarantees that future generations inherit a healthier, more stable planet.", tr:"Temiz yenilenebilir enerjiyi seçmek, gelecek nesillerin daha sağlıklı ve daha istikrarlı bir gezegeni miras almasını garanti eder."},
+{id:25, eng:"The future of global power is bright.", tr:"Küresel enerjinin geleceği aydınlıktır."}
+],
+questions: [
+{q:"What is the main problem with burning fossil fuels?", options:["High storage costs", "Greenhouse gas emissions and climate change", "They smell bad"], answer:1},
+{q:"Why are batteries needed in clean energy systems?", options:["To store surplus daytime electricity", "To clean solar panels", "To stop wind turbines"], answer:0},
+{q:"Where are offshore wind turbines built?", options:["Inside deep caves", "On ocean shores", "Near coal mines"], answer:1}
+]},
+
+{ id: 12, level: 'B1', length: 'long', title: 'The Psychology of Habit Formation',
+sentences: [
+{id:1, eng:"Our lives are largely built on routines.", tr:"Hayatımız büyük ölçüde rutinler üzerine kuruludur."},
+{id:2, eng:"Psychologists estimate that nearly half of our daily behavior is governed by automatic habits rather than conscious thought.", tr:"Psikologlar, günlük davranışlarımızın neredeyse yarısının bilinçli düşünceden ziyade otomatik alışkanlıklar tarafından yönetildiğini tahmin ediyor."},
+{id:3, eng:"Habits exist to conserve cognitive energy.", tr:"Alışkanlıklar bilişsel enerjiyi korumak için vardır."},
+{id:4, eng:"According to behavioral research, every single habit follows an automatic neurological loop composed of three steps.", tr:"Davranışsal araştırmalara göre, her bir alışkanlık üç adımdan oluşan otomatik bir nörolojik döngüyü takip eder."},
+{id:5, eng:"The first element is the cue.", tr:"İlk unsur ipucudur."},
+{id:6, eng:"A cue acts as an environmental trigger, such as a specific time of day or an emotional state like anxiety.", tr:"Bir ipucu, günün belirli bir saati veya kaygı gibi duygusal bir durum gibi çevresel bir tetikleyici görevi görür."},
+{id:7, eng:"Next comes the routine itself.", tr:"Sırada rutinin kendisi gelir."},
+{id:8, eng:"This is the physical, mental, or emotional behavior that you perform automatically in response to the cue.", tr:"Bu, ipucuna yanıt olarak otomatik olarak gerçekleştirdiğiniz fiziksel, zihinsel veya duygusal davranıştır."},
+{id:9, eng:"Finally, there is the reward.", tr:"Son olarak ödül vardır."},
+{id:10, eng:"The reward satisfies your initial craving and convinces your brain that this pattern is worth repeating.", tr:"Ödül, ilk arzunuzu tatmin eder ve beyninizi bu kalıbın tekrarlanmaya değer olduğuna ikna eder."},
+{id:11, eng:"Consider afternoon coffee drinking as an example.", tr:"Örnek olarak öğleden sonra kahve içmeyi düşünün."},
+{id:12, eng:"Feeling tired at two o'clock is the cue that drives you straight to the office kitchen.", tr:"Saat ikide yorgun hissetmek, sizi doğrudan ofis mutfağına götüren ipucudur."},
+{id:13, eng:"The routine is brewing coffee.", tr:"Rutin kahve demlemektir."},
+{id:14, eng:"The pleasant reward is the quick boost of energy and social conversation with colleagues.", tr:"Hoş ödül, hızlı enerji artışı ve iş arkadaşlarıyla yapılan sosyal sohbettir."},
+{id:15, eng:"Breaking bad habits requires smart strategy.", tr:"Kötü alışkanlıkları kırmak akıllıca bir strateji gerektirir."},
+{id:16, eng:"Experts suggest that you cannot eliminate a routine simply through willpower without replacing it with something better.", tr:"Uzmanlar, bir rutini yerine daha iyi bir şey koymadan sadece irade gücüyle ortadan kaldıramayacağınızı öne sürüyor."},
+{id:17, eng:"Keep the same cue and reward.", tr:"Aynı ipucunu ve ödülü koruyun."},
+{id:18, eng:"If stress makes you eat junk food, substitute that unhealthy snack with a brisk ten-minute walk outside.", tr:"Stres abur cubur yemenize neden oluyorsa, o sağlıksız atıştırmalığı dışarıda on dakikalık tempolu bir yürüyüşle değiştirin."},
+{id:19, eng:"Starting tiny is another proven technique.", tr:"Küçük başlamak kanıtlanmış bir başka tekniktir."},
+{id:20, eng:"Committing to reading just two pages of a book every night feels easy and avoids burnout.", tr:"Her gece bir kitabın sadece iki sayfasını okumayı taahhüt etmek kolay hissettirir ve tükenmişliği önler."},
+{id:21, eng:"Consistency matters more than extreme intensity.", tr:"Tutarlılık aşırı yoğunluktan daha önemlidir."},
+{id:22, eng:"Your physical environment should also be arranged to make good habits effortless and visible.", tr:"Fiziksel çevreniz de iyi alışkanlıkları zahmetsiz ve görünür kılacak şekilde düzenlenmelidir."},
+{id:23, eng:"Keep your workout shoes in plain sight.", tr:"Antrenman ayakkabılarınızı göz önünde tutun."},
+{id:24, eng:"When healthy actions turn into automated reflexes, reaching your personal goals becomes inevitable.", tr:"Sağlıklı eylemler otomatik reflekslere dönüştüğünde, kişisel hedeflerinize ulaşmak kaçınılmaz hale gelir."},
+{id:25, eng:"Small daily habits create massive transformations.", tr:"Küçük günlük alışkanlıklar muazzam dönüşümler yaratır."}
+],
+questions: [
+{q:"What are the three steps of the habit loop?", options:["Start, middle, end", "Cue, routine, reward", "Plan, action, result"], answer:1},
+{q:"What is the recommended way to break a bad habit?", options:["Relying only on willpower", "Keeping the cue and reward but replacing the routine", "Sleeping more"], answer:1},
+{q:"Why is starting with tiny habits effective?", options:["It avoids burnout and feels easy", "It costs less money", "It requires expensive tools"], answer:0}
+]},
+
+{ id: 13, level: 'B1', length: 'long', title: 'Sustainable Tourism and Travel',
+sentences: [
+{id:1, eng:"Global travel has expanded tremendously.", tr:"Küresel seyahat muazzam bir şekilde genişledi."},
+{id:2, eng:"Cheap flights and online booking platforms allow millions of people to visit exotic destinations every year.", tr:"Ucuz uçuşlar ve çevrimiçi rezervasyon platformları her yıl milyonlarca insanın egzotik yerleri ziyaret etmesini sağlıyor."},
+{id:3, eng:"However, mass tourism brings heavy consequences.", tr:"Ancak kitle turizmi ağır sonuçlar doğurmaktadır."},
+{id:4, eng:"Historic cities like Venice and Amsterdam suffer from overtourism, where visitors overwhelm local services.", tr:"Venedik ve Amsterdam gibi tarihi şehirler, ziyaretçilerin yerel hizmetleri bunalttığı aşırı turizmden muzdariptir."},
+{id:5, eng:"Rents skyrocket for long-term residents.", tr:"Uzun süreli bölge sakinleri için kiralar fırlıyor."},
+{id:6, eng:"In fragile nature reserves, large crowds leave mountains of plastic litter and disturb native wildlife.", tr:"Hassas doğa koruma alanlarında büyük kalabalıklar plastik çöp dağları bırakır ve yerli yaban hayatını rahatsız eder."},
+{id:7, eng:"Sustainable tourism offers a responsible alternative.", tr:"Sürdürülebilir turizm sorumlu bir alternatif sunar."},
+{id:8, eng:"This travel philosophy focuses on protecting cultural heritage and preserving the natural environment for the future.", tr:"Bu seyahat felsefesi, kültürel mirası korumaya ve doğal çevreyi gelecek için muhafaza etmeye odaklanır."},
+{id:9, eng:"Conscious travelers can easily make a difference.", tr:"Bilinçli gezginler kolayca bir fark yaratabilir."},
+{id:10, eng:"Taking high-speed passenger trains instead of short flights dramatically lowers personal carbon footprints.", tr:"Kısa uçuşlar yerine yüksek hızlı yolcu trenlerini kullanmak kişisel karbon ayak izini çarpıcı bir şekilde azaltır."},
+{id:11, eng:"Trains offer scenic, stress-free journeys.", tr:"Trenler manzaralı, stressiz yolculuklar sunar."},
+{id:12, eng:"Supporting locally owned accommodations and family restaurants keeps tourism income directly within the community.", tr:"Yerel işletmelere ait konaklama yerlerini ve aile restoranlarını desteklemek, turizm gelirini doğrudan toplum içinde tutar."},
+{id:13, eng:"Big resort chains often take profits abroad.", tr:"Büyük tatil köyü zincirleri karlarını genellikle yurtdışına götürür."},
+{id:14, eng:"Eating seasonal cuisine introduces travelers to genuine culture and supports local farmers.", tr:"Mevsimlik yemekler yemek, gezginleri özgün kültürle tanıştırır ve yerel çiftçileri destekler."},
+{id:15, eng:"Respecting local social customs is equally important.", tr:"Yerel sosyal geleneklere saygı göstermek de aynı derecede önemlidir."},
+{id:16, eng:"Learning basic courtesy phrases in the native language builds mutual understanding with local people.", tr:"Yerel dilde temel nezaket ifadelerini öğrenmek, yerel halkla karşılıklı anlayış geliştirir."},
+{id:17, eng:"Always follow the leave-no-trace principle.", tr:"Her zaman geride iz bırakmama ilkesine uyun."},
+{id:18, eng:"When hiking in mountains or coral reefs, never collect protected stones, plants, or wild shells.", tr:"Dağlarda veya mercan resiflerinde yürüyüş yaparken asla koruma altındaki taşları, bitkileri veya vahşi deniz kabuklarını toplamayın."},
+{id:19, eng:"Carry a durable refillable water bottle.", tr:"Dayanıklı ve tekrar doldurulabilir bir su şişesi taşıyın."},
+{id:20, eng:"Visiting secondary destinations reduces crowd pressure on famous world capitals.", tr:"İkincil destinasyonları ziyaret etmek, ünlü dünya başkentleri üzerindeki kalabalık baskısını azaltır."},
+{id:21, eng:"Off-season travel provides quieter, richer experiences.", tr:"Sezon dışı seyahat daha sakin ve daha zengin deneyimler sağlar."},
+{id:22, eng:"Prices are also substantially lower outside peak summer.", tr:"Fiyatlar da yoğun yaz döneminin dışında önemli ölçüde daha düşüktür."},
+{id:23, eng:"True travel is about cultural connection.", tr:"Gerçek seyahat kültürel bağ kurmakla ilgilidir."},
+{id:24, eng:"When we treat delicate destinations with deep respect, we preserve their beauty for upcoming generations.", tr:"Hassas destinasyonlara derin bir saygıyla yaklaştığımızda, güzelliklerini gelecek nesiller için korumuş oluruz."},
+{id:25, eng:"Travel with curiosity, kindness, and mindfulness.", tr:"Merakla, nezaketle ve özenle seyahat edin."}
+],
+questions: [
+{q:"What is a negative impact of overtourism on historic cities?", options:["Streets are too empty", "Local rents skyrocket and services are overwhelmed", "No food is available"], answer:1},
+{q:"Why should travelers support locally owned restaurants?", options:["To keep profits within the local community", "Because they are always free", "To eat fast food"], answer:0},
+{q:"What does the 'leave-no-trace' principle mean?", options:["Never taking photographs", "Leaving nature undisturbed and packing out all trash", "Traveling without luggage"], answer:1}
+]},
+
+{ id: 14, level: 'B1', length: 'long', title: 'The Art of Public Speaking',
+sentences: [
+{id:1, eng:"Public speaking terrifies millions of adults.", tr:"Topluluk önünde konuşmak milyonlarca yetişkini dehşete düşürür."},
+{id:2, eng:"Surveys consistently reveal that glossophobia, or fear of public speech, ranks higher than the fear of spiders.", tr:"Anketler sürekli olarak, topluluk önünde konuşma korkusu olan glossofobinin örümcek korkusundan daha üst sırada yer aldığını ortaya koyuyor."},
+{id:3, eng:"Our bodies trigger an involuntary biological reaction.", tr:"Bedenlerimiz istemsiz bir biyolojik reaksiyon tetikler."},
+{id:4, eng:"When stepping onto an open stage, your heart beats rapidly and adrenaline floods your bloodstream.", tr:"Açık bir sahneye adım attığınızda kalbiniz hızla çarpar ve kanınıza adrenalin dolar."},
+{id:5, eng:"Fortunately, speaking is a learnable craft.", tr:"Neyse ki konuşmak öğrenilebilir bir zanaattır."},
+{id:6, eng:"Thorough preparation remains the ultimate foundation for confidence in front of any live audience.", tr:"Kapsamlı hazırlık, herhangi bir canlı dinleyici kitlesi karşısında özgüvenin nihai temeli olmaya devam eder."},
+{id:7, eng:"Understand your listeners before preparing slides.", tr:"Slaytları hazırlamadan önce dinleyicilerinizi anlayın."},
+{id:8, eng:"Knowing what your audience needs allows you to craft a speech that directly solves their problems.", tr:"Dinleyicilerinizin neye ihtiyacı olduğunu bilmek, doğrudan onların sorunlarını çözen bir konuşma hazırlamanızı sağlar."},
+{id:9, eng:"Every strong presentation follows a clear structure.", tr:"Her güçlü sunum net bir yapıyı takip eder."},
+{id:10, eng:"Begin with an intriguing question, a personal story, or a surprising statistic to capture instant attention.", tr:"Anında dikkat çekmek için merak uyandırıcı bir soruyla, kişisel bir hikayeyle veya şaşırtıcı bir istatistikle başlayın."},
+{id:11, eng:"Audiences remember stories far longer than spreadsheets.", tr:"Dinleyiciler hikayeleri tablolardan çok daha uzun süre hatırlar."},
+{id:12, eng:"Your physical body language speaks before your voice.", tr:"Fiziksel beden diliniz sesinizden önce konuşur."},
+{id:13, eng:"Stand upright with your feet shoulder-width apart to project natural calm and authority.", tr:"Doğal bir sakinlik ve otorite yansıtmak için ayaklarınız omuz genişliğinde açık şekilde dik durun."},
+{id:14, eng:"Maintain steady eye contact with different individuals across the room.", tr:"Odanın dört bir yanındaki farklı bireylerle düzenli göz teması kurun."},
+{id:15, eng:"Vocal control is another vital speaking asset.", tr:"Ses kontrolü bir diğer hayati konuşma avantajıdır."},
+{id:16, eng:"When speakers feel nervous, they naturally rush and speak too quickly without taking proper breaths.", tr:"Konuşmacılar gergin hissettiklerinde, doğal olarak acele ederler ve düzgün nefes almadan çok hızlı konuşurlar."},
+{id:17, eng:"Deliberate pauses are extremely powerful tools.", tr:"Bilinçli duraklamalar son derece güçlü araçlardır."},
+{id:18, eng:"Pausing for two seconds allows your audience to digest critical points and gives you time to think.", tr:"İki saniye duraklamak, dinleyicilerinizin kritik noktaları sindirmesini sağlar ve size düşünme zamanı verir."},
+{id:19, eng:"Keep your presentation slides remarkably visual.", tr:"Sunum slaytlarınızı son derece görsel tutun."},
+{id:20, eng:"Slides packed with tiny text force audiences to read instead of listening to your arguments.", tr:"Küçük metinlerle dolu slaytlar, dinleyicileri argümanlarınızı dinlemek yerine okumaya zorlar."},
+{id:21, eng:"Practice aloud multiple times before speaking.", tr:"Konuşmadan önce defalarca sesli pratik yapın."},
+{id:22, eng:"Recording your rehearsal on a phone reveals annoying filler words like um and uh.", tr:"Provanızı telefona kaydetmek, 'ııı' ve 'şey' gibi sinir bozucu dolgu kelimeleri ortaya çıkarır."},
+{id:23, eng:"Feedback from honest friends speeds up improvement.", tr:"Dürüst arkadaşlardan gelen geri bildirim gelişimi hızlandırır."},
+{id:24, eng:"With regular practice, speaking transforms into an empowering skill that elevates your professional career.", tr:"Düzenli pratikle konuşmak, profesyonel kariyerinizi yükselten güçlendirici bir beceriye dönüşür."},
+{id:25, eng:"Speak with clarity, passion, and purpose.", tr:"Netlikle, tutkuyla ve bir amaçla konuşun."}
+],
+questions: [
+{q:"What is glossophobia?", options:["Fear of spiders", "Fear of public speaking", "Fear of heights"], answer:1},
+{q:"Why are deliberate pauses useful in a speech?", options:["To check the time", "To let listeners digest points and give time to breathe", "To drink a full glass of milk"], answer:1},
+{q:"What kind of slides should a speaker avoid?", options:["Visual slides", "Slides packed with tiny dense text", "Slides with photos"], answer:1}
+]},
+
+{ id: 15, level: 'B1', length: 'long', title: 'Financial Literacy for Young Adults',
+sentences: [
+{id:1, eng:"Money management is a critical life skill.", tr:"Para yönetimi kritik bir yaşam becerisidir."},
+{id:2, eng:"Unfortunately, standard academic schools rarely teach students how to manage their personal income effectively.", tr:"Ne yazık ki, standart okullar nadiren öğrencilere kişisel gelirlerini nasıl etkili yöneteceklerini öğretir."},
+{id:3, eng:"Many graduates quickly accumulate expensive credit debt.", tr:"Birçok mezun hızla pahalı kredi borcu biriktirir."},
+{id:4, eng:"Without financial literacy, individuals make emotional purchasing decisions that compromise their future freedom.", tr:"Finansal okuryazarlık olmadan bireyler, gelecekteki özgürlüklerini tehlikeye atan duygusal satın alma kararları verirler."},
+{id:5, eng:"Building personal wealth begins with a budget.", tr:"Kişisel servet inşa etmek bir bütçeyle başlar."},
+{id:6, eng:"A simple budget tracks incoming earnings and categorizes every expense with precision.", tr:"Basit bir bütçe gelen kazançları takip eder ve her harcamayı hassasiyetle sınıflandırır."},
+{id:7, eng:"The 50/30/20 rule is widely recommended.", tr:"50/30/20 kuralı yaygın olarak tavsiye edilir."},
+{id:8, eng:"Under this model, fifty percent of monthly income covers essential living needs like housing, groceries, and utilities.", tr:"Bu modelde aylık gelirin yüzde ellisi barınma, market ve faturalar gibi temel yaşam ihtiyaçlarını karşılar."},
+{id:9, eng:"Thirty percent goes toward personal discretionary wants.", tr:"Yüzde otuzu kişisel keyfi isteklere gider."},
+{id:10, eng:"The final twenty percent must be saved or invested immediately.", tr:"Son yüzde yirmi ise derhal biriktirilmeli veya yatırıma dönüştürülmelidir."},
+{id:11, eng:"An emergency fund is your primary shield.", tr:"Bir acil durum fonu sizin birincil kalkanınızdır."},
+{id:12, eng:"Save three to six months of bare living expenses inside an accessible high-yield bank account.", tr:"Üç ila altı aylık asgari yaşam masraflarını erişilebilir, yüksek getirili bir banka hesabında biriktirin."},
+{id:13, eng:"This fund protects you against sudden job loss or expensive medical emergencies without requiring loans.", tr:"Bu fon, kredi çekmeye gerek kalmadan sizi ani iş kaybına veya pahalı tıbbi acil durumlara karşı korur."},
+{id:14, eng:"Avoid high-interest consumer debt like the plague.", tr:"Yüksek faizli tüketici borcundan vebadan kaçar gibi kaçının."},
+{id:15, eng:"Credit cards demand extreme personal discipline.", tr:"Kredi kartları aşırı kişisel disiplin gerektirir."},
+{id:16, eng:"Paying only the minimum balance triggers compound interest against you, costing thousands in unnecessary fees.", tr:"Yalnızca asgari bakiyeyi ödemek bileşik faizi aleyhinize işletir ve binlerce liralık gereksiz ücrete mal olur."},
+{id:17, eng:"Always pay your statement balance completely every month.", tr:"Her ay hesap özeti bakiyenizi her zaman tamamen ödeyin."},
+{id:18, eng:"Compound interest can also work in your favor.", tr:"Bileşik faiz lehinize de çalışabilir."},
+{id:19, eng:"Investing early inside broad index funds allows small monthly contributions to grow into substantial wealth.", tr:"Geniş tabanlı endeks fonlarına erken yatırım yapmak, küçük aylık katkıların önemli bir servete dönüşmesini sağlar."},
+{id:20, eng:"Time in the market beats trying to time the market.", tr:"Piyasada geçirilen zaman, piyasanın zamanını tahmin etmeye çalışmaktan daha üstündür."},
+{id:21, eng:"Learn the difference between assets and liabilities.", tr:"Varlıklar ve yükümlülükler arasındaki farkı öğrenin."},
+{id:22, eng:"Assets put money into your pockets, while liabilities steadily drain your cash reserves over time.", tr:"Varlıklar cebinize para koyarken, yükümlülükler zamanla nakit rezervlerinizi düzenli olarak tüketir."},
+{id:23, eng:"Practice conscious delayed gratification with large purchases.", tr:"Büyük satın alımlarda bilinçli ertelemeli tatmin uygulayın."},
+{id:24, eng:"When you master your financial choices today, you unlock immense security and personal peace tomorrow.", tr:"Bugün finansal seçimlerinizde ustalaştığınızda, yarın muazzam bir güvenlik ve kişisel huzurun kapısını aralarsınız."},
+{id:25, eng:"Financial freedom is created through daily discipline.", tr:"Finansal özgürlük günlük disiplinle yaratılır."}
+],
+questions: [
+{q:"In the 50/30/20 budget, what is the 20% allocated to?", options:["Dining out", "Savings, investments, and debt repayment", "Entertainment"], answer:1},
+{q:"How many months of expenses should an emergency fund cover?", options:["1 week", "3 to 6 months", "10 years"], answer:1},
+{q:"What is the main danger of credit cards?", options:["Paying minimum balance triggers high compound interest", "They are made of plastic", "They expire fast"], answer:0}
+]},
+
+/* ==================== B2 SEVİYESİ (5 METİN - 25 CÜMLE, DENGELİ UZUNLUK) ==================== */
+{ id: 16, level: 'B2', length: 'long', title: 'The Psychology of Decision Fatigue',
+sentences: [
+{id:1, eng:"Humans make hundreds of choices daily.", tr:"İnsanlar her gün yüzlerce seçim yapar."},
+{id:2, eng:"From trivial meal selections to complex business negotiations, modern life demands relentless cognitive evaluation.", tr:"Önemsiz yemek tercihlerinden karmaşık iş müzakerelerine kadar, modern hayat aralıksız bilişsel değerlendirme talep eder."},
+{id:3, eng:"This mental taxation has a biological limit.", tr:"Bu zihinsel vergilendirmenin biyolojik bir sınırı vardır."},
+{id:4, eng:"Psychologists define decision fatigue as the deteriorating quality of choices made after prolonged sessions of decision-making.", tr:"Psikologlar karar yorgunluğunu, uzun süren karar verme süreçlerinin ardından yapılan seçimlerin kalitesinin düşmesi olarak tanımlarlar."},
+{id:5, eng:"Willpower behaves much like a physical muscle.", tr:"İrade gücü tıpkı fiziksel bir kas gibi davranır."},
+{id:6, eng:"When cognitive energy is depleted, the brain desperately searches for shortcuts to conserve its remaining fuel.", tr:"Bilişsel enerji tükendiğinde, beyin kalan yakıtını korumak için çaresizce kestirmeler arar."},
+{id:7, eng:"People either act impulsively or avoid choices completely.", tr:"İnsanlar ya dürtüsel davranır ya da seçimlerden tamamen kaçınırlar."},
+{id:8, eng:"A famous judicial study revealed that judges granted parole far more frequently after breakfast and lunch breaks.", tr:"Ünlü bir adli araştırma, yargıçların kahvaltı ve öğle yemeği molalarından hemen sonra çok daha sık şartlı tahliye verdiğini ortaya koydu."},
+{id:9, eng:"Mental exhaustion quietly eroded their judicial empathy.", tr:"Zihinsel tükenmişlik adli empatilerini sessizce yıprattı."},
+{id:10, eng:"Supermarkets exploit this vulnerability aggressively.", tr:"Süpermarketler bu kırılganlığı agresif bir şekilde istismar eder."},
+{id:11, eng:"After shoppers navigate crowded aisles comparing prices, checkout stands tempt their exhausted brains with candy and soda.", tr:"Müşteriler fiyatları karşılaştırarak kalabalık koridorlarda dolaştıktan sonra, kasalar tükenmiş beyinlerini şeker ve gazlı içeceklerle cezbeder."},
+{id:12, eng:"Decision fatigue also sabotages workplace productivity.", tr:"Karar yorgunluğu iş yeri verimliliğini de sabote eder."},
+{id:13, eng:"Executives who waste peak morning hours replying to minor emails struggle with high-stakes strategic dilemmas later.", tr:"Sabahın en verimli saatlerini önemsiz e-postaları yanıtlayarak harcayan yöneticiler, daha sonra yüksek riskli stratejik ikilemlerde zorlanırlar."},
+{id:14, eng:"Steve Jobs famously adopted a uniform wardrobe.", tr:"Steve Jobs tek tip bir gardırobu benimsemesiyle ünlüydü."},
+{id:15, eng:"By wearing identical outfits daily, he eliminated trivial clothing dilemmas and preserved bandwidth for technological design.", tr:"Her gün aynı kıyafetleri giyerek önemsiz giyim ikilemlerini ortadan kaldırdı ve kapasitesini teknolojik tasarım için korudu."},
+{id:16, eng:"Automating recurring routines is the best countermeasure.", tr:"Tekrarlayan rutinleri otomatikleştirmek en iyi karşı önlemdir."},
+{id:17, eng:"When decisions become habitual, the prefrontal cortex rests while basal ganglia handle automated actions effortlessly.", tr:"Kararlar alışkanlık haline geldiğinde, bazal ganglionlar otomatik eylemleri zahmetsizce yürütürken prefrontal korteks dinlenir."},
+{id:18, eng:"Schedule demanding analytical tasks early.", tr:"Zorlu analitik görevleri erken saatlere planlayın."},
+{id:19, eng:"Never negotiate salary or make major financial commitments late at night when self-regulation is lowest.", tr:"Özdenetimin en düşük olduğu gece geç saatlerde asla maaş pazarlığı yapmayın veya büyük finansal taahhütlerde bulunmayın."},
+{id:20, eng:"Nutrition also directly influences executive control.", tr:"Beslenme de yürütücü kontrolü doğrudan etkiler."},
+{id:21, eng:"The brain consumes significant blood glucose during intense deliberation, requiring balanced meals to maintain endurance.", tr:"Beyin yoğun müzakereler sırasında önemli miktarda kan şekeri tüketir ve dayanıklılığı sürdürmek için dengeli öğünler gerektirir."},
+{id:22, eng:"Delegate minor responsibilities to team members.", tr:"Küçük sorumlulukları ekip üyelerine devredin."},
+{id:23, eng:"Simplifying personal lifestyle options protects mental sharpness.", tr:"Kişisel yaşam tarzı seçeneklerini basitleştirmek zihinsel keskinliği korur."},
+{id:24, eng:"By consciously managing our daily mental energy, we make superior decisions and lead far more balanced lives.", tr:"Günlük zihinsel enerjimizi bilinçli olarak yöneterek, üstün kararlar verir ve çok daha dengeli hayatlar süreriz."},
+{id:25, eng:"Protect your attention like your greatest treasure.", tr:"Dikkatinizi en büyük hazineniz gibi koruyun."}
+],
+questions: [
+{q:"What is decision fatigue?", options:["A muscular illness", "Deteriorating quality of decisions after prolonged choice-making", "A computer error"], answer:1},
+{q:"Why did Steve Jobs wear identical outfits daily?", options:["To save money on laundry", "To eliminate clothing dilemmas and preserve mental energy", "He disliked fashion"], answer:1},
+{q:"What biological fuel does the brain consume during intense deliberation?", options:["Adrenaline", "Blood glucose", "Lactic acid"], answer:1}
+]},
+
+{ id: 17, level: 'B2', length: 'long', title: 'Urban Green Spaces and Mental Well-being',
+sentences: [
+{id:1, eng:"Global cities are expanding rapidly.", tr:"Küresel şehirler hızla genişliyor."},
+{id:2, eng:"As concrete towers replace natural landscapes, urban residents increasingly suffer from elevated chronic stress and anxiety.", tr:"Beton kuleler doğal manzaraların yerini aldıkça, kent sakinleri giderek daha fazla kronik stres ve kaygıdan muzdarip oluyor."},
+{id:3, eng:"Urban planners now recognize this crisis.", tr:"Şehir plancıları artık bu krizi kabul ediyor."},
+{id:4, eng:"Public parks and botanical reserves act as essential environmental buffers against the toxic pressures of city life.", tr:"Halka açık parklar ve botanik rezervler, şehir hayatının zehirli baskılarına karşı temel çevresel tamponlar olarak işlev görür."},
+{id:5, eng:"Immersion in greenery reduces cortisol levels.", tr:"Yeşilliğin içine girmek kortizol seviyelerini düşürür."},
+{id:6, eng:"The Japanese practice of Shinrin-yoku, or forest bathing, proves that spending time among trees stimulates parasympathetic relaxation.", tr:"Japon Shinrin-yoku yani orman banyosu pratiği, ağaçlar arasında vakit geçirmenin parasempatik rahatlamayı uyardığını kanıtlıyor."},
+{id:7, eng:"Heart rates drop within twenty minutes.", tr:"Kalp atış hızları yirmi dakika içinde düşer."},
+{id:8, eng:"Moreover, mature trees capture hazardous particulate pollutants emitted by diesel engines along congested metropolitan avenues.", tr:"Ayrıca olgun ağaçlar, kalabalık metropol caddelerindeki dizel motorların yaydığı tehlikeli partikül kirleticileri yakalar."},
+{id:9, eng:"Vegetation cools surrounding concrete corridors naturally.", tr:"Bitki örtüsü çevreleyen beton koridorları doğal yollarla soğutur."},
+{id:10, eng:"Through natural shade and moisture transpiration, urban greenery effectively mitigates the dangerous urban heat island effect.", tr:"Doğal gölge ve nem terlemesi yoluyla kentsel yeşillik, tehlikeli kentsel ısı adası etkisini etkili bir şekilde hafifletir."},
+{id:11, eng:"Neighborhood parks also foster social unity.", tr:"Mahalle parkları sosyal birliği de pekiştirir."},
+{id:12, eng:"Communal gardens and green public plazas provide welcoming spaces where diverse socioeconomic groups connect and exercise.", tr:"Topluluk bahçeleri ve yeşil halk meydanları, farklı sosyoekonomik grupların iletişim kurduğu ve spor yaptığı sıcak alanlar sunar."},
+{id:13, eng:"Children with green access develop better focus.", tr:"Yeşil alan erişimi olan çocuklar daha iyi odaklanma geliştirir."},
+{id:14, eng:"Clinical trials show that natural schoolyards substantially diminish attention deficit symptoms and aggressive behaviors among pupils.", tr:"Klinik deneyler, doğal okul bahçelerinin öğrenciler arasındaki dikkat eksikliği semptomlarını ve agresif davranışları önemli ölçüde azalttığını gösteriyor."},
+{id:15, eng:"Nature effortlessly restores depleted cognitive attention.", tr:"Doğa, tükenmiş bilişsel dikkati zahmetsizce geri kazandırır."},
+{id:16, eng:"Observing organic patterns like rustling leaves allows our directed analytical focus to rest and recharge completely.", tr:"Hışırdayan yapraklar gibi organik desenleri gözlemlemek, yönlendirilmiş analitik odağımızın dinlenmesini ve tamamen yenilenmesini sağlar."},
+{id:17, eng:"Modern architecture is embracing living design.", tr:"Modern mimari yaşayan tasarımı benimsiyor."},
+{id:18, eng:"Vertical forests and rooftop agricultural gardens turn sterile glass skyscrapers into functional biodiverse ecosystems.", tr:"Dikey ormanlar ve çatı tarım bahçeleri, steril cam gökdelenleri işlevsel biyoçeşitli ekosistemlere dönüştürür."},
+{id:19, eng:"Singapore leads this visionary movement.", tr:"Singapur bu vizyoner harekete öncülük ediyor."},
+{id:20, eng:"However, environmental disparities persist across low-income districts lacking equal access to municipal parks and trees.", tr:"Ancak belediye parklarına ve ağaçlarına eşit erişimden yoksun düşük gelirli bölgelerde çevresel eşitsizlikler sürmektedir."},
+{id:21, eng:"Equal access to nature is justice.", tr:"Doğaya eşit erişim bir adalettir."},
+{id:22, eng:"Equitable urban investment must guarantee every citizen safe, clean green spaces within walking distance from home.", tr:"Adil kentsel yatırımlar, her vatandaşın evine yürüme mesafesinde güvenli, temiz yeşil alanları garanti etmelidir."},
+{id:23, eng:"Green design is a public health necessity.", tr:"Yeşil tasarım bir halk sağlığı gerekliliğidir."},
+{id:24, eng:"Prioritizing natural urban ecosystems safeguards human psychological well-being as global populations continue migrating into dense cities.", tr:"Doğal kentsel ekosistemleri önceliklendirmek, küresel nüfus yoğun şehirlere göç etmeyi sürdürürken insan psikolojik sağlığını korur."},
+{id:25, eng:"Nature and urban progress must coexist.", tr:"Doğa ve kentsel ilerleme bir arada var olmalıdır."}
+],
+questions: [
+{q:"What Japanese therapeutic practice means 'forest bathing'?", options:["Ikebana", "Shinrin-yoku", "Karate"], answer:1},
+{q:"How do trees reduce the urban heat island effect?", options:["Through shade and moisture transpiration", "By blocking sunlight permanently", "By drinking all groundwater"], answer:0},
+{q:"What happens to cortisol levels when exposed to greenery?", options:["They increase sharply", "They decrease", "They remain frozen"], answer:1}
+]},
+
+{ id: 18, level: 'B2', length: 'long', title: 'The Evolution of Global Supply Chains',
+sentences: [
+{id:1, eng:"Global commerce connects distant continents seamlessly.", tr:"Küresel ticaret uzak kıtaları kusursuz bir şekilde birbirine bağlar."},
+{id:2, eng:"Over past decades, advanced telecommunications and containerized shipping created an unprecedented interconnected world economy.", tr:"Geçtiğimiz on yıllar boyunca gelişmiş telekomünikasyon ve konteynerli taşımacılık, benzeri görülmemiş bir birbirine bağlı dünya ekonomisi yarattı."},
+{id:3, eng:"Corporations dismantled expensive local production facilities.", tr:"Şirketler pahalı yerel üretim tesislerini tasfiye etti."},
+{id:4, eng:"In pursuit of cheap offshore labor, manufacturers fragmented their supply networks across multiple specialized nations.", tr:"Ucuz denizaşırı iş gücü arayışıyla üreticiler, tedarik ağlarını birden fazla uzmanlaşmış ülkeye böldüler."},
+{id:5, eng:"Just-in-time manufacturing became standard gospel.", tr:"Tam zamanında üretim standart bir öğreti haline geldi."},
+{id:6, eng:"Under this lean strategy, companies eliminated warehouse stockpiles to save millions in storage and inventory overhead.", tr:"Bu yalın strateji altında şirketler, depolama ve envanter genel giderlerinden milyonlarca tasarruf etmek için stokları ortadan kaldırdı."},
+{id:7, eng:"Consumer products became remarkably affordable worldwide.", tr:"Tüketici ürünleri dünya çapında son derece uygun fiyatlı hale geldi."},
+{id:8, eng:"However, this ultra-efficient operational system created immense systemic fragility against unexpected global shocks.", tr:"Ancak bu ultra verimli operasyonel sistem, beklenmedik küresel şoklara karşı muazzam bir sistemik kırılganlık yarattı."},
+{id:9, eng:"Recent geopolitical conflicts exposed these vulnerabilities.", tr:"Son jeopolitik çatışmalar bu kırılganlıkları açığa çıkardı."},
+{id:10, eng:"A single blocked cargo vessel at the Suez Canal immobilized tens of billions in global trade.", tr:"Süveyş Kanalı'nda mahsur kalan tek bir kargo gemisi, küresel ticarette on milyarlarca doları hareketsiz kıldı."},
+{id:11, eng:"Semiconductor shortages crippled global automobile assembly.", tr:"Yarı iletken kıtlığı küresel otomobil montajını felç etti."},
+{id:12, eng:"When microchip factories shuttered abroad, vehicle plants worldwide halted production, inflicting billions in losses.", tr:"Denizaşırı mikroçip fabrikaları kapandığında, dünya çapındaki araç fabrikaları üretimi durdurarak milyarlarca dolarlık zarara yol açtı."},
+{id:13, eng:"Corporate executives are now shifting strategies.", tr:"Kurumsal yöneticiler artık stratejilerini değiştiriyor."},
+{id:14, eng:"Resilience has rapidly replaced pure cost minimization as the primary operational priority across industries.", tr:"Dayanıklılık, endüstriler genelinde birincil operasyonel öncelik olarak saf maliyet minimizasyonunun yerini hızla aldı."},
+{id:15, eng:"Nearshoring is gaining tremendous international momentum.", tr:"Nearshoring (yakın ülkeye taşıma) muazzam bir uluslararası ivme kazanıyor."},
+{id:16, eng:"Enterprises are relocating critical manufacturing hubs to neighboring countries to shorten transit routes dramatically.", tr:"İşletmeler, transit rotalarını önemli ölçüde kısaltmak için kritik üretim merkezlerini komşu ülkelere taşıyor."},
+{id:17, eng:"Friendshoring provides an additional political safeguard.", tr:"Friendshoring (dost ülkeye taşıma) ek bir siyasi güvence sağlar."},
+{id:18, eng:"By partnering with ideologically aligned governments, businesses effectively insulate distribution networks from geopolitical sanctions.", tr:"İşletmeler, ideolojik olarak uyumlu hükümetlerle ortaklık kurarak dağıtım ağlarını jeopolitik yaptırımlardan etkili bir şekilde yalıtır."},
+{id:19, eng:"Digital tracking enhances end-to-end visibility.", tr:"Dijital takip uçtan uca görünürlüğü artırır."},
+{id:20, eng:"Predictive machine learning algorithms now detect maritime shipping bottlenecks before vessels depart destination ports.", tr:"Öngörücü makine öğrenimi algoritmaları artık gemiler varış limanlarından ayrılmadan önce deniz taşımacılığı darboğazlarını tespit ediyor."},
+{id:21, eng:"Environmental regulations demand cleaner sea logistics.", tr:"Çevre düzenlemeleri daha temiz deniz lojistiği talep ediyor."},
+{id:22, eng:"Global shipping generates heavy carbon emissions, prompting investments in green hydrogen and alternative biofuels.", tr:"Küresel taşımacılık ağır karbon salımları üreterek yeşil hidrojen ve alternatif biyoyakıtlara yatırımları teşvik ediyor."},
+{id:23, eng:"Supply chains are becoming smarter and localized.", tr:"Tedarik zincirleri daha akıllı ve yerelleşmiş hale geliyor."},
+{id:24, eng:"Companies that balance economic agility with geographical foresight will decisively conquer volatile future markets.", tr:"Ekonomik çevikliği coğrafi öngörüyle dengeleyen şirketler, değişken geleceğin pazarlarını kesin bir şekilde fethedecektir."},
+{id:25, eng:"True strength lies in supply flexibility.", tr:"Gerçek güç tedarik esnekliğinde yatar."}
+],
+questions: [
+{q:"What was the primary goal of just-in-time manufacturing?", options:["Holding huge warehouse stockpiles", "Minimizing storage overhead to save money", "Employing more truck drivers"], answer:1},
+{q:"What does nearshoring mean?", options:["Moving factories closer to consumer markets", "Selling only online", "Shutting down businesses"], answer:0},
+{q:"Which component shortage halted car assembly lines?", options:["Rubber tires", "Semiconductor microchips", "Windshields"], answer:1}
+]},
+
+{ id: 19, level: 'B2', length: 'long', title: 'Ethical Dilemmas in AI and Automation',
+sentences: [
+{id:1, eng:"Artificial intelligence is advancing at blinding speed.", tr:"Yapay zeka baş döndürücü bir hızla ilerliyor."},
+{id:2, eng:"Autonomous algorithms now evaluate loan applicants, screen job resumes, and assist judges with criminal sentencing.", tr:"Otonom algoritmalar artık kredi başvurularını değerlendiriyor, iş özgeçmişlerini eliyor ve yargıçlara ceza infazlarında yardımcı oluyor."},
+{id:3, eng:"These automated systems offer superhuman speed.", tr:"Bu otomatik sistemler insanüstü bir hız sunar."},
+{id:4, eng:"However, deploying automated machine learning models without strict ethical oversight creates perilous social consequences.", tr:"Ancak makine öğrenimi modellerini sıkı etik denetim olmadan devreye sokmak tehlikeli sosyal sonuçlar doğurur."},
+{id:5, eng:"Algorithmic bias represents a critical danger.", tr:"Algoritmik önyargı kritik bir tehlikeyi temsil eder."},
+{id:6, eng:"Because predictive algorithms are trained on historical data, they inevitably inherit and amplify human societal prejudices.", tr:"Öngörücü algoritmalar geçmiş veriler üzerinde eğitildiğinden, kaçınılmaz olarak insan toplumsal önyargılarını miras alır ve büyütür."},
+{id:7, eng:"Facial recognition software produces frequent misidentifications.", tr:"Yüz tanıma yazılımı sık sık yanlış teşhisler üretir."},
+{id:8, eng:"Studies confirm that these scanning tools exhibit substantially higher error rates when analyzing ethnic minority faces.", tr:"Araştırmalar, bu tarama araçlarının etnik azınlık yüzlerini analiz ederken önemli ölçüde daha yüksek hata oranları sergilediğini doğrulamaktadır."},
+{id:9, eng:"Flawed algorithms can lead to wrongful arrests.", tr:"Hatalı algoritmalar haksız tutuklamalara yol açabilir."},
+{id:10, eng:"The black box dilemma presents another profound challenge.", tr:"Kara kutu ikilemi bir başka derin zorluk sunar."},
+{id:11, eng:"Complex deep neural networks cannot explain the precise logical steps behind their automated conclusions.", tr:"Karmaşık derin sinir ağları, otomatik sonuçlarının arkasındaki kesin mantıksal adımları açıklayamaz."},
+{id:12, eng:"Due process requires understandable legal explanations.", tr:"Adil yargılanma hakkı anlaşılabilir yasal açıklamalar gerektirir."},
+{id:13, eng:"If an algorithm denies bail or parole, defendants have the right to know why.", tr:"Bir algoritma kefaleti veya şartlı tahliyeyi reddederse, sanıkların nedenini bilme hakkı vardır."},
+{id:14, eng:"Autonomous vehicles introduce philosophical dilemmas onto highways.", tr:"Otonom araçlar otoyollarda felsefi ikilemler ortaya çıkarır."},
+{id:15, eng:"In unavoidable collision scenarios, software must choose which lives to prioritize based on programmed values.", tr:"Kaçınılmaz çarpışma senaryolarında, yazılım programlanmış değerlere göre hangi hayatlara öncelik vereceğini seçmelidir."},
+{id:16, eng:"Workplace automation threatens cognitive and manual labor.", tr:"İş yeri otomasyonu bilişsel ve kol gücüne dayalı emeği tehdit eder."},
+{id:17, eng:"Generative software and robotic machinery are rapidly displacing skilled professionals, writers, and assembly technicians.", tr:"Üretken yazılımlar ve robotik makineler nitelikli profesyonelleri, yazarları ve montaj teknisyenlerini hızla yerinden ediyor."},
+{id:18, eng:"Wealth could concentrate among tech monopolists.", tr:"Servet teknoloji tekelcilerinin elinde toplanabilir."},
+{id:19, eng:"Economists urge governments to adopt universal basic income and aggressive retraining programs.", tr:"Ekonomistler hükümetleri evrensel temel geliri ve agresif yeniden eğitim programlarını benimsemeye çağırıyor."},
+{id:20, eng:"Enforceable regulatory frameworks are vital.", tr:"Yaptırımı olan düzenleyici çerçeveler hayati önem taşır."},
+{id:21, eng:"The European Union has enacted landmark regulations classifying AI systems by their threat level.", tr:"Avrupa Birliği, yapay zeka sistemlerini tehdit düzeylerine göre sınıflandıran dönüm noktası niteliğinde düzenlemeleri yürürlüğe koydu."},
+{id:22, eng:"High-risk systems must mandate human-in-the-loop oversight.", tr:"Yüksek riskli sistemler, süreçte insanın yer aldığı denetimi zorunlu kılmalıdır."},
+{id:23, eng:"Technology must always serve humanity.", tr:"Teknoloji her zaman insanlığa hizmet etmelidir."},
+{id:24, eng:"Establishing robust ethical guardrails today ensures that automation enhances human potential instead of diminishing it.", tr:"Bugün sağlam etik güvenceler oluşturmak, otomasyonun insan potansiyelini azaltmak yerine geliştirmesini sağlar."},
+{id:25, eng:"Human dignity remains non-negotiable.", tr:"İnsan onuru tartışılamaz bir değerdir."}
+],
+questions: [
+{q:"What causes algorithmic bias in AI models?", options:["Hardware glitches", "Training models on historical data with human prejudices", "Low battery"], answer:1},
+{q:"What is the 'black box' problem in AI?", options:["Computers being painted black", "Deep networks unable to explain their logical reasoning", "Broken screen monitors"], answer:1},
+{q:"How does the European Union regulate artificial intelligence?", options:["By classifying systems according to their risk level", "By banning all computers", "By taxing internet usage"], answer:0}
+]},
+
+{ id: 20, level: 'B2', length: 'long', title: 'The Impact of Bilingualism on Brain Plasticity',
+sentences: [
+{id:1, eng:"Language learning transforms the human mind.", tr:"Dil öğrenimi insan zihnini dönüştürür."},
+{id:2, eng:"For decades, flawed pedagogical theories erroneously claimed that raising children bilingually would confuse their grammatical development.", tr:"On yıllar boyunca kusurlu pedagojik teoriler, çocukları iki dilli yetiştirmenin dilbilgisel gelişimlerini karıştıracağını hatalı bir şekilde iddia etti."},
+{id:3, eng:"Modern neuroimaging completely disproved that myth.", tr:"Modern beyin görüntüleme bu efsaneyi tamamen çürüttü."},
+{id:4, eng:"Neuroscientists now prove that speaking multiple languages dramatically improves neural plasticity and cognitive longevity.", tr:"Sinirbilimciler artık birden fazla dil konuşmanın sinirsel plastisiteyi ve bilişsel uzun ömürlülüğü çarpıcı bir şekilde geliştirdiğini kanıtlıyor."},
+{id:5, eng:"The brain reorganizes through synaptic connections.", tr:"Beyin sinaptik bağlantılar yoluyla kendini yeniden düzenler."},
+{id:6, eng:"When a multilingual speaker converses, both languages remain perpetually active and competing inside the brain.", tr:"Çok dilli bir konuşmacı sohbet ettiğinde, her iki dil de beynin içinde sürekli olarak aktif ve rekabet halinde kalır."},
+{id:7, eng:"The prefrontal cortex works constantly.", tr:"Prefrontal korteks sürekli çalışır."},
+{id:8, eng:"It suppresses irrelevant words from one language while instantly selecting correct grammatical structures in another.", tr:"Bir dilden alakasız kelimeleri bastırırken diğer dildeki doğru dilbilgisel yapıları anında seçer."},
+{id:9, eng:"This persistent workout strengthens executive function.", tr:"Bu sürekli antrenman yürütücü işlevi güçlendirir."},
+{id:10, eng:"Bilingual individuals demonstrate superior aptitude in multitasking and ignoring distracting environmental noise.", tr:"İki dilli bireyler çoklu görevlerde ve dikkat dağıtıcı çevresel gürültüyü görmezden gelmede üstün yetenek sergilerler."},
+{id:11, eng:"They switch between tasks with agility.", tr:"Görevler arasında çeviklikle geçiş yaparlar."},
+{id:12, eng:"Children exposed to multiple dialects develop acute metalinguistic awareness early in life.", tr:"Birden fazla lehçeye maruz kalan çocuklar, yaşamın erken dönemlerinde keskin bir üst-dilsel farkındalık geliştirirler."},
+{id:13, eng:"They realize words are arbitrary symbols representing real-world concepts rather than physical realities.", tr:"Kelimelerin fiziksel gerçekliklerden ziyade gerçek dünya kavramlarını temsil eden keyfi semboller olduğunu fark ederler."},
+{id:14, eng:"This linguistic insight enhances general problem-solving.", tr:"Bu dilsel kavrayış genel problem çözmeyi geliştirir."},
+{id:15, eng:"Crucially, these cognitive advantages extend into old age.", tr:"Daha da önemlisi, bu bilişsel avantajlar yaşlılığa kadar uzanır."},
+{id:16, eng:"Epidemiological studies indicate that lifelong bilingualism delays symptomatic onset of Alzheimer's by five years.", tr:"Epidemiyolojik çalışmalar, yaşam boyu iki dilliliğin Alzheimer semptomlarının başlangıcını beş yıl geciktirdiğini göstermektedir."},
+{id:17, eng:"Physical pathology might still develop.", tr:"Fiziksel patoloji yine de gelişebilir."},
+{id:18, eng:"However, multilingual brains possess richer cognitive reserve, allowing them to route thoughts through undamaged pathways.", tr:"Ancak çok dilli beyinler daha zengin bir bilişsel rezerve sahiptir ve düşünceleri hasar görmemiş yollardan yönlendirmelerine olanak tanır."},
+{id:19, eng:"Adults also benefit from language acquisition.", tr:"Yetişkinler de dil ediniminden yararlanırlar."},
+{id:20, eng:"Although mastering foreign pronunciation demands disciplined effort, neuroplastic remodeling occurs regardless of your biological age.", tr:"Yabancı telaffuzda ustalaşmak disiplinli bir çaba gerektirse de, nöroplastik yeniden yapılanma biyolojik yaşınızdan bağımsız olarak gerçekleşir."},
+{id:21, eng:"Studying vocabulary stimulates white matter integrity.", tr:"Kelime çalışmak beyaz cevher bütünlüğünü uyarır."},
+{id:22, eng:"It functions as intensive weightlifting for your neurons.", tr:"Nöronlarınız için yoğun bir ağırlık kaldırma işlevi görür."},
+{id:23, eng:"Learning new words keeps thoughts youthful.", tr:"Yeni kelimeler öğrenmek düşünceleri genç tutar."},
+{id:24, eng:"Embracing foreign languages enriches your cultural world while shielding your brain against degenerative decline.", tr:"Yabancı dilleri benimsemek beyninizi dejeneratif gerilemeye karşı korurken kültürel dünyanızı zenginleştirir."},
+{id:25, eng:"Every new language grants another mind.", tr:"Her yeni dil bir başka zihin bağışlar."}
+],
+questions: [
+{q:"What did outdated theories claim about bilingual children?", options:["It gives them superpowers", "It confuses grammatical development", "It makes them tall"], answer:1},
+{q:"By how many years can bilingualism delay Alzheimer's symptoms?", options:["Five years", "One month", "Twenty years"], answer:0},
+{q:"What is cognitive reserve?", options:["A bank account", "Brain's ability to navigate damage using alternative neural pathways", "A memory card"], answer:1}
+]}
 ];
 
 function App() {
@@ -569,7 +743,6 @@ function App() {
 
   const [currentView, setCurrentView] = useState('home');
   const [selectedLevel, setSelectedLevel] = useState(null);
-  const [lengthFilter, setLengthFilter] = useState('all');
   const [activeText, setActiveText] = useState(null);
   const [selectedTranslation, setSelectedTranslation] = useState(null);
   const [selectedLevelTag, setSelectedLevelTag] = useState('B1');
@@ -628,7 +801,7 @@ function App() {
   const getWordLevel = (wordStr, currentTextLevel) => {
     const clean = cleanWord(wordStr);
     if (wordLevelMap[clean]) return wordLevelMap[clean];
-    if (currentTextLevel && ['A1', 'A2', 'B1', 'B2', 'C1'].includes(currentTextLevel)) {
+    if (currentTextLevel && ['A1', 'A2', 'B1', 'B2'].includes(currentTextLevel)) {
       return currentTextLevel;
     }
     return 'B1';
@@ -695,7 +868,6 @@ function App() {
     } else if (['levels', 'savedWords', 'vocabTest', 'addText', 'customList'].includes(currentView)) {
       setCurrentView('home');
       setSelectedLevel(null);
-      setLengthFilter('all');
     }
   };
 
@@ -767,13 +939,12 @@ function App() {
     const sentences = engSentences.map((eng, idx) => ({
       id: idx + 1,
       eng: eng,
-      tr: trSentences[idx] || "Bu cümle için çeviri girilmedi. (Kelimelere tıklayarak öğrenebilirsin)"
+      tr: trSentences[idx] || "Bu cümle için çeviri girilmedi."
     }));
 
     const textItem = {
       id: 'custom_' + Date.now(),
       level: newLevel,
-      length: sentences.length <= 5 ? 'short' : sentences.length <= 12 ? 'medium' : 'long',
       title: newTitle.trim() || 'Özel Metin #' + (customTexts.length + 1),
       sentences: sentences,
       isCustom: true,
@@ -784,7 +955,7 @@ function App() {
     setNewTitle('');
     setNewEngText('');
     setNewTrText('');
-    setToastMessage("Özel metin başarıyla eklendi! 📖");
+    setToastMessage("Özel metin eklendi! 📖");
     startReading(textItem);
   };
 
@@ -836,11 +1007,7 @@ function App() {
   };
 
   const allAvailableTexts = [...defaultTexts, ...customTexts];
-  const filteredTexts = allAvailableTexts.filter(t => {
-    if (t.level !== selectedLevel) return false;
-    if (lengthFilter === 'all') return true;
-    return t.length === lengthFilter;
-  });
+  const filteredTexts = allAvailableTexts.filter(t => t.level === selectedLevel);
 
   const filteredSavedWords = wordFilterLevel === 'ALL' 
     ? savedWords 
@@ -894,10 +1061,10 @@ function App() {
                 <span className="text-4xl">🌍</span>
               </div>
               <h2 className="text-2xl font-black text-slate-800">Seviyeni Seç</h2>
-              <p className="text-xs text-slate-500 mt-1">Okuyarak ve tıklayarak İngilizce geliştir</p>
+              <p className="text-xs text-slate-500 mt-1">Her seviyede dengeli ve seviyeli metinler</p>
             </div>
 
-            {/* Seviye Butonları */}
+            {/* Seviye Butonları (A1, A2, B1, B2) */}
             <div className="space-y-2.5">
               {levels.map(level => {
                 const count = allAvailableTexts.filter(t => t.level === level).length;
@@ -972,8 +1139,6 @@ function App() {
             ) : (
               filteredTexts.map(text => {
                 const isCompleted = completedTexts.includes(text.id);
-                const lengthColor = text.length === 'short' ? "bg-blue-100 text-blue-700" : text.length === 'medium' ? "bg-amber-100 text-amber-700" : "bg-purple-100 text-purple-700";
-                const lengthLabel = text.length === 'short' ? "Kısa" : text.length === 'medium' ? "Orta" : "Uzun";
                 return (
                   <button key={text.id} onClick={() => startReading(text)}
                     className={`w-full text-left bg-white p-4 rounded-2xl shadow-sm border flex gap-3.5 items-center hover:shadow-md active:scale-[0.98] transition ${isCompleted ? 'border-green-300 bg-green-50/50' : 'border-slate-200'}`}>
@@ -985,10 +1150,7 @@ function App() {
                         <h3 className={`font-bold text-base leading-tight ${isCompleted ? 'text-green-900' : 'text-slate-800'}`}>{text.title}</h3>
                         {text.isCustom && <span className="bg-purple-100 text-purple-800 text-[10px] font-bold px-1.5 py-0.5 rounded">ÖZEL</span>}
                       </div>
-                      <div className="flex items-center gap-2">
-                        <span className={`text-[10px] font-bold px-2 py-0.5 rounded-md ${lengthColor}`}>{lengthLabel}</span>
-                        <span className="text-xs text-slate-400 font-medium">{text.sentences.length} Cümle</span>
-                      </div>
+                      <span className="text-xs text-slate-400 font-medium">{text.sentences.length} Cümle</span>
                     </div>
                   </button>
                 );
@@ -1032,7 +1194,7 @@ function App() {
                 <label className="block text-xs font-bold text-slate-600 uppercase mb-1">Metin Başlığı</label>
                 <input
                   type="text"
-                  placeholder="Örn: The Power of Habits"
+                  placeholder="Örn: A Great Day"
                   value={newTitle}
                   onChange={(e) => setNewTitle(e.target.value)}
                   className="w-full p-3 text-sm rounded-xl border border-slate-300 focus:outline-none focus:border-indigo-500"
@@ -1059,7 +1221,7 @@ function App() {
                 <label className="block text-xs font-bold text-slate-600 uppercase mb-1">İngilizce Metin (Zorunlu)</label>
                 <textarea
                   rows="6"
-                  placeholder="İngilizce metninizi buraya yapıştırın. Noktalardan otomatik cümlelere bölünecektir..."
+                  placeholder="İngilizce metninizi buraya yapıştırın..."
                   value={newEngText}
                   onChange={(e) => setNewEngText(e.target.value)}
                   className="w-full p-3 text-sm rounded-xl border border-slate-300 focus:outline-none focus:border-indigo-500 leading-relaxed"
@@ -1081,7 +1243,7 @@ function App() {
                 onClick={handleSaveCustomText}
                 className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3.5 rounded-xl shadow-lg transition active:scale-[0.98] flex items-center justify-center gap-2"
               >
-                <span>📖</span> Metni Kaydet ve Okumaya Başla
+                <span>📖</span> Metni Kaydet ve Oku
               </button>
             </div>
           </div>
@@ -1318,7 +1480,6 @@ function App() {
               className="absolute top-3 right-3 p-1 text-slate-400 hover:text-white text-base"
             >✕</button>
 
-            {/* Seviye Etiketi Seçici Rozeti */}
             <div className="mb-3 flex items-center gap-2">
               <span className="text-[10px] font-bold uppercase text-slate-400">Seviye Etiketi:</span>
               <div className="flex gap-1">
@@ -1334,7 +1495,6 @@ function App() {
               </div>
             </div>
 
-            {/* Kelime Grubu (Phrase) varsa */}
             {selectedTranslation.phrase && (
               <div className="mb-3 pb-3 border-b border-slate-800 pr-6">
                 <div className="flex items-center gap-2 mb-0.5">
@@ -1352,7 +1512,6 @@ function App() {
               </div>
             )}
 
-            {/* Tek Kelime */}
             <div className="pr-6">
               <div className="flex items-center gap-2 mb-0.5">
                 <span className="text-[10px] text-slate-400 font-bold uppercase">
