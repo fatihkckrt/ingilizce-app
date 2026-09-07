@@ -1,4 +1,6 @@
 // @ts-nocheck
+import { expandedDictionary } from './generated_dictionary';
+
 // INDEXEDDB DEPOLAMA MOTORU
 const DB_NAME = 'EnglishLearnAppDB';
 const DB_VERSION = 1;
@@ -155,7 +157,7 @@ const findPhrasalVerbsInText = (text) => {
   return matches;
 };
 
-const dictionary = {
+const baseDictionary = {
   // Temel Gramer & Zamirler
   "i": "ben", "you": "sen/siz", "he": "o (erkek)", "she": "o (kadın)", "it": "o", "we": "biz", "they": "onlar",
   "me": "bana/beni", "him": "ona/onu", "her": "ona/onun", "us": "bize/bizi", "them": "onlara/onları",
@@ -264,6 +266,11 @@ const dictionary = {
   "public speaking": "topluluk önünde konuşma", "body language": "beden dili", "financial literacy": "finansal okuryazarlık",
   "emergency fund": "acil durum fonu", "decision fatigue": "karar yorgunluğu", "green spaces": "yeşil alanlar",
   "supply chains": "tedarik zincirleri", "artificial intelligence": "yapay zeka", "brain plasticity": "beyin plastisitesi"
+};
+
+const dictionary: Record<string, string> = {
+  ...baseDictionary,
+  ...expandedDictionary
 };
 
 const wordLevelMap = {

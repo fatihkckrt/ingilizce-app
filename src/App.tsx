@@ -106,6 +106,8 @@ export default function App() {
   const [selectedLevel, setSelectedLevel] = useState(null);
   const [activeText, setActiveText] = useState(null);
   const [selectedTranslation, setSelectedTranslation] = useState(null);
+  const [isSearchingOnline, setIsSearchingOnline] = useState(false);
+  const [customWordInput, setCustomWordInput] = useState('');
   const [selectedLevelTag, setSelectedLevelTag] = useState('B1');
   const [activeHighlight, setActiveHighlight] = useState(null);
   const [showFullTranslation, setShowFullTranslation] = useState(false);
@@ -353,9 +355,29 @@ export default function App() {
     if (!clean) return null;
     if (dictionary[clean]) return dictionary[clean];
 
+    const irregulars = {
+      "went": "go", "came": "come", "saw": "see", "took": "take", "made": "make",
+      "got": "get", "found": "find", "gave": "give", "told": "tell", "thought": "think",
+      "felt": "feel", "left": "leave", "knew": "know", "began": "begin", "became": "become",
+      "brought": "bring", "built": "build", "bought": "buy", "spoke": "speak", "spent": "spend",
+      "stood": "stand", "swam": "swim", "ran": "run", "read": "read", "wrote": "write",
+      "wore": "wear", "won": "win", "woke": "wake", "slept": "sleep", "paid": "pay",
+      "met": "meet", "lost": "lose", "kept": "keep", "held": "hold", "heard": "hear",
+      "grew": "grow", "drew": "draw", "drove": "drive", "drank": "drink", "ate": "eat",
+      "fell": "fall", "flew": "fly", "forgot": "forget", "chose": "choose", "broken": "break",
+      "chosen": "choose", "driven": "drive", "eaten": "eat", "fallen": "fall", "flown": "fly",
+      "forgotten": "forget", "given": "give", "grown": "grow", "known": "know", "seen": "see",
+      "spoken": "speak", "taken": "take", "written": "write"
+    };
+
+    if (irregulars[clean] && dictionary[irregulars[clean]]) {
+      return dictionary[irregulars[clean]];
+    }
+
     const rules = [
       ["'s", ""], ["s", ""], ["es", ""], ["ed", ""], ["d", ""],
-      ["ing", ""], ["ing", "e"], ["ly", ""], ["er", ""], ["est", ""]
+      ["ing", ""], ["ing", "e"], ["ly", ""], ["er", ""], ["est", ""],
+      ["ied", "y"], ["ies", "y"], ["ier", "y"], ["iest", "y"], ["ily", "y"]
     ];
 
     for (const [suffix, replace] of rules) {
@@ -455,6 +477,34 @@ export default function App() {
     });
     setActiveHighlight({ sentenceId: sentence?.id, indices: matchedIndices });
     speak(foundPhraseData ? foundPhraseData.original : singleWordData.original);
+
+    // Çevrim içi dinamik arama (Eğer kelime yerel sözlükte bulunamadıysa)
+    if (!foundSingleTr && clickedCleanWord && clickedCleanWord.length > 1) {
+      setIsSearchingOnline(true);
+      fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(clickedCleanWord)}&langpair=en|tr`)
+        .then(res => res.json())
+        .then(data => {
+          const rawTr = data?.responseData?.translatedText;
+          if (rawTr && rawTr.toLowerCase() !== clickedCleanWord.toLowerCase() && !rawTr.includes('MYMEMORY')) {
+            const cleanTr = rawTr.toLowerCase().trim();
+            dictionary[clickedCleanWord] = cleanTr;
+            setSelectedTranslation(prev => {
+              if (!prev || prev.word?.original !== clickedCleanWord) return prev;
+              return {
+                ...prev,
+                word: {
+                  ...prev.word,
+                  translated: cleanTr
+                }
+              };
+            });
+          }
+        })
+        .catch(() => {})
+        .finally(() => {
+          setIsSearchingOnline(false);
+        });
+    }
   };
 
   const handlePhrasalBadgeClick = (phrasalMatch, sentence) => {
@@ -527,6 +577,8 @@ export default function App() {
   };
 
   const closeTranslationModal = () => {
+    setCustomWordInput('');
+    setIsSearchingOnline(false);
     if (window.history.state && window.history.state.modal === 'translation') {
       window.history.back();
     } else {
@@ -1975,15 +2027,56 @@ export default function App() {
                       : `🔖 ${selectedLevelTag} Olarak Deftere Ekle`}
                   </button>
                 </>
+              ) : isSearchingOnline ? (
+                <div className="mt-3 flex items-center gap-2.5 py-2 px-3 rounded-xl bg-indigo-950/60 border border-indigo-500/30 text-indigo-300 text-xs font-semibold">
+                  <span className="inline-block w-4 h-4 border-2 border-indigo-400 border-t-transparent rounded-full animate-spin"></span>
+                  <span>Çevrimiçi sözlük taranıyor...</span>
+                </div>
               ) : (
-                <div className="mt-2 space-y-2">
-                  <p className="text-xs text-amber-300 font-medium">Bu kelime sözlükte bulunamadı.</p>
-                  <div className="flex gap-2">
+                <div className="mt-2.5 space-y-2.5 bg-slate-800/80 p-3.5 rounded-2xl border border-slate-700">
+                  <p className="text-xs text-amber-300 font-semibold flex items-center gap-1.5">
+                    <span>💡</span> Yerel sözlükte bulunamadı. Anlamını girip deftere ekleyebilirsiniz:
+                  </p>
+                  <div className="flex gap-1.5">
+                    <input
+                      type="text"
+                      placeholder="Kelimenin Türkçe karşılığı..."
+                      value={customWordInput}
+                      onChange={(e) => setCustomWordInput(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' && customWordInput.trim()) {
+                          const cleanTr = customWordInput.trim().toLowerCase();
+                          const newWordData = { original: selectedTranslation.word.original, translated: cleanTr };
+                          dictionary[selectedTranslation.word.original] = cleanTr;
+                          toggleSaveWord(newWordData, selectedLevelTag, selectedTranslation.context);
+                          setSelectedTranslation(prev => prev ? { ...prev, word: newWordData } : null);
+                          setCustomWordInput('');
+                        }
+                      }}
+                      className="flex-1 px-3 py-2 text-xs rounded-xl bg-slate-900 border border-slate-600 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-400"
+                    />
+                    <button
+                      onClick={() => {
+                        if (!customWordInput.trim()) return;
+                        const cleanTr = customWordInput.trim().toLowerCase();
+                        const newWordData = { original: selectedTranslation.word.original, translated: cleanTr };
+                        dictionary[selectedTranslation.word.original] = cleanTr;
+                        toggleSaveWord(newWordData, selectedLevelTag, selectedTranslation.context);
+                        setSelectedTranslation(prev => prev ? { ...prev, word: newWordData } : null);
+                        setCustomWordInput('');
+                      }}
+                      disabled={!customWordInput.trim()}
+                      className="px-3.5 py-2 bg-indigo-600 hover:bg-indigo-500 disabled:opacity-40 text-white rounded-xl text-xs font-bold shrink-0 shadow transition"
+                    >
+                      💾 Kaydet
+                    </button>
+                  </div>
+                  <div className="flex gap-2 pt-1 border-t border-slate-700/60">
                     <a
                       href={`https://translate.google.com/?sl=en&tl=tr&text=${encodeURIComponent(selectedTranslation.word.original)}&op=translate`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-xs bg-slate-800 hover:bg-slate-700 border border-slate-600 text-indigo-300 px-3 py-1.5 rounded-lg flex items-center gap-1 font-bold"
+                      className="text-xs bg-slate-900 hover:bg-slate-700 border border-slate-700 text-indigo-300 px-3 py-1.5 rounded-lg flex items-center gap-1 font-bold transition"
                     >
                       🌐 Google Çeviri
                     </a>
@@ -1991,7 +2084,7 @@ export default function App() {
                       href={`https://tureng.com/tr/turkce-ingilizce/${encodeURIComponent(selectedTranslation.word.original)}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-xs bg-slate-800 hover:bg-slate-700 border border-slate-600 text-amber-300 px-3 py-1.5 rounded-lg flex items-center gap-1 font-bold"
+                      className="text-xs bg-slate-900 hover:bg-slate-700 border border-slate-700 text-amber-300 px-3 py-1.5 rounded-lg flex items-center gap-1 font-bold transition"
                     >
                       📖 Tureng
                     </a>
