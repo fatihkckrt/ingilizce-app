@@ -10,6 +10,13 @@
     <meta property="og:description" content="Leitner SRS ve Karaoke sistemi ile İngilizce öğrenme uygulaması" />
     <meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary_large_image" />
+    <script>
+      // GitHub Pages kök dizinden açıldığında derlenmiş /docs/ klasörüne otomatik yönlendir
+      if (window.location.hostname.endsWith('github.io') && !window.location.pathname.includes('/docs')) {
+        var base = window.location.pathname.replace(/\/+$/, '');
+        window.location.replace(base + '/docs/' + window.location.search + window.location.hash);
+      }
+    </script>
     <script type="module" crossorigin src="./assets/index-DEJBupFi.js"></script>
     <link rel="stylesheet" crossorigin href="./assets/index-CAnE_RkB.css">
   <link rel="manifest" href="./manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="./registerSW.js"></script></head>
