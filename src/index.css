@@ -1,0 +1,46 @@
+@import "tailwindcss";
+
+body {
+  margin: 0;
+  touch-action: manipulation;
+  min-height: 100vh;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.word-highlight {
+  background-color: #c7d2fe !important;
+  border-radius: 4px;
+  color: #1e1b4b !important;
+}
+
+.karaoke-highlight {
+  background-color: #fde047 !important;
+  color: #1e1b4b !important;
+  border-radius: 4px;
+  box-shadow: 0 0 12px rgba(250, 204, 21, 0.85);
+  font-weight: 800 !important;
+  transition: background-color 0.1s ease;
+}
+
+.phrase-hunter-highlight {
+  border-bottom: 2px dashed #eab308 !important;
+  background-color: rgba(234, 179, 8, 0.15) !important;
+  border-radius: 3px;
+}
+
+.glass-container {
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+.card-glass {
+  background: rgba(255, 255, 255, 0.88);
+}
