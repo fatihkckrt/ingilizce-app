@@ -101,60 +101,201 @@ const logStudyActivity = async (type, details = {}) => {
   }
 };
 
-const phrasalVerbs = {
-  "look forward to": { tr: "dört gözle beklemek", level: "B1", type: "phrasal", ex: "I look forward to hearing from you." },
-  "give up": { tr: "vazgeçmek, pes etmek", level: "A2", type: "phrasal", ex: "Never give up on your dreams." },
-  "figure out": { tr: "çözmek, anlamak", level: "B1", type: "phrasal", ex: "I need to figure out this problem." },
-  "run out of": { tr: "tükenmek, bitmek", level: "A2", type: "phrasal", ex: "We have run out of coffee." },
-  "take care of": { tr: "ilgilenmek, bakmak", level: "A2", type: "phrasal", ex: "She takes care of her younger brother." },
-  "break down": { tr: "bozulmak, arızalanmak; çökmek", level: "A2", type: "phrasal", ex: "The car broke down on the highway." },
-  "carry out": { tr: "yürütmek, gerçekleştirmek", level: "B2", type: "phrasal", ex: "Scientists carry out important experiments." },
-  "come across": { tr: "karşılaşmak, denk gelmek", level: "B1", type: "phrasal", ex: "I came across an old photo yesterday." },
-  "get along with": { tr: "biriyle iyi geçinmek", level: "B1", type: "phrasal", ex: "Do you get along with your colleagues?" },
-  "keep up with": { tr: "ayak uydurmak, takip etmek", level: "B2", type: "phrasal", ex: "It is hard to keep up with modern technology." },
-  "look into": { tr: "araştırmak, incelemek", level: "B1", type: "phrasal", ex: "The manager will look into the complaint." },
-  "make sense": { tr: "mantıklı gelmek, anlam ifade etmek", level: "A2", type: "collocation", ex: "That explanation makes total sense." },
-  "put off": { tr: "ertelemek", level: "B1", type: "phrasal", ex: "Never put off until tomorrow what you can do today." },
-  "turn down": { tr: "reddetmek; kısmak", level: "B1", type: "phrasal", ex: "He turned down the job offer." },
-  "wake up": { tr: "uyanmak", level: "A1", type: "phrasal", ex: "I wake up at 7 AM every day." },
-  "find out": { tr: "öğrenmek, keşfetmek", level: "A2", type: "phrasal", ex: "I need to find out what happened." },
-  "set up": { tr: "kurmak, başlatmak", level: "A2", type: "phrasal", ex: "They set up a new company." },
-  "catch up with": { tr: "yakalamak; hasret gidermek", level: "B1", type: "phrasal", ex: "Let's catch up over coffee this weekend." },
-  "deal with": { tr: "başa çıkmak, ele almak", level: "B1", type: "phrasal", ex: "How do you deal with stress?" },
-  "call off": { tr: "iptal etmek", level: "B1", type: "phrasal", ex: "They called off the soccer match due to heavy rain." },
-  "point out": { tr: "işaret etmek, belirtmek", level: "B1", type: "phrasal", ex: "She pointed out several key advantages." },
-  "pay attention to": { tr: "dikkat etmek, kulak vermek", level: "A2", type: "collocation", ex: "Please pay attention to the instructions." },
-  "take advantage of": { tr: "fırsatı değerlendirmek, yararlanmak", level: "B2", type: "collocation", ex: "You should take advantage of this opportunity." },
-  "in terms of": { tr: "bakımından, açısından", level: "B2", type: "collocation", ex: "In terms of performance, this phone is great." },
+interface PhraseInfo {
+  tr: string;
+  level: string;
+  type: string;
+  ex: string;
+  variants?: string[];
+  canonical?: string;
+  isVariant?: boolean;
+}
+
+const rawPhrasalVerbs: Record<string, PhraseInfo> = {
+  // === A1 ===
+  "wake up": { tr: "uyanmak", level: "A1", type: "phrasal", ex: "I wake up at 7 AM every day.", variants: ["wakes up", "waking up", "woke up", "woken up"] },
+  "get up": { tr: "yataktan kalkmak", level: "A1", type: "phrasal", ex: "She gets up early on weekdays.", variants: ["gets up", "getting up", "got up"] },
+  "grow up": { tr: "büyümek, yetişmek", level: "A1", type: "phrasal", ex: "I grew up in a small town.", variants: ["grows up", "growing up", "grew up", "grown up"] },
+  "have fun": { tr: "eğlenmek", level: "A1", type: "collocation", ex: "Have fun tonight!", variants: ["has fun", "having fun", "had fun"] },
+  "go shopping": { tr: "alışverişe gitmek", level: "A1", type: "collocation", ex: "We went shopping yesterday.", variants: ["goes shopping", "going shopping", "went shopping", "gone shopping"] },
+
+  // === A2 ===
+  "go camping": { tr: "kamp yapmaya gitmek", level: "A2", type: "collocation", ex: "We went camping in the mountains.", variants: ["goes camping", "going camping", "went camping", "gone camping"] },
+  "set up": { tr: "kurmak, hazırlamak", level: "A2", type: "phrasal", ex: "Setting up the tents took thirty minutes.", variants: ["sets up", "setting up"] },
+  "sit around": { tr: "etrafında toplanıp oturmak", level: "A2", type: "phrasal", ex: "We sat around the fire and shared stories.", variants: ["sits around", "sitting around", "sat around"] },
+  "move into": { tr: "yeni eve taşınmak", level: "A2", type: "phrasal", ex: "I moved into a new apartment last month.", variants: ["moves into", "moving into", "moved into"] },
+  "search for": { tr: "aramak, araştırmak", level: "A2", type: "phrasal", ex: "I spent two weeks searching for the right flat.", variants: ["searches for", "searching for", "searched for"] },
+  "look for": { tr: "aramak", level: "A2", type: "phrasal", ex: "What are you looking for?", variants: ["looks for", "looking for", "looked for"] },
+  "carry down": { tr: "aşağı taşımak", level: "A2", type: "phrasal", ex: "He helped me carry the heavy furniture downstairs.", variants: ["carries down", "carrying down", "carried down"] },
+  "knock on": { tr: "kapıyı çalmak", level: "A2", type: "phrasal", ex: "My neighbor knocked on my door with cookies.", variants: ["knocks on", "knocking on", "knocked on"] },
+  "save time": { tr: "zaman kazanmak, tasarruf etmek", level: "A2", type: "collocation", ex: "Living closer to work saves valuable time.", variants: ["saves time", "saving time", "saved time", "saves valuable time", "saved valuable time"] },
+  "on display": { tr: "sergilenmekte, teşhirde", level: "A2", type: "idiom", ex: "There was a real astronaut suit on display." },
+  "outer space": { tr: "uzay boşluğu, derin uzay", level: "A2", type: "collocation", ex: "The meteorite came from outer space." },
+  "feel like": { tr: "gibi hissetmek; canı istemek", level: "A2", type: "phrasal", ex: "We felt like we were swimming with whales.", variants: ["feels like", "feeling like", "felt like"] },
+  "turn off": { tr: "kapatmak, söndürmek", level: "A2", type: "phrasal", ex: "At seven, we turned off the living room lights.", variants: ["turns off", "turning off", "turned off"] },
+  "turn on": { tr: "açmak, çalıştırmak", level: "A2", type: "phrasal", ex: "Please turn on the lights.", variants: ["turns on", "turning on", "turned on"] },
+  "hide behind": { tr: "arkasına saklanmak", level: "A2", type: "phrasal", ex: "We hid behind the sofa and waited quietly.", variants: ["hides behind", "hiding behind", "hid behind", "hidden behind"] },
+  "jump up": { tr: "yerinden fırlamak, zıplamak", level: "A2", type: "phrasal", ex: "We all jumped up and shouted happy birthday.", variants: ["jumps up", "jumping up", "jumped up"] },
+  "blow out": { tr: "üfleyerek söndürmek", level: "A2", type: "phrasal", ex: "She blew out the candles and made a wish.", variants: ["blows out", "blowing out", "blew out", "blown out"] },
+  "make a wish": { tr: "dilek tutmak", level: "A2", type: "collocation", ex: "She made a secret wish.", variants: ["makes a wish", "making a wish", "made a wish", "made a secret wish"] },
+  "worth it": { tr: "buna değer, zahmetine değer", level: "A2", type: "idiom", ex: "Keeping the secret was hard, but it was worth it." },
+  "at first": { tr: "ilk başta, başlangıçta", level: "A2", type: "idiom", ex: "Using the clutch was very hard at first." },
+  "at the end": { tr: "sonunda, bitiminde", level: "A2", type: "idiom", ex: "At the end, he smiled and said I passed." },
+  "try again": { tr: "tekrar denemek", level: "A2", type: "collocation", ex: "The engine stopped, but I tried again calmly.", variants: ["tries again", "trying again", "tried again"] },
+  "take pictures": { tr: "fotoğraf çekmek", level: "A2", type: "collocation", ex: "We took many pictures of the rocks and trees.", variants: ["takes pictures", "taking pictures", "took pictures", "take pictures of", "took pictures of", "take a picture", "took a picture"] },
+  "give up": { tr: "vazgeçmek, pes etmek", level: "A2", type: "phrasal", ex: "Never give up on your dreams.", variants: ["gives up", "giving up", "gave up", "given up"] },
+  "run out of": { tr: "tükenmek, bitmek", level: "A2", type: "phrasal", ex: "We have run out of coffee.", variants: ["runs out of", "running out of", "ran out of"] },
+  "take care of": { tr: "ilgilenmek, bakmak", level: "A2", type: "phrasal", ex: "She takes care of her younger brother.", variants: ["takes care of", "taking care of", "took care of", "taken care of"] },
+  "break down": { tr: "bozulmak, arızalanmak", level: "A2", type: "phrasal", ex: "The car broke down on the highway.", variants: ["breaks down", "breaking down", "broke down", "broken down"] },
+  "make sense": { tr: "mantıklı gelmek, anlam ifade etmek", level: "A2", type: "collocation", ex: "That explanation makes total sense.", variants: ["makes sense", "making sense", "made sense"] },
+  "find out": { tr: "öğrenmek, keşfetmek", level: "A2", type: "phrasal", ex: "I need to find out what happened.", variants: ["finds out", "finding out", "found out"] },
+  "pay attention to": { tr: "dikkat etmek, kulak vermek", level: "A2", type: "collocation", ex: "Please pay attention to the instructions.", variants: ["pays attention to", "paying attention to", "paid attention to"] },
+  "depend on": { tr: "bağlı olmak, güvenmek", level: "A2", type: "phrasal", ex: "Success depends on your consistency.", variants: ["depends on", "depending on", "depended on"] },
+  "put on": { tr: "giymek, takmak", level: "A2", type: "phrasal", ex: "Put on warm clothes.", variants: ["puts on", "putting on"] },
+  "take off": { tr: "çıkarmak; havalanmak", level: "A2", type: "phrasal", ex: "The plane will take off soon.", variants: ["takes off", "taking off", "took off", "taken off"] },
+  "pick up": { tr: "almak, toplamak, yerden kaldırmak", level: "A2", type: "phrasal", ex: "Can you pick up the phone?", variants: ["picks up", "picking up", "picked up"] },
+  "come back": { tr: "geri dönmek", level: "A2", type: "phrasal", ex: "When will you come back?", variants: ["comes back", "coming back", "came back"] },
+  "go back": { tr: "geri gitmek", level: "A2", type: "phrasal", ex: "I want to go back home.", variants: ["goes back", "going back", "went back", "gone back"] },
+  "calm down": { tr: "sakinleşmek", level: "A2", type: "phrasal", ex: "Calm down and breathe slowly.", variants: ["calms down", "calming down", "calmed down"] },
+  "hurry up": { tr: "acele etmek", level: "A2", type: "phrasal", ex: "Hurry up or we will be late.", variants: ["hurries up", "hurrying up", "hurried up"] },
+  "get ready": { tr: "hazırlanmak", level: "A2", type: "collocation", ex: "Get ready for the trip.", variants: ["gets ready", "getting ready", "got ready"] },
+  "make friends": { tr: "arkadaş edinmek", level: "A2", type: "collocation", ex: "She makes friends easily.", variants: ["makes friends", "making friends", "made friends"] },
+  "take a walk": { tr: "yürüyüşe çıkmak", level: "A2", type: "collocation", ex: "Let us take a walk.", variants: ["takes a walk", "taking a walk", "took a walk"] },
+  "look after": { tr: "göz kulak olmak, bakmak", level: "A2", type: "phrasal", ex: "Who looks after your cat?", variants: ["looks after", "looking after", "looked after"] },
+  "fall in love": { tr: "aşık olmak", level: "A2", type: "collocation", ex: "They fell in love in Paris.", variants: ["falls in love", "falling in love", "fell in love", "fallen in love"] },
+  "do homework": { tr: "ödev yapmak", level: "A2", type: "collocation", ex: "She is doing her homework.", variants: ["does homework", "doing homework", "did homework", "done homework"] },
+  "check in": { tr: "giriş yaptırmak (otel/uçuş)", level: "A2", type: "phrasal", ex: "We checked in at 2 PM.", variants: ["checks in", "checking in", "checked in"] },
+  "check out": { tr: "çıkış yapmak; göz atmak", level: "A2", type: "phrasal", ex: "Check out this cool website.", variants: ["checks out", "checking out", "checked out"] },
+  "wait for": { tr: "beklemek", level: "A2", type: "phrasal", ex: "I waited for the bus for 30 minutes.", variants: ["waits for", "waiting for", "waited for"] },
+  "listen to": { tr: "dinlemek", level: "A2", type: "phrasal", ex: "Listen to good music.", variants: ["listens to", "listening to", "listened to"] },
+  "talk about": { tr: "hakkında konuşmak", level: "A2", type: "phrasal", ex: "What did you talk about?", variants: ["talks about", "talking about", "talked about"] },
+
+  // === B1 ===
+  "renewable energy": { tr: "yenilenebilir enerji", level: "B1", type: "collocation", ex: "Renewable energy is essential for our planet." },
+  "climate change": { tr: "iklim değişikliği", level: "B1", type: "collocation", ex: "Climate change accelerates extreme weather." },
+  "fossil fuels": { tr: "fosil yakıtlar", level: "B1", type: "collocation", ex: "Fossil fuels release greenhouse gases." },
+  "greenhouse gases": { tr: "sera gazları", level: "B1", type: "collocation", ex: "Factories emit greenhouse gases." },
+  "solar power": { tr: "güneş enerjisi", level: "B1", type: "collocation", ex: "Solar power and wind energy lead the clean revolution." },
+  "wind energy": { tr: "rüzgar enerjisi", level: "B1", type: "collocation", ex: "Wind energy produces clean electricity." },
+  "electric vehicles": { tr: "elektrikli araçlar", level: "B1", type: "collocation", ex: "Electric vehicles are replacing gasoline cars." },
+  "future generations": { tr: "gelecek nesiller", level: "B1", type: "collocation", ex: "We must preserve nature for future generations." },
+  "than ever before": { tr: "şimdiye kadar hiç olmadığı kadar", level: "B1", type: "idiom", ex: "International commitment is stronger than ever before." },
+  "at a rapid pace": { tr: "baş döndürücü/hızlı bir tempoda", level: "B1", type: "idiom", ex: "Battery technology has advanced at a rapid pace." },
+  "look forward to": { tr: "dört gözle beklemek", level: "B1", type: "phrasal", ex: "I look forward to hearing from you.", variants: ["looks forward to", "looking forward to", "looked forward to"] },
+  "figure out": { tr: "çözmek, anlamak", level: "B1", type: "phrasal", ex: "I need to figure out this problem.", variants: ["figures out", "figuring out", "figured out"] },
+  "come across": { tr: "karşılaşmak, denk gelmek", level: "B1", type: "phrasal", ex: "I came across an old photo yesterday.", variants: ["comes across", "coming across", "came across"] },
+  "get along with": { tr: "biriyle iyi geçinmek", level: "B1", type: "phrasal", ex: "Do you get along with your colleagues?", variants: ["gets along with", "getting along with", "got along with"] },
+  "look into": { tr: "araştırmak, incelemek", level: "B1", type: "phrasal", ex: "The manager will look into the complaint.", variants: ["looks into", "looking into", "looked into"] },
+  "put off": { tr: "ertelemek", level: "B1", type: "phrasal", ex: "Never put off until tomorrow what you can do today.", variants: ["puts off", "putting off"] },
+  "turn down": { tr: "reddetmek; kısmak", level: "B1", type: "phrasal", ex: "He turned down the job offer.", variants: ["turns down", "turning down", "turned down"] },
+  "catch up with": { tr: "yakalamak; hasret gidermek", level: "B1", type: "phrasal", ex: "Let us catch up over coffee this weekend.", variants: ["catches up with", "catching up with", "caught up with"] },
+  "deal with": { tr: "başa çıkmak, ele almak", level: "B1", type: "phrasal", ex: "How do you deal with stress?", variants: ["deals with", "dealing with", "dealt with"] },
+  "call off": { tr: "iptal etmek", level: "B1", type: "phrasal", ex: "They called off the soccer match due to heavy rain.", variants: ["calls off", "calling off", "called off"] },
+  "point out": { tr: "işaret etmek, belirtmek", level: "B1", type: "phrasal", ex: "She pointed out several key advantages.", variants: ["points out", "pointing out", "pointed out"] },
+  "bring up": { tr: "gündeme getirmek; büyütmek", level: "B1", type: "phrasal", ex: "Why did you bring up that topic?", variants: ["brings up", "bringing up", "brought up"] },
+  "run into": { tr: "karşılaşmak, rastlamak", level: "B1", type: "phrasal", ex: "I ran into my old teacher at the market.", variants: ["runs into", "running into", "ran into"] },
+  "end up": { tr: "sonuçlanmak, kendini ... bulmak", level: "B1", type: "phrasal", ex: "We ended up having dinner at midnight.", variants: ["ends up", "ending up", "ended up"] },
+  "build on": { tr: "üzerine kurmak / inşa edilmek", level: "B1", type: "phrasal", ex: "Our lives are largely built on routines.", variants: ["builds on", "building on", "built on"] },
+  "rather than": { tr: "yerine, -den ziyade", level: "B1", type: "idiom", ex: "Habits govern behavior rather than conscious thought." },
+  "according to": { tr: "-e göre", level: "B1", type: "idiom", ex: "According to behavioral research, habits follow a loop." },
+  "composed of": { tr: "-den oluşan, meydana gelen", level: "B1", type: "collocation", ex: "A loop composed of three steps." },
+  "in response to": { tr: "-e yanıt/tepki olarak", level: "B1", type: "idiom", ex: "Behavior performed in response to the cue." },
+  "as an example": { tr: "örnek olarak", level: "B1", type: "idiom", ex: "Consider afternoon coffee as an example." },
+  "break bad habits": { tr: "kötü alışkanlıkları kırmak", level: "B1", type: "collocation", ex: "Breaking bad habits requires smart strategy.", variants: ["breaks bad habits", "breaking bad habits", "broke bad habits"] },
+  "substitute with": { tr: "-ile değiştirmek, yerine koymak", level: "B1", type: "phrasal", ex: "Substitute that unhealthy snack with a walk.", variants: ["substitutes with", "substituting with", "substituted with"] },
+  "in plain sight": { tr: "göz önünde, apaçık", level: "B1", type: "idiom", ex: "Keep your workout shoes in plain sight." },
+  "turn into": { tr: "-e dönüşmek", level: "B1", type: "phrasal", ex: "Actions turn into automated reflexes.", variants: ["turns into", "turning into", "turned into"] },
+  "suffer from": { tr: "muzdarip olmak, acısını çekmek", level: "B1", type: "phrasal", ex: "Historic cities suffer from overtourism.", variants: ["suffers from", "suffering from", "suffered from"] },
+  "make a difference": { tr: "fark yaratmak", level: "B1", type: "collocation", ex: "Conscious travelers can make a difference.", variants: ["makes a difference", "making a difference", "made a difference"] },
+  "focus on": { tr: "odaklanmak", level: "B1", type: "phrasal", ex: "This travel philosophy focuses on conservation.", variants: ["focuses on", "focusing on", "focused on"] },
+  "instead of": { tr: "yerine", level: "B1", type: "idiom", ex: "Taking trains instead of short flights lowers carbon footprint." },
   "as a result of": { tr: "sonucunda, neticesinde", level: "B1", type: "collocation", ex: "He won the award as a result of hard work." },
-  "bring up": { tr: "gündeme getirmek; büyütmek", level: "B1", type: "phrasal", ex: "Why did you bring up that topic?" },
-  "depend on": { tr: "bağlı olmak, güvenmek", level: "A2", type: "phrasal", ex: "Success depends on your consistency." },
-  "grow up": { tr: "büyümek, yetişmek", level: "A1", type: "phrasal", ex: "I grew up in a small coastal town." },
-  "run into": { tr: "karşılaşmak, rastlamak", level: "B1", type: "phrasal", ex: "I ran into my old teacher at the market." },
-  "stand out": { tr: "göze çarpmak, öne çıkmak", level: "B2", type: "phrasal", ex: "Her leadership skills really stand out." },
-  "end up": { tr: "sonuçlanmak, kendini ... bulmak", level: "B1", type: "phrasal", ex: "We ended up having dinner at midnight." }
+  "in front of": { tr: "önünde", level: "B1", type: "idiom", ex: "Confidence in front of any live audience." },
+  "body language": { tr: "beden dili", level: "B1", type: "collocation", ex: "Your physical body language speaks before your voice." },
+  "eye contact": { tr: "göz teması", level: "B1", type: "collocation", ex: "Maintain steady eye contact with the audience." },
+  "speed up": { tr: "hızlandırmak", level: "B1", type: "phrasal", ex: "Feedback speeds up improvement.", variants: ["speeds up", "speeding up", "sped up", "speeded up"] },
+  "in your favor": { tr: "lehine, yararına", level: "B1", type: "idiom", ex: "Compound interest can work in your favor." },
+  "over time": { tr: "zamanla, zaman içinde", level: "B1", type: "idiom", ex: "Liabilities steadily drain cash over time." },
+  "delayed gratification": { tr: "tatmini erteleme, sabır", level: "B1", type: "collocation", ex: "Practice conscious delayed gratification with large purchases." },
+  "work out": { tr: "antrenman yapmak; çözüme ulaşmak", level: "B1", type: "phrasal", ex: "I work out at the gym regularly.", variants: ["works out", "working out", "worked out"] },
+  "cheer up": { tr: "neşelenmek, teselli etmek", level: "B1", type: "phrasal", ex: "Cheer up, everything will be fine!", variants: ["cheers up", "cheering up", "cheered up"] },
+  "give in": { tr: "pes etmek, boyun eğmek", level: "B1", type: "phrasal", ex: "Never give in to peer pressure.", variants: ["gives in", "giving in", "gave in", "given in"] },
+  "show up": { tr: "çıkagelmek, belirmek", level: "B1", type: "phrasal", ex: "He did not show up for class.", variants: ["shows up", "showing up", "showed up", "shown up"] },
+  "get rid of": { tr: "kurtulmak, elden çıkarmak", level: "B1", type: "phrasal", ex: "It is time to get rid of old junk.", variants: ["gets rid of", "getting rid of", "got rid of"] },
+  "keep on": { tr: "devam etmek", level: "B1", type: "phrasal", ex: "Keep on smiling.", variants: ["keeps on", "keeping on", "kept on"] },
+  "carry on": { tr: "sürdürmek, devam etmek", level: "B1", type: "phrasal", ex: "Carry on with your speech.", variants: ["carries on", "carrying on", "carried on"] },
+  "watch out": { tr: "dikkat etmek", level: "B1", type: "phrasal", ex: "Watch out for pickpockets.", variants: ["watches out", "watching out", "watched out"] },
+  "by chance": { tr: "tesadüfen", level: "B1", type: "idiom", ex: "We met by chance in the cafe." },
+  "on purpose": { tr: "kasıtlı olarak, bilerek", level: "B1", type: "idiom", ex: "I did not do it on purpose." },
+  "in advance": { tr: "önceden, peşin", level: "B1", type: "idiom", ex: "Please reserve your room in advance." },
+  "at least": { tr: "en azından", level: "B1", type: "idiom", ex: "Read at least ten pages daily." },
+  "at most": { tr: "en çok, en fazla", level: "B1", type: "idiom", ex: "It will cost ten dollars at most." },
+  "out of order": { tr: "arızalı, bozuk", level: "B1", type: "idiom", ex: "The ticket machine is out of order." },
+  "up to date": { tr: "güncel", level: "B1", type: "idiom", ex: "Keep your software up to date." },
+  "in fact": { tr: "aslında, doğrusu", level: "B1", type: "idiom", ex: "In fact, I enjoyed the book immensely." },
+  "as well as": { tr: "yanı sıra, hem de", level: "B1", type: "idiom", ex: "She speaks German as well as English." },
+  "in order to": { tr: "amacıyla, -mek için", level: "B1", type: "idiom", ex: "Work hard in order to achieve your goals." },
+  "due to": { tr: "-den dolayı, yüzünden", level: "B1", type: "idiom", ex: "The game was canceled due to heavy snow." },
+  "because of": { tr: "nedeniyle", level: "B1", type: "idiom", ex: "We could not travel because of the storm." },
+  "in spite of": { tr: "-e rağmen", level: "B1", type: "idiom", ex: "In spite of bad weather, we had a picnic." },
+  "on the other hand": { tr: "öte yandan, diğer taraftan", level: "B1", type: "idiom", ex: "On the other hand, it is quite expensive." },
+  "first of all": { tr: "her şeyden önce", level: "B1", type: "idiom", ex: "First of all, congratulations on your graduation." },
+  "all in all": { tr: "özetle, neticede", level: "B1", type: "idiom", ex: "All in all, it was a successful year." },
+  "sooner or later": { tr: "er ya da geç", level: "B1", type: "idiom", ex: "Sooner or later, hard work pays off." },
+  "step by step": { tr: "adım adım", level: "B1", type: "idiom", ex: "Follow the tutorial step by step." },
+  "so far": { tr: "şu ana kadar", level: "B1", type: "idiom", ex: "So far so good." },
+  "keep in mind": { tr: "akılda tutmak", level: "B1", type: "idiom", ex: "Keep in mind that consistency is key.", variants: ["keeps in mind", "keeping in mind", "kept in mind"] },
+  "take for granted": { tr: "çantada keklik görmek", level: "B1", type: "idiom", ex: "Never take your health for granted.", variants: ["takes for granted", "taking for granted", "took for granted", "taken for granted"] },
+
+  // === B2 ===
+  "carry out": { tr: "yürütmek, gerçekleştirmek", level: "B2", type: "phrasal", ex: "Scientists carry out important experiments.", variants: ["carries out", "carrying out", "carried out"] },
+  "keep up with": { tr: "ayak uydurmak, takip etmek", level: "B2", type: "phrasal", ex: "It is hard to keep up with modern technology.", variants: ["keeps up with", "keeping up with", "kept up with"] },
+  "take advantage of": { tr: "fırsatı değerlendirmek, yararlanmak", level: "B2", type: "collocation", ex: "You should take advantage of this opportunity.", variants: ["takes advantage of", "taking advantage of", "took advantage of", "taken advantage of"] },
+  "in terms of": { tr: "bakımından, açısından", level: "B2", type: "collocation", ex: "In terms of performance, this phone is great." },
+  "stand out": { tr: "göze çarpmak, öne çıkmak", level: "B2", type: "phrasal", ex: "Her leadership skills really stand out.", variants: ["stands out", "standing out", "stood out"] }
 };
 
-const findPhrasalVerbsInText = (text) => {
+// Flatten dictionary including all canonical keys and conjugated variants
+const phrasalVerbs: Record<string, PhraseInfo> = {};
+for (const [canonical, data] of Object.entries(rawPhrasalVerbs)) {
+  phrasalVerbs[canonical] = { ...data, canonical };
+  if (data.variants) {
+    for (const v of data.variants) {
+      if (!phrasalVerbs[v]) {
+        phrasalVerbs[v] = { ...data, canonical, isVariant: true };
+      }
+    }
+  }
+}
+
+const findPhrasalVerbsInText = (text: string) => {
   if (!text) return [];
-  const matches = [];
+  const matches: any[] = [];
   const sortedPhrases = Object.keys(phrasalVerbs).sort((a, b) => b.length - a.length);
+  const matchedSpans: { start: number; end: number }[] = [];
   
   for (const phrase of sortedPhrases) {
     const escaped = phrase.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     const regex = new RegExp(`\\b${escaped}\\b`, 'gi');
     let match;
     while ((match = regex.exec(text)) !== null) {
-      matches.push({
-        phrase,
-        matchedText: match[0],
-        index: match.index,
-        length: match[0].length,
-        info: phrasalVerbs[phrase]
-      });
+      const start = match.index;
+      const end = start + match[0].length;
+      const hasOverlap = matchedSpans.some(span => Math.max(start, span.start) < Math.min(end, span.end));
+      if (!hasOverlap) {
+        matchedSpans.push({ start, end });
+        const info = phrasalVerbs[phrase];
+        matches.push({
+          phrase: info.canonical || phrase,
+          matchedText: match[0],
+          index: start,
+          length: match[0].length,
+          info
+        });
+      }
     }
   }
-  return matches;
+  return matches.sort((a, b) => a.index - b.index);
 };
 
 const baseDictionary = {

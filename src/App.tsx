@@ -15,6 +15,7 @@ import {
 import { StatsModal } from "./components/StatsModal";
 import { AITextGenerator } from "./components/AITextGenerator";
 import { InstallPromptBanner } from "./components/InstallPromptBanner";
+import { Settings } from "lucide-react";
 
 export class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -1169,10 +1170,11 @@ function MainApp() {
           {currentView === 'reading' ? (
             <button 
               onClick={toggleTypeSettings} 
-              className="p-2 font-bold text-sm bg-white/20 rounded-xl hover:bg-white/30 transition flex items-center gap-1"
-              title="Tipografi ve Ses Ayarları"
+              className="px-2.5 py-1.5 font-bold text-xs bg-white/20 rounded-xl hover:bg-white/30 transition flex items-center gap-1.5 shadow-xs"
+              title="Okuma, Tipografi ve Ses Ayarları"
             >
-              Aa
+              <Settings className="w-3.5 h-3.5" />
+              <span>Aa</span>
             </button>
           ) : currentView === 'home' ? (
             <button 
