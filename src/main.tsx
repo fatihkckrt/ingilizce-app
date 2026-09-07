@@ -8,3 +8,7 @@ createRoot(document.getElementById('root')!).render(
     <App />
   </StrictMode>,
 );
+
+if (typeof (window as unknown as { __APP_MOUNTED__?: () => void }).__APP_MOUNTED__ === 'function') {
+  (window as unknown as { __APP_MOUNTED__?: () => void }).__APP_MOUNTED__!();
+}

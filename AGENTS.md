@@ -17,4 +17,7 @@ This application is a comprehensive English learning platform combining:
 - **Base Baseline:** All future user requests must be built on top of this existing codebase.
 - **Preserve Existing Features:** Do not remove or regress the Leitner SRS engine, the Web Speech karaoke synchronization, the vocabulary storage, or the reading texts.
 - **Incremental Modifications:** When modifying or adding features, ensure compatibility with `src/data.ts` and `src/App.tsx` data structures.
-- **Continuous GitHub Sync:** After verifying any code changes, bug fixes, or feature updates with `compile_applet`, run `npm run build && rm -rf docs && cp -r dist docs`, commit and push to GitHub (`origin main`), and update `gh-pages` branch so GitHub Pages is always up to date and never serves a white screen.
+- **Continuous GitHub Sync & Safe Deployment (CRITICAL):**
+  - To deploy updates safely, **ALWAYS run `npm run deploy`**.
+  - The `npm run deploy` command (`scripts/deploy.cjs`) automatically builds the production bundle, verifies compiled assets in `dist/index.html`, copies with `.nojekyll` and `404.html` to `docs/`, commits and pushes to `main`, and uses `git subtree split` to safely update the root of `gh-pages` with the compiled files.
+  - **CRITICAL WARNING:** NEVER run `git push origin main:gh-pages --force`! Doing so pushes raw uncompiled TypeScript source code (`/src/main.tsx`) to GitHub Pages, which immediately causes a fatal JavaScript syntax error and a blank white screen on mobile devices. Always use `npm run deploy`.

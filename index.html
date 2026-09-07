@@ -12,7 +12,112 @@
     <meta name="twitter:card" content="summary_large_image" />
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <div id="app-initial-loader" style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#090d16;color:#f8fafc;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;padding:24px;text-align:center;box-sizing:border-box;">
+        <div style="width:72px;height:72px;border-radius:20px;background:linear-gradient(135deg,#4f46e5,#7c3aed);display:flex;align-items:center;justify-content:center;box-shadow:0 12px 32px rgba(79,70,229,0.35);margin-bottom:20px;">
+          <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+          </svg>
+        </div>
+        <h1 style="font-size:20px;font-weight:700;margin:0 0 8px 0;letter-spacing:-0.3px;color:#ffffff;">İngilizce Öğren</h1>
+        <p id="loader-status-text" style="font-size:14px;color:#94a3b8;margin:0 0 24px 0;line-height:1.5;max-width:280px;">Uygulama yükleniyor...</p>
+        
+        <div id="loader-spinner" style="width:28px;height:28px;border:3px solid rgba(255,255,255,0.1);border-top-color:#6366f1;border-radius:50%;animation:appSpin 0.8s linear infinite;"></div>
+        
+        <div id="loader-recovery-action" style="display:none;margin-top:20px;">
+          <button id="manual-reset-btn" type="button" style="background:#4f46e5;color:#ffffff;border:none;padding:12px 20px;font-size:14px;font-weight:600;border-radius:12px;cursor:pointer;box-shadow:0 4px 14px rgba(79,70,229,0.4);display:inline-flex;align-items:center;gap:8px;">
+            <span>🔄</span> Güncellemeyi Uygula & Başlat
+          </button>
+        </div>
+      </div>
+    </div>
+    <style>
+      @keyframes appSpin { to { transform: rotate(360deg); } }
+      html, body { margin: 0; padding: 0; background-color: #090d16; }
+    </style>
+    <script>
+      (function() {
+        var hasCleaned = false;
+        function forceClearAndReload() {
+          if (hasCleaned) return;
+          hasCleaned = true;
+          try {
+            if ('serviceWorker' in navigator) {
+              navigator.serviceWorker.getRegistrations().then(function(regs) {
+                for (var i = 0; i < regs.length; i++) { regs[i].unregister(); }
+              }).catch(function(){});
+            }
+            if ('caches' in window) {
+              caches.keys().then(function(keys) {
+                for (var i = 0; i < keys.length; i++) { caches.delete(keys[i]); }
+              }).catch(function(){});
+            }
+          } catch(e) {}
+          setTimeout(function() {
+            var url = new URL(window.location.href);
+            url.searchParams.set('_r', Date.now().toString());
+            window.location.replace(url.toString());
+          }, 250);
+        }
+
+        window.__FORCE_RELOAD__ = forceClearAndReload;
+
+        // Listen for chunk or script load errors (Capture phase: catches resource 404s)
+        window.addEventListener('error', function(e) {
+          var target = e.target;
+          var isResource = target && (target.tagName === 'SCRIPT' || target.tagName === 'LINK');
+          var msg = (e.message || '') + '';
+          var isChunkOrSyntax = msg.indexOf('Loading chunk') !== -1 ||
+                                msg.indexOf('Unexpected token') !== -1 ||
+                                msg.indexOf('Failed to fetch dynamically imported module') !== -1;
+
+          if (isResource || isChunkOrSyntax) {
+            console.warn('[Self-Healing] Script load or version mismatch error:', e);
+            var attempts = parseInt(sessionStorage.getItem('app_auto_recovery') || '0', 10);
+            if (attempts < 2) {
+              sessionStorage.setItem('app_auto_recovery', (attempts + 1).toString());
+              var statusEl = document.getElementById('loader-status-text');
+              if (statusEl) statusEl.textContent = 'Yeni sürüm güncelleniyor, lütfen bekleyin...';
+              forceClearAndReload();
+            } else {
+              showRecoveryBtn('Güncelleme algılandı. Lütfen butona dokunarak uygulamayı yenileyin:');
+            }
+          }
+        }, true);
+
+        // Fallback Watchdog: If React doesn't mount within 4 seconds, show manual reset
+        var watchdog = setTimeout(function() {
+          var loader = document.getElementById('app-initial-loader');
+          if (loader) {
+            showRecoveryBtn('Yükleme beklenenden uzun sürdü:');
+          }
+        }, 4000);
+
+        function showRecoveryBtn(text) {
+          var statusEl = document.getElementById('loader-status-text');
+          var actionEl = document.getElementById('loader-recovery-action');
+          var spinnerEl = document.getElementById('loader-spinner');
+          if (statusEl && text) statusEl.textContent = text;
+          if (actionEl) actionEl.style.display = 'block';
+          if (spinnerEl) spinnerEl.style.display = 'none';
+        }
+
+        document.addEventListener('click', function(e) {
+          if (e.target && (e.target.id === 'manual-reset-btn' || e.target.closest('#manual-reset-btn'))) {
+            var btn = document.getElementById('manual-reset-btn');
+            if (btn) btn.textContent = 'Yenileniyor...';
+            sessionStorage.removeItem('app_auto_recovery');
+            forceClearAndReload();
+          }
+        });
+
+        window.__APP_MOUNTED__ = function() {
+          clearTimeout(watchdog);
+          sessionStorage.removeItem('app_auto_recovery');
+        };
+      })();
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
