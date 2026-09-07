@@ -115,14 +115,61 @@ function MainApp() {
     })();
   }, []);
 
-  const [readerTheme, setReaderTheme] = useState(() => localStorage.getItem('app_theme') || 'glass');
-  const [fontSize, setFontSize] = useState(() => localStorage.getItem('app_fontsize') || 'base');
-  const [fontFamily, setFontFamily] = useState(() => localStorage.getItem('app_fontfamily') || 'sans');
-  const [speechRate, setSpeechRate] = useState(() => parseFloat(localStorage.getItem('app_speech_rate') || '0.9'));
-  const [phraseHunterActive, setPhraseHunterActive] = useState(false);
+  // DEFAULT UYGULAMA AYARLARI:
+  // Telaffuz hızı: 1x (1.0)
+  // Okuma teması: sepia (Kitap)
+  // Yazı boyutu: base (MD)
+  // Yazı tipi: sans
+  const [readerTheme, setReaderTheme] = useState(() => {
+    const initialized = localStorage.getItem('app_defaults_v3_applied');
+    if (!initialized) return 'sepia';
+    return localStorage.getItem('app_theme') || 'sepia';
+  });
+  const [fontSize, setFontSize] = useState(() => {
+    return localStorage.getItem('app_fontsize') || 'base';
+  });
+  const [fontFamily, setFontFamily] = useState(() => {
+    return localStorage.getItem('app_fontfamily') || 'sans';
+  });
+  const [speechRate, setSpeechRate] = useState(() => {
+    const initialized = localStorage.getItem('app_defaults_v3_applied');
+    if (!initialized) return 1.0;
+    const saved = localStorage.getItem('app_speech_rate');
+    return saved ? parseFloat(saved) : 1.0;
+  });
+  const [phraseHunterActive, setPhraseHunterActive] = useState(() => {
+    return localStorage.getItem('app_phrase_hunter') === 'true';
+  });
   const [showTypeSettings, setShowTypeSettings] = useState(false);
   const [showBackupModal, setShowBackupModal] = useState(false);
   const [showStatsModal, setShowStatsModal] = useState(false);
+
+  // Eski/yeni tüm kullanıcılarda varsayılanların uygulanması (isteyen ayarlardan dilediğince değiştirebilir)
+  useEffect(() => {
+    if (!localStorage.getItem('app_defaults_v3_applied')) {
+      localStorage.setItem('app_defaults_v3_applied', 'true');
+      const oldTheme = localStorage.getItem('app_theme');
+      if (!oldTheme || oldTheme === 'glass') {
+        localStorage.setItem('app_theme', 'sepia');
+        setReaderTheme('sepia');
+      }
+      const oldRate = localStorage.getItem('app_speech_rate');
+      if (!oldRate || oldRate === '0.9') {
+        localStorage.setItem('app_speech_rate', '1.0');
+        setSpeechRate(1.0);
+      }
+      const oldFont = localStorage.getItem('app_fontfamily');
+      if (!oldFont) {
+        localStorage.setItem('app_fontfamily', 'sans');
+        setFontFamily('sans');
+      }
+      const oldSize = localStorage.getItem('app_fontsize');
+      if (!oldSize) {
+        localStorage.setItem('app_fontsize', 'base');
+        setFontSize('base');
+      }
+    }
+  }, []);
 
   // Doğal Sesler (TTS Voices)
   const [voices, setVoices] = useState([]);
@@ -287,6 +334,7 @@ function MainApp() {
   useEffect(() => { localStorage.setItem('app_fontsize', fontSize); }, [fontSize]);
   useEffect(() => { localStorage.setItem('app_fontfamily', fontFamily); }, [fontFamily]);
   useEffect(() => { localStorage.setItem('app_speech_rate', speechRate); }, [speechRate]);
+  useEffect(() => { localStorage.setItem('app_phrase_hunter', phraseHunterActive.toString()); }, [phraseHunterActive]);
 
   useEffect(() => {
     if (toastMessage) {
@@ -630,6 +678,7 @@ function MainApp() {
     setActiveHighlight(null);
     setShowTypeSettings(false);
     setShowBackupModal(false);
+    setShowStatsModal(false);
 
     if (options.level !== undefined) setSelectedLevel(options.level);
     if (options.text !== undefined) setActiveText(options.text);
@@ -646,12 +695,18 @@ function MainApp() {
       isCustom: targetText?.isCustom || false
     };
 
-    window.history.pushState(stateObj, '');
+    if (view === 'home') {
+      window.history.replaceState(stateObj, '');
+    } else {
+      window.history.pushState(stateObj, '');
+    }
   };
 
   const openTranslationModal = (data) => {
     setSelectedTranslation(data);
-    if (!window.history.state || window.history.state.modal !== 'translation') {
+    if (window.history.state && window.history.state.modal === 'translation') {
+      window.history.replaceState({ ...window.history.state, modal: 'translation' }, '');
+    } else {
       window.history.pushState({ ...(window.history.state || { view: currentViewRef.current }), modal: 'translation' }, '');
     }
   };
@@ -659,11 +714,10 @@ function MainApp() {
   const closeTranslationModal = () => {
     setCustomWordInput('');
     setIsSearchingOnline(false);
+    setSelectedTranslation(null);
+    setActiveHighlight(null);
     if (window.history.state && window.history.state.modal === 'translation') {
       window.history.back();
-    } else {
-      setSelectedTranslation(null);
-      setActiveHighlight(null);
     }
   };
 
@@ -675,10 +729,9 @@ function MainApp() {
   };
 
   const closeBackupModal = () => {
+    setShowBackupModal(false);
     if (window.history.state && window.history.state.modal === 'backup') {
       window.history.back();
-    } else {
-      setShowBackupModal(false);
     }
   };
 
@@ -690,10 +743,9 @@ function MainApp() {
   };
 
   const closeStatsModal = () => {
+    setShowStatsModal(false);
     if (window.history.state && window.history.state.modal === 'stats') {
       window.history.back();
-    } else {
-      setShowStatsModal(false);
     }
   };
 
@@ -709,15 +761,16 @@ function MainApp() {
   };
 
   const closeTypeSettings = () => {
+    setShowTypeSettings(false);
     if (window.history.state && window.history.state.modal === 'typeSettings') {
       window.history.back();
-    } else {
-      setShowTypeSettings(false);
     }
   };
 
   const handleHeaderBack = () => {
     stopKaraoke();
+
+    // 1. Önce açık olan modalleri kapat
     if (selectedTranslationRef.current) {
       closeTranslationModal();
       return;
@@ -735,35 +788,36 @@ function MainApp() {
       return;
     }
 
-    if (window.history.state && window.history.state.view && window.history.state.view !== 'home') {
-      window.history.back();
-    } else {
-      fallbackGoBack();
+    // 2. Döngüleri kesin önleyen hiyerarşik geri dönüş
+    const cv = currentViewRef.current;
+    if (cv === 'textQuiz') {
+      if (activeTextRef.current) {
+        navigateTo('reading', { text: activeTextRef.current, level: selectedLevelRef.current || activeTextRef.current.level });
+      } else if (selectedLevelRef.current) {
+        navigateTo('levels', { level: selectedLevelRef.current });
+      } else {
+        navigateTo('home');
+      }
+      return;
     }
+
+    if (cv === 'reading') {
+      if (activeTextRef.current?.isCustom) {
+        navigateTo('customList');
+      } else if (selectedLevelRef.current || activeTextRef.current?.level) {
+        navigateTo('levels', { level: selectedLevelRef.current || activeTextRef.current?.level });
+      } else {
+        navigateTo('home');
+      }
+      return;
+    }
+
+    // levels, savedWords, vocabTest, addText, customList, aiGenerate -> Kesinlikle Ana Ekran'a dön
+    navigateTo('home');
   };
 
   const fallbackGoBack = () => {
-    stopKaraoke();
-    setSelectedTranslation(null);
-    setActiveHighlight(null);
-    setShowTypeSettings(false);
-    setShowBackupModal(false);
-    setShowStatsModal(false);
-
-    const cv = currentViewRef.current;
-    if (cv === 'reading' || cv === 'textQuiz') {
-      if (activeTextRef.current?.isCustom) {
-        setCurrentView('customList');
-      } else {
-        setCurrentView('levels');
-      }
-      setActiveText(null);
-      setQuizScore(null);
-      setQuizAnswers({});
-    } else if (['levels', 'savedWords', 'vocabTest', 'addText', 'customList', 'aiGenerate'].includes(cv)) {
-      setCurrentView('home');
-      setSelectedLevel(null);
-    }
+    handleHeaderBack();
   };
 
   const returnToLevelList = () => {
@@ -772,10 +826,12 @@ function MainApp() {
       setCompletedTexts(prev => [...prev, activeText.id]);
       logStudyActivity('text_completed', { count: 1 });
     }
-    if (window.history.state && window.history.state.view === 'textQuiz') {
-      window.history.go(-2);
+    if (activeText?.isCustom) {
+      navigateTo('customList');
+    } else if (selectedLevel || activeText?.level) {
+      navigateTo('levels', { level: selectedLevel || activeText?.level });
     } else {
-      fallbackGoBack();
+      navigateTo('home');
     }
   };
 
@@ -808,7 +864,15 @@ function MainApp() {
       logStudyActivity('text_completed', { count: 1 });
     }
     setToastMessage("Tebrikler! Metin tamamlandı. 🎉");
-    setTimeout(() => { handleHeaderBack(); }, 300);
+    setTimeout(() => {
+      if (activeText?.isCustom) {
+        navigateTo('customList');
+      } else if (selectedLevel || activeText?.level) {
+        navigateTo('levels', { level: selectedLevel || activeText?.level });
+      } else {
+        navigateTo('home');
+      }
+    }, 350);
   };
 
   const checkTextQuiz = () => {
@@ -1144,19 +1208,39 @@ function MainApp() {
       >
 
         {/* Header */}
-        <div className={`p-4 flex items-center shadow-md shrink-0 sticky top-0 z-40 border-b transition-colors duration-300 ${themeStyle.header}`}>
+        <div className={`p-3.5 sm:p-4 flex items-center shadow-md shrink-0 sticky top-0 z-40 border-b transition-colors duration-300 ${themeStyle.header}`}>
           {currentView !== 'home' ? (
-            <button onClick={handleHeaderBack} className="p-2 mr-1 hover:opacity-80 rounded-full transition text-lg">⬅️</button>
+            <div className="flex items-center gap-1 mr-1">
+              <button 
+                onClick={handleHeaderBack} 
+                className="p-1.5 sm:p-2 hover:opacity-80 rounded-xl transition text-base flex items-center justify-center active:scale-95" 
+                title="Geri"
+              >
+                ⬅️
+              </button>
+              <button 
+                onClick={() => navigateTo('home')} 
+                className="p-1.5 sm:p-2 hover:bg-white/20 rounded-xl transition text-base flex items-center justify-center active:scale-95" 
+                title="Ana Ekran"
+              >
+                🏠
+              </button>
+            </div>
           ) : (
             <button 
               onClick={openStatsModal} 
-              className="p-2 mr-1 hover:bg-white/20 rounded-xl transition text-base"
+              className="p-2 mr-1 hover:bg-white/20 rounded-xl transition text-base flex items-center justify-center active:scale-95"
               title="Gelişim ve İstatistikler"
             >
               📊
             </button>
           )}
-          <h1 className="text-lg font-bold flex-1 text-center truncate tracking-wide">
+
+          <h1 
+            onClick={() => currentView !== 'home' && navigateTo('home')}
+            className={`text-base sm:text-lg font-bold flex-1 text-center truncate tracking-wide ${currentView !== 'home' ? 'cursor-pointer hover:opacity-90' : ''}`}
+            title={currentView !== 'home' ? "Ana Ekrana Dönmek İçin Dokunun" : undefined}
+          >
             {currentView === 'home' && "İngilizce Öğren"}
             {currentView === 'levels' && `${selectedLevel} Seviye Metinleri`}
             {currentView === 'reading' && (activeText ? activeText.title : 'Okuma')}
@@ -1167,26 +1251,43 @@ function MainApp() {
             {currentView === 'customList' && "Özel Metinlerim"}
             {currentView === 'aiGenerate' && "AI Metin Stüdyosu"}
           </h1>
-          {currentView === 'reading' ? (
+
+          <div className="flex items-center gap-1.5 ml-1">
+            {/* Kalıp Avcısı Butonu (Giriş ekranında ve okuma ekranında gözükür) */}
+            <button
+              onClick={() => setPhraseHunterActive(!phraseHunterActive)}
+              className={`px-2.5 py-1.5 rounded-xl font-bold text-xs flex items-center gap-1 transition shadow-xs active:scale-95 ${
+                phraseHunterActive 
+                  ? 'bg-amber-400 text-amber-950 ring-1 ring-amber-500 font-extrabold' 
+                  : 'bg-white/20 hover:bg-white/30 text-white'
+              }`}
+              title={phraseHunterActive ? "Kalıp Avcısı Açık (Metinlerde vurgulanır)" : "Kalıp Avcısını Aç"}
+            >
+              <span>🎯</span>
+              <span className="hidden xs:inline text-[11px]">{phraseHunterActive ? "Kalıplar Açık" : "Kalıp Avcısı"}</span>
+            </button>
+
+            {/* Ayarlar Butonu (Aa kaldırıldı, sadece Settings ikonu; hem girişte hem okumada) */}
             <button 
               onClick={toggleTypeSettings} 
-              className="px-2.5 py-1.5 font-bold text-xs bg-white/20 rounded-xl hover:bg-white/30 transition flex items-center gap-1.5 shadow-xs"
-              title="Okuma, Tipografi ve Ses Ayarları"
+              className={`p-2 rounded-xl transition flex items-center justify-center shadow-xs active:scale-95 ${
+                showTypeSettings ? 'bg-indigo-600 text-white shadow-md ring-1 ring-white/50' : 'bg-white/20 hover:bg-white/30 text-white'
+              }`}
+              title="Okuma, Tema ve Ses Ayarları"
             >
-              <Settings className="w-3.5 h-3.5" />
-              <span>Aa</span>
+              <Settings className="w-4 h-4" />
             </button>
-          ) : currentView === 'home' ? (
-            <button 
-              onClick={openBackupModal} 
-              className="p-2 text-xs bg-white/20 hover:bg-white/30 rounded-xl transition flex items-center gap-1 font-bold"
-              title="Yedekleme & İçe Aktarma"
-            >
-              💾
-            </button>
-          ) : (
-            <div className="w-9"></div>
-          )}
+
+            {currentView === 'home' && (
+              <button 
+                onClick={openBackupModal} 
+                className="p-2 text-xs bg-white/20 hover:bg-white/30 rounded-xl transition flex items-center justify-center font-bold active:scale-95"
+                title="Yedekleme & İçe Aktarma"
+              >
+                💾
+              </button>
+            )}
+          </div>
         </div>
 
         {/* Tipografi, Tema & Ses Hızı Ayar Paneli */}
@@ -1195,6 +1296,27 @@ function MainApp() {
             <div className="flex justify-between items-center mb-3">
               <span className="text-xs font-black uppercase text-slate-400">Okuma & Ses Ayarları</span>
               <button onClick={closeTypeSettings} className="text-slate-400 hover:text-white text-xs">✕ Kapat</button>
+            </div>
+
+            {/* Kalıp Avcısı Hızlı Ayarı */}
+            <div className="mb-3 p-2.5 bg-slate-800 rounded-xl border border-slate-700 flex items-center justify-between">
+              <div className="flex items-center gap-2.5">
+                <span className="text-xl">🎯</span>
+                <div>
+                  <span className="text-xs font-bold text-slate-200 block">Kalıp Avcısı</span>
+                  <span className="text-[10px] text-slate-400">Deyim ve phrasal verb'leri sarı renkle vurgula</span>
+                </div>
+              </div>
+              <button
+                onClick={() => setPhraseHunterActive(!phraseHunterActive)}
+                className={`px-3 py-1.5 text-xs font-bold rounded-lg border transition ${
+                  phraseHunterActive 
+                    ? 'bg-amber-400 border-amber-300 text-amber-950 shadow-sm' 
+                    : 'bg-slate-700 border-slate-600 text-slate-300 hover:bg-slate-600'
+                }`}
+              >
+                {phraseHunterActive ? 'Açık ✓' : 'Kapalı'}
+              </button>
             </div>
 
             {/* Doğal Ses Seçimi */}
@@ -1347,6 +1469,34 @@ function MainApp() {
               <p className="text-xs opacity-70 mt-1 font-medium">Huzurlu ve kalıcı dil öğrenme alanı</p>
             </div>
 
+            {/* Kalıp Avcısı Giriş Ekranı Hızlı Kartı */}
+            <div className={`p-3.5 rounded-2xl border transition shadow-sm flex items-center justify-between ${phraseHunterActive ? 'bg-amber-100/90 border-amber-300 text-amber-950' : `${themeStyle.card} border-slate-200/80`}`}>
+              <div className="flex items-center gap-3">
+                <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-xl shadow-xs transition-colors ${phraseHunterActive ? 'bg-amber-400 text-amber-950' : 'bg-black/10'}`}>
+                  🎯
+                </div>
+                <div className="text-left">
+                  <div className="flex items-center gap-1.5">
+                    <span className="font-bold text-sm">Kalıp Avcısı</span>
+                    <span className={`text-[9px] font-black px-1.5 py-0.5 rounded-full ${phraseHunterActive ? 'bg-amber-500 text-white' : 'bg-slate-300 text-slate-700'}`}>
+                      {phraseHunterActive ? 'AÇIK' : 'KAPALI'}
+                    </span>
+                  </div>
+                  <span className="text-[11px] opacity-70 block">Deyim ve phrasal verb'leri metinlerde sarı renkle vurgular</span>
+                </div>
+              </div>
+              <button
+                onClick={() => setPhraseHunterActive(!phraseHunterActive)}
+                className={`px-3.5 py-2 rounded-xl text-xs font-bold transition shadow-xs active:scale-95 ${
+                  phraseHunterActive 
+                    ? 'bg-amber-500 hover:bg-amber-600 text-white' 
+                    : 'bg-indigo-600 hover:bg-indigo-700 text-white'
+                }`}
+              >
+                {phraseHunterActive ? 'Aktif ✓' : 'Aç'}
+              </button>
+            </div>
+
             <div className="space-y-2.5">
               {levels.map(level => {
                 const count = allAvailableTexts.filter(t => t.level === level).length;
@@ -1444,6 +1594,19 @@ function MainApp() {
                 </div>
               </div>
               <span className="text-lg opacity-60">➔</span>
+            </button>
+
+            {/* Uygulama & Okuma Ayarları Hızlı Kartı */}
+            <button onClick={toggleTypeSettings}
+              className={`w-full ${themeStyle.card} border p-4 rounded-2xl flex items-center justify-between hover:shadow-md transition active:scale-[0.98]`}>
+              <div className="flex items-center gap-3">
+                <span className="text-2xl p-1 bg-black/5 rounded-xl">⚙️</span>
+                <div className="text-left">
+                  <span className="font-bold text-base block">Okuma & Uygulama Ayarları</span>
+                  <span className="text-xs opacity-60 font-medium">Tema ({readerTheme === 'sepia' ? 'Kitap' : readerTheme === 'oled' ? 'OLED' : 'Doğa'}), Hız ({speechRate}x), Yazı ({fontSize.toUpperCase()} / {fontFamily})</span>
+                </div>
+              </div>
+              <span className="text-lg opacity-40">➔</span>
             </button>
           </div>
         )}
