@@ -6,6 +6,7 @@ import { VitePWA } from 'vite-plugin-pwa';
 
 export default defineConfig(() => {
   return {
+    base: './',
     plugins: [
       react(), 
       tailwindcss(),
@@ -13,15 +14,15 @@ export default defineConfig(() => {
         registerType: 'autoUpdate',
         includeAssets: ['favicon.ico', 'apple-touch-icon.png'],
         manifest: {
-          id: '/',
+          id: './',
           name: 'İngilizce Öğren - Leitner SRS',
           short_name: 'İngilizce',
           description: 'Leitner SRS ve Karaoke sistemi ile kişiselleştirilmiş İngilizce öğrenme platformu',
           theme_color: '#312e81',
           background_color: '#0f172a',
           display: 'standalone',
-          start_url: '/',
-          scope: '/',
+          start_url: './',
+          scope: './',
           icons: [
             {
               src: '/pwa-192x192.png',
