@@ -17,3 +17,4 @@ This application is a comprehensive English learning platform combining:
 - **Base Baseline:** All future user requests must be built on top of this existing codebase.
 - **Preserve Existing Features:** Do not remove or regress the Leitner SRS engine, the Web Speech karaoke synchronization, the vocabulary storage, or the reading texts.
 - **Incremental Modifications:** When modifying or adding features, ensure compatibility with `src/data.ts` and `src/App.tsx` data structures.
+- **Continuous GitHub Sync:** After verifying any code changes, bug fixes, or feature updates with `compile_applet`, always commit and push the latest code to GitHub (`origin main`) so the user can test directly from their repository.
