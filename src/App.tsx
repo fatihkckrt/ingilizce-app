@@ -16,14 +16,66 @@ import { StatsModal } from "./components/StatsModal";
 import { AITextGenerator } from "./components/AITextGenerator";
 import { InstallPromptBanner } from "./components/InstallPromptBanner";
 
-export default function App() {
+export class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+  static getDerivedStateFromError(error) {
+    return { hasError: true, error };
+  }
+  componentDidCatch(error, errorInfo) {
+    console.error("Uygulama hatası:", error, errorInfo);
+  }
+  handleReset = async () => {
+    try {
+      if ('caches' in window) {
+        const keys = await caches.keys();
+        await Promise.all(keys.map(k => caches.delete(k)));
+      }
+      if ('serviceWorker' in navigator) {
+        const regs = await navigator.serviceWorker.getRegistrations();
+        await Promise.all(regs.map(r => r.unregister()));
+      }
+    } catch (e) {
+      console.warn(e);
+    }
+    window.location.reload();
+  };
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="min-h-screen bg-slate-900 text-white flex flex-col items-center justify-center p-6 text-center">
+          <div className="text-4xl mb-4">🌿</div>
+          <h2 className="text-xl font-bold mb-2">Uygulama Yüklenirken Bir Sorun Oluştu</h2>
+          <p className="text-sm text-slate-400 mb-6 max-w-sm">
+            Eski önbellek kalıntısı temizlenerek en güncel sürüm yeniden yüklenebilir.
+          </p>
+          <button
+            onClick={this.handleReset}
+            className="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 font-bold rounded-xl text-white shadow-lg transition"
+          >
+            🔄 Önbelleği Temizle ve Yeniden Başlat
+          </button>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
+function MainApp() {
   const [completedTexts, setCompletedTexts] = useState(() => {
-    try { return JSON.parse(localStorage.getItem('completedTexts') || '[]'); } catch { return []; }
+    try { 
+      const raw = JSON.parse(localStorage.getItem('completedTexts') || '[]'); 
+      return Array.isArray(raw) ? raw : [];
+    } catch { return []; }
   });
 
   const [savedWords, setSavedWords] = useState(() => {
     try { 
       const raw = JSON.parse(localStorage.getItem('savedWords') || '[]');
+      if (!Array.isArray(raw)) return [];
       return raw.map(w => ({
         ...w,
         level: w.level || 'B1',
@@ -38,7 +90,10 @@ export default function App() {
   });
 
   const [customTexts, setCustomTexts] = useState(() => {
-    try { return JSON.parse(localStorage.getItem('customTexts') || '[]'); } catch { return []; }
+    try { 
+      const raw = JSON.parse(localStorage.getItem('customTexts') || '[]'); 
+      return Array.isArray(raw) ? raw : [];
+    } catch { return []; }
   });
 
   // INDEXEDDB İLE İLK YÜKLEME VE SENKRONİZASYON
@@ -2155,5 +2210,13 @@ export default function App() {
       />
 
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <ErrorBoundary>
+      <MainApp />
+    </ErrorBoundary>
   );
 }
