@@ -63,13 +63,66 @@ fs.writeFileSync(docsNoJekyll, '');
 
 console.log('✅ Synchronized dist/ into docs/ with .nojekyll and 404.html.');
 
-// 5. Git Commit and Deploy (if git repository is present)
+// Helper to load key-values from .env if present
+function loadEnv() {
+  const envPath = path.join(__dirname, '..', '.env');
+  if (fs.existsSync(envPath)) {
+    const lines = fs.readFileSync(envPath, 'utf8').split('\n');
+    for (const line of lines) {
+      const trimmed = line.trim();
+      if (!trimmed || trimmed.startsWith('#')) continue;
+      const idx = trimmed.indexOf('=');
+      if (idx !== -1) {
+        const key = trimmed.substring(0, idx).trim();
+        let val = trimmed.substring(idx + 1).trim();
+        if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) {
+          val = val.substring(1, val.length - 1);
+        }
+        process.env[key] = val;
+      }
+    }
+  }
+}
+loadEnv();
+
+// 5. Git Commit and Deploy
 const gitDir = path.join(__dirname, '..', '.git');
+
+// Auto-initialize Git if .git is missing but repo credentials are in .env
+if (!fs.existsSync(gitDir) && process.env.GITHUB_TOKEN && process.env.GITHUB_REPO) {
+  console.log('\n▶ [DEPLOY] Initializing Git repository from saved credentials...');
+  try {
+    const rawRepo = process.env.GITHUB_REPO.replace(/^https?:\/\//, '').replace(/\.git$/, '');
+    const user = process.env.GITHUB_USERNAME || 'fatihkckrt';
+    const email = process.env.GITHUB_EMAIL || 'fatihkckrt@gmail.com';
+    const authedUrl = `https://${user}:${process.env.GITHUB_TOKEN}@${rawRepo}.git`;
+    
+    run('git init', 'Initializing git repo');
+    run(`git config user.name "${user}"`, 'Setting git username');
+    run(`git config user.email "${email}"`, 'Setting git user email');
+    run(`git remote add origin ${authedUrl}`, 'Setting remote origin');
+    run('git branch -M main', 'Setting branch to main');
+    try { run('git fetch origin main', 'Fetching remote main'); } catch (_) {}
+  } catch (err) {
+    console.warn('⚠️ Git auto-initialization warning:', err.message);
+  }
+}
+
 if (!fs.existsSync(gitDir)) {
   console.log('\nℹ️ Bu ortamda henüz bağlı bir .git deposu bulunmuyor.');
   console.log('✅ Üretim paketi (dist/) ve statik dosyalar (docs/) başarıyla derlendi ve hazırlandı.');
   console.log('💡 AI Studio arayüzündeki "Export to GitHub" menüsünü kullanarak veya git remote tanımlayarak deponuzu güncelleyebilirsiniz.');
 } else {
+  // Ensure remote has token if available
+  if (process.env.GITHUB_TOKEN && process.env.GITHUB_REPO) {
+    try {
+      const rawRepo = process.env.GITHUB_REPO.replace(/^https?:\/\//, '').replace(/\.git$/, '');
+      const user = process.env.GITHUB_USERNAME || 'fatihkckrt';
+      const authedUrl = `https://${user}:${process.env.GITHUB_TOKEN}@${rawRepo}.git`;
+      execSync(`git remote set-url origin ${authedUrl}`, { stdio: 'ignore' });
+    } catch (_) {}
+  }
+
   // 5. Git Commit on main
   try {
     run('git add -A', 'Staging all files');

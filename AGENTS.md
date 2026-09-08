@@ -17,6 +17,11 @@ This application is a comprehensive English learning platform combining:
 - **Base Baseline:** All future user requests must be built on top of this existing codebase.
 - **Preserve Existing Features:** Do not remove or regress the Leitner SRS engine, the Web Speech karaoke synchronization, the vocabulary storage, or the reading texts.
 - **Incremental Modifications:** When modifying or adding features, ensure compatibility with `src/data.ts` and `src/App.tsx` data structures.
+- **GitHub Repository & Deployment Setup:**
+  - **Remote Repository:** `https://github.com/fatihkckrt/ingilizce-app`
+  - **User:** `fatihkckrt` (fatihkckrt@gmail.com)
+  - **Credentials:** Securely stored in `.env` (`GITHUB_TOKEN`, `GITHUB_REPO`, `GITHUB_USERNAME`, `GITHUB_EMAIL`). The `.env` file is gitignored to protect the token from GitHub Secret Scanners.
+  - **Automated Git Setup:** `scripts/deploy.cjs` is configured to auto-initialize `.git` and configure authenticated git remotes using `.env` whenever needed.
 - **Continuous GitHub Sync & Safe Deployment (CRITICAL):**
   - To deploy updates safely, **ALWAYS run `npm run deploy`**.
   - The `npm run deploy` command (`scripts/deploy.cjs`) automatically builds the production bundle, verifies compiled assets in `dist/index.html`, copies with `.nojekyll` and `404.html` to `docs/`, commits and pushes to `main`, and uses `git subtree split` to safely update the root of `gh-pages` with the compiled files.
