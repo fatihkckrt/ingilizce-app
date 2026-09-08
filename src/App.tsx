@@ -261,6 +261,10 @@ function MainApp() {
 
   // TARAYICI & TELEFON GERİ TUŞU YÖNETİMİ (popstate)
   useEffect(() => {
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+
     if (!window.history.state || !window.history.state.view) {
       window.history.replaceState({ view: 'home' }, '');
     }
@@ -277,6 +281,10 @@ function MainApp() {
       }
       if (showTypeSettingsRef.current && (!state || state.modal !== 'typeSettings')) {
         setShowTypeSettings(false);
+        requestAnimationFrame(() => {
+          homeScrollRef.current?.scrollTo({ top: 0, behavior: 'instant' });
+          window.scrollTo({ top: 0, behavior: 'instant' });
+        });
       }
       if (showBackupModalRef.current && (!state || state.modal !== 'backup')) {
         setShowBackupModal(false);
@@ -757,9 +765,6 @@ function MainApp() {
       closeTypeSettings();
     } else {
       setShowTypeSettings(true);
-      if (!window.history.state || window.history.state.modal !== 'typeSettings') {
-        window.history.pushState({ ...(window.history.state || { view: currentViewRef.current }), modal: 'typeSettings' }, '');
-      }
       setTimeout(() => {
         homeScrollRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
         settingsPanelRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -773,9 +778,6 @@ function MainApp() {
       closeTypeSettings();
     } else {
       setShowTypeSettings(true);
-      if (!window.history.state || window.history.state.modal !== 'typeSettings') {
-        window.history.pushState({ ...(window.history.state || { view: currentViewRef.current }), modal: 'typeSettings' }, '');
-      }
       setTimeout(() => {
         homeScrollRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
         settingsPanelRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -789,6 +791,10 @@ function MainApp() {
     if (window.history.state && window.history.state.modal === 'typeSettings') {
       window.history.back();
     }
+    requestAnimationFrame(() => {
+      homeScrollRef.current?.scrollTo({ top: 0, behavior: 'instant' });
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    });
   };
 
   const handleHeaderBack = () => {
@@ -1277,23 +1283,7 @@ function MainApp() {
           </h1>
 
           <div className="flex items-center gap-1.5 ml-1">
-            {/* Kalıp Avcısı Butonu (Giriş ekranında ve okuma ekranında gözükür) */}
-            {(currentView === 'home' || currentView === 'reading') && (
-              <button
-                onClick={() => setPhraseHunterActive(!phraseHunterActive)}
-                className={`px-2.5 py-1.5 rounded-xl font-bold text-xs flex items-center gap-1 transition shadow-xs active:scale-95 ${
-                  phraseHunterActive 
-                    ? 'bg-amber-400 text-amber-950 ring-1 ring-amber-500 font-extrabold' 
-                    : 'bg-white/20 hover:bg-white/30 text-white'
-                }`}
-                title={phraseHunterActive ? "Kalıp Avcısı Açık (Metinlerde vurgulanır)" : "Kalıp Avcısını Aç"}
-              >
-                <span>🎯</span>
-                <span className="hidden xs:inline text-[11px]">{phraseHunterActive ? "Kalıplar Açık" : "Kalıp Avcısı"}</span>
-              </button>
-            )}
-
-            {/* Ayarlar Butonu (Sadece Giriş ekranında ve okuma ekranında gözükür) */}
+            {/* Ayarlar Butonu (Giriş ekranında ve okuma ekranında gözükür) */}
             {(currentView === 'home' || currentView === 'reading') && (
               <button 
                 onClick={toggleTypeSettings} 
@@ -1495,34 +1485,6 @@ function MainApp() {
               </div>
               <h2 className="text-2xl font-black">Seviyeni Seç</h2>
               <p className="text-xs opacity-70 mt-1 font-medium">Huzurlu ve kalıcı dil öğrenme alanı</p>
-            </div>
-
-            {/* Kalıp Avcısı Giriş Ekranı Hızlı Kartı */}
-            <div className={`p-3.5 rounded-2xl border transition shadow-sm flex items-center justify-between ${phraseHunterActive ? 'bg-amber-100/90 border-amber-300 text-amber-950' : `${themeStyle.card} border-slate-200/80`}`}>
-              <div className="flex items-center gap-3">
-                <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-xl shadow-xs transition-colors ${phraseHunterActive ? 'bg-amber-400 text-amber-950' : 'bg-black/10'}`}>
-                  🎯
-                </div>
-                <div className="text-left">
-                  <div className="flex items-center gap-1.5">
-                    <span className="font-bold text-sm">Kalıp Avcısı</span>
-                    <span className={`text-[9px] font-black px-1.5 py-0.5 rounded-full ${phraseHunterActive ? 'bg-amber-500 text-white' : 'bg-slate-300 text-slate-700'}`}>
-                      {phraseHunterActive ? 'AÇIK' : 'KAPALI'}
-                    </span>
-                  </div>
-                  <span className="text-[11px] opacity-70 block">Deyim ve phrasal verb'leri metinlerde sarı renkle vurgular</span>
-                </div>
-              </div>
-              <button
-                onClick={() => setPhraseHunterActive(!phraseHunterActive)}
-                className={`px-3.5 py-2 rounded-xl text-xs font-bold transition shadow-xs active:scale-95 ${
-                  phraseHunterActive 
-                    ? 'bg-amber-500 hover:bg-amber-600 text-white' 
-                    : 'bg-indigo-600 hover:bg-indigo-700 text-white'
-                }`}
-              >
-                {phraseHunterActive ? 'Aktif ✓' : 'Aç'}
-              </button>
             </div>
 
             <div className="space-y-2.5">
@@ -1769,61 +1731,41 @@ function MainApp() {
         {/* READING VIEW (KARAOKE KESİNTİSİZ ÇALIŞAN HALİ) */}
         {currentView === 'reading' && activeText && (
           <div className="flex-1 flex flex-col relative overflow-hidden">
-            {/* Metnin Konusuna Özel Atmosferik Arka Plan Görseli */}
+            {/* Metnin Konusuna Özel Canlı Arka Plan Görseli - Tüm Sayfayı Kaplar */}
             <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
               <img 
                 src={getTextBgImage(activeText)} 
                 alt="" 
                 aria-hidden="true"
-                referrerPolicy="no-referrer"
-                className="w-full h-full object-cover object-center scale-105 filter blur-[1.5px] brightness-95 transition-opacity duration-700"
+                referrerPolicy="no-referrer" 
+                className="w-full h-full object-cover object-center scale-100 transition-all duration-700 filter brightness-90"
               />
-              {/* Temaya Duyarlı Saydamlık & Okuma Katmanı */}
+              {/* Sayfa Geneline Yayılan Şeffaf Okuma Katmanı */}
               <div className={`absolute inset-0 transition-colors duration-300 ${
                 readerTheme === 'sepia' 
-                  ? 'bg-[#f7f0e1]/92 backdrop-blur-[2px]' 
+                  ? 'bg-[#f7f0e1]/78' 
                   : readerTheme === 'oled' 
-                    ? 'bg-black/93 backdrop-blur-[2px]' 
+                    ? 'bg-black/80' 
                     : readerTheme === 'forest' 
-                      ? 'bg-[#0f1f17]/93 backdrop-blur-[2px]' 
-                      : 'bg-white/90 backdrop-blur-[2px]'
+                      ? 'bg-[#0a1811]/80' 
+                      : 'bg-slate-900/65'
               }`} />
             </div>
 
-            <div className="relative z-10 px-4 py-2 border-b flex justify-between items-center text-xs opacity-85 border-black/10 backdrop-blur-xs bg-white/20">
-              <span className="font-semibold">{activeText.sentences.length} Cümle ({speechRate}x)</span>
-              <button
-                onClick={() => setPhraseHunterActive(!phraseHunterActive)}
-                className={`px-3 py-1 rounded-full font-bold flex items-center gap-1.5 transition ${phraseHunterActive ? 'bg-amber-400 text-amber-950 shadow-sm ring-1 ring-amber-500' : 'bg-black/10 hover:bg-black/20'}`}
-              >
-                <span>🎯</span> {phraseHunterActive ? "Kalıp Avcısı Açık" : "Kalıpları Vurgula"}
-              </button>
-            </div>
-
             <div className="relative z-10 p-4 sm:p-5 flex-1 overflow-y-auto space-y-4 pb-36">
-              {/* Metin Başlığı ve Tematik Görsel Afişi */}
-              <div className="relative overflow-hidden rounded-2xl border border-white/50 shadow-md mb-2">
-                <div className="h-32 sm:h-36 w-full relative overflow-hidden">
-                  <img 
-                    src={getTextBgImage(activeText)} 
-                    alt={activeText.title}
-                    referrerPolicy="no-referrer" 
-                    className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent flex flex-col justify-end p-4 text-white">
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className={`text-[10px] font-black uppercase px-2 py-0.5 rounded-md shadow-xs ${
-                        activeText.level === 'A1' ? 'bg-emerald-500 text-white' :
-                        activeText.level === 'A2' ? 'bg-blue-500 text-white' :
-                        activeText.level === 'B1' ? 'bg-indigo-500 text-white' : 'bg-purple-500 text-white'
-                      }`}>
-                        {activeText.level} Seviye
-                      </span>
-                      {activeText.isCustom && <span className="bg-amber-400 text-amber-950 text-[10px] font-bold px-1.5 py-0.5 rounded shadow-xs">ÖZEL METİN</span>}
-                    </div>
-                    <h2 className="text-lg sm:text-xl font-bold leading-tight drop-shadow-md">{activeText.title}</h2>
-                  </div>
+              {/* Metin Başlığı ve Seviye Rozeti */}
+              <div className="p-3.5 sm:p-4 rounded-2xl bg-black/45 backdrop-blur-md border border-white/20 text-white shadow-md mb-2">
+                <div className="flex items-center gap-2 mb-1">
+                  <span className={`text-[10px] font-black uppercase px-2 py-0.5 rounded-md shadow-xs ${
+                    activeText.level === 'A1' ? 'bg-emerald-500 text-white' :
+                    activeText.level === 'A2' ? 'bg-blue-500 text-white' :
+                    activeText.level === 'B1' ? 'bg-indigo-500 text-white' : 'bg-purple-500 text-white'
+                  }`}>
+                    {activeText.level} Seviye
+                  </span>
+                  {activeText.isCustom && <span className="bg-amber-400 text-amber-950 text-[10px] font-bold px-1.5 py-0.5 rounded shadow-xs">ÖZEL METİN</span>}
                 </div>
+                <h2 className="text-xl sm:text-2xl font-black leading-tight drop-shadow-md">{activeText.title}</h2>
               </div>
 
               {activeText.sentences.map((sentence) => {
