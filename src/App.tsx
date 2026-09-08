@@ -10,7 +10,8 @@ import {
   defaultTexts, 
   phrasalVerbs, 
   findPhrasalVerbsInText, 
-  logStudyActivity 
+  logStudyActivity,
+  getTextBgImage
 } from "./data";
 import { StatsModal } from "./components/StatsModal";
 import { AITextGenerator } from "./components/AITextGenerator";
@@ -236,6 +237,8 @@ function MainApp() {
   const [newTrText, setNewTrText] = useState('');
 
   const fileInputRef = useRef(null);
+  const homeScrollRef = useRef(null);
+  const settingsPanelRef = useRef(null);
 
   // Tarayıcı Geri Tuşu & Geçmiş (History) Senkronizasyonu için Ref'ler
   const currentViewRef = useRef(currentView);
@@ -757,6 +760,27 @@ function MainApp() {
       if (!window.history.state || window.history.state.modal !== 'typeSettings') {
         window.history.pushState({ ...(window.history.state || { view: currentViewRef.current }), modal: 'typeSettings' }, '');
       }
+      setTimeout(() => {
+        homeScrollRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
+        settingsPanelRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, 50);
+    }
+  };
+
+  const handleOpenSettingsFromBottom = () => {
+    if (showTypeSettings) {
+      closeTypeSettings();
+    } else {
+      setShowTypeSettings(true);
+      if (!window.history.state || window.history.state.modal !== 'typeSettings') {
+        window.history.pushState({ ...(window.history.state || { view: currentViewRef.current }), modal: 'typeSettings' }, '');
+      }
+      setTimeout(() => {
+        homeScrollRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
+        settingsPanelRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, 50);
     }
   };
 
@@ -1254,29 +1278,33 @@ function MainApp() {
 
           <div className="flex items-center gap-1.5 ml-1">
             {/* Kalıp Avcısı Butonu (Giriş ekranında ve okuma ekranında gözükür) */}
-            <button
-              onClick={() => setPhraseHunterActive(!phraseHunterActive)}
-              className={`px-2.5 py-1.5 rounded-xl font-bold text-xs flex items-center gap-1 transition shadow-xs active:scale-95 ${
-                phraseHunterActive 
-                  ? 'bg-amber-400 text-amber-950 ring-1 ring-amber-500 font-extrabold' 
-                  : 'bg-white/20 hover:bg-white/30 text-white'
-              }`}
-              title={phraseHunterActive ? "Kalıp Avcısı Açık (Metinlerde vurgulanır)" : "Kalıp Avcısını Aç"}
-            >
-              <span>🎯</span>
-              <span className="hidden xs:inline text-[11px]">{phraseHunterActive ? "Kalıplar Açık" : "Kalıp Avcısı"}</span>
-            </button>
+            {(currentView === 'home' || currentView === 'reading') && (
+              <button
+                onClick={() => setPhraseHunterActive(!phraseHunterActive)}
+                className={`px-2.5 py-1.5 rounded-xl font-bold text-xs flex items-center gap-1 transition shadow-xs active:scale-95 ${
+                  phraseHunterActive 
+                    ? 'bg-amber-400 text-amber-950 ring-1 ring-amber-500 font-extrabold' 
+                    : 'bg-white/20 hover:bg-white/30 text-white'
+                }`}
+                title={phraseHunterActive ? "Kalıp Avcısı Açık (Metinlerde vurgulanır)" : "Kalıp Avcısını Aç"}
+              >
+                <span>🎯</span>
+                <span className="hidden xs:inline text-[11px]">{phraseHunterActive ? "Kalıplar Açık" : "Kalıp Avcısı"}</span>
+              </button>
+            )}
 
-            {/* Ayarlar Butonu (Aa kaldırıldı, sadece Settings ikonu; hem girişte hem okumada) */}
-            <button 
-              onClick={toggleTypeSettings} 
-              className={`p-2 rounded-xl transition flex items-center justify-center shadow-xs active:scale-95 ${
-                showTypeSettings ? 'bg-indigo-600 text-white shadow-md ring-1 ring-white/50' : 'bg-white/20 hover:bg-white/30 text-white'
-              }`}
-              title="Okuma, Tema ve Ses Ayarları"
-            >
-              <Settings className="w-4 h-4" />
-            </button>
+            {/* Ayarlar Butonu (Sadece Giriş ekranında ve okuma ekranında gözükür) */}
+            {(currentView === 'home' || currentView === 'reading') && (
+              <button 
+                onClick={toggleTypeSettings} 
+                className={`p-2 rounded-xl transition flex items-center justify-center shadow-xs active:scale-95 ${
+                  showTypeSettings ? 'bg-indigo-600 text-white shadow-md ring-1 ring-white/50' : 'bg-white/20 hover:bg-white/30 text-white'
+                }`}
+                title="Okuma, Tema ve Ses Ayarları"
+              >
+                <Settings className="w-4 h-4" />
+              </button>
+            )}
 
             {currentView === 'home' && (
               <button 
@@ -1292,7 +1320,7 @@ function MainApp() {
 
         {/* Tipografi, Tema & Ses Hızı Ayar Paneli */}
         {showTypeSettings && (
-          <div className="p-4 bg-slate-900 text-white border-b border-slate-700 shadow-xl z-35 animate-fadeIn">
+          <div ref={settingsPanelRef} className="p-4 bg-slate-900 text-white border-b border-slate-700 shadow-xl z-35 animate-fadeIn">
             <div className="flex justify-between items-center mb-3">
               <span className="text-xs font-black uppercase text-slate-400">Okuma & Ses Ayarları</span>
               <button onClick={closeTypeSettings} className="text-slate-400 hover:text-white text-xs">✕ Kapat</button>
@@ -1457,7 +1485,7 @@ function MainApp() {
 
         {/* HOME VIEW */}
         {currentView === 'home' && (
-          <div className="flex-1 p-5 flex flex-col space-y-4 overflow-y-auto">
+          <div ref={homeScrollRef} className="flex-1 p-5 flex flex-col space-y-4 overflow-y-auto">
             {/* PWA Kurulum Butonu */}
             <InstallPromptBanner />
 
@@ -1597,16 +1625,25 @@ function MainApp() {
             </button>
 
             {/* Uygulama & Okuma Ayarları Hızlı Kartı */}
-            <button onClick={toggleTypeSettings}
-              className={`w-full ${themeStyle.card} border p-4 rounded-2xl flex items-center justify-between hover:shadow-md transition active:scale-[0.98]`}>
+            <button onClick={handleOpenSettingsFromBottom}
+              className={`w-full ${themeStyle.card} border p-4 rounded-2xl flex items-center justify-between hover:shadow-md transition active:scale-[0.98] ${
+                showTypeSettings ? 'ring-2 ring-indigo-500 border-indigo-400' : ''
+              }`}>
               <div className="flex items-center gap-3">
                 <span className="text-2xl p-1 bg-black/5 rounded-xl">⚙️</span>
                 <div className="text-left">
-                  <span className="font-bold text-base block">Okuma & Uygulama Ayarları</span>
+                  <div className="flex items-center gap-2">
+                    <span className="font-bold text-base block">Okuma & Uygulama Ayarları</span>
+                    {showTypeSettings && (
+                      <span className="bg-indigo-600 text-white text-[10px] font-extrabold px-2 py-0.5 rounded-full animate-pulse">
+                        YUKARIDA AÇIK ↑
+                      </span>
+                    )}
+                  </div>
                   <span className="text-xs opacity-60 font-medium">Tema ({readerTheme === 'sepia' ? 'Kitap' : readerTheme === 'oled' ? 'OLED' : 'Doğa'}), Hız ({speechRate}x), Yazı ({fontSize.toUpperCase()} / {fontFamily})</span>
                 </div>
               </div>
-              <span className="text-lg opacity-40">➔</span>
+              <span className="text-lg opacity-60 font-bold">{showTypeSettings ? '▲' : '➔'}</span>
             </button>
           </div>
         )}
@@ -1731,8 +1768,29 @@ function MainApp() {
 
         {/* READING VIEW (KARAOKE KESİNTİSİZ ÇALIŞAN HALİ) */}
         {currentView === 'reading' && activeText && (
-          <div className="flex-1 flex flex-col relative">
-            <div className="px-4 py-2 border-b flex justify-between items-center text-xs opacity-75 border-black/10">
+          <div className="flex-1 flex flex-col relative overflow-hidden">
+            {/* Metnin Konusuna Özel Atmosferik Arka Plan Görseli */}
+            <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
+              <img 
+                src={getTextBgImage(activeText)} 
+                alt="" 
+                aria-hidden="true"
+                referrerPolicy="no-referrer"
+                className="w-full h-full object-cover object-center scale-105 filter blur-[1.5px] brightness-95 transition-opacity duration-700"
+              />
+              {/* Temaya Duyarlı Saydamlık & Okuma Katmanı */}
+              <div className={`absolute inset-0 transition-colors duration-300 ${
+                readerTheme === 'sepia' 
+                  ? 'bg-[#f7f0e1]/92 backdrop-blur-[2px]' 
+                  : readerTheme === 'oled' 
+                    ? 'bg-black/93 backdrop-blur-[2px]' 
+                    : readerTheme === 'forest' 
+                      ? 'bg-[#0f1f17]/93 backdrop-blur-[2px]' 
+                      : 'bg-white/90 backdrop-blur-[2px]'
+              }`} />
+            </div>
+
+            <div className="relative z-10 px-4 py-2 border-b flex justify-between items-center text-xs opacity-85 border-black/10 backdrop-blur-xs bg-white/20">
               <span className="font-semibold">{activeText.sentences.length} Cümle ({speechRate}x)</span>
               <button
                 onClick={() => setPhraseHunterActive(!phraseHunterActive)}
@@ -1742,7 +1800,32 @@ function MainApp() {
               </button>
             </div>
 
-            <div className="p-5 flex-1 overflow-y-auto space-y-4 pb-36">
+            <div className="relative z-10 p-4 sm:p-5 flex-1 overflow-y-auto space-y-4 pb-36">
+              {/* Metin Başlığı ve Tematik Görsel Afişi */}
+              <div className="relative overflow-hidden rounded-2xl border border-white/50 shadow-md mb-2">
+                <div className="h-32 sm:h-36 w-full relative overflow-hidden">
+                  <img 
+                    src={getTextBgImage(activeText)} 
+                    alt={activeText.title}
+                    referrerPolicy="no-referrer" 
+                    className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent flex flex-col justify-end p-4 text-white">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className={`text-[10px] font-black uppercase px-2 py-0.5 rounded-md shadow-xs ${
+                        activeText.level === 'A1' ? 'bg-emerald-500 text-white' :
+                        activeText.level === 'A2' ? 'bg-blue-500 text-white' :
+                        activeText.level === 'B1' ? 'bg-indigo-500 text-white' : 'bg-purple-500 text-white'
+                      }`}>
+                        {activeText.level} Seviye
+                      </span>
+                      {activeText.isCustom && <span className="bg-amber-400 text-amber-950 text-[10px] font-bold px-1.5 py-0.5 rounded shadow-xs">ÖZEL METİN</span>}
+                    </div>
+                    <h2 className="text-lg sm:text-xl font-bold leading-tight drop-shadow-md">{activeText.title}</h2>
+                  </div>
+                </div>
+              </div>
+
               {activeText.sentences.map((sentence) => {
                 const sentenceWords = sentence.eng.split(' ');
                 const cleanWords = sentenceWords.map(w => cleanWord(w));

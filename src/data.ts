@@ -432,7 +432,7 @@ const LEITNER_INTERVALS = {
 const levels = ['A1', 'A2', 'B1', 'B2'];
 
 const defaultTexts = [
-{ id: 1, level: 'A1', title: 'A Day on the Farm', sentences: [
+{ id: 1, level: 'A1', title: 'A Day on the Farm', bgImage: 'https://images.unsplash.com/photo-1500595046743-cd271d694d30?auto=format&fit=crop&w=1200&q=80', sentences: [
 {id:1, eng:"My grandfather has a small farm outside the city.", tr:"Büyükbabamın şehir dışında küçük bir çiftliği var."},
 {id:2, eng:"I visit the farm every summer holiday.", tr:"Her yaz tatilinde çiftliği ziyaret ederim."},
 {id:3, eng:"We wake up early in the morning.", tr:"Sabahları erken uyanırız."},
@@ -458,7 +458,7 @@ const defaultTexts = [
 {q:"What is the dog's name?", options:["Max", "Tom", "Leo"], answer:0},
 {q:"Where do they eat lunch?", options:["In the kitchen", "Under an oak tree", "In the barn"], answer:1}
 ]},
-{ id: 2, level: 'A1', title: 'My School Day', sentences: [
+{ id: 2, level: 'A1', title: 'My School Day', bgImage: 'https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&w=1200&q=80', sentences: [
 {id:1, eng:"I am a student at a primary school.", tr:"Ben bir ilkokulda öğrenciyim."},
 {id:2, eng:"My school is close to my home.", tr:"Okulum evime yakındır."},
 {id:3, eng:"I walk to school every morning with my friends.", tr:"Her sabah arkadaşlarımla okula yürürüm."},
@@ -484,7 +484,7 @@ const defaultTexts = [
 {q:"What is the author's favorite subject?", options:["English", "Math", "History"], answer:0},
 {q:"What do they play after lunch?", options:["Tennis", "Football", "Basketball"], answer:1}
 ]},
-{ id: 3, level: 'A1', title: 'Shopping at the Supermarket', sentences: [
+{ id: 3, level: 'A1', title: 'Shopping at the Supermarket', bgImage: 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1200&q=80', sentences: [
 {id:1, eng:"Every Sunday morning, my mother and I go shopping.", tr:"Her pazar sabahı annem ve ben alışverişe gideriz."},
 {id:2, eng:"We visit a large supermarket in our town.", tr:"Kasabamızdaki büyük bir süpermarketi ziyaret ederiz."},
 {id:3, eng:"First, my mother writes a clear shopping list.", tr:"İlk önce annem net bir alışveriş listesi yazar."},
@@ -510,7 +510,7 @@ const defaultTexts = [
 {q:"What sweet treat does the author choose?", options:["Ice cream", "Dark chocolate", "Cake"], answer:1},
 {q:"How does the mother pay?", options:["With cash", "With credit card", "With coins"], answer:1}
 ]},
-{ id: 4, level: 'A1', title: 'A Visit to the Zoo', sentences: [
+{ id: 4, level: 'A1', title: 'A Visit to the Zoo', bgImage: 'https://images.unsplash.com/photo-1534567153574-2b12153a87f0?auto=format&fit=crop&w=1200&q=80', sentences: [
 {id:1, eng:"Last Saturday, my family went to the city zoo.", tr:"Geçen cumartesi ailem şehir hayvanat bahçesine gitti."},
 {id:2, eng:"The weather was warm, dry, and sunny.", tr:"Hava ılık, kuru ve güneşliydi."},
 {id:3, eng:"We arrived at the zoo gates at ten o'clock.", tr:"Hayvanat bahçesi kapısına saat onda vardık."},
@@ -536,7 +536,7 @@ const defaultTexts = [
 {q:"What did the elephant drink water with?", options:["Its long trunk", "A bucket", "A bottle"], answer:0},
 {q:"What was the big lion doing?", options:["Roaring", "Sleeping under a tree", "Eating"], answer:1}
 ]},
-{ id: 5, level: 'A1', title: 'My Small Hometown', sentences: [
+{ id: 5, level: 'A1', title: 'My Small Hometown', bgImage: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80', sentences: [
 {id:1, eng:"I live in a peaceful town near high mountains.", tr:"Yüksek dağların yakınında huzurlu bir kasabada yaşıyorum."},
 {id:2, eng:"My hometown is quiet, clean, and green.", tr:"Memleketim sessiz, temiz ve yeşildir."},
 {id:3, eng:"Only four thousand people live here.", tr:"Burada sadece dört bin insan yaşar."},
@@ -562,7 +562,7 @@ const defaultTexts = [
 {q:"What flows behind the author's garden?", options:["A highway", "A clean river", "A railway"], answer:1},
 {q:"What shines in the sky at night?", options:["Thousands of bright stars", "Towers", "Dark clouds"], answer:0}
 ]},
-{ id: 6, level: 'A2', title: 'A Weekend Camping Trip', sentences: [
+{ id: 6, level: 'A2', title: 'A Weekend Camping Trip', bgImage: 'https://images.unsplash.com/photo-1510312305653-8ed496efae75?auto=format&fit=crop&w=1200&q=80', sentences: [
 {id:1, eng:"Last Saturday, my friends and I went camping in the mountains.", tr:"Geçen cumartesi arkadaşlarım ve ben dağlarda kamp yapmaya gittik."},
 {id:2, eng:"We packed warm clothes, flashlights, and sleeping bags.", tr:"Sıcak giysiler, el fenerleri ve uyku tulumları hazırladık."},
 {id:3, eng:"The forecast predicted sunny weather, so we were excited.", tr:"Hava durumu güneşli bir hava öngördü, bu yüzden heyecanlıydık."},
@@ -588,7 +588,7 @@ const defaultTexts = [
 {q:"What did they cook over the fire?", options:["Fish", "Sausages and potatoes", "Burgers"], answer:1},
 {q:"What filled the night sky?", options:["Rain clouds", "Bright stars", "Heavy smoke"], answer:1}
 ]},
-{ id: 7, level: 'A2', title: 'Moving to a New Apartment', sentences: [
+{ id: 7, level: 'A2', title: 'Moving to a New Apartment', bgImage: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=80', sentences: [
 {id:1, eng:"Last month, I moved into a new apartment.", tr:"Geçen ay yeni bir daireye taşındım."},
 {id:2, eng:"My old flat was too far from my workplace.", tr:"Eski dairem iş yerimden çok uzaktı."},
 {id:3, eng:"I spent two weeks searching for the right place online.", tr:"İnternette doğru yeri aramak için iki hafta harcadım."},
@@ -614,7 +614,7 @@ const defaultTexts = [
 {q:"What floor is the new flat on?", options:["First floor", "Second floor", "Third floor"], answer:2},
 {q:"What did the neighbor bring?", options:["Fresh cookies", "Hot coffee", "Flowers"], answer:0}
 ]},
-{ id: 8, level: 'A2', title: 'Visiting a Science Museum', sentences: [
+{ id: 8, level: 'A2', title: 'Visiting a Science Museum', bgImage: 'https://images.unsplash.com/photo-1507668077129-56e32842fceb?auto=format&fit=crop&w=1200&q=80', sentences: [
 {id:1, eng:"Yesterday, our school visited the capital science museum.", tr:"Dün okulumuz başkent bilim müzesini ziyaret etti."},
 {id:2, eng:"We traveled together on a large yellow bus.", tr:"Büyük sarı bir otobüsle birlikte seyahat ettik."},
 {id:3, eng:"The trip took one hour from our school.", tr:"Yolculuk okulumuzdan bir saat sürdü."},
@@ -640,7 +640,7 @@ const defaultTexts = [
 {q:"What did the author touch in the space room?", options:["A meteorite", "A rocket engine", "The Moon"], answer:0},
 {q:"What was the 3D movie about?", options:["Jungle animals", "Oceans and whales", "Volcanoes"], answer:1}
 ]},
-{ id: 9, level: 'A2', title: 'Planning a Birthday Surprise', sentences: [
+{ id: 9, level: 'A2', title: 'Planning a Birthday Surprise', bgImage: 'https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?auto=format&fit=crop&w=1200&q=80', sentences: [
 {id:1, eng:"Next Friday is my best friend Lisa's birthday.", tr:"Gelecek cuma en iyi arkadaşım Lisa'nın doğum günü."},
 {id:2, eng:"We wanted to organize a secret surprise party.", tr:"Gizli bir sürpriz parti organize etmek istedik."},
 {id:3, eng:"We created a private chat group to plan everything.", tr:"Her şeyi planlamak için özel bir sohbet grubu kurduk."},
@@ -666,7 +666,7 @@ const defaultTexts = [
 {q:"How did Emma keep Lisa busy?", options:["Going to the cinema", "Shopping", "Studying"], answer:0},
 {q:"Where did the friends hide?", options:["Behind the sofa", "In the kitchen", "In the garden"], answer:0}
 ]},
-{ id: 10, level: 'A2', title: 'Learning to Drive a Car', sentences: [
+{ id: 10, level: 'A2', title: 'Learning to Drive a Car', bgImage: 'https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?auto=format&fit=crop&w=1200&q=80', sentences: [
 {id:1, eng:"Learning to drive was always my biggest personal goal.", tr:"Araba kullanmayı öğrenmek her zaman en büyük kişisel hedefimdi."},
 {id:2, eng:"When I turned twenty, I joined a driving academy.", tr:"Yirmi yaşıma bastığımda bir sürücü kursuna katıldım."},
 {id:3, eng:"First, I attended theory classes for two weeks.", tr:"İlk olarak iki hafta boyunca teorik derslere katıldım."},
@@ -692,7 +692,7 @@ const defaultTexts = [
 {q:"What was the hardest maneuver?", options:["Parallel parking", "Turning right", "Stopping"], answer:0},
 {q:"How did the author feel on the first day?", options:["Bored", "Nervous and sweating", "Angry"], answer:1}
 ]},
-{ id: 11, level: 'B1', title: 'The Rise of Renewable Energy', sentences: [
+{ id: 11, level: 'B1', title: 'The Rise of Renewable Energy', bgImage: 'https://images.unsplash.com/photo-1466611653911-95081537e5b7?auto=format&fit=crop&w=1200&q=80', sentences: [
 {id:1, eng:"Energy powers modern human society.", tr:"Enerji modern insan toplumuna güç sağlar."},
 {id:2, eng:"For more than a century, countries have heavily relied on coal, oil, and natural gas.", tr:"Bir asırdan fazla bir süredir ülkeler kömür, petrol ve doğal gaza yoğun bir şekilde bağımlı olmuştur."},
 {id:3, eng:"However, this reliance creates serious environmental damage.", tr:"Ancak bu bağımlılık ciddi çevresel hasar yaratmaktadır."},
@@ -723,7 +723,7 @@ const defaultTexts = [
 {q:"Why are batteries needed in clean energy systems?", options:["To store surplus daytime electricity", "To clean solar panels", "To stop wind"], answer:0},
 {q:"Where are offshore wind turbines built?", options:["In deep caves", "On ocean shores", "Near coal mines"], answer:1}
 ]},
-{ id: 12, level: 'B1', title: 'The Psychology of Habit Formation', sentences: [
+{ id: 12, level: 'B1', title: 'The Psychology of Habit Formation', bgImage: 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=1200&q=80', sentences: [
 {id:1, eng:"Our lives are largely built on routines.", tr:"Hayatımız büyük ölçüde rutinler üzerine kuruludur."},
 {id:2, eng:"Psychologists estimate that nearly half of our daily behavior is governed by automatic habits rather than conscious thought.", tr:"Psikologlar, günlük davranışlarımızın neredeyse yarısının bilinçli düşünceden ziyade otomatik alışkanlıklar tarafından yönetildiğini tahmin ediyor."},
 {id:3, eng:"Habits exist to conserve cognitive energy.", tr:"Alışkanlıklar bilişsel enerjiyi korumak için vardır."},
@@ -754,7 +754,7 @@ const defaultTexts = [
 {q:"How should you break a bad habit?", options:["Relying only on willpower", "Keeping cue/reward and replacing routine", "Sleeping more"], answer:1},
 {q:"Why is starting with tiny habits effective?", options:["It avoids burnout and feels easy", "It costs less money", "It requires tools"], answer:0}
 ]},
-{ id: 13, level: 'B1', title: 'Sustainable Tourism and Travel', sentences: [
+{ id: 13, level: 'B1', title: 'Sustainable Tourism and Travel', bgImage: 'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=1200&q=80', sentences: [
 {id:1, eng:"Global travel has expanded tremendously.", tr:"Küresel seyahat muazzam bir şekilde genişledi."},
 {id:2, eng:"Cheap flights and online booking platforms allow millions of people to visit exotic destinations every year.", tr:"Ucuz uçuşlar ve çevrimiçi rezervasyon platformları her yıl milyonlarca insanın egzotik yerleri ziyaret etmesini sağlıyor."},
 {id:3, eng:"However, mass tourism brings heavy consequences.", tr:"Ancak kitle turizmi ağır sonuçlar doğurmaktadır."},
@@ -785,7 +785,7 @@ const defaultTexts = [
 {q:"Why should travelers support locally owned restaurants?", options:["To keep profits in local community", "They are free", "Fast food"], answer:0},
 {q:"What does 'leave-no-trace' principle mean?", options:["No photos", "Leaving nature undisturbed and packing out trash", "No luggage"], answer:1}
 ]},
-{ id: 14, level: 'B1', title: 'The Art of Public Speaking', sentences: [
+{ id: 14, level: 'B1', title: 'The Art of Public Speaking', bgImage: 'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&w=1200&q=80', sentences: [
 {id:1, eng:"Public speaking terrifies millions of adults.", tr:"Topluluk önünde konuşmak milyonlarca yetişkini dehşete düşürür."},
 {id:2, eng:"Surveys consistently reveal that glossophobia, or fear of public speech, ranks higher than the fear of spiders.", tr:"Anketler sürekli olarak, topluluk önünde konuşma korkusu olan glossofobinin örümcek korkusundan daha üst sırada yer aldığını ortaya koyuyor."},
 {id:3, eng:"Our bodies trigger an involuntary biological reaction.", tr:"Bedenlerimiz istemsiz bir biyolojik reaksiyon tetikler."},
@@ -816,7 +816,7 @@ const defaultTexts = [
 {q:"Why are deliberate pauses useful?", options:["To check the time", "To let listeners digest points", "To drink water"], answer:1},
 {q:"What slides should a speaker avoid?", options:["Visual slides", "Slides packed with tiny text", "Slides with photos"], answer:1}
 ]},
-{ id: 15, level: 'B1', title: 'Financial Literacy for Young Adults', sentences: [
+{ id: 15, level: 'B1', title: 'Financial Literacy for Young Adults', bgImage: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=1200&q=80', sentences: [
 {id:1, eng:"Money management is a critical life skill.", tr:"Para yönetimi kritik bir yaşam becerisidir."},
 {id:2, eng:"Unfortunately, standard academic schools rarely teach students how to manage their personal income effectively.", tr:"Ne yazık ki, standart okullar nadiren öğrencilere kişisel gelirlerini nasıl etkili yöneteceklerini öğretir."},
 {id:3, eng:"Many graduates quickly accumulate expensive credit debt.", tr:"Birçok mezun hızla pahalı kredi borcu biriktirir."},
@@ -847,7 +847,7 @@ const defaultTexts = [
 {q:"How many months of expenses should an emergency fund cover?", options:["1 week", "3 to 6 months", "10 years"], answer:1},
 {q:"What is the danger of paying only the minimum balance?", options:["Compound interest against you", "Cards expire", "Heavy cards"], answer:0}
 ]},
-{ id: 16, level: 'B2', title: 'The Psychology of Decision Fatigue', sentences: [
+{ id: 16, level: 'B2', title: 'The Psychology of Decision Fatigue', bgImage: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80', sentences: [
 {id:1, eng:"Humans make hundreds of choices daily.", tr:"İnsanlar her gün yüzlerce seçim yapar."},
 {id:2, eng:"From trivial meal selections to complex business negotiations, modern life demands relentless cognitive evaluation.", tr:"Önemsiz yemek tercihlerinden karmaşık iş müzakerelerine kadar, modern hayat aralıksız bilişsel değerlendirme talep eder."},
 {id:3, eng:"This mental taxation has a biological limit.", tr:"Bu zihinsel vergilendirmenin biyolojik bir sınırı vardır."},
@@ -878,7 +878,7 @@ const defaultTexts = [
 {q:"Why did Steve Jobs wear identical outfits?", options:["Save money", "Eliminate clothing dilemmas and save mental energy", "Disliked clothes"], answer:1},
 {q:"What fuel does the brain consume during deliberation?", options:["Adrenaline", "Blood glucose", "Water"], answer:1}
 ]},
-{ id: 17, level: 'B2', title: 'Urban Green Spaces and Mental Well-being', sentences: [
+{ id: 17, level: 'B2', title: 'Urban Green Spaces and Mental Well-being', bgImage: 'https://images.unsplash.com/photo-1519331379826-f10be5486c6f?auto=format&fit=crop&w=1200&q=80', sentences: [
 {id:1, eng:"Global cities are expanding rapidly.", tr:"Küresel şehirler hızla genişliyor."},
 {id:2, eng:"As concrete towers replace natural landscapes, urban residents increasingly suffer from elevated chronic stress and anxiety.", tr:"Beton kuleler doğal manzaraların yerini aldıkça, kent sakinleri giderek daha fazla kronik stres ve kaygıdan muzdarip oluyor."},
 {id:3, eng:"Urban planners now recognize this crisis.", tr:"Şehir plancıları artık bu krizi kabul ediyor."},
@@ -909,7 +909,7 @@ const defaultTexts = [
 {q:"How do trees reduce urban heat island effect?", options:["Shade and moisture transpiration", "Blocking sun forever", "Drinking water"], answer:0},
 {q:"What happens to cortisol levels when in greenery?", options:["Increase", "Decrease", "Stay frozen"], answer:1}
 ]},
-{ id: 18, level: 'B2', title: 'The Evolution of Global Supply Chains', sentences: [
+{ id: 18, level: 'B2', title: 'The Evolution of Global Supply Chains', bgImage: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1200&q=80', sentences: [
 {id:1, eng:"Global commerce connects distant continents seamlessly.", tr:"Küresel ticaret uzak kıtaları kusursuz bir şekilde birbirine bağlar."},
 {id:2, eng:"Over past decades, advanced telecommunications and containerized shipping created an unprecedented interconnected world economy.", tr:"Geçtiğimiz on yıllar boyunca gelişmiş telekomünikasyon ve konteynerli taşımacılık, benzeri görülmemiş bir birbirine bağlı dünya ekonomisi yarattı."},
 {id:3, eng:"Corporations dismantled expensive local production facilities.", tr:"Şirketler pahalı yerel üretim tesislerini tasfiye etti."},
@@ -940,7 +940,7 @@ const defaultTexts = [
 {q:"What does nearshoring mean?", options:["Moving factories closer to consumer markets", "Selling online", "Closing shops"], answer:0},
 {q:"Which shortage halted car assembly lines?", options:["Rubber tires", "Semiconductor microchips", "Windshields"], answer:1}
 ]},
-{ id: 19, level: 'B2', title: 'Ethical Dilemmas in AI and Automation', sentences: [
+{ id: 19, level: 'B2', title: 'Ethical Dilemmas in AI and Automation', bgImage: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=1200&q=80', sentences: [
 {id:1, eng:"Artificial intelligence is advancing at blinding speed.", tr:"Yapay zeka baş döndürücü bir hızla ilerliyor."},
 {id:2, eng:"Autonomous algorithms now evaluate loan applicants, screen job resumes, and assist judges with criminal sentencing.", tr:"Otonom algoritmalar artık kredi başvurularını değerlendiriyor, iş özgeçmişlerini eliyor ve yargıçlara ceza infazlarında yardımcı oluyor."},
 {id:3, eng:"These automated systems offer superhuman speed.", tr:"Bu otomatik sistemler insanüstü bir hız sunar."},
@@ -971,7 +971,7 @@ const defaultTexts = [
 {q:"What is the 'black box' problem in AI?", options:["Painted computers", "Deep networks unable to explain their reasoning", "Broken screen"], answer:1},
 {q:"How does EU regulate AI?", options:["Classifying systems according to risk level", "Banning computers", "Taxing Internet"], answer:0}
 ]},
-{ id: 20, level: 'B2', title: 'The Impact of Bilingualism on Brain Plasticity', sentences: [
+{ id: 20, level: 'B2', title: 'The Impact of Bilingualism on Brain Plasticity', bgImage: 'https://images.unsplash.com/photo-1559757175-5700dde675bc?auto=format&fit=crop&w=1200&q=80', sentences: [
 {id:1, eng:"Language learning transforms the human mind.", tr:"Dil öğrenimi insan zihnini dönüştürür."},
 {id:2, eng:"For decades, flawed pedagogical theories erroneously claimed that raising children bilingually would confuse their grammatical development.", tr:"On yıllar boyunca kusurlu pedagojik teoriler, çocukları iki dilli yetiştirmenin dilbilgisel gelişimlerini karıştıracağını hatalı bir şekilde iddia etti."},
 {id:3, eng:"Modern neuroimaging completely disproved that myth.", tr:"Modern beyin görüntüleme bu efsaneyi tamamen çürüttü."},
@@ -1004,6 +1004,60 @@ const defaultTexts = [
 ]}
 ];
 
+const getTextBgImage = (text: any): string => {
+  if (!text) return 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80';
+  if (text.bgImage) return text.bgImage;
+
+  const idMap: Record<number, string> = {
+    1: 'https://images.unsplash.com/photo-1500595046743-cd271d694d30?auto=format&fit=crop&w=1200&q=80',
+    2: 'https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&w=1200&q=80',
+    3: 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1200&q=80',
+    4: 'https://images.unsplash.com/photo-1534567153574-2b12153a87f0?auto=format&fit=crop&w=1200&q=80',
+    5: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80',
+    6: 'https://images.unsplash.com/photo-1510312305653-8ed496efae75?auto=format&fit=crop&w=1200&q=80',
+    7: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=80',
+    8: 'https://images.unsplash.com/photo-1507668077129-56e32842fceb?auto=format&fit=crop&w=1200&q=80',
+    9: 'https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?auto=format&fit=crop&w=1200&q=80',
+    10: 'https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?auto=format&fit=crop&w=1200&q=80',
+    11: 'https://images.unsplash.com/photo-1466611653911-95081537e5b7?auto=format&fit=crop&w=1200&q=80',
+    12: 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=1200&q=80',
+    13: 'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=1200&q=80',
+    14: 'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&w=1200&q=80',
+    15: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=1200&q=80',
+    16: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80',
+    17: 'https://images.unsplash.com/photo-1519331379826-f10be5486c6f?auto=format&fit=crop&w=1200&q=80',
+    18: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1200&q=80',
+    19: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=1200&q=80',
+    20: 'https://images.unsplash.com/photo-1559757175-5700dde675bc?auto=format&fit=crop&w=1200&q=80'
+  };
+
+  if (typeof text.id === 'number' && idMap[text.id]) {
+    return idMap[text.id];
+  }
+
+  const t = (text.title || '').toLowerCase();
+  if (t.includes('farm') || t.includes('animal') || t.includes('nature') || t.includes('garden')) {
+    return 'https://images.unsplash.com/photo-1500595046743-cd271d694d30?auto=format&fit=crop&w=1200&q=80';
+  }
+  if (t.includes('school') || t.includes('student') || t.includes('book') || t.includes('learn') || t.includes('class')) {
+    return 'https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&w=1200&q=80';
+  }
+  if (t.includes('travel') || t.includes('trip') || t.includes('holiday') || t.includes('camp') || t.includes('forest')) {
+    return 'https://images.unsplash.com/photo-1510312305653-8ed496efae75?auto=format&fit=crop&w=1200&q=80';
+  }
+  if (t.includes('tech') || t.includes('ai') || t.includes('future') || t.includes('science') || t.includes('robot')) {
+    return 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=1200&q=80';
+  }
+  if (t.includes('city') || t.includes('house') || t.includes('home') || t.includes('apartment') || t.includes('room')) {
+    return 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=80';
+  }
+
+  if (text.level === 'A1') return 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80';
+  if (text.level === 'A2') return 'https://images.unsplash.com/photo-1510312305653-8ed496efae75?auto=format&fit=crop&w=1200&q=80';
+  if (text.level === 'B1') return 'https://images.unsplash.com/photo-1466611653911-95081537e5b7?auto=format&fit=crop&w=1200&q=80';
+  return 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80';
+};
+
 export { 
   idbGet, 
   idbSet, 
@@ -1015,5 +1069,6 @@ export {
   phrasalVerbs, 
   findPhrasalVerbsInText, 
   logStudyActivity, 
-  getTodayDateKey 
+  getTodayDateKey,
+  getTextBgImage
 };
