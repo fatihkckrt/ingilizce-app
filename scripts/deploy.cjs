@@ -102,7 +102,10 @@ if (!fs.existsSync(gitDir) && process.env.GITHUB_TOKEN && process.env.GITHUB_REP
     run(`git config user.email "${email}"`, 'Setting git user email');
     run(`git remote add origin ${authedUrl}`, 'Setting remote origin');
     run('git branch -M main', 'Setting branch to main');
-    try { run('git fetch origin main', 'Fetching remote main'); } catch (_) {}
+    try { 
+      run('git fetch origin main', 'Fetching remote main'); 
+      run('git reset origin/main', 'Aligning with remote main');
+    } catch (_) {}
   } catch (err) {
     console.warn('⚠️ Git auto-initialization warning:', err.message);
   }

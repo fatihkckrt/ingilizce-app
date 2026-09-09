@@ -1214,6 +1214,20 @@ function MainApp() {
 
   const themeStyle = getThemeClasses();
 
+  const getReadingCardStyle = () => {
+    switch (readerTheme) {
+      case 'sepia':
+        return 'bg-[#fffcf7]/85 backdrop-blur-md border border-[#e5d8c3]/80 text-[#2e1d0f] shadow-md';
+      case 'oled':
+        return 'bg-black/75 backdrop-blur-md border border-white/20 text-slate-100 shadow-lg';
+      case 'forest':
+        return 'bg-[#0d2218]/80 backdrop-blur-md border border-emerald-500/30 text-emerald-100 shadow-lg';
+      case 'glass':
+      default:
+        return 'bg-white/85 backdrop-blur-md border border-white/70 text-slate-900 shadow-md';
+    }
+  };
+
   const getFontSizeClass = () => {
     switch(fontSize) {
       case 'sm': return 'text-sm';
@@ -1238,7 +1252,11 @@ function MainApp() {
       >
 
         {/* Header */}
-        <div className={`p-3.5 sm:p-4 flex items-center shadow-md shrink-0 sticky top-0 z-40 border-b transition-colors duration-300 ${themeStyle.header}`}>
+        <div className={`p-3.5 sm:p-4 flex items-center shadow-md shrink-0 sticky top-0 z-40 border-b transition-colors duration-300 ${
+          currentView === 'reading' 
+            ? 'bg-black/55 backdrop-blur-md text-white border-white/20' 
+            : themeStyle.header
+        }`}>
           {currentView !== 'home' ? (
             <div className="flex items-center gap-1 mr-1">
               <button 
@@ -1738,32 +1756,39 @@ function MainApp() {
                 alt="" 
                 aria-hidden="true"
                 referrerPolicy="no-referrer" 
-                className="w-full h-full object-cover object-center scale-100 transition-all duration-700 filter brightness-90"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80';
+                }}
+                className="w-full h-full object-cover object-center scale-100 transition-all duration-700 filter brightness-95 contrast-105"
               />
-              {/* Sayfa Geneline Yayılan Şeffaf Okuma Katmanı */}
+              {/* Sayfa Geneline Yayılan Şık Yarı Saydam Okuma Katmanı (Resmin Net Görünmesini Sağlar) */}
               <div className={`absolute inset-0 transition-colors duration-300 ${
                 readerTheme === 'sepia' 
-                  ? 'bg-[#f7f0e1]/78' 
+                  ? 'bg-gradient-to-b from-[#2e1c10]/45 via-[#2e1c10]/25 to-[#2e1c10]/55' 
                   : readerTheme === 'oled' 
-                    ? 'bg-black/80' 
+                    ? 'bg-gradient-to-b from-black/65 via-black/40 to-black/75' 
                     : readerTheme === 'forest' 
-                      ? 'bg-[#0a1811]/80' 
-                      : 'bg-slate-900/65'
+                      ? 'bg-gradient-to-b from-[#07170e]/50 via-[#07170e]/25 to-[#07170e]/60' 
+                      : 'bg-gradient-to-b from-slate-950/45 via-slate-900/20 to-slate-950/55'
               }`} />
             </div>
 
             <div className="relative z-10 p-4 sm:p-5 flex-1 overflow-y-auto space-y-4 pb-36">
               {/* Metin Başlığı ve Seviye Rozeti */}
-              <div className="p-3.5 sm:p-4 rounded-2xl bg-black/45 backdrop-blur-md border border-white/20 text-white shadow-md mb-2">
-                <div className="flex items-center gap-2 mb-1">
-                  <span className={`text-[10px] font-black uppercase px-2 py-0.5 rounded-md shadow-xs ${
+              <div className="p-4 sm:p-5 rounded-2xl bg-black/45 backdrop-blur-md border border-white/25 text-white shadow-xl mb-3">
+                <div className="flex items-center justify-between gap-2 mb-1.5">
+                  <span className={`text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full shadow-xs ${
                     activeText.level === 'A1' ? 'bg-emerald-500 text-white' :
                     activeText.level === 'A2' ? 'bg-blue-500 text-white' :
                     activeText.level === 'B1' ? 'bg-indigo-500 text-white' : 'bg-purple-500 text-white'
                   }`}>
                     {activeText.level} Seviye
                   </span>
-                  {activeText.isCustom && <span className="bg-amber-400 text-amber-950 text-[10px] font-bold px-1.5 py-0.5 rounded shadow-xs">ÖZEL METİN</span>}
+                  {activeText.isCustom && (
+                    <span className="bg-amber-400 text-amber-950 text-[10px] font-bold px-2 py-0.5 rounded-full shadow-xs">
+                      ÖZEL METİN
+                    </span>
+                  )}
                 </div>
                 <h2 className="text-xl sm:text-2xl font-black leading-tight drop-shadow-md">{activeText.title}</h2>
               </div>
@@ -1777,7 +1802,7 @@ function MainApp() {
                 const phrasalsInSentence = phraseHunterActive ? findPhrasalVerbsInText(sentence.eng) : [];
 
                 return (
-                  <div key={sentence.id} className={`relative ${themeStyle.card} p-4 rounded-2xl border shadow-sm hover:shadow transition`}>
+                  <div key={sentence.id} className={`relative ${getReadingCardStyle()} p-4 rounded-2xl transition hover:shadow-xl`}>
                     <div className={`${getFontSizeClass()} leading-relaxed flex flex-wrap items-center gap-y-2`}>
                       <div className="flex-1">
                         {sentenceWords.map((word, idx) => {
@@ -1797,16 +1822,16 @@ function MainApp() {
                           );
                         })}
                       </div>
-                      <div className="flex items-center gap-1 ml-2">
+                      <div className="flex items-center gap-1.5 ml-2">
                         <button
                           onClick={() => speakSentenceWithKaraoke(sentence)}
                           title="Cümleyi Karaoke ile Dinle"
-                          className={`w-7 h-7 rounded-full flex items-center justify-center text-xs shadow-sm transition ${isSpeakingThisSentence ? 'bg-amber-400 text-amber-950 animate-pulse' : 'bg-indigo-50 text-indigo-700 hover:bg-indigo-100'}`}
+                          className={`w-7 h-7 rounded-full flex items-center justify-center text-xs shadow-sm transition ${isSpeakingThisSentence ? 'bg-amber-400 text-amber-950 animate-pulse' : 'bg-indigo-600 text-white hover:bg-indigo-700'}`}
                         >🔊</button>
                         <button
                           onClick={() => setRevealedSentences(prev => ({ ...prev, [sentence.id]: !prev[sentence.id] }))}
                           title="Çeviriyi Gör"
-                          className="w-7 h-7 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center text-xs hover:bg-slate-200 shadow-sm"
+                          className="w-7 h-7 rounded-full bg-slate-700/60 text-white flex items-center justify-center text-xs hover:bg-slate-800 shadow-sm"
                         >🌐</button>
                       </div>
                     </div>
@@ -1829,7 +1854,11 @@ function MainApp() {
                     )}
 
                     {(revealedSentences[sentence.id] || showFullTranslation) && (
-                      <div className="mt-2.5 p-2.5 bg-indigo-50 border-l-4 border-indigo-600 text-xs rounded-r-lg text-slate-700 leading-relaxed font-medium shadow-inner">
+                      <div className={`mt-2.5 p-2.5 rounded-r-lg text-xs leading-relaxed font-semibold shadow-inner border-l-4 ${
+                        readerTheme === 'oled' || readerTheme === 'forest' 
+                          ? 'bg-indigo-950/80 border-indigo-400 text-indigo-100' 
+                          : 'bg-amber-50/95 border-amber-600 text-amber-950'
+                      }`}>
                         {sentence.tr}
                       </div>
                     )}
@@ -1838,14 +1867,17 @@ function MainApp() {
               })}
             </div>
 
-            <div className={`absolute bottom-0 left-0 right-0 p-3.5 ${themeStyle.footer} border-t shadow-2xl flex gap-2.5 z-30 transition-colors duration-300`}>
+            <div className="absolute bottom-0 left-0 right-0 p-3.5 bg-black/60 backdrop-blur-lg border-t border-white/20 shadow-2xl flex gap-2.5 z-30 transition-colors duration-300">
               <button
                 onClick={() => setShowFullTranslation(!showFullTranslation)}
-                className={`flex-1 py-3 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 transition ${showFullTranslation ? 'bg-slate-200 text-slate-700' : 'bg-indigo-100 text-indigo-900'}`}
+                className={`flex-1 py-3 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 transition ${showFullTranslation ? 'bg-slate-200 text-slate-800 font-extrabold' : 'bg-white/20 hover:bg-white/30 text-white'}`}
               >
                 <span>🌐</span> {showFullTranslation ? "Gizle" : "Tam Çeviri"}
               </button>
-              <button onClick={handleFinishReading} className="flex-[1.4] py-3 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 bg-green-600 text-white shadow-md hover:bg-green-700 transition">
+              <button 
+                onClick={handleFinishReading} 
+                className="flex-[1.4] py-3 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 bg-emerald-600 hover:bg-emerald-700 text-white shadow-md transition active:scale-95"
+              >
                 <span>✅</span> {activeText.questions?.length > 0 ? "Sınava Geç" : "Metni Bitir"}
               </button>
             </div>
