@@ -16,6 +16,7 @@ import {
 import { StatsModal } from "./components/StatsModal";
 import { AITextGenerator } from "./components/AITextGenerator";
 import { InstallPromptBanner } from "./components/InstallPromptBanner";
+import { PhraseCardsModal } from "./components/PhraseCardsModal";
 import { Settings } from "lucide-react";
 
 export class ErrorBoundary extends React.Component {
@@ -230,6 +231,10 @@ function MainApp() {
   const [phraseHunterActive, setPhraseHunterActive] = useState(() => {
     return localStorage.getItem('app_phrase_hunter') === 'true';
   });
+  const [focusModeActive, setFocusModeActive] = useState(() => {
+    return localStorage.getItem('app_focus_mode') === 'true';
+  });
+  const [showPhraseCardsModal, setShowPhraseCardsModal] = useState(false);
   const [showTypeSettings, setShowTypeSettings] = useState(false);
   const [showBackupModal, setShowBackupModal] = useState(false);
   const [showStatsModal, setShowStatsModal] = useState(false);
@@ -1626,6 +1631,34 @@ function MainApp() {
               </button>
             </div>
 
+            {/* Odaklanma Modu (Focus Mode) Hızlı Ayarı */}
+            <div className="mb-3 p-2.5 bg-slate-800 rounded-xl border border-slate-700 flex items-center justify-between">
+              <div className="flex items-center gap-2.5">
+                <span className="text-xl">🧘</span>
+                <div>
+                  <span className="text-xs font-bold text-slate-200 block">Odaklanma Modu (Focus Mode)</span>
+                  <span className="text-[10px] text-slate-400">Türkçe çevirileri gizle, saf İngilizce oku</span>
+                </div>
+              </div>
+              <button
+                onClick={() => {
+                  const next = !focusModeActive;
+                  setFocusModeActive(next);
+                  localStorage.setItem('app_focus_mode', next ? 'true' : 'false');
+                  if (next) {
+                    setShowFullTranslation(false);
+                  }
+                }}
+                className={`px-3 py-1.5 text-xs font-bold rounded-lg border transition ${
+                  focusModeActive 
+                    ? 'bg-indigo-600 border-indigo-400 text-white shadow-sm' 
+                    : 'bg-slate-700 border-slate-600 text-slate-300 hover:bg-slate-600'
+                }`}
+              >
+                {focusModeActive ? 'Aktif ✓' : 'Kapalı'}
+              </button>
+            </div>
+
             {/* Doğal ve Gerçekçi Ses Seçim Stüdyosu */}
             <div className="mb-3.5 p-3 rounded-xl bg-slate-800 border border-slate-700">
               <div className="flex justify-between items-center mb-2 pb-2 border-b border-slate-700/70">
@@ -2060,6 +2093,19 @@ function MainApp() {
               <div className="bg-orange-600 text-white text-xs font-bold px-3 py-1.5 rounded-xl shadow">{savedWords.length}</div>
             </button>
 
+            {/* Kalıp & Deyim Kartları Stüdyosu */}
+            <button onClick={() => setShowPhraseCardsModal(true)}
+              className={`w-full ${themeStyle.card} border-2 border-amber-400 p-4 rounded-2xl flex items-center justify-between hover:border-amber-600 shadow-md text-amber-950 transition active:scale-[0.98]`}>
+              <div className="flex items-center gap-3">
+                <span className="text-2xl p-1 bg-amber-400/20 rounded-xl">🎯</span>
+                <div className="text-left">
+                  <span className="font-bold text-base block">Kalıp & Deyim Kartları</span>
+                  <span className="text-xs text-amber-800 font-medium">Phrasal Verb'ler, Deyimler & Akademik Kalıplar</span>
+                </div>
+              </div>
+              <span className="bg-amber-400 text-amber-950 text-xs font-black px-2.5 py-1 rounded-full shadow-xs">Kartlar ➔</span>
+            </button>
+
             {/* Gelişim ve İstatistikler */}
             <button onClick={openStatsModal}
               className={`w-full ${themeStyle.card} border-2 border-emerald-400 p-4 rounded-2xl flex items-center justify-between hover:border-emerald-600 shadow-md text-emerald-950 transition active:scale-[0.98]`}>
@@ -2233,18 +2279,37 @@ function MainApp() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent flex flex-col justify-end p-4 text-white">
                     <div className="flex items-center justify-between gap-2 mb-1.5">
-                      <span className={`text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full shadow-xs ${
-                        activeText.level === 'A1' ? 'bg-emerald-500 text-white' :
-                        activeText.level === 'A2' ? 'bg-blue-500 text-white' :
-                        activeText.level === 'B1' ? 'bg-indigo-500 text-white' : 'bg-purple-500 text-white'
-                      }`}>
-                        {activeText.level} Seviye
-                      </span>
-                      {activeText.isCustom && (
-                        <span className="bg-amber-400 text-amber-950 text-[10px] font-bold px-2 py-0.5 rounded-full shadow-xs">
-                          ÖZEL METİN
+                      <div className="flex items-center gap-1.5">
+                        <span className={`text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full shadow-xs ${
+                          activeText.level === 'A1' ? 'bg-emerald-500 text-white' :
+                          activeText.level === 'A2' ? 'bg-blue-500 text-white' :
+                          activeText.level === 'B1' ? 'bg-indigo-500 text-white' : 'bg-purple-500 text-white'
+                        }`}>
+                          {activeText.level} Seviye
                         </span>
-                      )}
+                        {activeText.isCustom && (
+                          <span className="bg-amber-400 text-amber-950 text-[10px] font-bold px-2 py-0.5 rounded-full shadow-xs">
+                            ÖZEL METİN
+                          </span>
+                        )}
+                      </div>
+                      <button
+                        onClick={() => {
+                          const next = !focusModeActive;
+                          setFocusModeActive(next);
+                          localStorage.setItem('app_focus_mode', next ? 'true' : 'false');
+                          if (next) setShowFullTranslation(false);
+                          showToast(next ? "🧘 Odaklanma Modu Açık (Çeviriler Gizlendi)" : "🌐 Odaklanma Modu Kapatıldı");
+                        }}
+                        className={`text-[10px] font-bold px-2.5 py-1 rounded-full border transition flex items-center gap-1 active:scale-95 ${
+                          focusModeActive
+                            ? 'bg-indigo-500 text-white border-indigo-400 shadow-md ring-1 ring-white/40'
+                            : 'bg-black/40 text-white/80 border-white/20 hover:bg-black/60'
+                        }`}
+                        title="Odaklanma Modu: Türkçe çevirileri gizleyip zihninizi doğrudan İngilizceye odaklar"
+                      >
+                        <span>{focusModeActive ? "🧘 Odak Modu: Açık" : "🧘 Odak Modu"}</span>
+                      </button>
                     </div>
                     <h2 className="text-xl sm:text-2xl font-black leading-tight drop-shadow-md text-white">
                       {activeText.title}
@@ -2336,7 +2401,7 @@ function MainApp() {
                       </div>
                     )}
 
-                    {(revealedSentences[sentence.id] || showFullTranslation) && (
+                    {((!focusModeActive && (revealedSentences[sentence.id] || showFullTranslation)) || (focusModeActive && revealedSentences[sentence.id])) && (
                       <div className={`mt-2.5 p-2.5 rounded-r-lg text-xs leading-relaxed font-semibold shadow-inner border-l-4 ${
                         readerTheme === 'oled' || readerTheme === 'forest' 
                           ? 'bg-indigo-950/80 border-indigo-400 text-indigo-100' 
@@ -2918,6 +2983,46 @@ function MainApp() {
         onClose={closeStatsModal}
         savedWords={savedWords}
         completedTextsCount={completedTexts.length}
+      />
+
+      {/* KALIP & DEYİM KARTLARI MODALI */}
+      <PhraseCardsModal
+        isOpen={showPhraseCardsModal}
+        onClose={() => setShowPhraseCardsModal(false)}
+        savedPhrasesSet={new Set(savedWords.map(w => (w.word || '').toLowerCase()))}
+        onSavePhrase={(phrase, info) => {
+          const exists = savedWords.some(w => w.word.toLowerCase() === phrase.toLowerCase());
+          if (exists) {
+            showToast(`"${phrase}" zaten kelime defterinizde kayıtlı.`);
+            return;
+          }
+          const newWord = {
+            id: Date.now().toString(),
+            word: phrase,
+            translation: info.tr,
+            level: info.level || 'B1',
+            box: 1,
+            nextReview: Date.now() + LEITNER_INTERVALS[1],
+            lastReviewed: null,
+            contextEng: info.ex || null,
+            contextTr: null,
+            sourceTitle: 'Kalıp & Deyim Kartları'
+          };
+          const updated = [...savedWords, newWord];
+          setSavedWords(updated);
+          localStorage.setItem('savedWords', JSON.stringify(updated));
+          idbSet('savedWords', updated);
+          showToast(`🎯 "${phrase}" Leitner Defterinize 1. Kutuya eklendi!`);
+        }}
+        onSpeak={(text) => {
+          if ('speechSynthesis' in window) {
+            window.speechSynthesis.cancel();
+            const utt = new SpeechSynthesisUtterance(text);
+            utt.lang = 'en-US';
+            utt.rate = speechRate;
+            window.speechSynthesis.speak(utt);
+          }
+        }}
       />
 
     </div>
