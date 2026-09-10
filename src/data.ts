@@ -1,5 +1,5 @@
-// @ts-nocheck
 import { expandedDictionary } from './generated_dictionary';
+import type { PhraseInfo, ReadingText, Sentence, QuizQuestion, VocabWord, StudyStats, CEFRLevel, PhraseCategory } from './types';
 
 // INDEXEDDB DEPOLAMA MOTORU
 const DB_NAME = 'EnglishLearnAppDB';
@@ -248,11 +248,51 @@ const rawPhrasalVerbs: Record<string, PhraseInfo> = {
   "take for granted": { tr: "çantada keklik görmek", level: "B1", type: "idiom", ex: "Never take your health for granted.", variants: ["takes for granted", "taking for granted", "took for granted", "taken for granted"] },
 
   // === B2 ===
+  "decision fatigue": { tr: "karar yorgunluğu", level: "B2", type: "collocation", ex: "Decision fatigue leads to deteriorating choice quality." },
+  "lead to": { tr: "yol açmak, sebep olmak", level: "B2", type: "phrasal", ex: "Flawed algorithms can lead to wrongful arrests.", variants: ["leads to", "leading to", "led to"] },
+  "result in": { tr: "ile sonuçlanmak", level: "B2", type: "phrasal", ex: "Careless decisions result in serious losses.", variants: ["results in", "resulting in", "resulted in"] },
+  "cope with": { tr: "başa çıkmak, göğüs germek", level: "B2", type: "phrasal", ex: "Urban residents must cope with high chronic stress.", variants: ["copes with", "coping with", "coped with"] },
+  "in pursuit of": { tr: "peşinde, arayışında", level: "B2", type: "idiom", ex: "In pursuit of lower costs, companies relocated abroad." },
+  "just-in-time": { tr: "tam zamanında (üretim/tedarik)", level: "B2", type: "collocation", ex: "Just-in-time manufacturing became standard gospel." },
+  "supply chain": { tr: "tedarik zinciri", level: "B2", type: "collocation", ex: "Supply chains connect distant continents seamlessly.", variants: ["supply chains"] },
+  "at blinding speed": { tr: "baş döndürücü bir hızla", level: "B2", type: "idiom", ex: "Artificial intelligence is advancing at blinding speed." },
+  "algorithmic bias": { tr: "algoritmik önyargı", level: "B2", type: "collocation", ex: "Algorithmic bias poses serious ethical concerns." },
+  "due process": { tr: "adil yargılanma hakkı / hukuki süreç", level: "B2", type: "academic", ex: "Due process requires understandable legal explanations." },
+  "based on": { tr: "-e dayanarak, -e göre", level: "B2", type: "academic", ex: "Software must make choices based on programmed values.", variants: ["base on", "basing on"] },
+  "human-in-the-loop": { tr: "insanın devrede olduğu denetim", level: "B2", type: "collocation", ex: "Safety regulations mandate human-in-the-loop oversight." },
+  "regardless of": { tr: "-e bakılmaksızın", level: "B2", type: "academic", ex: "Plasticity occurs regardless of your biological age." },
+  "cognitive reserve": { tr: "bilişsel rezerv / zihinsel yedek kapasite", level: "B2", type: "collocation", ex: "Multilingual brains possess richer cognitive reserve." },
+  "neural plasticity": { tr: "sinirsel plastisite / beyin esnekliği", level: "B2", type: "academic", ex: "Speaking multiple languages improves neural plasticity." },
+  "executive function": { tr: "yürütücü işlev (beyin)", level: "B2", type: "academic", ex: "This workout strengthens executive function." },
+  "switch between": { tr: "arasında geçiş yapmak", level: "B2", type: "phrasal", ex: "They switch between tasks with agility.", variants: ["switches between", "switching between", "switched between"] },
+  "lie in": { tr: "-de yatmak, -den kaynaklanmak", level: "B2", type: "phrasal", ex: "True strength lies in supply flexibility.", variants: ["lies in", "lying in", "lay in"] },
+  "stem from": { tr: "-den kaynaklanmak, ileri gelmek", level: "B2", type: "phrasal", ex: "Many modern anxieties stem from chronic overstimulation.", variants: ["stems from", "stemming from", "stemmed from"] },
+  "pave the way": { tr: "çığır açmak, zemin hazırlamak", level: "B2", type: "idiom", ex: "This breakthrough paved the way for modern computing.", variants: ["paves the way", "paving the way", "paved the way"] },
+  "take into account": { tr: "hesaba katmak, göz önünde bulundurmak", level: "B2", type: "collocation", ex: "You must take into account all variables.", variants: ["takes into account", "taking into account", "took into account", "taken into account"] },
+  "on the verge of": { tr: "eşiğinde, kenarında", level: "B2", type: "idiom", ex: "The industry is on the verge of a major revolution." },
+  "play a crucial role in": { tr: "hayati bir rol oynamak", level: "B2", type: "collocation", ex: "Diet plays a crucial role in cognitive health.", variants: ["plays a crucial role in", "playing a crucial role in", "played a crucial role in"] },
+  "come at a cost": { tr: "bir bedel karşılığı olmak", level: "B2", type: "idiom", ex: "Rapid growth often comes at a cost.", variants: ["comes at a cost", "coming at a cost", "came at a cost"] },
+  "make a tradeoff": { tr: "ödün vermek, denge kurmak", level: "B2", type: "collocation", ex: "Engineers must make tradeoffs between speed and security.", variants: ["makes a tradeoff", "making a tradeoff", "made a tradeoff", "make trade-offs", "makes trade-offs"] },
+  "in contrast to": { tr: "-in aksine, tersine", level: "B2", type: "academic", ex: "In contrast to conventional methods, this is cleaner." },
+  "prior to": { tr: "-den önce", level: "B2", type: "academic", ex: "Prior to the trial, defendants meet their legal counsel." },
+  "foster social unity": { tr: "sosyal birliği pekiştirmek", level: "B2", type: "collocation", ex: "Neighborhood parks foster social unity.", variants: ["fosters social unity", "fostering social unity", "fostered social unity"] },
+  "mitigate the effect": { tr: "etkiyi hafifletmek/azaltmak", level: "B2", type: "collocation", ex: "Urban greenery mitigates the heat island effect.", variants: ["mitigates the effect", "mitigating the effect", "mitigated the effect"] },
+  "high-stakes": { tr: "yüksek riskli, hayati önemde", level: "B2", type: "collocation", ex: "Struggle with high-stakes strategic dilemmas." },
+  "rest and recharge": { tr: "dinlenmek ve enerji toplamak", level: "B2", type: "idiom", ex: "Observing nature allows our minds to rest and recharge." },
   "carry out": { tr: "yürütmek, gerçekleştirmek", level: "B2", type: "phrasal", ex: "Scientists carry out important experiments.", variants: ["carries out", "carrying out", "carried out"] },
   "keep up with": { tr: "ayak uydurmak, takip etmek", level: "B2", type: "phrasal", ex: "It is hard to keep up with modern technology.", variants: ["keeps up with", "keeping up with", "kept up with"] },
   "take advantage of": { tr: "fırsatı değerlendirmek, yararlanmak", level: "B2", type: "collocation", ex: "You should take advantage of this opportunity.", variants: ["takes advantage of", "taking advantage of", "took advantage of", "taken advantage of"] },
   "in terms of": { tr: "bakımından, açısından", level: "B2", type: "collocation", ex: "In terms of performance, this phone is great." },
   "stand out": { tr: "göze çarpmak, öne çıkmak", level: "B2", type: "phrasal", ex: "Her leadership skills really stand out.", variants: ["stands out", "standing out", "stood out"] }
+};
+
+export { rawPhrasalVerbs };
+
+export const getAllPhrasesList = (): Array<PhraseInfo & { phrase: string }> => {
+  return Object.entries(rawPhrasalVerbs).map(([phrase, info]) => ({
+    phrase,
+    ...info
+  }));
 };
 
 // Flatten dictionary including all canonical keys and conjugated variants
