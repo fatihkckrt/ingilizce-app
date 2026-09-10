@@ -66,6 +66,86 @@ export class ErrorBoundary extends React.Component {
   }
 }
 
+// Akıllı Ses Cinsiyeti ve Karakter Analiz Motoru
+export const isMaleVoice = (v: SpeechSynthesisVoice | { name?: string; voiceURI?: string } | null | undefined): boolean => {
+  if (!v) return false;
+  const s = `${v.name || ''} ${v.voiceURI || ''}`.toLowerCase();
+
+  // Kesin Kadın Anahtar Kelimeleri & Personaları
+  const femaleMatches = [
+    'female', 'woman', 'zira', 'jenny', 'samantha', 'victoria', 'karen',
+    'moira', 'tessa', 'fiona', 'serena', 'ava', 'kate', 'nicky', 'allison',
+    'catherine', 'elizabeth', 'sarah', 'mary', 'linda', 'susan', 'jessica',
+    'emily', 'chloe', 'sophie', 'emma', 'olivia', 'mia', 'amelia', 'claire',
+    'aria', 'hazel', 'ayanda', 'stephanie', 'joanna', 'ivy', 'kendra', 'kimberly',
+    'salli', 'nicole', 'google us english', 'google uk english female', 
+    'en-us-x-sfg#female', 'en-gb-x-rjs#female', 'en-au-x-aub#female'
+  ];
+  if (femaleMatches.some(f => s.includes(f))) return false;
+
+  // Kesin Erkek Anahtar Kelimeleri & Personaları
+  const maleMatches = [
+    'male', 'man', 'david', 'mark', 'daniel', 'alex', 'george', 'guy', 'fred',
+    'oliver', 'arthur', 'gordon', 'aaron', 'lee', 'rishi', 'james', 'ryan',
+    'tom', 'brian', 'richard', 'thomas', 'william', 'jack', 'charles', 'henry',
+    'edward', 'jacob', 'michael', 'paul', 'john', 'peter', 'luke', 'steve',
+    'stephen', 'diego', 'jorge', 'steffan', 'christopher', 'matthew', 'justin',
+    'joey', 'geraint', 'alva', 'rjs', '#male', '-male', 'uk english male', 'us english male',
+    'en-gb-x-rjs', 'en-us-x-sfg#male', 'en-us-x-iog', 'en-us-x-tpd'
+  ];
+  return maleMatches.some(m => s.includes(m));
+};
+
+export const isFemaleVoice = (v: SpeechSynthesisVoice | { name?: string; voiceURI?: string } | null | undefined): boolean => {
+  return !isMaleVoice(v);
+};
+
+export const getVoiceDisplayInfo = (v: SpeechSynthesisVoice) => {
+  const name = v.name || '';
+  const lang = (v.lang || '').toLowerCase();
+  const isMale = isMaleVoice(v);
+
+  let flag = '🌐';
+  let accent = 'İngilizce';
+  if (lang.includes('us')) {
+    flag = '🇺🇸';
+    accent = 'Amerikan';
+  } else if (lang.includes('gb') || lang.includes('uk')) {
+    flag = '🇬🇧';
+    accent = 'İngiliz';
+  } else if (lang.includes('au')) {
+    flag = '🇦🇺';
+    accent = 'Avustralya';
+  } else if (lang.includes('ca')) {
+    flag = '🇨🇦';
+    accent = 'Kanada';
+  } else if (lang.includes('ie')) {
+    flag = '🇮🇪';
+    accent = 'İrlanda';
+  } else if (lang.includes('in')) {
+    flag = '🇮🇳';
+    accent = 'Hindistan';
+  }
+
+  const cleanName = name
+    .replace(/^microsoft\s+/i, '')
+    .replace(/\s*-\s*english\s*\([^)]+\)/i, '')
+    .replace(/\s*\(united states\)/i, '')
+    .replace(/\s*\(united kingdom\)/i, '')
+    .replace(/\s*\(australia\)/i, '')
+    .replace(/\s*\(natural\)/i, '')
+    .replace(/\s*online/i, '')
+    .trim();
+
+  return {
+    displayName: cleanName || name,
+    flag,
+    accent,
+    genderLabel: isMale ? '👨 Erkek' : '👩 Kadın',
+    isMale
+  };
+};
+
 function MainApp() {
   const [completedTexts, setCompletedTexts] = useState(() => {
     try { 
@@ -186,87 +266,60 @@ function MainApp() {
 
   // Doğal ve Gerçekçi Sesler Motoru
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
+  const [voiceFilterTab, setVoiceFilterTab] = useState<'all' | 'male' | 'female' | 'hd'>('all');
   const [selectedVoice, setSelectedVoice] = useState(() => {
     const saved = localStorage.getItem('app_selected_voice');
-    if (!saved || !localStorage.getItem('app_voice_engine_v4_upgraded')) {
-      return 'hd_us';
-    }
-    return saved;
+    return saved || 'device_us_male';
   });
-
-  // V4 Ses Motoru Yükseltmesi: Eski sistemde robotik ses takılı kalan kullanıcıları doğrudan en kaliteli HD Stüdyo sesine yükselt
-  useEffect(() => {
-    if (!localStorage.getItem('app_voice_engine_v4_upgraded')) {
-      localStorage.setItem('app_voice_engine_v4_upgraded', 'true');
-      setSelectedVoice('hd_us');
-      localStorage.setItem('app_selected_voice', 'hd_us');
-    }
-  }, []);
 
   const VOICE_PRESETS = [
     {
+      id: 'device_us_male',
+      name: 'Amerikan Erkek',
+      desc: 'David / Alex / Sistem Erkek Sesi',
+      category: 'male',
+      flag: '🇺🇸',
+      badge: '👨 Erkek'
+    },
+    {
+      id: 'device_uk_male',
+      name: 'İngiliz Erkek',
+      desc: 'Daniel / George / British Erkek',
+      category: 'male',
+      flag: '🇬🇧',
+      badge: '👨 Erkek'
+    },
+    {
       id: 'hd_us',
-      name: 'Amerikan (Doğal Stüdyo)',
-      desc: 'Yapay Zeka Stüdyo • Gerçek İnsan Telaffuzu',
+      name: 'Amerikan Kadın (Stüdyo)',
+      desc: 'Doğal Stüdyo Kaydı • İnsan Telaffuzu',
       category: 'hd',
       flag: '🇺🇸',
       badge: '🌟 Stüdyo HD'
     },
     {
       id: 'hd_uk',
-      name: 'İngiliz (Doğal Stüdyo)',
-      desc: 'Oxford/BBC Stili • Doğal British Aksanı',
+      name: 'İngiliz Kadın (Stüdyo)',
+      desc: 'Doğal British Aksanı • Kadın Sesi',
       category: 'hd',
       flag: '🇬🇧',
-      badge: '🌟 Stüdyo HD'
-    },
-    {
-      id: 'hd_au',
-      name: 'Avustralya (Doğal Stüdyo)',
-      desc: 'Akıcı & Doğal Okyanusya Aksanı',
-      category: 'hd',
-      flag: '🇦🇺',
       badge: '🌟 Stüdyo HD'
     },
     {
       id: 'device_us_female',
       name: 'Amerikan Kadın (Cihaz)',
-      desc: 'Canlı & İnce Ton Sentezi',
-      category: 'device',
+      desc: 'Zira / Samantha / Canlı Sentez',
+      category: 'female',
       flag: '🇺🇸',
       badge: '👩 Kadın'
-    },
-    {
-      id: 'device_us_male',
-      name: 'Amerikan Erkek (Cihaz)',
-      desc: 'Tok & Derin Ton Sentezi',
-      category: 'device',
-      flag: '🇺🇸',
-      badge: '👨 Erkek'
     },
     {
       id: 'device_uk_female',
       name: 'İngiliz Kadın (Cihaz)',
-      desc: 'Zarif British Sentez',
-      category: 'device',
+      desc: 'Hazel / Serena / British Sentez',
+      category: 'female',
       flag: '🇬🇧',
       badge: '👩 Kadın'
-    },
-    {
-      id: 'device_uk_male',
-      name: 'İngiliz Erkek (Cihaz)',
-      desc: 'Karizmatik & Derin British',
-      category: 'device',
-      flag: '🇬🇧',
-      badge: '👨 Erkek'
-    },
-    {
-      id: 'device_default',
-      name: 'Standart Sistem Sesi',
-      desc: 'Cihazın Varsayılan Sentezleyicisi',
-      category: 'device',
-      flag: '🌐',
-      badge: '🤖 Standart'
     }
   ];
 
@@ -303,51 +356,69 @@ function MainApp() {
 
     setTimeout(() => {
       const utterance = new SpeechSynthesisUtterance(text);
-      const key = voiceKey || selectedVoice || 'device_default';
+      const key = voiceKey || selectedVoice || 'device_us_male';
 
-      let targetPitch = speechPitch;
+      const allVoices = window.speechSynthesis.getVoices() || [];
+      const enVoices = allVoices.filter(v => (v.lang || '').toLowerCase().startsWith('en'));
+      const voicePool = enVoices.length > 0 ? enVoices : allVoices;
+
+      const malePool = voicePool.filter(isMaleVoice);
+      const femalePool = voicePool.filter(isFemaleVoice);
+
+      const isRequestedMale = key.includes('male') || 
+                              allVoices.some(v => (v.name === key || v.voiceURI === key) && isMaleVoice(v));
+
+      let matchedVoice: SpeechSynthesisVoice | null = null;
       let targetLang = 'en-US';
-      let systemVoiceName: string | null = null;
+      let targetPitch = speechPitch;
 
-      if (key === 'device_us_female') {
-        targetPitch = 1.22;
-        targetLang = 'en-US';
-      } else if (key === 'device_us_male') {
-        targetPitch = 0.78;
-        targetLang = 'en-US';
-      } else if (key === 'device_uk_female') {
-        targetPitch = 1.18;
-        targetLang = 'en-GB';
-      } else if (key === 'device_uk_male') {
-        targetPitch = 0.75;
-        targetLang = 'en-GB';
-      } else if (key === 'device_default') {
-        targetPitch = 1.0;
-        targetLang = 'en-US';
-      } else {
-        systemVoiceName = key;
+      // 1. Doğrudan sistem ses adı veya URI eşleşmesi
+      matchedVoice = allVoices.find(v => v.name === key || v.voiceURI === key) || null;
+
+      // 2. Akıllı Ön Tanımlı Eşleşme (Erkek sesi istendiğinde kesinlikle gerçek bir erkek sesi bul)
+      if (!matchedVoice) {
+        if (key === 'device_us_male' || key === 'male_us') {
+          targetLang = 'en-US';
+          // Amerikan erkek sesi ara, yoksa ilk erkek sesini al
+          matchedVoice = malePool.find(v => (v.lang || '').toLowerCase().includes('us')) || malePool[0] || null;
+        } else if (key === 'device_uk_male' || key === 'male_uk') {
+          targetLang = 'en-GB';
+          // İngiliz erkek sesi ara, yoksa ilk erkek sesini al
+          matchedVoice = malePool.find(v => (v.lang || '').toLowerCase().includes('gb') || (v.lang || '').toLowerCase().includes('uk')) || malePool[0] || null;
+        } else if (key === 'device_us_female' || key === 'female_us') {
+          targetLang = 'en-US';
+          matchedVoice = femalePool.find(v => (v.lang || '').toLowerCase().includes('us')) || femalePool[0] || null;
+        } else if (key === 'device_uk_female' || key === 'female_uk') {
+          targetLang = 'en-GB';
+          matchedVoice = femalePool.find(v => (v.lang || '').toLowerCase().includes('gb') || (v.lang || '').toLowerCase().includes('uk')) || femalePool[0] || null;
+        } else if (isRequestedMale) {
+          matchedVoice = malePool[0] || null;
+        } else {
+          matchedVoice = voicePool[0] || null;
+        }
       }
 
-      const allVoices = window.speechSynthesis.getVoices();
-      if (allVoices && allVoices.length > 0) {
-        let matched: SpeechSynthesisVoice | null = null;
-        if (systemVoiceName) {
-          matched = allVoices.find(v => v.name === systemVoiceName || v.voiceURI === systemVoiceName) || null;
-        }
-        if (!matched) {
-          matched = allVoices.find(v => (v.lang || '').toLowerCase().startsWith(targetLang.toLowerCase().slice(0, 2))) || null;
-        }
-        if (matched) {
-          utterance.voice = matched;
-          utterance.lang = matched.lang || targetLang;
+      if (matchedVoice) {
+        utterance.voice = matchedVoice;
+        utterance.lang = matchedVoice.lang || targetLang;
+        // Gerçek bir erkek sesi bulunduysa doğal perdesini koru!
+        if (isMaleVoice(matchedVoice)) {
+          utterance.pitch = speechPitch;
+        } else if (isRequestedMale) {
+          // Cihazda hiç erkek ses dosyası yüklü değilse yapay olarak pesleştir
+          utterance.pitch = Math.min(speechPitch, 0.62);
         } else {
-          utterance.lang = targetLang;
+          utterance.pitch = speechPitch;
         }
       } else {
         utterance.lang = targetLang;
+        if (isRequestedMale) {
+          utterance.pitch = Math.min(speechPitch, 0.62);
+        } else {
+          utterance.pitch = speechPitch;
+        }
       }
 
-      utterance.pitch = targetPitch;
       utterance.rate = speechRate;
       window._activeSpeechUtterance = utterance;
       window.speechSynthesis.speak(utterance);
@@ -355,19 +426,26 @@ function MainApp() {
   };
 
   const testVoice = (targetVoiceId?: string) => {
-    const voiceKey = targetVoiceId || selectedVoice || 'hd_us';
+    const voiceKey = targetVoiceId || selectedVoice || 'device_us_male';
     stopCurrentSpeech();
 
+    const isMale = voiceKey.includes('male') || 
+                   voices.some(v => (v.name === voiceKey || v.voiceURI === voiceKey) && isMaleVoice(v));
+
     let sampleText = "Hello! Keep up the great work practicing English.";
-    if (voiceKey.includes('uk')) {
+    if (isMale) {
+      if (voiceKey.includes('uk') || voiceKey.includes('gb')) {
+        sampleText = "Good day! I am your British male English assistant.";
+      } else {
+        sampleText = "Hello! I am your American male reading assistant.";
+      }
+    } else if (voiceKey.includes('uk')) {
       sampleText = "Good day! Welcome to your British English practice.";
     } else if (voiceKey.includes('au')) {
       sampleText = "G'day mate! Practicing English with an Australian accent.";
-    } else if (voiceKey === 'device_us_male' || voiceKey === 'device_uk_male') {
-      sampleText = "Hello! I am your English reading assistant.";
     }
 
-    if (voiceKey.startsWith('hd_')) {
+    if (voiceKey.startsWith('hd_') && !isMale) {
       const url = getHdAudioUrl(sampleText, voiceKey);
       const audio = new Audio(url);
       audio.playbackRate = speechRate;
@@ -384,7 +462,7 @@ function MainApp() {
   useEffect(() => {
     if (typeof window === 'undefined' || !window.speechSynthesis) return;
     const loadVoices = () => {
-      const all = window.speechSynthesis.getVoices();
+      const all = window.speechSynthesis.getVoices() || [];
       if (!all || all.length === 0) return;
       const enVoices = all.filter(v => v.lang && v.lang.toLowerCase().startsWith('en'));
       setVoices(enVoices.length > 0 ? enVoices : all);
@@ -565,7 +643,10 @@ function MainApp() {
     if (!text) return;
     stopCurrentSpeech();
 
-    if (selectedVoice.startsWith('hd_')) {
+    const isMaleRequested = selectedVoice.includes('male') || 
+      voices.some(v => (v.name === selectedVoice || v.voiceURI === selectedVoice) && isMaleVoice(v));
+
+    if (!isMaleRequested && selectedVoice.startsWith('hd_')) {
       const url = getHdAudioUrl(text, selectedVoice);
       const audio = new Audio(url);
       audio.playbackRate = speechRate;
@@ -622,8 +703,11 @@ function MainApp() {
 
     scheduleNext(0);
 
-    // 1. HD Doğal Stüdyo Sesi (Gerçek İnsan Kaydı)
-    if (selectedVoice.startsWith('hd_')) {
+    const isMaleRequested = selectedVoice.includes('male') || 
+      voices.some(v => (v.name === selectedVoice || v.voiceURI === selectedVoice) && isMaleVoice(v));
+
+    // 1. HD Doğal Stüdyo Sesi (Yalnızca Kadın / Stüdyo seçiliyse)
+    if (!isMaleRequested && selectedVoice.startsWith('hd_')) {
       const url = getHdAudioUrl(text, selectedVoice);
       const audio = new Audio(url);
       audio.playbackRate = speechRate;
@@ -655,7 +739,7 @@ function MainApp() {
       return;
     }
 
-    // 2. Cihaz Sentezleyici
+    // 2. Cihaz Sentezleyici (Erkek sesi dahil tüm cihaz sesleri)
     speakWithDeviceTTS(text, selectedVoice);
   };
 
@@ -1544,11 +1628,11 @@ function MainApp() {
 
             {/* Doğal ve Gerçekçi Ses Seçim Stüdyosu */}
             <div className="mb-3.5 p-3 rounded-xl bg-slate-800 border border-slate-700">
-              <div className="flex justify-between items-center mb-2.5 pb-2 border-b border-slate-700/70">
+              <div className="flex justify-between items-center mb-2 pb-2 border-b border-slate-700/70">
                 <div className="flex items-center gap-1.5">
-                  <span className="text-xs font-bold text-slate-200">Telaffuz Sesi</span>
-                  <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-                    Stüdyo & HD
+                  <span className="text-xs font-bold text-slate-200">Telaffuz & Ses Motoru</span>
+                  <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+                    Erkek / Kadın Seçimi
                   </span>
                 </div>
                 <button 
@@ -1556,119 +1640,214 @@ function MainApp() {
                   className="px-2.5 py-1 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-[11px] font-bold flex items-center gap-1 shadow-xs transition active:scale-95"
                   title="Seçili Sesi Dinle"
                 >
-                  <span>🔊</span> Seçili Sesi Dinle
+                  <span>🔊</span> Dinle
                 </button>
               </div>
 
-              {/* 1. Kategori: Stüdyo Kalitesinde Gerçek İnsan Sesleri (Tavsiye Edilen) */}
-              <div className="mb-2.5">
-                <div className="flex items-center justify-between mb-1.5">
-                  <span className="text-[10px] font-extrabold uppercase tracking-wider text-amber-400 flex items-center gap-1">
-                    🌟 Stüdyo Doğal Sesler <span className="text-[9px] text-slate-400 font-normal lowercase">(gerçek insan kaydı)</span>
-                  </span>
-                </div>
-                <div className="space-y-1.5">
-                  {VOICE_PRESETS.filter(v => v.category === 'hd').map(preset => {
-                    const isSelected = selectedVoice === preset.id;
-                    return (
-                      <div
-                        key={preset.id}
-                        onClick={() => {
-                          setSelectedVoice(preset.id);
-                          testVoice(preset.id);
-                        }}
-                        className={`p-2 rounded-lg border transition cursor-pointer flex items-center justify-between gap-2 ${
-                          isSelected
-                            ? 'bg-indigo-950/70 border-indigo-500 text-white shadow-xs ring-1 ring-indigo-500/50'
-                            : 'bg-slate-900/80 border-slate-700/80 text-slate-300 hover:bg-slate-800/80 hover:border-slate-600'
-                        }`}
-                      >
-                        <div className="flex items-center gap-2 min-w-0">
-                          <span className="text-base">{preset.flag}</span>
-                          <div className="min-w-0">
-                            <div className="flex items-center gap-1.5">
-                              <span className="text-xs font-bold truncate">{preset.name}</span>
-                              <span className="text-[9px] px-1 py-0.2 rounded bg-amber-400/20 text-amber-300 font-medium">
-                                Doğal HD
-                              </span>
-                            </div>
-                            <span className="text-[10px] text-slate-400 block truncate">{preset.desc}</span>
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-1.5 shrink-0">
-                          <button
-                            type="button"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setSelectedVoice(preset.id);
-                              testVoice(preset.id);
-                            }}
-                            className={`px-2 py-1 text-[10px] font-bold rounded-md flex items-center gap-1 transition ${
-                              isSelected
-                                ? 'bg-indigo-600 text-white'
-                                : 'bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white'
-                            }`}
-                          >
-                            <span>▶</span> Dinle
-                          </button>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
+              {/* Sistem Ses Teşhis ve Bilgi Rozeti */}
+              <div className="mb-2.5 p-2 rounded-lg bg-slate-900/90 border border-slate-700/60 text-[10px]">
+                {voices.filter(isMaleVoice).length > 0 ? (
+                  <div className="flex items-center gap-1.5 text-emerald-300">
+                    <span>✅</span>
+                    <span>Cihazınızda <strong>{voices.filter(isMaleVoice).length} adet gerçek erkek sesi</strong> ve {voices.filter(isFemaleVoice).length} kadın sesi aktif.</span>
+                  </div>
+                ) : (
+                  <div className="space-y-1">
+                    <div className="flex items-start gap-1.5 text-amber-300">
+                      <span className="shrink-0 text-xs">⚠️</span>
+                      <span>Cihazınızda doğrudan tanımlı erkek ses dosyası bulunamadı (Yalnızca kadın sesi yüklü). Erkek seçildiğinde yapay derin ton verilir.</span>
+                    </div>
+                    <div className="text-[9px] text-slate-400 pl-4">
+                      💡 <em>Gerçek erkek sesi için: Telefon Ayarları &gt; Erişilebilirlik &gt; Metin Okuma (TTS) &gt; Google TTS &gt; Ses Verilerini İndir menüsünden 'İngilizce Erkek' paketini indirebilirsiniz.</em>
+                    </div>
+                  </div>
+                )}
               </div>
 
-              {/* 2. Kategori: Cihaz Sentezleyici Sesleri (Farklı Karakter & Tonlar) */}
-              <div>
-                <div className="flex items-center justify-between mb-1.5 mt-2.5">
-                  <span className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 flex items-center gap-1">
-                    📱 Cihaz Sentezleyici <span className="text-[9px] text-slate-500 font-normal lowercase">(kadın / erkek / çevrim dışı)</span>
-                  </span>
-                </div>
-                <div className="grid grid-cols-2 gap-1.5">
-                  {VOICE_PRESETS.filter(v => v.category === 'device' && v.id !== 'device_default').map(preset => {
-                    const isSelected = selectedVoice === preset.id;
-                    return (
-                      <div
-                        key={preset.id}
-                        onClick={() => {
+              {/* Filtreleme Sekmeleri: Tümü / Erkek / Kadın / Stüdyo */}
+              <div className="grid grid-cols-4 gap-1 mb-2.5 p-0.5 bg-slate-900 rounded-lg border border-slate-700/80">
+                <button
+                  type="button"
+                  onClick={() => setVoiceFilterTab('all')}
+                  className={`py-1 text-[10px] font-bold rounded transition ${
+                    voiceFilterTab === 'all'
+                      ? 'bg-indigo-600 text-white shadow-xs'
+                      : 'text-slate-400 hover:text-white'
+                  }`}
+                >
+                  🌟 Tümü
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setVoiceFilterTab('male')}
+                  className={`py-1 text-[10px] font-bold rounded transition flex items-center justify-center gap-0.5 ${
+                    voiceFilterTab === 'male'
+                      ? 'bg-sky-600 text-white shadow-xs'
+                      : 'text-slate-400 hover:text-white'
+                  }`}
+                >
+                  <span>👨</span> Erkek
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setVoiceFilterTab('female')}
+                  className={`py-1 text-[10px] font-bold rounded transition flex items-center justify-center gap-0.5 ${
+                    voiceFilterTab === 'female'
+                      ? 'bg-pink-600 text-white shadow-xs'
+                      : 'text-slate-400 hover:text-white'
+                  }`}
+                >
+                  <span>👩</span> Kadın
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setVoiceFilterTab('hd')}
+                  className={`py-1 text-[10px] font-bold rounded transition flex items-center justify-center gap-0.5 ${
+                    voiceFilterTab === 'hd'
+                      ? 'bg-amber-600 text-white shadow-xs'
+                      : 'text-slate-400 hover:text-white'
+                  }`}
+                >
+                  <span>🎙️</span> Stüdyo
+                </button>
+              </div>
+
+              {/* Ön Tanımlı Hızlı Seçim Kartları */}
+              <div className="space-y-1.5 mb-2.5">
+                {VOICE_PRESETS.filter(preset => {
+                  if (voiceFilterTab === 'male') return preset.category === 'male';
+                  if (voiceFilterTab === 'female') return preset.category === 'female' || preset.category === 'hd';
+                  if (voiceFilterTab === 'hd') return preset.category === 'hd';
+                  return true;
+                }).map(preset => {
+                  const isSelected = selectedVoice === preset.id;
+                  const isMale = preset.badge.includes('Erkek');
+                  return (
+                    <div
+                      key={preset.id}
+                      onClick={() => {
+                        setSelectedVoice(preset.id);
+                        testVoice(preset.id);
+                      }}
+                      className={`p-2 rounded-lg border transition cursor-pointer flex items-center justify-between gap-2 ${
+                        isSelected
+                          ? isMale
+                            ? 'bg-sky-950/80 border-sky-400 text-white shadow-xs ring-1 ring-sky-400/50'
+                            : 'bg-indigo-950/80 border-indigo-400 text-white shadow-xs ring-1 ring-indigo-400/50'
+                          : 'bg-slate-900/80 border-slate-700/80 text-slate-300 hover:bg-slate-800/80 hover:border-slate-600'
+                      }`}
+                    >
+                      <div className="flex items-center gap-2 min-w-0">
+                        <span className="text-base">{preset.flag}</span>
+                        <div className="min-w-0">
+                          <div className="flex items-center gap-1.5">
+                            <span className="text-xs font-bold truncate">{preset.name}</span>
+                            <span className={`text-[9px] px-1 py-0.2 rounded font-medium ${
+                              isMale 
+                                ? 'bg-sky-400/20 text-sky-300 border border-sky-400/30' 
+                                : preset.category === 'hd' 
+                                  ? 'bg-amber-400/20 text-amber-300 border border-amber-400/30' 
+                                  : 'bg-pink-400/20 text-pink-300 border border-pink-400/30'
+                            }`}>
+                              {preset.badge}
+                            </span>
+                          </div>
+                          <span className="text-[10px] text-slate-400 block truncate">{preset.desc}</span>
+                        </div>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
                           setSelectedVoice(preset.id);
                           testVoice(preset.id);
                         }}
-                        className={`p-2 rounded-lg border transition cursor-pointer flex flex-col justify-between ${
+                        className={`px-2 py-1 text-[10px] font-bold rounded-md flex items-center gap-1 transition shrink-0 ${
                           isSelected
-                            ? 'bg-indigo-950/70 border-indigo-500 text-white shadow-xs ring-1 ring-indigo-500/50'
-                            : 'bg-slate-900/80 border-slate-700/80 text-slate-300 hover:bg-slate-800/80 hover:border-slate-600'
+                            ? isMale ? 'bg-sky-600 text-white' : 'bg-indigo-600 text-white'
+                            : 'bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white'
                         }`}
                       >
-                        <div className="flex items-center justify-between mb-1">
-                          <div className="flex items-center gap-1 truncate">
-                            <span className="text-xs">{preset.flag}</span>
-                            <span className="text-xs font-bold truncate">{preset.badge}</span>
-                          </div>
-                          <span className="text-[9px] text-slate-400 truncate">{preset.name.includes('İngiliz') ? 'UK' : 'US'}</span>
-                        </div>
-                        <div className="flex items-center justify-between mt-1">
-                          <span className="text-[9px] text-slate-400 truncate">{preset.desc.split('•')[0]}</span>
-                          <button
-                            type="button"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setSelectedVoice(preset.id);
-                              testVoice(preset.id);
+                        <span>▶</span> Dinle
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Cihazınızda Tespit Edilen Gerçek Sesler Listesi */}
+              {voices.length > 0 && (voiceFilterTab === 'male' || voiceFilterTab === 'all' || voiceFilterTab === 'female') && (
+                <div>
+                  <div className="flex items-center justify-between mb-1.5 mt-2">
+                    <span className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 flex items-center gap-1">
+                      📱 Cihazınızdaki Donanım Sesleri ({voices.filter(v => {
+                        if (voiceFilterTab === 'male') return isMaleVoice(v);
+                        if (voiceFilterTab === 'female') return isFemaleVoice(v);
+                        return true;
+                      }).length} adet)
+                    </span>
+                  </div>
+
+                  <div className="max-h-44 overflow-y-auto space-y-1 pr-1 custom-scrollbar">
+                    {voices
+                      .filter(v => {
+                        if (voiceFilterTab === 'male') return isMaleVoice(v);
+                        if (voiceFilterTab === 'female') return isFemaleVoice(v);
+                        return true;
+                      })
+                      .map(voice => {
+                        const isSelected = selectedVoice === voice.name || selectedVoice === voice.voiceURI;
+                        const info = getVoiceDisplayInfo(voice);
+                        return (
+                          <div
+                            key={voice.name}
+                            onClick={() => {
+                              setSelectedVoice(voice.name);
+                              testVoice(voice.name);
                             }}
-                            className={`px-1.5 py-0.5 text-[9px] font-bold rounded flex items-center gap-0.5 transition ${
-                              isSelected ? 'bg-indigo-600 text-white' : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                            className={`p-1.5 px-2 rounded-lg border transition cursor-pointer flex items-center justify-between gap-1.5 text-xs ${
+                              isSelected
+                                ? info.isMale
+                                  ? 'bg-sky-950/80 border-sky-400 text-white ring-1 ring-sky-400/50'
+                                  : 'bg-pink-950/80 border-pink-400 text-white ring-1 ring-pink-400/50'
+                                : 'bg-slate-900/60 border-slate-700/60 text-slate-300 hover:bg-slate-800 hover:border-slate-600'
                             }`}
                           >
-                            <span>▶</span> Dinle
-                          </button>
-                        </div>
-                      </div>
-                    );
-                  })}
+                            <div className="flex items-center gap-1.5 min-w-0">
+                              <span className="text-sm">{info.flag}</span>
+                              <div className="min-w-0">
+                                <div className="flex items-center gap-1">
+                                  <span className="text-[11px] font-semibold truncate">{info.displayName}</span>
+                                  <span className={`text-[8px] px-1 py-0.2 rounded font-bold ${
+                                    info.isMale ? 'bg-sky-500/20 text-sky-300' : 'bg-pink-500/20 text-pink-300'
+                                  }`}>
+                                    {info.genderLabel}
+                                  </span>
+                                </div>
+                                <span className="text-[9px] text-slate-500 block truncate">{info.accent} • {voice.lang}</span>
+                              </div>
+                            </div>
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setSelectedVoice(voice.name);
+                                testVoice(voice.name);
+                              }}
+                              className={`px-1.5 py-0.5 text-[9px] font-bold rounded shrink-0 transition ${
+                                isSelected 
+                                  ? info.isMale ? 'bg-sky-600 text-white' : 'bg-pink-600 text-white'
+                                  : 'bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-white'
+                              }`}
+                            >
+                              ▶ Dinle
+                            </button>
+                          </div>
+                        );
+                      })}
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
 
             <div className="mb-3">
