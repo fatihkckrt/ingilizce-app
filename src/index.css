@@ -25,9 +25,8 @@ body {
   background-color: #fde047 !important;
   color: #1e1b4b !important;
   border-radius: 4px;
-  box-shadow: 0 0 12px rgba(250, 204, 21, 0.85);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
   font-weight: 800 !important;
-  transition: background-color 0.1s ease;
 }
 
 .phrase-hunter-highlight {
