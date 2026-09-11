@@ -84,7 +84,6 @@ export interface ReaderSettings {
   fontFamily: string;
   theme: 'dark' | 'nature' | 'night' | 'classic' | 'warm';
   speechSpeed: number;
-  focusMode: boolean; // Focus mode: hides Turkish sentences by default to foster immersion
   autoScroll: boolean;
   phraseHunterActive: boolean;
   selectedVoiceURI?: string;

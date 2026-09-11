@@ -231,9 +231,6 @@ function MainApp() {
   const [phraseHunterActive, setPhraseHunterActive] = useState(() => {
     return localStorage.getItem('app_phrase_hunter') === 'true';
   });
-  const [focusModeActive, setFocusModeActive] = useState(() => {
-    return localStorage.getItem('app_focus_mode') === 'true';
-  });
   const [showPhraseCardsModal, setShowPhraseCardsModal] = useState(false);
   const [showTypeSettings, setShowTypeSettings] = useState(false);
   const [showBackupModal, setShowBackupModal] = useState(false);
@@ -1631,34 +1628,6 @@ function MainApp() {
               </button>
             </div>
 
-            {/* Odaklanma Modu (Focus Mode) Hızlı Ayarı */}
-            <div className="mb-3 p-2.5 bg-slate-800 rounded-xl border border-slate-700 flex items-center justify-between">
-              <div className="flex items-center gap-2.5">
-                <span className="text-xl">🧘</span>
-                <div>
-                  <span className="text-xs font-bold text-slate-200 block">Odaklanma Modu (Focus Mode)</span>
-                  <span className="text-[10px] text-slate-400">Türkçe çevirileri gizle, saf İngilizce oku</span>
-                </div>
-              </div>
-              <button
-                onClick={() => {
-                  const next = !focusModeActive;
-                  setFocusModeActive(next);
-                  localStorage.setItem('app_focus_mode', next ? 'true' : 'false');
-                  if (next) {
-                    setShowFullTranslation(false);
-                  }
-                }}
-                className={`px-3 py-1.5 text-xs font-bold rounded-lg border transition ${
-                  focusModeActive 
-                    ? 'bg-indigo-600 border-indigo-400 text-white shadow-sm' 
-                    : 'bg-slate-700 border-slate-600 text-slate-300 hover:bg-slate-600'
-                }`}
-              >
-                {focusModeActive ? 'Aktif ✓' : 'Kapalı'}
-              </button>
-            </div>
-
             {/* Doğal ve Gerçekçi Ses Seçim Stüdyosu */}
             <div className="mb-3.5 p-3 rounded-xl bg-slate-800 border border-slate-700">
               <div className="flex justify-between items-center mb-2 pb-2 border-b border-slate-700/70">
@@ -2279,7 +2248,7 @@ function MainApp() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent flex flex-col justify-end p-4 text-white">
                     <div className="flex items-center justify-between gap-2 mb-1.5">
-                      <div className="flex items-center gap-1.5">
+                      <div className="flex items-center gap-1.5 flex-wrap">
                         <span className={`text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full shadow-xs ${
                           activeText.level === 'A1' ? 'bg-emerald-500 text-white' :
                           activeText.level === 'A2' ? 'bg-blue-500 text-white' :
@@ -2292,24 +2261,21 @@ function MainApp() {
                             ÖZEL METİN
                           </span>
                         )}
+                        {/* Metindeki Toplam Kalıp & Deyim Sayısı Rozeti */}
+                        {(() => {
+                          const totalPhrases = activeText.sentences.reduce((sum, s) => sum + findPhrasalVerbsInText(s.eng).length, 0);
+                          if (totalPhrases === 0) return null;
+                          return (
+                            <span 
+                              onClick={() => setShowPhraseCardsModal(true)}
+                              className="cursor-pointer bg-amber-400/90 hover:bg-amber-400 text-amber-950 text-[10px] font-extrabold px-2 py-0.5 rounded-full shadow-xs flex items-center gap-1 transition active:scale-95"
+                              title="Bu metindeki deyim ve kalıpları kartlarda incelemek için tıklayın"
+                            >
+                              <span>⚡ {totalPhrases} Kalıp / Deyim</span>
+                            </span>
+                          );
+                        })()}
                       </div>
-                      <button
-                        onClick={() => {
-                          const next = !focusModeActive;
-                          setFocusModeActive(next);
-                          localStorage.setItem('app_focus_mode', next ? 'true' : 'false');
-                          if (next) setShowFullTranslation(false);
-                          showToast(next ? "🧘 Odaklanma Modu Açık (Çeviriler Gizlendi)" : "🌐 Odaklanma Modu Kapatıldı");
-                        }}
-                        className={`text-[10px] font-bold px-2.5 py-1 rounded-full border transition flex items-center gap-1 active:scale-95 ${
-                          focusModeActive
-                            ? 'bg-indigo-500 text-white border-indigo-400 shadow-md ring-1 ring-white/40'
-                            : 'bg-black/40 text-white/80 border-white/20 hover:bg-black/60'
-                        }`}
-                        title="Odaklanma Modu: Türkçe çevirileri gizleyip zihninizi doğrudan İngilizceye odaklar"
-                      >
-                        <span>{focusModeActive ? "🧘 Odak Modu: Açık" : "🧘 Odak Modu"}</span>
-                      </button>
                     </div>
                     <h2 className="text-xl sm:text-2xl font-black leading-tight drop-shadow-md text-white">
                       {activeText.title}
@@ -2401,7 +2367,7 @@ function MainApp() {
                       </div>
                     )}
 
-                    {((!focusModeActive && (revealedSentences[sentence.id] || showFullTranslation)) || (focusModeActive && revealedSentences[sentence.id])) && (
+                    {(revealedSentences[sentence.id] || showFullTranslation) && (
                       <div className={`mt-2.5 p-2.5 rounded-r-lg text-xs leading-relaxed font-semibold shadow-inner border-l-4 ${
                         readerTheme === 'oled' || readerTheme === 'forest' 
                           ? 'bg-indigo-950/80 border-indigo-400 text-indigo-100' 
