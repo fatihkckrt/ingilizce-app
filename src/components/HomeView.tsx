@@ -168,6 +168,21 @@ export const HomeView: React.FC<HomeViewProps> = ({
         <span className="bg-amber-400 text-amber-950 text-xs font-black px-2.5 py-1 rounded-full shadow-xs">Kartlar ➔</span>
       </button>
 
+      {/* İngilizce Kare & Çengel Bulmaca */}
+      <button
+        onClick={() => navigateTo('puzzle')}
+        className={`w-full ${themeStyle.card} border-2 border-indigo-400 p-4 rounded-2xl flex items-center justify-between hover:border-indigo-600 shadow-md text-indigo-950 transition active:scale-[0.98]`}
+      >
+        <div className="flex items-center gap-3">
+          <span className="text-2xl p-1 bg-indigo-500/10 rounded-xl">🧩</span>
+          <div className="text-left">
+            <span className="font-bold text-base block">İngilizce Kare Bulmaca</span>
+            <span className="text-xs text-indigo-800 font-medium">A1-B2 Seviyeli 5x5, 6x6, 7x7 Çengel Bulmacalar</span>
+          </div>
+        </div>
+        <span className="bg-indigo-600 text-white text-xs font-black px-3 py-1.5 rounded-full shadow-xs">Çöz ➔</span>
+      </button>
+
       {/* Gelişim ve İstatistikler */}
       <button
         onClick={openStatsModal}

@@ -26,6 +26,7 @@ import { ReaderView } from "./components/ReaderView";
 import { TextQuizView } from "./components/TextQuizView";
 import { SavedWordsView } from "./components/SavedWordsView";
 import { VocabTestView } from "./components/VocabTestView";
+import { PuzzleView } from "./components/PuzzleView";
 import { BackupModal } from "./components/BackupModal";
 import { WordTranslationModal } from "./components/WordTranslationModal";
 import { 
@@ -378,6 +379,7 @@ function MainApp() {
   const [showFullTranslation, setShowFullTranslation] = useState(false);
   const [revealedSentences, setRevealedSentences] = useState({});
   const [toastMessage, setToastMessage] = useState(null);
+  const showToast = (msg) => setToastMessage(msg);
   
   const [quizAnswers, setQuizAnswers] = useState({});
   const [quizScore, setQuizScore] = useState(null);
@@ -1383,6 +1385,7 @@ function MainApp() {
             {currentView === 'addText' && "Kendi Metnini Ekle"}
             {currentView === 'customList' && "Özel Metinlerim"}
             {currentView === 'aiGenerate' && "AI Metin Stüdyosu"}
+            {currentView === 'puzzle' && "İngilizce Bulmaca"}
           </h1>
 
           <div className="flex items-center gap-1.5 ml-1">
@@ -1596,6 +1599,41 @@ function MainApp() {
               startReading(newText);
             }}
             onBack={handleHeaderBack}
+          />
+        )}
+
+        {/* PUZZLE VIEW */}
+        {currentView === "puzzle" && (
+          <PuzzleView
+            themeStyle={themeStyle}
+            onBackToHome={() => navigateTo('home')}
+            onSaveWord={(word, translation, level) => {
+              const cleanWord = (word || '').toLowerCase().trim();
+              const exists = savedWords.some(w => (w.word || '').toLowerCase() === cleanWord);
+              if (exists) {
+                showToast(`"${word}" zaten kelime defterinizde kayıtlı.`);
+                return;
+              }
+              const newWord = {
+                id: Date.now().toString(),
+                word: cleanWord,
+                translation: translation,
+                level: level || 'A1',
+                box: 1,
+                nextReview: Date.now() + LEITNER_INTERVALS[1],
+                lastReviewed: null,
+                contextEng: `Kare Bulmaca kelimesi: ${word}`,
+                contextTr: translation,
+                sourceTitle: 'Kare Bulmaca'
+              };
+              const updated = [...savedWords, newWord];
+              setSavedWords(updated);
+              localStorage.setItem('savedWords', JSON.stringify(updated));
+              idbSet('savedWords', updated);
+              showToast(`✨ "${word}" Leitner Defterinize 1. Kutuya eklendi!`);
+            }}
+            speak={speak}
+            isWordSaved={(word) => savedWords.some(w => (w.word || '').toLowerCase() === (word || '').toLowerCase().trim())}
           />
         )}
 
