@@ -187,7 +187,22 @@ export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
   const [showCluesModal, setShowCluesModal] = useState(false);
   const [finalScore, setFinalScore] = useState(0);
   const [wrongCellKey, setWrongCellKey] = useState<string | null>(null);
-  const [wrongFeedback, setWrongFeedback] = useState<string | null>(null);
+
+  // Reset board state when puzzle changes
+  useEffect(() => {
+    setUserGrid(Array.from({ length: puzzle.size }, () => Array(puzzle.size).fill('')));
+    setActiveRow(puzzle.clues[0]?.row ?? 0);
+    setActiveCol(puzzle.clues[0]?.col ?? 0);
+    setActiveDirection(puzzle.clues[0]?.direction ?? 'across');
+    setSeconds(0);
+    setHintsUsed(0);
+    setIsCompleted(false);
+    setCompletedWordIds(new Set());
+    setShowVictory(false);
+    setShowCluesModal(false);
+    setFinalScore(0);
+    setWrongCellKey(null);
+  }, [puzzle.id, puzzle.size]);
 
   // Confetti particles container ref
   const confettiCanvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -346,11 +361,10 @@ export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
 
     if (!expectedChar) return;
 
-    // 1. REJECT WRONG LETTER & PROVIDE IMMEDIATE FEEDBACK
+    // 1. REJECT WRONG LETTER & PROVIDE IMMEDIATE FEEDBACK (CELL SHAKE + SOUND ONLY, NO LAYOUT SHIFT)
     if (char !== expectedChar) {
       const cellKey = `${activeRow},${activeCol}`;
       setWrongCellKey(cellKey);
-      setWrongFeedback(`Yanlış harf! Tekrar dene.`);
       playWrongBuzzer();
       if ('vibrate' in navigator) {
         try { (navigator as any).vibrate(60); } catch (e) {}
@@ -358,15 +372,11 @@ export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
       setTimeout(() => {
         setWrongCellKey(prev => prev === cellKey ? null : prev);
       }, 350);
-      setTimeout(() => {
-        setWrongFeedback(null);
-      }, 1000);
       return;
     }
 
     // 2. ACCEPT CORRECT LETTER
     playKeyTap();
-    setWrongFeedback(null);
     const newGrid = userGrid.map(row => [...row]);
     newGrid[activeRow][activeCol] = char;
     setUserGrid(newGrid);
@@ -727,14 +737,6 @@ export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
               </p>
             )}
           </div>
-
-          {/* Wrong feedback banner */}
-          {wrongFeedback && (
-            <div className="mt-2 py-1 px-2.5 rounded-xl bg-rose-500 text-white text-xs font-black animate-shake flex items-center gap-1.5 shadow-md">
-              <span className="w-2 h-2 rounded-full bg-white animate-ping"></span>
-              <span>{wrongFeedback}</span>
-            </div>
-          )}
         </div>
 
         {/* CROSSWORD BOARD GRID */}
@@ -853,14 +855,14 @@ export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
         </div>
 
         {/* TACTILE VIRTUAL KEYBOARD */}
-        <div className="bg-slate-200/90 dark:bg-slate-900/95 backdrop-blur-md rounded-2xl border-2 border-slate-300 dark:border-slate-800 p-2 shadow-md space-y-1.5 mt-1 select-none max-w-lg mx-auto w-full">
+        <div className="bg-slate-200/80 dark:bg-slate-900/90 backdrop-blur-md rounded-2xl border border-slate-300/80 dark:border-slate-800 p-1.5 sm:p-2 shadow-md space-y-1.5 mt-1 select-none max-w-lg mx-auto w-full">
           {/* Row 1 */}
           <div className="flex gap-1 justify-center">
             {kbRows[0].map(k => (
               <button
                 key={k}
                 onClick={() => handleKeyPress(k)}
-                className="flex-1 min-w-[28px] max-w-[42px] h-11 bg-white hover:bg-slate-50 dark:bg-slate-800 dark:hover:bg-slate-750 text-slate-900 dark:text-white font-black text-base rounded-xl shadow-xs border-b-[3px] border-slate-300 dark:border-slate-950 active:translate-y-0.5 active:border-b-0 transition flex items-center justify-center"
+                className="flex-1 min-w-[28px] max-w-[42px] h-11 sm:h-12 bg-white hover:bg-slate-50 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-950 dark:text-white font-black text-base sm:text-lg rounded-xl shadow-xs border-b-[3px] border-slate-300 dark:border-slate-950 active:translate-y-0.5 active:border-b-0 active:bg-indigo-50 dark:active:bg-indigo-950/40 transition flex items-center justify-center cursor-pointer"
               >
                 {k}
               </button>
@@ -873,7 +875,7 @@ export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
               <button
                 key={k}
                 onClick={() => handleKeyPress(k)}
-                className="flex-1 min-w-[28px] max-w-[42px] h-11 bg-white hover:bg-slate-50 dark:bg-slate-800 dark:hover:bg-slate-750 text-slate-900 dark:text-white font-black text-base rounded-xl shadow-xs border-b-[3px] border-slate-300 dark:border-slate-950 active:translate-y-0.5 active:border-b-0 transition flex items-center justify-center"
+                className="flex-1 min-w-[28px] max-w-[42px] h-11 sm:h-12 bg-white hover:bg-slate-50 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-950 dark:text-white font-black text-base sm:text-lg rounded-xl shadow-xs border-b-[3px] border-slate-300 dark:border-slate-950 active:translate-y-0.5 active:border-b-0 active:bg-indigo-50 dark:active:bg-indigo-950/40 transition flex items-center justify-center cursor-pointer"
               >
                 {k}
               </button>
@@ -884,7 +886,7 @@ export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
           <div className="flex gap-1 justify-center">
             <button
               onClick={handleBackspace}
-              className="min-w-[46px] max-w-[56px] h-11 bg-rose-100 hover:bg-rose-200 dark:bg-rose-950/70 dark:hover:bg-rose-900/80 text-rose-800 dark:text-rose-200 font-black text-sm rounded-xl shadow-xs border-b-[3px] border-rose-300 dark:border-rose-900 active:translate-y-0.5 active:border-b-0 transition flex items-center justify-center"
+              className="min-w-[46px] max-w-[56px] h-11 sm:h-12 bg-rose-50 hover:bg-rose-100 dark:bg-rose-950/60 dark:hover:bg-rose-900/70 text-rose-700 dark:text-rose-200 font-black text-base rounded-xl shadow-xs border-b-[3px] border-rose-200 dark:border-rose-900 active:translate-y-0.5 active:border-b-0 transition flex items-center justify-center cursor-pointer"
               title="Geri Sil"
             >
               ⌫
@@ -894,7 +896,7 @@ export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
               <button
                 key={k}
                 onClick={() => handleKeyPress(k)}
-                className="flex-1 min-w-[28px] max-w-[42px] h-11 bg-white hover:bg-slate-50 dark:bg-slate-800 dark:hover:bg-slate-750 text-slate-900 dark:text-white font-black text-base rounded-xl shadow-xs border-b-[3px] border-slate-300 dark:border-slate-950 active:translate-y-0.5 active:border-b-0 transition flex items-center justify-center"
+                className="flex-1 min-w-[28px] max-w-[42px] h-11 sm:h-12 bg-white hover:bg-slate-50 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-950 dark:text-white font-black text-base sm:text-lg rounded-xl shadow-xs border-b-[3px] border-slate-300 dark:border-slate-950 active:translate-y-0.5 active:border-b-0 active:bg-indigo-50 dark:active:bg-indigo-950/40 transition flex items-center justify-center cursor-pointer"
               >
                 {k}
               </button>
@@ -902,7 +904,7 @@ export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
 
             <button
               onClick={() => cycleClue(1)}
-              className="min-w-[46px] max-w-[56px] h-11 bg-indigo-600 hover:bg-indigo-500 text-white font-black text-sm rounded-xl shadow-xs border-b-[3px] border-indigo-800 active:translate-y-0.5 active:border-b-0 transition flex items-center justify-center gap-1"
+              className="min-w-[46px] max-w-[56px] h-11 sm:h-12 bg-indigo-600 hover:bg-indigo-500 text-white font-black text-base rounded-xl shadow-xs border-b-[3px] border-indigo-800 active:translate-y-0.5 active:border-b-0 transition flex items-center justify-center gap-1 cursor-pointer"
               title="Sonraki Kelime"
             >
               ➔
@@ -1021,16 +1023,22 @@ export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
             <div className="flex flex-col gap-2">
               {hasNextPuzzle && onNextPuzzle && (
                 <button
-                  onClick={onNextPuzzle}
-                  className="w-full py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-extrabold rounded-2xl shadow-lg transition flex items-center justify-center gap-2 active:scale-95"
+                  onClick={() => {
+                    setShowVictory(false);
+                    onNextPuzzle();
+                  }}
+                  className="w-full py-3.5 bg-indigo-600 hover:bg-indigo-500 text-white font-extrabold text-sm rounded-2xl shadow-lg transition flex items-center justify-center gap-2 active:scale-95 cursor-pointer"
                 >
                   <span>Sonraki Bulmacaya Geç</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
               )}
               <button
-                onClick={onBack}
-                className="w-full py-2.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold rounded-2xl transition"
+                onClick={() => {
+                  setShowVictory(false);
+                  onBack();
+                }}
+                className="w-full py-2.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold rounded-2xl transition cursor-pointer"
               >
                 Bulmacalar Listesine Dön
               </button>

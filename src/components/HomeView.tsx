@@ -119,13 +119,13 @@ export const HomeView: React.FC<HomeViewProps> = ({
       {customTextsCount > 0 && (
         <button
           onClick={() => navigateTo('customList')}
-          className={`w-full ${themeStyle.card} border border-purple-300 p-4 rounded-2xl flex items-center justify-between hover:border-purple-400 text-purple-900 shadow-sm transition`}
+          className={`w-full ${themeStyle.card} border border-purple-300 dark:border-purple-800 p-4 rounded-2xl flex items-center justify-between hover:border-purple-500 shadow-sm transition active:scale-[0.99]`}
         >
           <div className="flex items-center gap-3">
             <span className="text-2xl">📑</span>
             <div className="text-left">
-              <span className="font-bold text-base block">Eklediğim Metinler</span>
-              <span className="text-xs text-purple-600 font-medium">{customTextsCount} özel metin</span>
+              <span className="font-extrabold text-base block">Eklediğim Metinler</span>
+              <span className="text-xs opacity-75 font-medium">{customTextsCount} özel metin</span>
             </div>
           </div>
           <span className="bg-purple-600 text-white text-xs font-bold px-2.5 py-1 rounded-full shadow">{customTextsCount}</span>
@@ -134,20 +134,20 @@ export const HomeView: React.FC<HomeViewProps> = ({
 
       <button
         onClick={() => navigateTo('savedWords')}
-        className={`w-full ${themeStyle.card} border-2 border-orange-300 p-4 rounded-2xl flex items-center justify-between hover:border-orange-500 shadow-md text-orange-950 transition`}
+        className={`w-full ${themeStyle.card} border-2 border-orange-400 dark:border-orange-800 p-4 rounded-2xl flex items-center justify-between hover:border-orange-500 shadow-md transition active:scale-[0.99]`}
       >
         <div className="flex items-center gap-3">
           <span className="text-2xl">🧠</span>
           <div className="text-left">
             <div className="flex items-center gap-1.5">
-              <span className="font-bold text-base block">Kelime Defterim</span>
+              <span className="font-extrabold text-base block">Kelime Defterim</span>
               {dueCount > 0 && (
                 <span className="bg-rose-600 text-white text-[10px] font-black px-2 py-0.5 rounded-full animate-pulse">
                   {dueCount} TEKRAR!
                 </span>
               )}
             </div>
-            <span className="text-xs text-orange-800 font-medium">5 Aşamalı Leitner Aralıklı Tekrar</span>
+            <span className="text-xs opacity-80 font-medium">5 Aşamalı Leitner Aralıklı Tekrar</span>
           </div>
         </div>
         <div className="bg-orange-600 text-white text-xs font-bold px-3 py-1.5 rounded-xl shadow">{savedWordsCount}</div>
@@ -156,28 +156,28 @@ export const HomeView: React.FC<HomeViewProps> = ({
       {/* Kalıp & Deyim Kartları Stüdyosu */}
       <button
         onClick={() => setShowPhraseCardsModal(true)}
-        className={`w-full ${themeStyle.card} border-2 border-amber-400 p-4 rounded-2xl flex items-center justify-between hover:border-amber-600 shadow-md text-amber-950 transition active:scale-[0.98]`}
+        className={`w-full ${themeStyle.card} border-2 border-amber-400 dark:border-amber-800 p-4 rounded-2xl flex items-center justify-between hover:border-amber-500 shadow-md transition active:scale-[0.98]`}
       >
         <div className="flex items-center gap-3">
           <span className="text-2xl p-1 bg-amber-400/20 rounded-xl">🎯</span>
           <div className="text-left">
-            <span className="font-bold text-base block">Kalıp & Deyim Kartları</span>
-            <span className="text-xs text-amber-800 font-medium">Phrasal Verb'ler, Deyimler & Akademik Kalıplar</span>
+            <span className="font-extrabold text-base block">Kalıp & Deyim Kartları</span>
+            <span className="text-xs opacity-80 font-medium">Phrasal Verb'ler, Deyimler & Akademik Kalıplar</span>
           </div>
         </div>
-        <span className="bg-amber-400 text-amber-950 text-xs font-black px-2.5 py-1 rounded-full shadow-xs">Kartlar ➔</span>
+        <span className="bg-amber-500 text-slate-950 font-black text-xs px-2.5 py-1 rounded-full shadow-xs">Kartlar ➔</span>
       </button>
 
       {/* İngilizce Kare & Çengel Bulmaca */}
       <button
         onClick={() => navigateTo('puzzle')}
-        className={`w-full ${themeStyle.card} border-2 border-indigo-400 p-4 rounded-2xl flex items-center justify-between hover:border-indigo-600 shadow-md text-indigo-950 transition active:scale-[0.98]`}
+        className={`w-full ${themeStyle.card} border-2 border-indigo-400 dark:border-indigo-800 p-4 rounded-2xl flex items-center justify-between hover:border-indigo-500 shadow-md transition active:scale-[0.98]`}
       >
         <div className="flex items-center gap-3">
-          <span className="text-2xl p-1 bg-indigo-500/10 rounded-xl">🧩</span>
+          <span className="text-2xl p-1 bg-indigo-500/20 rounded-xl">🧩</span>
           <div className="text-left">
-            <span className="font-bold text-base block">İngilizce Kare Bulmaca</span>
-            <span className="text-xs text-indigo-800 font-medium">A1-B2 Seviyeli 5x5, 6x6, 7x7 Çengel Bulmacalar</span>
+            <span className="font-extrabold text-base block">İngilizce Kare Bulmaca</span>
+            <span className="text-xs opacity-80 font-medium">A1-B2 Seviyeli 5x5, 6x6, 7x7 Çengel Bulmacalar</span>
           </div>
         </div>
         <span className="bg-indigo-600 text-white text-xs font-black px-3 py-1.5 rounded-full shadow-xs">Çöz ➔</span>
@@ -186,13 +186,13 @@ export const HomeView: React.FC<HomeViewProps> = ({
       {/* Gelişim ve İstatistikler */}
       <button
         onClick={openStatsModal}
-        className={`w-full ${themeStyle.card} border-2 border-emerald-400 p-4 rounded-2xl flex items-center justify-between hover:border-emerald-600 shadow-md text-emerald-950 transition active:scale-[0.98]`}
+        className={`w-full ${themeStyle.card} border-2 border-emerald-400 dark:border-emerald-800 p-4 rounded-2xl flex items-center justify-between hover:border-emerald-500 shadow-md transition active:scale-[0.98]`}
       >
         <div className="flex items-center gap-3">
           <span className="text-2xl">📊</span>
           <div className="text-left">
-            <span className="font-bold text-base block">Gelişim & İstatistiklerim</span>
-            <span className="text-xs text-emerald-800 font-medium">Günlük Seri, Okuma Hacmi ve Leitner Dağılımı</span>
+            <span className="font-extrabold text-base block">Gelişim & İstatistiklerim</span>
+            <span className="text-xs opacity-80 font-medium">Günlük Seri, Okuma Hacmi ve Leitner Dağılımı</span>
           </div>
         </div>
         <span className="text-lg opacity-60">➔</span>

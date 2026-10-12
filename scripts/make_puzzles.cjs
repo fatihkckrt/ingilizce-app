@@ -733,7 +733,7 @@ allPuzzles.push(createPuzzle(
 allPuzzles.push(createPuzzle(
   'b1-5x5-2',
   'Girişim & Hedefler',
-  'A1',
+  'B1',
   5,
   'Alışkanlık edinme, umut, ana hedef ve toplam başarı.',
   [
@@ -1128,6 +1128,11 @@ allPuzzles.push(createPuzzle(
     { number: 4, direction: 'across', word: 'NATIONS', clue: 'Dünya sahnesindeki egemen toplumlar (Uluslar)', row: 2, col: 0 }
   ]
 ));
+
+const { NEW_PUZZLES } = require('./new_puzzles_data.cjs');
+for (const np of NEW_PUZZLES) {
+  allPuzzles.push(createPuzzle(np.id, np.title, np.level, np.size, np.description, np.clues));
+}
 
 console.log(`Generated ${allPuzzles.length} verified puzzles!`);
 

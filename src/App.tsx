@@ -174,6 +174,15 @@ function MainApp() {
     localStorage.setItem('app_speech_pitch', speechPitch.toString());
   }, [speechPitch]);
 
+  // Keep dark class synced with readerTheme for full-app dark mode support
+  useEffect(() => {
+    if (readerTheme === 'oled' || readerTheme === 'forest') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [readerTheme]);
+
   const [phraseHunterActive, setPhraseHunterActive] = useState(() => {
     return localStorage.getItem('app_phrase_hunter') === 'true';
   });
