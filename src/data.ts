@@ -1,18 +1,19 @@
 import { expandedDictionary } from './generated_dictionary';
-import type { PhraseInfo, ReadingText, Sentence, QuizQuestion, VocabWord, StudyStats, CEFRLevel, PhraseCategory } from './types';
+import type { PhraseInfo, StudyStats } from './types';
 
 // INDEXEDDB DEPOLAMA MOTORU
 const DB_NAME = 'EnglishLearnAppDB';
 const DB_VERSION = 1;
 const STORE_NAME = 'app_store';
 
-const initDB = () => {
-  return new Promise((resolve, reject) => {
-    if (!window.indexedDB) { resolve(null); return; }
+const initDB = (): Promise<IDBDatabase | null> => {
+  return new Promise((resolve) => {
+    if (typeof window === 'undefined' || !window.indexedDB) { resolve(null); return; }
     const request = indexedDB.open(DB_NAME, DB_VERSION);
-    request.onupgradeneeded = (e) => {
-      const db = e.target.result;
-      if (!db.objectStoreNames.contains(STORE_NAME)) {
+    request.onupgradeneeded = (e: IDBVersionChangeEvent) => {
+      const target = e.target as IDBOpenDBRequest;
+      const db = target?.result;
+      if (db && !db.objectStoreNames.contains(STORE_NAME)) {
         db.createObjectStore(STORE_NAME);
       }
     };
@@ -21,7 +22,7 @@ const initDB = () => {
   });
 };
 
-const idbGet = async (key) => {
+const idbGet = async <T = any>(key: string): Promise<T | null> => {
   const db = await initDB();
   if (!db) return null;
   return new Promise((resolve) => {
@@ -29,28 +30,31 @@ const idbGet = async (key) => {
       const tx = db.transaction(STORE_NAME, 'readonly');
       const store = tx.objectStore(STORE_NAME);
       const req = store.get(key);
-      req.onsuccess = () => resolve(req.result || null);
+      req.onsuccess = () => resolve((req.result as T) || null);
       req.onerror = () => resolve(null);
     } catch { resolve(null); }
   });
 };
 
-const idbSet = async (key, val) => {
+const idbSet = async (key: string, val: any): Promise<void> => {
   const db = await initDB();
   if (!db) return;
   try {
     const tx = db.transaction(STORE_NAME, 'readwrite');
     const store = tx.objectStore(STORE_NAME);
     store.put(val, key);
-  } catch(e) {}
+  } catch (e) {}
 };
 
-const getTodayDateKey = () => new Date().toISOString().slice(0, 10);
+const getTodayDateKey = (): string => new Date().toISOString().slice(0, 10);
 
-const logStudyActivity = async (type, details = {}) => {
+const logStudyActivity = async (
+  type: 'sentence_read' | 'text_completed' | 'quiz_completed' | 'vocab_review',
+  details: { count?: number; total?: number; correct?: number } = {}
+): Promise<StudyStats | undefined> => {
   try {
     const today = getTodayDateKey();
-    const stats = (await idbGet('study_stats')) || {
+    const stats: StudyStats = (await idbGet<StudyStats>('study_stats')) || {
       dailyStreak: 0,
       lastActiveDate: '',
       totalSentencesRead: 0,
@@ -100,16 +104,6 @@ const logStudyActivity = async (type, details = {}) => {
     console.error('Failed to log study activity:', e);
   }
 };
-
-interface PhraseInfo {
-  tr: string;
-  level: string;
-  type: string;
-  ex: string;
-  variants?: string[];
-  canonical?: string;
-  isVariant?: boolean;
-}
 
 const rawPhrasalVerbs: Record<string, PhraseInfo> = {
   // === A1 ===

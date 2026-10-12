@@ -17,6 +17,31 @@ import { StatsModal } from "./components/StatsModal";
 import { AITextGenerator } from "./components/AITextGenerator";
 import { InstallPromptBanner } from "./components/InstallPromptBanner";
 import { PhraseCardsModal } from "./components/PhraseCardsModal";
+import { SettingsDrawer } from "./components/SettingsDrawer";
+import { HomeView } from "./components/HomeView";
+import { LevelsView } from "./components/LevelsView";
+import { CustomListView } from "./components/CustomListView";
+import { AddTextView } from "./components/AddTextView";
+import { ReaderView } from "./components/ReaderView";
+import { TextQuizView } from "./components/TextQuizView";
+import { SavedWordsView } from "./components/SavedWordsView";
+import { VocabTestView } from "./components/VocabTestView";
+import { BackupModal } from "./components/BackupModal";
+import { WordTranslationModal } from "./components/WordTranslationModal";
+import { 
+  isMaleVoice, 
+  isFemaleVoice, 
+  getVoiceDisplayInfo, 
+  VOICE_PRESETS, 
+  getHdAudioUrl 
+} from "./utils/voiceUtils";
+import { 
+  getBadgeStyle, 
+  getBoxStyle, 
+  getThemeClasses, 
+  getFontSizeClass, 
+  getFontFamilyStyle 
+} from "./utils/themeUtils";
 import { Settings } from "lucide-react";
 
 export class ErrorBoundary extends React.Component {
@@ -66,86 +91,6 @@ export class ErrorBoundary extends React.Component {
     return this.props.children;
   }
 }
-
-// Akıllı Ses Cinsiyeti ve Karakter Analiz Motoru
-export const isMaleVoice = (v: SpeechSynthesisVoice | { name?: string; voiceURI?: string } | null | undefined): boolean => {
-  if (!v) return false;
-  const s = `${v.name || ''} ${v.voiceURI || ''}`.toLowerCase();
-
-  // Kesin Kadın Anahtar Kelimeleri & Personaları
-  const femaleMatches = [
-    'female', 'woman', 'zira', 'jenny', 'samantha', 'victoria', 'karen',
-    'moira', 'tessa', 'fiona', 'serena', 'ava', 'kate', 'nicky', 'allison',
-    'catherine', 'elizabeth', 'sarah', 'mary', 'linda', 'susan', 'jessica',
-    'emily', 'chloe', 'sophie', 'emma', 'olivia', 'mia', 'amelia', 'claire',
-    'aria', 'hazel', 'ayanda', 'stephanie', 'joanna', 'ivy', 'kendra', 'kimberly',
-    'salli', 'nicole', 'google us english', 'google uk english female', 
-    'en-us-x-sfg#female', 'en-gb-x-rjs#female', 'en-au-x-aub#female'
-  ];
-  if (femaleMatches.some(f => s.includes(f))) return false;
-
-  // Kesin Erkek Anahtar Kelimeleri & Personaları
-  const maleMatches = [
-    'male', 'man', 'david', 'mark', 'daniel', 'alex', 'george', 'guy', 'fred',
-    'oliver', 'arthur', 'gordon', 'aaron', 'lee', 'rishi', 'james', 'ryan',
-    'tom', 'brian', 'richard', 'thomas', 'william', 'jack', 'charles', 'henry',
-    'edward', 'jacob', 'michael', 'paul', 'john', 'peter', 'luke', 'steve',
-    'stephen', 'diego', 'jorge', 'steffan', 'christopher', 'matthew', 'justin',
-    'joey', 'geraint', 'alva', 'rjs', '#male', '-male', 'uk english male', 'us english male',
-    'en-gb-x-rjs', 'en-us-x-sfg#male', 'en-us-x-iog', 'en-us-x-tpd'
-  ];
-  return maleMatches.some(m => s.includes(m));
-};
-
-export const isFemaleVoice = (v: SpeechSynthesisVoice | { name?: string; voiceURI?: string } | null | undefined): boolean => {
-  return !isMaleVoice(v);
-};
-
-export const getVoiceDisplayInfo = (v: SpeechSynthesisVoice) => {
-  const name = v.name || '';
-  const lang = (v.lang || '').toLowerCase();
-  const isMale = isMaleVoice(v);
-
-  let flag = '🌐';
-  let accent = 'İngilizce';
-  if (lang.includes('us')) {
-    flag = '🇺🇸';
-    accent = 'Amerikan';
-  } else if (lang.includes('gb') || lang.includes('uk')) {
-    flag = '🇬🇧';
-    accent = 'İngiliz';
-  } else if (lang.includes('au')) {
-    flag = '🇦🇺';
-    accent = 'Avustralya';
-  } else if (lang.includes('ca')) {
-    flag = '🇨🇦';
-    accent = 'Kanada';
-  } else if (lang.includes('ie')) {
-    flag = '🇮🇪';
-    accent = 'İrlanda';
-  } else if (lang.includes('in')) {
-    flag = '🇮🇳';
-    accent = 'Hindistan';
-  }
-
-  const cleanName = name
-    .replace(/^microsoft\s+/i, '')
-    .replace(/\s*-\s*english\s*\([^)]+\)/i, '')
-    .replace(/\s*\(united states\)/i, '')
-    .replace(/\s*\(united kingdom\)/i, '')
-    .replace(/\s*\(australia\)/i, '')
-    .replace(/\s*\(natural\)/i, '')
-    .replace(/\s*online/i, '')
-    .trim();
-
-  return {
-    displayName: cleanName || name,
-    flag,
-    accent,
-    genderLabel: isMale ? '👨 Erkek' : '👩 Kadın',
-    isMale
-  };
-};
 
 function MainApp() {
   const [completedTexts, setCompletedTexts] = useState(() => {
@@ -268,72 +213,10 @@ function MainApp() {
 
   // Doğal ve Gerçekçi Sesler Motoru
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
-  const [voiceFilterTab, setVoiceFilterTab] = useState<'all' | 'male' | 'female' | 'hd'>('all');
   const [selectedVoice, setSelectedVoice] = useState(() => {
     const saved = localStorage.getItem('app_selected_voice');
     return saved || 'device_us_male';
   });
-
-  const VOICE_PRESETS = [
-    {
-      id: 'device_us_male',
-      name: 'Amerikan Erkek',
-      desc: 'David / Alex / Sistem Erkek Sesi',
-      category: 'male',
-      flag: '🇺🇸',
-      badge: '👨 Erkek'
-    },
-    {
-      id: 'device_uk_male',
-      name: 'İngiliz Erkek',
-      desc: 'Daniel / George / British Erkek',
-      category: 'male',
-      flag: '🇬🇧',
-      badge: '👨 Erkek'
-    },
-    {
-      id: 'hd_us',
-      name: 'Amerikan Kadın (Stüdyo)',
-      desc: 'Doğal Stüdyo Kaydı • İnsan Telaffuzu',
-      category: 'hd',
-      flag: '🇺🇸',
-      badge: '🌟 Stüdyo HD'
-    },
-    {
-      id: 'hd_uk',
-      name: 'İngiliz Kadın (Stüdyo)',
-      desc: 'Doğal British Aksanı • Kadın Sesi',
-      category: 'hd',
-      flag: '🇬🇧',
-      badge: '🌟 Stüdyo HD'
-    },
-    {
-      id: 'device_us_female',
-      name: 'Amerikan Kadın (Cihaz)',
-      desc: 'Zira / Samantha / Canlı Sentez',
-      category: 'female',
-      flag: '🇺🇸',
-      badge: '👩 Kadın'
-    },
-    {
-      id: 'device_uk_female',
-      name: 'İngiliz Kadın (Cihaz)',
-      desc: 'Hazel / Serena / British Sentez',
-      category: 'female',
-      flag: '🇬🇧',
-      badge: '👩 Kadın'
-    }
-  ];
-
-  const getHdAudioUrl = (text: string, voiceId: string): string => {
-    let lang = 'en';
-    if (voiceId === 'hd_uk') lang = 'en-gb';
-    else if (voiceId === 'hd_au') lang = 'en-au';
-    else lang = 'en';
-
-    const clean = encodeURIComponent(text.trim().slice(0, 180));
-    return `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=${lang}&q=${clean}`;
-  };
 
   const stopCurrentSpeech = () => {
     if (activeAudioRef.current) {
@@ -1448,83 +1331,12 @@ function MainApp() {
     return levelMatch && boxMatch;
   });
 
-  const getBadgeStyle = (lvl) => {
-    switch(lvl) {
-      case 'A1': return 'bg-emerald-100 text-emerald-800 border-emerald-300';
-      case 'A2': return 'bg-blue-100 text-blue-800 border-blue-300';
-      case 'B1': return 'bg-indigo-100 text-indigo-800 border-indigo-300';
-      case 'B2': return 'bg-purple-100 text-purple-800 border-purple-300';
-      default: return 'bg-amber-100 text-amber-800 border-amber-300';
-    }
-  };
-
-  const getBoxStyle = (boxNum) => {
-    switch(boxNum) {
-      case 1: return 'bg-rose-100 text-rose-800 border-rose-300';
-      case 2: return 'bg-orange-100 text-orange-800 border-orange-300';
-      case 3: return 'bg-amber-100 text-amber-800 border-amber-300';
-      case 4: return 'bg-blue-100 text-blue-800 border-blue-300';
-      case 5: return 'bg-emerald-100 text-emerald-800 border-emerald-300';
-      default: return 'bg-slate-100 text-slate-700 border-slate-300';
-    }
-  };
-
-  const getThemeClasses = () => {
-    switch(readerTheme) {
-      case 'sepia':
-        return {
-          container: 'bg-[#f7f0e1] text-[#433422]',
-          card: 'bg-[#ede2cb] border-[#dfd0b4] text-[#3d2e1e]',
-          header: 'bg-[#433422] text-[#f7f0e1] border-[#342718]',
-          footer: 'bg-[#ede2cb] border-[#dfd0b4]'
-        };
-      case 'oled':
-        return {
-          container: 'bg-[#000000] text-[#e2e8f0]',
-          card: 'bg-[#121212] border-[#262626] text-[#e2e8f0]',
-          header: 'bg-[#0a0a0a] text-white border-[#1f1f1f]',
-          footer: 'bg-[#121212] border-[#262626]'
-        };
-      case 'forest':
-        return {
-          container: 'bg-[#07170e] text-[#d1fae5]',
-          card: 'bg-[#0e2719] border-[#18422b] text-[#ecfdf5]',
-          header: 'bg-[#05100a] text-white border-[#103420]',
-          footer: 'bg-[#0e2719] border-[#18422b]'
-        };
-      case 'glass':
-      default:
-        return {
-          container: 'bg-slate-100 text-slate-800',
-          card: 'bg-white border-slate-200 text-slate-800 shadow-sm',
-          header: 'bg-indigo-950 text-white border-indigo-800/50',
-          footer: 'bg-white border-slate-200'
-        };
-    }
-  };
-
-  const themeStyle = getThemeClasses();
-
-  const getFontSizeClass = () => {
-    switch(fontSize) {
-      case 'sm': return 'text-sm';
-      case 'lg': return 'text-lg';
-      case 'xl': return 'text-xl';
-      case 'base':
-      default: return 'text-base';
-    }
-  };
-
-  const getFontFamilyStyle = () => {
-    return fontFamily === 'serif' 
-      ? { fontFamily: 'Georgia, Cambria, "Times New Roman", Times, serif' } 
-      : { fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' };
-  };
+  const themeStyle = getThemeClasses(readerTheme);
 
   return (
     <div className="min-h-screen flex justify-center w-full px-0 sm:px-4 py-0 sm:py-6">
       <div 
-        style={getFontFamilyStyle()}
+        style={getFontFamilyStyle(fontFamily)}
         className={`w-full max-w-md shadow-2xl min-h-screen sm:min-h-[92vh] sm:rounded-3xl relative flex flex-col overflow-hidden border border-white/40 transition-colors duration-300 ${themeStyle.container}`}
       >
 
@@ -1600,359 +1412,25 @@ function MainApp() {
         </div>
 
         {/* Tipografi, Tema & Ses Hızı Ayar Paneli */}
-        {showTypeSettings && (
-          <div ref={settingsPanelRef} className="p-4 bg-slate-900 text-white border-b border-slate-700 shadow-xl z-35 animate-fadeIn">
-            <div className="flex justify-between items-center mb-3">
-              <span className="text-xs font-black uppercase text-slate-400">Okuma & Ses Ayarları</span>
-              <button onClick={closeTypeSettings} className="text-slate-400 hover:text-white text-xs">✕ Kapat</button>
-            </div>
-
-            {/* Kalıp Avcısı Hızlı Ayarı */}
-            <div className="mb-3 p-2.5 bg-slate-800 rounded-xl border border-slate-700 flex items-center justify-between">
-              <div className="flex items-center gap-2.5">
-                <span className="text-xl">🎯</span>
-                <div>
-                  <span className="text-xs font-bold text-slate-200 block">Kalıp Avcısı</span>
-                  <span className="text-[10px] text-slate-400">Deyim ve phrasal verb'leri sarı renkle vurgula</span>
-                </div>
-              </div>
-              <button
-                onClick={() => setPhraseHunterActive(!phraseHunterActive)}
-                className={`px-3 py-1.5 text-xs font-bold rounded-lg border transition ${
-                  phraseHunterActive 
-                    ? 'bg-amber-400 border-amber-300 text-amber-950 shadow-sm' 
-                    : 'bg-slate-700 border-slate-600 text-slate-300 hover:bg-slate-600'
-                }`}
-              >
-                {phraseHunterActive ? 'Açık ✓' : 'Kapalı'}
-              </button>
-            </div>
-
-            {/* Doğal ve Gerçekçi Ses Seçim Stüdyosu */}
-            <div className="mb-3.5 p-3 rounded-xl bg-slate-800 border border-slate-700">
-              <div className="flex justify-between items-center mb-2 pb-2 border-b border-slate-700/70">
-                <div className="flex items-center gap-1.5">
-                  <span className="text-xs font-bold text-slate-200">Telaffuz & Ses Motoru</span>
-                  <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
-                    Erkek / Kadın Seçimi
-                  </span>
-                </div>
-                <button 
-                  onClick={() => testVoice(selectedVoice)}
-                  className="px-2.5 py-1 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-[11px] font-bold flex items-center gap-1 shadow-xs transition active:scale-95"
-                  title="Seçili Sesi Dinle"
-                >
-                  <span>🔊</span> Dinle
-                </button>
-              </div>
-
-              {/* Sistem Ses Teşhis ve Bilgi Rozeti */}
-              <div className="mb-2.5 p-2 rounded-lg bg-slate-900/90 border border-slate-700/60 text-[10px]">
-                {voices.filter(isMaleVoice).length > 0 ? (
-                  <div className="flex items-center gap-1.5 text-emerald-300">
-                    <span>✅</span>
-                    <span>Cihazınızda <strong>{voices.filter(isMaleVoice).length} adet gerçek erkek sesi</strong> ve {voices.filter(isFemaleVoice).length} kadın sesi aktif.</span>
-                  </div>
-                ) : (
-                  <div className="space-y-1">
-                    <div className="flex items-start gap-1.5 text-amber-300">
-                      <span className="shrink-0 text-xs">⚠️</span>
-                      <span>Cihazınızda doğrudan tanımlı erkek ses dosyası bulunamadı (Yalnızca kadın sesi yüklü). Erkek seçildiğinde yapay derin ton verilir.</span>
-                    </div>
-                    <div className="text-[9px] text-slate-400 pl-4">
-                      💡 <em>Gerçek erkek sesi için: Telefon Ayarları &gt; Erişilebilirlik &gt; Metin Okuma (TTS) &gt; Google TTS &gt; Ses Verilerini İndir menüsünden 'İngilizce Erkek' paketini indirebilirsiniz.</em>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* Filtreleme Sekmeleri: Tümü / Erkek / Kadın / Stüdyo */}
-              <div className="grid grid-cols-4 gap-1 mb-2.5 p-0.5 bg-slate-900 rounded-lg border border-slate-700/80">
-                <button
-                  type="button"
-                  onClick={() => setVoiceFilterTab('all')}
-                  className={`py-1 text-[10px] font-bold rounded transition ${
-                    voiceFilterTab === 'all'
-                      ? 'bg-indigo-600 text-white shadow-xs'
-                      : 'text-slate-400 hover:text-white'
-                  }`}
-                >
-                  🌟 Tümü
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setVoiceFilterTab('male')}
-                  className={`py-1 text-[10px] font-bold rounded transition flex items-center justify-center gap-0.5 ${
-                    voiceFilterTab === 'male'
-                      ? 'bg-sky-600 text-white shadow-xs'
-                      : 'text-slate-400 hover:text-white'
-                  }`}
-                >
-                  <span>👨</span> Erkek
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setVoiceFilterTab('female')}
-                  className={`py-1 text-[10px] font-bold rounded transition flex items-center justify-center gap-0.5 ${
-                    voiceFilterTab === 'female'
-                      ? 'bg-pink-600 text-white shadow-xs'
-                      : 'text-slate-400 hover:text-white'
-                  }`}
-                >
-                  <span>👩</span> Kadın
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setVoiceFilterTab('hd')}
-                  className={`py-1 text-[10px] font-bold rounded transition flex items-center justify-center gap-0.5 ${
-                    voiceFilterTab === 'hd'
-                      ? 'bg-amber-600 text-white shadow-xs'
-                      : 'text-slate-400 hover:text-white'
-                  }`}
-                >
-                  <span>🎙️</span> Stüdyo
-                </button>
-              </div>
-
-              {/* Ön Tanımlı Hızlı Seçim Kartları */}
-              <div className="space-y-1.5 mb-2.5">
-                {VOICE_PRESETS.filter(preset => {
-                  if (voiceFilterTab === 'male') return preset.category === 'male';
-                  if (voiceFilterTab === 'female') return preset.category === 'female' || preset.category === 'hd';
-                  if (voiceFilterTab === 'hd') return preset.category === 'hd';
-                  return true;
-                }).map(preset => {
-                  const isSelected = selectedVoice === preset.id;
-                  const isMale = preset.badge.includes('Erkek');
-                  return (
-                    <div
-                      key={preset.id}
-                      onClick={() => {
-                        setSelectedVoice(preset.id);
-                        testVoice(preset.id);
-                      }}
-                      className={`p-2 rounded-lg border transition cursor-pointer flex items-center justify-between gap-2 ${
-                        isSelected
-                          ? isMale
-                            ? 'bg-sky-950/80 border-sky-400 text-white shadow-xs ring-1 ring-sky-400/50'
-                            : 'bg-indigo-950/80 border-indigo-400 text-white shadow-xs ring-1 ring-indigo-400/50'
-                          : 'bg-slate-900/80 border-slate-700/80 text-slate-300 hover:bg-slate-800/80 hover:border-slate-600'
-                      }`}
-                    >
-                      <div className="flex items-center gap-2 min-w-0">
-                        <span className="text-base">{preset.flag}</span>
-                        <div className="min-w-0">
-                          <div className="flex items-center gap-1.5">
-                            <span className="text-xs font-bold truncate">{preset.name}</span>
-                            <span className={`text-[9px] px-1 py-0.2 rounded font-medium ${
-                              isMale 
-                                ? 'bg-sky-400/20 text-sky-300 border border-sky-400/30' 
-                                : preset.category === 'hd' 
-                                  ? 'bg-amber-400/20 text-amber-300 border border-amber-400/30' 
-                                  : 'bg-pink-400/20 text-pink-300 border border-pink-400/30'
-                            }`}>
-                              {preset.badge}
-                            </span>
-                          </div>
-                          <span className="text-[10px] text-slate-400 block truncate">{preset.desc}</span>
-                        </div>
-                      </div>
-                      <button
-                        type="button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setSelectedVoice(preset.id);
-                          testVoice(preset.id);
-                        }}
-                        className={`px-2 py-1 text-[10px] font-bold rounded-md flex items-center gap-1 transition shrink-0 ${
-                          isSelected
-                            ? isMale ? 'bg-sky-600 text-white' : 'bg-indigo-600 text-white'
-                            : 'bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white'
-                        }`}
-                      >
-                        <span>▶</span> Dinle
-                      </button>
-                    </div>
-                  );
-                })}
-              </div>
-
-              {/* Cihazınızda Tespit Edilen Gerçek Sesler Listesi */}
-              {voices.length > 0 && (voiceFilterTab === 'male' || voiceFilterTab === 'all' || voiceFilterTab === 'female') && (
-                <div>
-                  <div className="flex items-center justify-between mb-1.5 mt-2">
-                    <span className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 flex items-center gap-1">
-                      📱 Cihazınızdaki Donanım Sesleri ({voices.filter(v => {
-                        if (voiceFilterTab === 'male') return isMaleVoice(v);
-                        if (voiceFilterTab === 'female') return isFemaleVoice(v);
-                        return true;
-                      }).length} adet)
-                    </span>
-                  </div>
-
-                  <div className="max-h-44 overflow-y-auto space-y-1 pr-1 custom-scrollbar">
-                    {voices
-                      .filter(v => {
-                        if (voiceFilterTab === 'male') return isMaleVoice(v);
-                        if (voiceFilterTab === 'female') return isFemaleVoice(v);
-                        return true;
-                      })
-                      .map(voice => {
-                        const isSelected = selectedVoice === voice.name || selectedVoice === voice.voiceURI;
-                        const info = getVoiceDisplayInfo(voice);
-                        return (
-                          <div
-                            key={voice.name}
-                            onClick={() => {
-                              setSelectedVoice(voice.name);
-                              testVoice(voice.name);
-                            }}
-                            className={`p-1.5 px-2 rounded-lg border transition cursor-pointer flex items-center justify-between gap-1.5 text-xs ${
-                              isSelected
-                                ? info.isMale
-                                  ? 'bg-sky-950/80 border-sky-400 text-white ring-1 ring-sky-400/50'
-                                  : 'bg-pink-950/80 border-pink-400 text-white ring-1 ring-pink-400/50'
-                                : 'bg-slate-900/60 border-slate-700/60 text-slate-300 hover:bg-slate-800 hover:border-slate-600'
-                            }`}
-                          >
-                            <div className="flex items-center gap-1.5 min-w-0">
-                              <span className="text-sm">{info.flag}</span>
-                              <div className="min-w-0">
-                                <div className="flex items-center gap-1">
-                                  <span className="text-[11px] font-semibold truncate">{info.displayName}</span>
-                                  <span className={`text-[8px] px-1 py-0.2 rounded font-bold ${
-                                    info.isMale ? 'bg-sky-500/20 text-sky-300' : 'bg-pink-500/20 text-pink-300'
-                                  }`}>
-                                    {info.genderLabel}
-                                  </span>
-                                </div>
-                                <span className="text-[9px] text-slate-500 block truncate">{info.accent} • {voice.lang}</span>
-                              </div>
-                            </div>
-                            <button
-                              type="button"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setSelectedVoice(voice.name);
-                                testVoice(voice.name);
-                              }}
-                              className={`px-1.5 py-0.5 text-[9px] font-bold rounded shrink-0 transition ${
-                                isSelected 
-                                  ? info.isMale ? 'bg-sky-600 text-white' : 'bg-pink-600 text-white'
-                                  : 'bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-white'
-                              }`}
-                            >
-                              ▶ Dinle
-                            </button>
-                          </div>
-                        );
-                      })}
-                  </div>
-                </div>
-              )}
-            </div>
-
-            <div className="mb-3">
-              <span className="text-[10px] text-slate-400 font-bold block mb-1.5">Telaffuz Hızı</span>
-              <div className="grid grid-cols-4 gap-1.5">
-                {[0.75, 0.9, 1.0, 1.25].map(rate => (
-                  <button
-                    key={rate}
-                    onClick={() => setSpeechRate(rate)}
-                    className={`py-1.5 text-xs font-bold rounded-lg border transition ${speechRate === rate ? 'bg-indigo-600 border-indigo-400 text-white shadow-sm' : 'bg-slate-800 border-slate-700 text-slate-400 hover:bg-slate-700'}`}
-                  >
-                    {rate}x
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className="mb-3">
-              <span className="text-[10px] text-slate-400 font-bold block mb-1.5">Okuma Teması</span>
-              <div className="grid grid-cols-3 gap-2">
-                <button
-                  onClick={() => setReaderTheme('glass')}
-                  className={`py-1.5 text-xs font-bold rounded-lg border flex items-center justify-center gap-1 ${readerTheme === 'glass' ? 'bg-indigo-600 border-indigo-400 text-white' : 'bg-slate-800 border-slate-700 text-slate-300'}`}
-                >
-                  🌿 Doğa
-                </button>
-                <button
-                  onClick={() => setReaderTheme('sepia')}
-                  className={`py-1.5 text-xs font-bold rounded-lg border flex items-center justify-center gap-1 ${readerTheme === 'sepia' ? 'bg-[#ede2cb] border-amber-600 text-[#433422]' : 'bg-slate-800 border-slate-700 text-slate-300'}`}
-                >
-                  📜 Kitap
-                </button>
-                <button
-                  onClick={() => setReaderTheme('oled')}
-                  className={`py-1.5 text-xs font-bold rounded-lg border flex items-center justify-center gap-1 ${readerTheme === 'oled' ? 'bg-black border-slate-500 text-white' : 'bg-slate-800 border-slate-700 text-slate-300'}`}
-                >
-                  🌙 OLED
-                </button>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <span className="text-[10px] text-slate-400 font-bold block mb-1.5">Yazı Boyutu</span>
-                <div className="flex gap-1">
-                  {['sm', 'base', 'lg', 'xl'].map(sz => (
-                    <button
-                      key={sz}
-                      onClick={() => setFontSize(sz)}
-                      className={`flex-1 py-1 text-xs font-bold rounded border uppercase ${fontSize === sz ? 'bg-indigo-600 border-indigo-400 text-white' : 'bg-slate-800 border-slate-700 text-slate-400'}`}
-                    >
-                      {sz === 'base' ? 'MD' : sz}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div>
-                <span className="text-[10px] text-slate-400 font-bold block mb-1.5">Yazı Tipi</span>
-                <div className="flex gap-1">
-                  <button
-                    onClick={() => setFontFamily('sans')}
-                    className={`flex-1 py-1 text-xs font-bold rounded border ${fontFamily === 'sans' ? 'bg-indigo-600 border-indigo-400 text-white' : 'bg-slate-800 border-slate-700 text-slate-400'}`}
-                  >
-                    Sans
-                  </button>
-                  <button
-                    onClick={() => setFontFamily('serif')}
-                    className={`flex-1 py-1 text-xs font-bold rounded border font-serif ${fontFamily === 'serif' ? 'bg-indigo-600 border-indigo-400 text-white' : 'bg-slate-800 border-slate-700 text-slate-400'}`}
-                  >
-                    Serif
-                  </button>
-                </div>
-              </div>
-
-              {/* Güncelleme & Önbellek Yenileme */}
-              <div className="pt-2 border-t border-slate-800 flex justify-between items-center">
-                <span className="text-[10px] text-slate-400 font-medium">Sözlük: <b className="text-emerald-400">Genişletilmiş (v2.6)</b></span>
-                <button
-                  onClick={async () => {
-                    try {
-                      if ('caches' in window) {
-                        const keys = await caches.keys();
-                        await Promise.all(keys.map(k => caches.delete(k)));
-                      }
-                      if ('serviceWorker' in navigator) {
-                        const regs = await navigator.serviceWorker.getRegistrations();
-                        await Promise.all(regs.map(r => r.unregister()));
-                      }
-                      window.location.reload();
-                    } catch {
-                      window.location.reload();
-                    }
-                  }}
-                  className="px-2 py-1 bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 rounded-lg text-[10px] font-bold transition flex items-center gap-1"
-                  title="Yeni kelimeleri ve en son güncellemeleri yüklemek için önbelleği sıfırla"
-                >
-                  🔄 Önbelleği Yenile
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
+        <SettingsDrawer
+          isOpen={showTypeSettings}
+          onClose={closeTypeSettings}
+          panelRef={settingsPanelRef}
+          phraseHunterActive={phraseHunterActive}
+          setPhraseHunterActive={setPhraseHunterActive}
+          voices={voices}
+          selectedVoice={selectedVoice}
+          setSelectedVoice={setSelectedVoice}
+          testVoice={testVoice}
+          speechRate={speechRate}
+          setSpeechRate={setSpeechRate}
+          readerTheme={readerTheme}
+          setReaderTheme={setReaderTheme}
+          fontSize={fontSize}
+          setFontSize={setFontSize}
+          fontFamily={fontFamily}
+          setFontFamily={setFontFamily}
+        />
 
         {/* Toast */}
         {toastMessage && (
@@ -1963,771 +1441,153 @@ function MainApp() {
         )}
 
         {/* HOME VIEW */}
-        {currentView === 'home' && (
-          <div ref={homeScrollRef} className="flex-1 p-5 flex flex-col space-y-4 overflow-y-auto">
-            {/* PWA Kurulum Butonu */}
-            <InstallPromptBanner />
-
-            <div className="text-center my-2">
-              <div className="bg-indigo-600/10 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-3 border border-indigo-500/20 shadow-inner">
-                <span className="text-4xl">🌲</span>
-              </div>
-              <h2 className="text-2xl font-black">Seviyeni Seç</h2>
-              <p className="text-xs opacity-70 mt-1 font-medium">Huzurlu ve kalıcı dil öğrenme alanı</p>
-            </div>
-
-            <div className="space-y-2.5">
-              {levels.map(level => {
-                const count = allAvailableTexts.filter(t => t.level === level).length;
-                return (
-                  <button key={level} onClick={() => { setSelectedLevel(level); navigateTo('levels', { level }); }}
-                    className={`w-full ${themeStyle.card} border p-4 rounded-2xl flex items-center justify-between hover:shadow-md transition active:scale-[0.99] group`}>
-                    <div className="flex items-center gap-3">
-                      <span className={`w-9 h-9 rounded-xl font-bold flex items-center justify-center text-sm border shadow-sm ${getBadgeStyle(level)}`}>
-                        {level}
-                      </span>
-                      <div className="text-left">
-                        <span className="font-bold text-base block">{level} Seviyesi</span>
-                        <span className="text-xs opacity-60 font-medium">{count} Metin Mevcut</span>
-                      </div>
-                    </div>
-                    <span className="text-lg opacity-40 group-hover:translate-x-1 transition">➔</span>
-                  </button>
-                );
-              })}
-            </div>
-
-            {/* AI Metin Stüdyosu */}
-            <div className="pt-2">
-              <button onClick={() => navigateTo('aiGenerate')}
-                className="w-full bg-gradient-to-r from-purple-700 via-indigo-700 to-sky-700 text-white p-4 rounded-2xl flex items-center justify-between shadow-lg hover:from-purple-800 hover:to-sky-800 transition active:scale-[0.98]">
-                <div className="flex items-center gap-3">
-                  <span className="text-2xl bg-white/20 p-2 rounded-xl">✨</span>
-                  <div className="text-left">
-                    <div className="flex items-center gap-1.5">
-                      <span className="font-bold text-base block">AI Metin Stüdyosu</span>
-                      <span className="bg-amber-300 text-amber-950 text-[10px] font-black px-1.5 py-0.5 rounded uppercase">Yeni</span>
-                    </div>
-                    <span className="text-xs text-indigo-100">İlgi alanına & seviyene özel metin üret</span>
-                  </div>
-                </div>
-                <span className="text-xl">🚀</span>
-              </button>
-            </div>
-
-            <div>
-              <button onClick={() => navigateTo('addText')}
-                className="w-full bg-gradient-to-r from-indigo-700 to-purple-800 text-white p-4 rounded-2xl flex items-center justify-between shadow-lg hover:from-indigo-800 hover:to-purple-900 transition active:scale-[0.98]">
-                <div className="flex items-center gap-3">
-                  <span className="text-2xl bg-white/20 p-2 rounded-xl">✏️</span>
-                  <div className="text-left">
-                    <span className="font-bold text-base block">Kendi Metnini Ekle</span>
-                    <span className="text-xs text-indigo-100">İnternetten metin veya haber yapıştır</span>
-                  </div>
-                </div>
-                <span className="text-xl">➕</span>
-              </button>
-            </div>
-
-            {customTexts.length > 0 && (
-              <button onClick={() => navigateTo('customList')}
-                className={`w-full ${themeStyle.card} border border-purple-300 p-4 rounded-2xl flex items-center justify-between hover:border-purple-400 text-purple-900 shadow-sm transition`}>
-                <div className="flex items-center gap-3">
-                  <span className="text-2xl">📑</span>
-                  <div className="text-left">
-                    <span className="font-bold text-base block">Eklediğim Metinler</span>
-                    <span className="text-xs text-purple-600 font-medium">{customTexts.length} özel metin</span>
-                  </div>
-                </div>
-                <span className="bg-purple-600 text-white text-xs font-bold px-2.5 py-1 rounded-full shadow">{customTexts.length}</span>
-              </button>
-            )}
-
-            <button onClick={() => navigateTo('savedWords')}
-              className={`w-full ${themeStyle.card} border-2 border-orange-300 p-4 rounded-2xl flex items-center justify-between hover:border-orange-500 shadow-md text-orange-950 transition`}>
-              <div className="flex items-center gap-3">
-                <span className="text-2xl">🧠</span>
-                <div className="text-left">
-                  <div className="flex items-center gap-1.5">
-                    <span className="font-bold text-base block">Kelime Defterim</span>
-                    {dueCount > 0 && (
-                      <span className="bg-rose-600 text-white text-[10px] font-black px-2 py-0.5 rounded-full animate-pulse">
-                        {dueCount} TEKRAR!
-                      </span>
-                    )}
-                  </div>
-                  <span className="text-xs text-orange-800 font-medium">5 Aşamalı Leitner Aralıklı Tekrar</span>
-                </div>
-              </div>
-              <div className="bg-orange-600 text-white text-xs font-bold px-3 py-1.5 rounded-xl shadow">{savedWords.length}</div>
-            </button>
-
-            {/* Kalıp & Deyim Kartları Stüdyosu */}
-            <button onClick={() => setShowPhraseCardsModal(true)}
-              className={`w-full ${themeStyle.card} border-2 border-amber-400 p-4 rounded-2xl flex items-center justify-between hover:border-amber-600 shadow-md text-amber-950 transition active:scale-[0.98]`}>
-              <div className="flex items-center gap-3">
-                <span className="text-2xl p-1 bg-amber-400/20 rounded-xl">🎯</span>
-                <div className="text-left">
-                  <span className="font-bold text-base block">Kalıp & Deyim Kartları</span>
-                  <span className="text-xs text-amber-800 font-medium">Phrasal Verb'ler, Deyimler & Akademik Kalıplar</span>
-                </div>
-              </div>
-              <span className="bg-amber-400 text-amber-950 text-xs font-black px-2.5 py-1 rounded-full shadow-xs">Kartlar ➔</span>
-            </button>
-
-            {/* Gelişim ve İstatistikler */}
-            <button onClick={openStatsModal}
-              className={`w-full ${themeStyle.card} border-2 border-emerald-400 p-4 rounded-2xl flex items-center justify-between hover:border-emerald-600 shadow-md text-emerald-950 transition active:scale-[0.98]`}>
-              <div className="flex items-center gap-3">
-                <span className="text-2xl">📊</span>
-                <div className="text-left">
-                  <span className="font-bold text-base block">Gelişim & İstatistiklerim</span>
-                  <span className="text-xs text-emerald-800 font-medium">Günlük Seri, Okuma Hacmi ve Leitner Dağılımı</span>
-                </div>
-              </div>
-              <span className="text-lg opacity-60">➔</span>
-            </button>
-
-            {/* Uygulama & Okuma Ayarları Hızlı Kartı */}
-            <button onClick={handleOpenSettingsFromBottom}
-              className={`w-full ${themeStyle.card} border p-4 rounded-2xl flex items-center justify-between hover:shadow-md transition active:scale-[0.98] ${
-                showTypeSettings ? 'ring-2 ring-indigo-500 border-indigo-400' : ''
-              }`}>
-              <div className="flex items-center gap-3">
-                <span className="text-2xl p-1 bg-black/5 rounded-xl">⚙️</span>
-                <div className="text-left">
-                  <div className="flex items-center gap-2">
-                    <span className="font-bold text-base block">Okuma & Uygulama Ayarları</span>
-                    {showTypeSettings && (
-                      <span className="bg-indigo-600 text-white text-[10px] font-extrabold px-2 py-0.5 rounded-full animate-pulse">
-                        YUKARIDA AÇIK ↑
-                      </span>
-                    )}
-                  </div>
-                  <span className="text-xs opacity-60 font-medium">Tema ({readerTheme === 'sepia' ? 'Kitap' : readerTheme === 'oled' ? 'OLED' : 'Doğa'}), Hız ({speechRate}x), Yazı ({fontSize.toUpperCase()} / {fontFamily})</span>
-                </div>
-              </div>
-              <span className="text-lg opacity-60 font-bold">{showTypeSettings ? '▲' : '➔'}</span>
-            </button>
-          </div>
+        {currentView === "home" && (
+          <HomeView
+            homeScrollRef={homeScrollRef}
+            themeStyle={themeStyle}
+            levels={levels}
+            allAvailableTexts={allAvailableTexts}
+            onSelectLevel={(level) => {
+              setSelectedLevel(level);
+              navigateTo("levels", { level });
+            }}
+            navigateTo={navigateTo}
+            customTextsCount={customTexts.length}
+            savedWordsCount={savedWords.length}
+            dueCount={dueCount}
+            openStatsModal={openStatsModal}
+            setShowPhraseCardsModal={setShowPhraseCardsModal}
+            handleOpenSettingsFromBottom={handleOpenSettingsFromBottom}
+            showTypeSettings={showTypeSettings}
+            readerTheme={readerTheme}
+            speechRate={speechRate}
+            fontSize={fontSize}
+            fontFamily={fontFamily}
+            getBadgeStyle={getBadgeStyle}
+          />
         )}
 
-        {/* LEVELS VIEW */}
-        {currentView === 'levels' && (
-          <div className="flex-1 p-4 space-y-3 overflow-y-auto pb-6">
-            {filteredTexts.length === 0 ? (
-              <div className="text-center opacity-50 mt-12 font-medium">Bu seviyede henüz metin yok.</div>
-            ) : (
-              filteredTexts.map(text => {
-                const isCompleted = completedTexts.includes(text.id);
-                return (
-                  <button key={text.id} onClick={() => startReading(text)}
-                    className={`w-full text-left ${themeStyle.card} p-4 rounded-2xl shadow-sm border flex gap-3.5 items-center hover:shadow-md active:scale-[0.98] transition ${isCompleted ? 'border-green-300 bg-green-50/70' : ''}`}>
-                    <div className={`${isCompleted ? 'bg-green-100 text-green-700' : 'bg-indigo-100 text-indigo-700'} p-3 rounded-xl shrink-0 flex items-center justify-center w-11 h-11 shadow-sm`}>
-                      <span className="text-xl">{isCompleted ? '✅' : '📄'}</span>
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-1">
-                        <h3 className={`font-bold text-base leading-tight ${isCompleted ? 'text-green-950' : ''}`}>{text.title}</h3>
-                        {text.isCustom && <span className="bg-purple-100 text-purple-800 text-[10px] font-bold px-1.5 py-0.5 rounded">ÖZEL</span>}
-                      </div>
-                      <span className="text-xs opacity-60 font-semibold">{text.sentences.length} Cümle</span>
-                    </div>
-                  </button>
-                );
-              })
-            )}
-          </div>
+        {/* LEVEL TEXTS LIST VIEW */}
+        {currentView === "levels" && (
+          <LevelsView
+            themeStyle={themeStyle}
+            selectedLevel={selectedLevel}
+            filteredTexts={filteredTexts}
+            completedTexts={completedTexts}
+            startReading={startReading}
+          />
         )}
 
-        {/* CUSTOM LIST VIEW */}
-        {currentView === 'customList' && (
-          <div className="flex-1 p-4 space-y-3 overflow-y-auto pb-6">
-            <div className="flex justify-between items-center mb-2">
-              <span className="text-xs font-bold opacity-70">Kendi Eklediğin Metinler</span>
-              <button onClick={() => navigateTo('addText')} className="text-xs bg-indigo-700 hover:bg-indigo-800 text-white font-bold px-3 py-1.5 rounded-lg shadow">➕ Yeni Ekle</button>
-            </div>
-            {customTexts.map(text => {
-              const isCompleted = completedTexts.includes(text.id);
-              return (
-                <div key={text.id} onClick={() => startReading(text)}
-                  className={`w-full text-left ${themeStyle.card} p-4 rounded-2xl shadow-sm border flex justify-between items-center hover:border-indigo-400 cursor-pointer transition`}>
-                  <div>
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded border ${getBadgeStyle(text.level)}`}>{text.level}</span>
-                      <h4 className="font-bold">{text.title}</h4>
-                      {isCompleted && <span className="text-green-600 text-xs">✓</span>}
-                    </div>
-                    <p className="text-xs opacity-60 font-medium">{text.sentences.length} Cümle</p>
-                  </div>
-                  <button onClick={(e) => deleteCustomText(e, text.id)} className="p-2 opacity-40 hover:text-red-500 text-base">🗑️</button>
-                </div>
-              );
-            })}
-          </div>
+        {/* CUSTOM TEXTS LIST VIEW */}
+        {currentView === "customList" && (
+          <CustomListView
+            themeStyle={themeStyle}
+            customTexts={customTexts}
+            startReading={startReading}
+            deleteCustomText={deleteCustomText}
+          />
         )}
 
         {/* ADD CUSTOM TEXT VIEW */}
-        {currentView === 'addText' && (
-          <div className="flex-1 p-5 space-y-4 overflow-y-auto pb-10">
-            <div className={`${themeStyle.card} p-4 rounded-2xl border shadow-sm space-y-3`}>
-              <div>
-                <label className="block text-xs font-bold opacity-70 uppercase mb-1">Metin Başlığı</label>
-                <input
-                  type="text"
-                  placeholder="Örn: A Calm Journey"
-                  value={newTitle}
-                  onChange={(e) => setNewTitle(e.target.value)}
-                  className="w-full p-3 text-sm rounded-xl border border-slate-300 bg-white text-slate-800 focus:outline-none focus:border-indigo-500"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-bold opacity-70 uppercase mb-1">Hedef Seviye</label>
-                <div className="grid grid-cols-4 gap-2">
-                  {['A1', 'A2', 'B1', 'B2'].map(lvl => (
-                    <button
-                      key={lvl}
-                      type="button"
-                      onClick={() => setNewLevel(lvl)}
-                      className={`py-2 text-xs font-bold rounded-lg border transition ${newLevel === lvl ? 'bg-indigo-700 text-white border-indigo-700 shadow' : 'bg-white text-slate-700 border-slate-200'}`}
-                    >
-                      {lvl}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-xs font-bold opacity-70 uppercase mb-1">İngilizce Metin (Zorunlu)</label>
-                <textarea
-                  rows="6"
-                  placeholder="İngilizce metninizi buraya yapıştırın..."
-                  value={newEngText}
-                  onChange={(e) => setNewEngText(e.target.value)}
-                  className="w-full p-3 text-sm rounded-xl border border-slate-300 bg-white text-slate-800 focus:outline-none focus:border-indigo-500 leading-relaxed"
-                ></textarea>
-              </div>
-
-              <div>
-                <label className="block text-xs font-bold opacity-70 uppercase mb-1">Türkçe Çevirisi (İsteğe Bağlı)</label>
-                <textarea
-                  rows="3"
-                  placeholder="Varsa Türkçe çeviriyi yapıştırın..."
-                  value={newTrText}
-                  onChange={(e) => setNewTrText(e.target.value)}
-                  className="w-full p-3 text-sm rounded-xl border border-slate-300 bg-white text-slate-800 focus:outline-none focus:border-indigo-500 leading-relaxed"
-                ></textarea>
-              </div>
-
-              <button
-                onClick={handleSaveCustomText}
-                className="w-full bg-indigo-700 hover:bg-indigo-800 text-white font-bold py-3.5 rounded-xl shadow-lg transition active:scale-[0.98] flex items-center justify-center gap-2"
-              >
-                <span>📖</span> Metni Kaydet ve Oku
-              </button>
-            </div>
-          </div>
+        {currentView === "addText" && (
+          <AddTextView
+            themeStyle={themeStyle}
+            newTitle={newTitle}
+            setNewTitle={setNewTitle}
+            newLevel={newLevel}
+            setNewLevel={setNewLevel}
+            newEngText={newEngText}
+            setNewEngText={setNewEngText}
+            newTrText={newTrText}
+            setNewTrText={setNewTrText}
+            handleSaveCustomText={handleSaveCustomText}
+          />
         )}
 
-        {/* READING VIEW (KARAOKE KESİNTİSİZ VE YÜKSEK PERFORMANSLI) */}
-        {currentView === 'reading' && activeText && (
-          <div className="flex-1 flex flex-col relative overflow-hidden">
-            <div className="p-4 sm:p-5 flex-1 overflow-y-auto space-y-3.5 pb-36">
-              {/* Metin Üst Görseli & Başlık Banner'ı */}
-              <div className="rounded-2xl overflow-hidden shadow-md border border-black/10 bg-slate-900 mb-2">
-                <div className="h-44 sm:h-52 w-full relative">
-                  <img 
-                    src={getTextBgImage(activeText)} 
-                    alt={activeText.title} 
-                    referrerPolicy="no-referrer" 
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80';
-                    }}
-                    className="w-full h-full object-cover object-center"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent flex flex-col justify-end p-4 text-white">
-                    <div className="flex items-center justify-between gap-2 mb-1.5">
-                      <div className="flex items-center gap-1.5 flex-wrap">
-                        <span className={`text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full shadow-xs ${
-                          activeText.level === 'A1' ? 'bg-emerald-500 text-white' :
-                          activeText.level === 'A2' ? 'bg-blue-500 text-white' :
-                          activeText.level === 'B1' ? 'bg-indigo-500 text-white' : 'bg-purple-500 text-white'
-                        }`}>
-                          {activeText.level} Seviye
-                        </span>
-                        {activeText.isCustom && (
-                          <span className="bg-amber-400 text-amber-950 text-[10px] font-bold px-2 py-0.5 rounded-full shadow-xs">
-                            ÖZEL METİN
-                          </span>
-                        )}
-                        {/* Metindeki Toplam Kalıp & Deyim Sayısı Rozeti */}
-                        {(() => {
-                          const totalPhrases = activeText.sentences.reduce((sum, s) => sum + findPhrasalVerbsInText(s.eng).length, 0);
-                          if (totalPhrases === 0) return null;
-                          return (
-                            <span 
-                              onClick={() => setShowPhraseCardsModal(true)}
-                              className="cursor-pointer bg-amber-400/90 hover:bg-amber-400 text-amber-950 text-[10px] font-extrabold px-2 py-0.5 rounded-full shadow-xs flex items-center gap-1 transition active:scale-95"
-                              title="Bu metindeki deyim ve kalıpları kartlarda incelemek için tıklayın"
-                            >
-                              <span>⚡ {totalPhrases} Kalıp / Deyim</span>
-                            </span>
-                          );
-                        })()}
-                      </div>
-                    </div>
-                    <h2 className="text-xl sm:text-2xl font-black leading-tight drop-shadow-md text-white">
-                      {activeText.title}
-                    </h2>
-                  </div>
-                </div>
-              </div>
-
-              {activeText.sentences.map((sentence) => {
-                const sentenceWords = sentence.eng.split(' ');
-                const cleanWords = sentenceWords.map(w => cleanWord(w));
-                const isHighlighted = activeHighlight && activeHighlight.sentenceId === sentence.id;
-                const isSpeakingThisSentence = karaokeState.sentenceId === sentence.id;
-
-                const phrasalsInSentence = phraseHunterActive ? findPhrasalVerbsInText(sentence.eng) : [];
-
-                // Performans Optimizasyonu: Kalıp indekslerini her kelime için tekrar hesaplamak yerine cümle bazında bir defa hesapla
-                let phraseIndicesSet: Set<number> | null = null;
-                if (phraseHunterActive) {
-                  phraseIndicesSet = new Set<number>();
-                  for (let start = 0; start < cleanWords.length; start++) {
-                    for (let len = 4; len >= 2; len--) {
-                      if (start + len <= cleanWords.length) {
-                        const candidate = cleanWords.slice(start, start + len).join(' ');
-                        if (phrasalVerbs[candidate] || dictionary[candidate]) {
-                          for (let k = 0; k < len; k++) {
-                            phraseIndicesSet.add(start + k);
-                          }
-                          break;
-                        }
-                      }
-                    }
-                  }
-                }
-
-                return (
-                  <div key={sentence.id} className={`relative ${themeStyle.card} border p-4 rounded-2xl shadow-xs hover:shadow-sm transition`}>
-                    <div className={`${getFontSizeClass()} leading-relaxed flex flex-wrap items-center gap-y-2`}>
-                      <div className="flex-1">
-                        {sentenceWords.map((word, idx) => {
-                          const isWordHighlighted = isHighlighted && activeHighlight.indices.includes(idx);
-                          const isKaraokeWord = isSpeakingThisSentence && karaokeState.wordIdx === idx;
-                          const inPhrase = phraseIndicesSet ? phraseIndicesSet.has(idx) : false;
-
-                          return (
-                            <span key={idx}>
-                              <button
-                                onClick={() => handleWordClick(word, idx, sentenceWords, sentence)}
-                                className={`rounded px-1 py-0.5 hover:opacity-75 transition font-medium ${isKaraokeWord ? 'karaoke-highlight' : ''} ${isWordHighlighted && !isKaraokeWord ? 'word-highlight font-bold' : ''} ${inPhrase && !isKaraokeWord && !isWordHighlighted ? 'phrase-hunter-highlight font-semibold' : ''}`}
-                              >
-                                {word}
-                              </button>{' '}
-                            </span>
-                          );
-                        })}
-                      </div>
-                      <div className="flex items-center gap-1.5 ml-2">
-                        <button
-                          onClick={() => speakSentenceWithKaraoke(sentence)}
-                          title="Cümleyi Karaoke ile Dinle"
-                          className={`w-7 h-7 rounded-full flex items-center justify-center text-xs shadow-sm transition ${isSpeakingThisSentence ? 'bg-amber-400 text-amber-950 animate-pulse' : 'bg-indigo-600 text-white hover:bg-indigo-700'}`}
-                        >🔊</button>
-                        <button
-                          onClick={() => setRevealedSentences(prev => ({ ...prev, [sentence.id]: !prev[sentence.id] }))}
-                          title="Çeviriyi Gör"
-                          className={`w-7 h-7 rounded-full flex items-center justify-center text-xs shadow-sm transition ${
-                            readerTheme === 'oled' || readerTheme === 'forest' 
-                              ? 'bg-slate-800 text-slate-200 hover:bg-slate-700' 
-                              : 'bg-slate-200 text-slate-700 hover:bg-slate-300'
-                          }`}
-                        >🌐</button>
-                      </div>
-                    </div>
-
-                    {/* Kalıp Avcısı: Cümledeki Phrasal Verb & Deyim Rozetleri */}
-                    {phraseHunterActive && phrasalsInSentence.length > 0 && (
-                      <div className="mt-2.5 pt-2 border-t border-dashed border-amber-300/70 flex flex-wrap gap-1.5 items-center">
-                        <span className="text-[10px] font-extrabold text-amber-800">⚡ Kalıplar:</span>
-                        {phrasalsInSentence.map((pm, pIdx) => (
-                          <button
-                            key={pIdx}
-                            onClick={() => handlePhrasalBadgeClick(pm, sentence)}
-                            className="text-[11px] font-bold bg-amber-100 hover:bg-amber-200 border border-amber-300 text-amber-950 px-2.5 py-0.5 rounded-full transition flex items-center gap-1 shadow-2xs"
-                          >
-                            <span>{pm.phrase}</span>
-                            <span className="opacity-70 font-normal">({pm.info.tr})</span>
-                          </button>
-                        ))}
-                      </div>
-                    )}
-
-                    {(revealedSentences[sentence.id] || showFullTranslation) && (
-                      <div className={`mt-2.5 p-2.5 rounded-r-lg text-xs leading-relaxed font-semibold shadow-inner border-l-4 ${
-                        readerTheme === 'oled' || readerTheme === 'forest' 
-                          ? 'bg-indigo-950/80 border-indigo-400 text-indigo-100' 
-                          : readerTheme === 'sepia'
-                            ? 'bg-[#e5d9bd] border-amber-700 text-[#3d2e1e]'
-                            : 'bg-indigo-50 border-indigo-600 text-slate-700'
-                      }`}>
-                        {sentence.tr}
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-
-            <div className={`absolute bottom-0 left-0 right-0 p-3.5 ${themeStyle.footer} border-t shadow-2xl flex gap-2.5 z-30 transition-colors duration-300`}>
-              <button
-                onClick={() => setShowFullTranslation(!showFullTranslation)}
-                className={`flex-1 py-3 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 transition ${
-                  showFullTranslation 
-                    ? 'bg-slate-300 text-slate-800 font-extrabold' 
-                    : readerTheme === 'oled' || readerTheme === 'forest' ? 'bg-slate-800 text-white' : 'bg-indigo-100 text-indigo-900 font-bold'
-                }`}
-              >
-                <span>🌐</span> {showFullTranslation ? "Gizle" : "Tam Çeviri"}
-              </button>
-              <button 
-                onClick={handleFinishReading} 
-                className="flex-[1.4] py-3 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 bg-emerald-600 hover:bg-emerald-700 text-white shadow-md transition active:scale-95"
-              >
-                <span>✅</span> {activeText.questions?.length > 0 ? "Sınava Geç" : "Metni Bitir"}
-              </button>
-            </div>
-          </div>
+        {/* READER VIEW */}
+        {currentView === "reading" && activeText && (
+          <ReaderView
+            activeText={activeText}
+            themeStyle={themeStyle}
+            getTextBgImage={getTextBgImage}
+            setShowPhraseCardsModal={setShowPhraseCardsModal}
+            findPhrasalVerbsInText={findPhrasalVerbsInText}
+            phraseHunterActive={phraseHunterActive}
+            cleanWord={cleanWord}
+            phrasalVerbs={phrasalVerbs}
+            dictionary={dictionary}
+            activeHighlight={activeHighlight}
+            karaokeState={karaokeState}
+            fontSizeClass={getFontSizeClass(fontSize)}
+            handleWordClick={handleWordClick}
+            speakSentenceWithKaraoke={speakSentenceWithKaraoke}
+            revealedSentences={revealedSentences}
+            setRevealedSentences={setRevealedSentences}
+            readerTheme={readerTheme}
+            handlePhrasalBadgeClick={handlePhrasalBadgeClick}
+            showFullTranslation={showFullTranslation}
+            setShowFullTranslation={setShowFullTranslation}
+            handleFinishReading={handleFinishReading}
+          />
         )}
 
         {/* READING QUIZ VIEW */}
-        {currentView === 'textQuiz' && activeText && activeText.questions && (
-          <div className="flex-1 p-5 overflow-y-auto pb-10">
-            <div className="text-center mb-5">
-              <h2 className="text-lg font-bold">Okuduğunu Anlama Sınavı</h2>
-              <p className="text-xs opacity-60 font-medium">Metne göre soruları cevaplayın</p>
-            </div>
-            <div className="space-y-4">
-              {activeText.questions.map((q, qIdx) => (
-                <div key={qIdx} className={`${themeStyle.card} p-4 rounded-2xl shadow-sm border`}>
-                  <p className="font-bold text-sm mb-3">{qIdx + 1}. {q.q}</p>
-                  <div className="space-y-2">
-                    {q.options.map((opt, oIdx) => {
-                      const isSelected = quizAnswers[qIdx] === oIdx;
-                      const showResult = quizScore !== null;
-                      const isCorrect = q.answer === oIdx;
-                      let btnClass = "w-full text-left p-3 rounded-xl border text-sm font-medium transition ";
-                      if (!showResult) {
-                        btnClass += isSelected ? "border-indigo-600 bg-indigo-50 text-indigo-900 font-bold" : "border-slate-200 bg-white text-slate-700";
-                      } else {
-                        if (isCorrect) btnClass += "border-green-500 bg-green-50 text-green-900 font-bold";
-                        else if (isSelected && !isCorrect) btnClass += "border-red-500 bg-red-50 text-red-900";
-                        else btnClass += "border-slate-200 opacity-40";
-                      }
-                      return (
-                        <button key={oIdx} disabled={showResult}
-                          onClick={() => setQuizAnswers(prev => ({...prev, [qIdx]: oIdx}))}
-                          className={btnClass}>{opt}</button>
-                      );
-                    })}
-                  </div>
-                </div>
-              ))}
-            </div>
-            {quizScore === null ? (
-              <button onClick={checkTextQuiz}
-                disabled={Object.keys(quizAnswers).length < activeText.questions.length}
-                className={`w-full mt-6 py-3.5 rounded-xl font-bold text-sm text-white transition shadow-md ${Object.keys(quizAnswers).length < activeText.questions.length ? 'bg-slate-400 cursor-not-allowed' : 'bg-indigo-700 hover:bg-indigo-800'}`}>
-                Cevapları Kontrol Et
-              </button>
-            ) : (
-              <div className={`mt-6 ${themeStyle.card} p-5 rounded-2xl shadow border-t-4 border-indigo-600 text-center`}>
-                <h3 className="text-xl font-black mb-1">Skorun: {quizScore} / {activeText.questions.length}</h3>
-                <p className="text-xs opacity-60 mb-4">{quizScore === activeText.questions.length ? "Mükemmel! Hepsini doğru cevapladın." : "Biraz daha tekrar yapabilirsin."}</p>
-                <button onClick={returnToLevelList} className="w-full py-3 bg-indigo-700 hover:bg-indigo-800 text-white rounded-xl font-bold text-sm shadow">
-                  Menüye Dön
-                </button>
-              </div>
-            )}
-          </div>
+        {currentView === "textQuiz" && activeText && activeText.questions && (
+          <TextQuizView
+            activeText={activeText}
+            themeStyle={themeStyle}
+            quizAnswers={quizAnswers}
+            setQuizAnswers={setQuizAnswers}
+            quizScore={quizScore}
+            checkTextQuiz={checkTextQuiz}
+            returnToLevelList={returnToLevelList}
+          />
         )}
 
-        {/* SAVED WORDS VIEW (YEDEKLLEME BUTONLU) */}
-        {currentView === 'savedWords' && (
-          <div className="flex-1 flex flex-col">
-            <div className={`p-4 ${themeStyle.card} border-b shrink-0 space-y-3`}>
-              <div className="flex justify-between items-center">
-                <div>
-                  <h3 className="font-bold flex items-center gap-1.5">
-                    <span>Leitner Kelime Sistemi</span>
-                    <span className="text-[10px] bg-indigo-100 text-indigo-800 font-bold px-2 py-0.5 rounded-md">SRS</span>
-                  </h3>
-                  <p className="text-xs opacity-60 font-medium">{filteredSavedWords.length} kelime listeleniyor</p>
-                </div>
-                <div className="flex gap-1.5">
-                  <button onClick={openBackupModal}
-                    className="flex items-center gap-1 px-2.5 py-1.5 rounded-xl font-bold text-xs bg-slate-800 text-white shadow"
-                    title="Veri Yedekleme & Geri Yükleme"
-                  >
-                    💾 Yedek
-                  </button>
-                  <button onClick={() => startVocabTest(false)} disabled={savedWords.length === 0}
-                    className={`flex items-center gap-1 px-3 py-1.5 rounded-xl font-bold text-xs ${savedWords.length === 0 ? 'bg-slate-200 text-slate-400' : 'bg-indigo-700 text-white shadow'}`}>
-                    <span>🎲</span> Test
-                  </button>
-                </div>
-              </div>
-
-              <button
-                onClick={() => startVocabTest(true)}
-                disabled={dueCount === 0}
-                className={`w-full py-3 rounded-2xl font-black text-xs flex items-center justify-between px-4 transition shadow-md active:scale-[0.98] ${dueCount > 0 ? 'bg-gradient-to-r from-emerald-600 to-teal-700 text-white ring-2 ring-emerald-400 ring-offset-1' : 'bg-slate-100 text-slate-400 border border-slate-200 cursor-not-allowed'}`}
-              >
-                <div className="flex items-center gap-2">
-                  <span className="text-lg">{dueCount > 0 ? '⚡' : '☕'}</span>
-                  <span>{dueCount > 0 ? "Vakti Gelenleri Tekrar Et" : "Bugün İçin Tüm Tekrarlar Tamam"}</span>
-                </div>
-                <span className={`text-xs px-2.5 py-0.5 rounded-full font-bold ${dueCount > 0 ? 'bg-white text-emerald-800' : 'bg-slate-200 text-slate-500'}`}>
-                  {dueCount} Kelime
-                </span>
-              </button>
-
-              <div>
-                <span className="text-[10px] font-bold opacity-60 uppercase tracking-wider block mb-1">Aşama Filtresi (Kutu)</span>
-                <div className="flex gap-1.5 overflow-x-auto scrollbar-hide">
-                  <button
-                    onClick={() => setWordFilterBox('ALL')}
-                    className={`px-2.5 py-1 rounded-lg text-xs font-bold shrink-0 transition ${wordFilterBox === 'ALL' ? 'bg-indigo-900 text-white' : 'bg-white text-slate-600 border border-slate-200'}`}
-                  >
-                    Tümü ({savedWords.length})
-                  </button>
-                  {[1, 2, 3, 4, 5].map(b => {
-                    const count = savedWords.filter(w => w.box === b).length;
-                    return (
-                      <button
-                        key={b}
-                        onClick={() => setWordFilterBox(String(b))}
-                        className={`px-2.5 py-1 rounded-lg text-xs font-bold shrink-0 border transition flex items-center gap-1 ${wordFilterBox === String(b) ? 'border-slate-800 ring-1 ring-slate-800 ' + getBoxStyle(b) : 'bg-white text-slate-600 border-slate-200'}`}
-                      >
-                        <span>Kutu {b}</span>
-                        <span className="text-[10px] opacity-75 font-normal">({count})</span>
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-
-              <div className="flex gap-1.5 overflow-x-auto scrollbar-hide pt-1">
-                {['ALL', 'A1', 'A2', 'B1', 'B2'].map(lvl => (
-                  <button
-                    key={lvl}
-                    onClick={() => setWordFilterLevel(lvl)}
-                    className={`px-2.5 py-1 rounded-lg text-[11px] font-bold shrink-0 transition ${wordFilterLevel === lvl ? 'bg-indigo-700 text-white shadow-sm' : 'bg-white text-slate-500 border border-slate-200'}`}
-                  >
-                    {lvl === 'ALL' ? 'Tüm Seviyeler' : lvl}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className="flex-1 p-4 space-y-2.5 overflow-y-auto">
-              {filteredSavedWords.length === 0 ? (
-                <div className="text-center opacity-50 mt-12">
-                  <p className="text-4xl mb-2">🏷️</p>
-                  <p className="text-sm font-medium">Bu filtreye uygun kayıtlı kelime bulunamadı.</p>
-                  <p className="text-xs opacity-75 mt-1">Metin okurken kelimelerin üzerine tıklayarak deftere ekleyebilirsin.</p>
-                </div>
-              ) : (
-                filteredSavedWords.map((wordObj, idx) => {
-                  const due = isDue(wordObj);
-                  return (
-                    <div key={idx} className={`${themeStyle.card} p-3.5 rounded-2xl shadow-sm border transition flex justify-between items-center ${due ? 'border-rose-300 bg-rose-50/40' : ''}`}>
-                      <div className="flex items-center gap-3">
-                        <div className="flex flex-col items-center gap-0.5">
-                          <span className={`text-[10px] font-black px-2 py-0.5 rounded-md border shadow-2xs ${getBoxStyle(wordObj.box || 1)}`}>
-                            Kutu {wordObj.box || 1}
-                          </span>
-                          <span className={`text-[9px] font-bold px-1.5 rounded ${due ? 'text-rose-700 bg-rose-100 animate-pulse' : 'opacity-50'}`}>
-                            {formatReviewTime(wordObj.nextReview)}
-                          </span>
-                        </div>
-
-                        <div>
-                          <div className="flex items-center gap-2">
-                            <span className={`text-[10px] font-black px-1.5 py-0.2 rounded border ${getBadgeStyle(wordObj.level)}`}>
-                              {wordObj.level || 'B1'}
-                            </span>
-                            <h4 className="font-bold text-base">{wordObj.original}</h4>
-                            <button onClick={() => speak(wordObj.original)} className="text-xs text-indigo-600">🔊</button>
-                          </div>
-                          <p className="text-xs opacity-70 font-medium">{wordObj.translated || "(Çeviri yok)"}</p>
-                          {wordObj.contextEng && (
-                            <div className="mt-1 text-[11px] text-indigo-800 bg-indigo-50/70 rounded px-2 py-0.5 border border-indigo-100 font-serif italic">
-                              "{wordObj.contextEng}"
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                      <button onClick={() => toggleSaveWord(wordObj, wordObj.level)} className="p-2 opacity-40 hover:text-red-500 text-sm">✕</button>
-                    </div>
-                  );
-                })
-              )}
-            </div>
-          </div>
+        {/* SAVED WORDS VIEW */}
+        {currentView === "savedWords" && (
+          <SavedWordsView
+            themeStyle={themeStyle}
+            filteredSavedWords={filteredSavedWords}
+            savedWords={savedWords}
+            dueCount={dueCount}
+            openBackupModal={openBackupModal}
+            startVocabTest={startVocabTest}
+            wordFilterBox={wordFilterBox}
+            setWordFilterBox={setWordFilterBox}
+            wordFilterLevel={wordFilterLevel}
+            setWordFilterLevel={setWordFilterLevel}
+            getBoxStyle={getBoxStyle}
+            getBadgeStyle={getBadgeStyle}
+            isDue={isDue}
+            formatReviewTime={formatReviewTime}
+            speak={speak}
+            toggleSaveWord={toggleSaveWord}
+          />
         )}
 
         {/* VOCAB TEST VIEW */}
-        {currentView === 'vocabTest' && vocabQuestions.length > 0 && (
-          <div className="flex-1 flex flex-col p-6">
-            {!vocabTestFinished ? (
-              <div className="flex-1 flex flex-col">
-                <div className="flex justify-between items-center mb-4">
-                  <span className="text-xs font-bold opacity-60">Soru {currentVocabIdx + 1} / {vocabQuestions.length}</span>
-                  
-                  <button
-                    onClick={() => {
-                      const next = !isListeningMode;
-                      setIsListeningMode(next);
-                      if (next && vocabQuestions[currentVocabIdx]) {
-                        speak(vocabQuestions[currentVocabIdx].word);
-                      }
-                    }}
-                    className={`px-3 py-1 rounded-full text-xs font-bold transition flex items-center gap-1.5 shadow-sm ${isListeningMode ? 'bg-indigo-600 text-white ring-2 ring-indigo-400' : 'bg-black/15 text-slate-300 hover:bg-black/25'}`}
-                  >
-                    <span>🎧</span> Dinleme Modu: {isListeningMode ? 'Açık' : 'Kapalı'}
-                  </button>
-                </div>
-
-                <div className="flex justify-end gap-1.5 mb-2">
-                  <span className={`px-2 py-0.5 rounded border text-[10px] ${getBoxStyle(vocabQuestions[currentVocabIdx]?.currentBox)}`}>
-                    Mevcut: Kutu {vocabQuestions[currentVocabIdx]?.currentBox}
-                  </span>
-                  <span className={`px-1.5 py-0.5 rounded border text-[10px] ${getBadgeStyle(vocabQuestions[currentVocabIdx]?.level)}`}>
-                    {vocabQuestions[currentVocabIdx]?.level || 'B1'}
-                  </span>
-                </div>
-
-                <div className="flex-1 flex flex-col items-center justify-center mb-6">
-                  <span className="text-xs text-indigo-700 font-bold uppercase tracking-wider mb-2">
-                    {isListeningMode ? "Duyduğunuz kelimenin anlamı nedir?" : "Bu kelimenin anlamı nedir?"}
-                  </span>
-
-                  {isListeningMode ? (
-                    <div className="text-center my-2">
-                      <button 
-                        onClick={() => speak(vocabQuestions[currentVocabIdx]?.word)} 
-                        className="w-20 h-20 bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white rounded-full flex items-center justify-center text-3xl shadow-xl mx-auto mb-2.5 transition animate-pulse"
-                        title="Tekrar Dinle"
-                      >
-                        🔊
-                      </button>
-                      <span className="text-xs opacity-70 font-bold block">Dinlemek için dokunun</span>
-                      {selectedVocabOption !== null && (
-                        <span className="text-2xl font-black mt-2 block text-indigo-400 tracking-wide">
-                          {vocabQuestions[currentVocabIdx]?.word}
-                        </span>
-                      )}
-                    </div>
-                  ) : (
-                    <div>
-                      <h2 className="text-3xl font-black text-center flex items-center justify-center gap-2">
-                        {vocabQuestions[currentVocabIdx]?.word || ''}
-                        <button onClick={() => speak(vocabQuestions[currentVocabIdx]?.word)} className="text-lg text-indigo-600">🔊</button>
-                      </h2>
-                      {vocabQuestions[currentVocabIdx]?.wordObj?.contextEng && (
-                        <div className="mt-2.5 px-3 py-1.5 rounded-xl bg-indigo-50/90 border border-indigo-200/70 text-xs text-center max-w-xs mx-auto shadow-2xs">
-                          <span className="text-[10px] font-bold text-indigo-700 block uppercase tracking-wider mb-0.5">
-                            💡 Cümle İçi Bağlamı:
-                          </span>
-                          <p className="italic text-slate-700 font-serif leading-relaxed">
-                            "{vocabQuestions[currentVocabIdx].wordObj.contextEng}"
-                          </p>
-                        </div>
-                      )}
-                    </div>
-                  )}
-                </div>
-
-                <div className="space-y-2.5 mb-8">
-                  {(vocabQuestions[currentVocabIdx]?.options || []).map((opt, idx) => {
-                    const isSelected = selectedVocabOption === idx;
-                    const isCorrect = idx === vocabQuestions[currentVocabIdx].correctIndex;
-                    let btnClass = `w-full ${themeStyle.card} p-3.5 rounded-2xl border-2 text-base font-semibold text-center transition shadow-sm flex items-center justify-between px-4 `;
-
-                    if (selectedVocabOption === null) {
-                      btnClass += "border-indigo-100 hover:border-indigo-400 active:scale-[0.98]";
-                    } else {
-                      if (isCorrect) {
-                        btnClass += "border-emerald-500 bg-emerald-50 text-emerald-950 font-bold";
-                      } else if (isSelected && !isCorrect) {
-                        btnClass += "border-rose-500 bg-rose-50 text-rose-950 font-bold";
-                      } else {
-                        btnClass += "border-slate-100 opacity-40";
-                      }
-                    }
-
-                    return (
-                      <button key={idx} disabled={selectedVocabOption !== null} onClick={() => handleVocabAnswer(idx)} className={btnClass}>
-                        <span className="flex-1 text-center">{opt}</span>
-                        {selectedVocabOption !== null && isCorrect && (
-                          <span className="text-xs text-emerald-700 font-black shrink-0 ml-2">
-                            {vocabQuestions[currentVocabIdx].currentBox < 5 ? `+1 Kutu 🚀` : `Usta ⭐`}
-                          </span>
-                        )}
-                        {selectedVocabOption !== null && isSelected && !isCorrect && (
-                          <span className="text-xs text-rose-700 font-black shrink-0 ml-2">1. Kutu ⚠️</span>
-                        )}
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-            ) : (
-              <div className="flex-1 flex flex-col p-2 space-y-4 overflow-y-auto">
-                <div className="text-center">
-                  <div className="bg-emerald-100 w-16 h-16 rounded-full flex items-center justify-center shadow-inner mx-auto mb-2">
-                    <span className="text-3xl">🎉</span>
-                  </div>
-                  <h2 className="text-xl font-black">Aralıklı Tekrar Tamamlandı!</h2>
-                  <p className="text-xs opacity-70 mt-0.5">
-                    Başarı: <strong className="text-indigo-700 font-bold text-sm">{vocabScore} / {vocabQuestions.length}</strong>
-                  </p>
-                </div>
-
-                <div className={`${themeStyle.card} p-3 rounded-2xl border space-y-2 max-h-64 overflow-y-auto`}>
-                  <span className="text-[10px] font-bold opacity-60 uppercase tracking-wider block border-b pb-1">
-                    Kelime Aşamaları Güncellendi:
-                  </span>
-                  {vocabHistory.map((item, hIdx) => (
-                    <div key={hIdx} className="flex justify-between items-center text-xs py-1 border-b border-black/5 last:border-0">
-                      <span className="font-bold">{item.word}</span>
-                      <div className="flex items-center gap-1.5 font-semibold">
-                        <span className="text-[10px] opacity-60">Kutu {item.oldBox}</span>
-                        <span>➔</span>
-                        <span className={`text-[10px] font-bold px-1.5 py-0.2 rounded border ${getBoxStyle(item.newBox)}`}>
-                          Kutu {item.newBox}
-                        </span>
-                        <span>{item.isCorrect ? '✅' : '❌'}</span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                <button onClick={handleHeaderBack} className="w-full bg-indigo-700 hover:bg-indigo-800 text-white py-3.5 rounded-xl font-bold text-sm shadow-md">
-                  Kelime Defterine Dön
-                </button>
-              </div>
-            )}
-          </div>
+        {currentView === "vocabTest" && vocabQuestions.length > 0 && (
+          <VocabTestView
+            vocabQuestions={vocabQuestions}
+            vocabTestFinished={vocabTestFinished}
+            currentVocabIdx={currentVocabIdx}
+            isListeningMode={isListeningMode}
+            setIsListeningMode={setIsListeningMode}
+            speak={speak}
+            selectedVocabOption={selectedVocabOption}
+            handleVocabAnswer={handleVocabAnswer}
+            vocabScore={vocabScore}
+            vocabHistory={vocabHistory}
+            handleHeaderBack={handleHeaderBack}
+            getBoxStyle={getBoxStyle}
+            getBadgeStyle={getBadgeStyle}
+            themeStyle={themeStyle}
+          />
         )}
 
         {/* AI METİN STÜDYOSU VIEW */}
-        {currentView === 'aiGenerate' && (
+        {currentView === "aiGenerate" && (
           <AITextGenerator
             savedWords={savedWords}
             onGenerated={(newText) => {
@@ -2742,206 +1602,39 @@ function MainApp() {
       </div>
 
       {/* 3. AŞAMA: VERİ & YEDEKLEME MODALI */}
-      {showBackupModal && (
-        <div 
-          className="fixed inset-0 bg-black/70 z-55 flex items-center justify-center p-4"
-          onClick={closeBackupModal}
-        >
-          <div 
-            className="w-full max-w-sm rounded-3xl p-5 shadow-2xl border border-slate-700 text-white relative"
-            style={{ backgroundColor: '#0f172a' }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="flex justify-between items-center mb-4">
-              <h3 className="font-black text-base flex items-center gap-2">
-                <span>💾</span> Veri Yönetimi & Yedek
-              </h3>
-              <button onClick={closeBackupModal} className="text-slate-400 hover:text-white text-sm font-bold">✕</button>
-            </div>
-
-            <p className="text-xs text-slate-300 mb-4 leading-relaxed">
-              Verileriniz cihazınızda <strong>IndexedDB</strong> ile güvenle saklanır. Telefon değiştirirken veya verilerinizi kaybetmemek için düzenli yedek alabilirsiniz.
-            </p>
-
-            <div className="space-y-2.5">
-              <button 
-                onClick={handleExportJSON}
-                className="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl shadow flex items-center justify-center gap-2"
-              >
-                <span>📥</span> JSON Yedeği İndir (Tüm Veriler)
-              </button>
-
-              <button 
-                onClick={() => fileInputRef.current && fileInputRef.current.click()}
-                className="w-full py-3 bg-slate-800 hover:bg-slate-700 border border-slate-600 text-white font-bold text-xs rounded-xl shadow flex items-center justify-center gap-2"
-              >
-                <span>📤</span> JSON Yedeği Geri Yükle
-              </button>
-              <input 
-                type="file" 
-                ref={fileInputRef} 
-                onChange={handleImportJSON} 
-                accept=".json" 
-                className="hidden" 
-              />
-
-              <button 
-                onClick={handleExportAnkiTSV}
-                className="w-full py-3 bg-teal-700 hover:bg-teal-800 text-white font-bold text-xs rounded-xl shadow flex items-center justify-center gap-2"
-              >
-                <span>📇</span> Anki Kart Destesi İndir (.tsv)
-              </button>
-            </div>
-
-            <div className="mt-4 pt-3 border-t border-slate-800 text-[11px] text-slate-400 flex justify-between">
-              <span>Depolanan Kelime: {savedWords.length}</span>
-              <span>Özel Metin: {customTexts.length}</span>
-            </div>
-          </div>
-        </div>
-      )}
+      <BackupModal
+        isOpen={showBackupModal}
+        onClose={closeBackupModal}
+        handleExportJSON={handleExportJSON}
+        handleExportAnkiTSV={handleExportAnkiTSV}
+        handleImportJSON={handleImportJSON}
+        fileInputRef={fileInputRef}
+        savedWordsCount={savedWords.length}
+        customTextsCount={customTexts.length}
+      />
 
       {/* VIEWPORT-FIXED ÇEVİRİ MODALI */}
-      {selectedTranslation && (
-        <div 
-          className="fixed inset-0 bg-black/60 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4"
-          onClick={closeTranslationModal}
-        >
-          <div 
-            className="w-full max-w-md rounded-t-3xl sm:rounded-3xl p-5 shadow-2xl border border-slate-700 text-white relative"
-            style={{ backgroundColor: '#0f172a' }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              onClick={closeTranslationModal}
-              className="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center text-sm font-bold transition"
-            >✕</button>
-
-            <div className="mb-4 flex items-center gap-2">
-              <span className="text-[11px] font-bold uppercase text-slate-400">Seviye Etiketi:</span>
-              <div className="flex gap-1.5">
-                {['A1', 'A2', 'B1', 'B2'].map(lvl => (
-                  <button
-                    key={lvl}
-                    onClick={() => setSelectedLevelTag(lvl)}
-                    className={`text-xs font-black px-2.5 py-1 rounded-lg border transition ${selectedLevelTag === lvl ? 'bg-indigo-600 text-white border-indigo-400 shadow-sm' : 'bg-slate-800 text-slate-400 border-slate-700 hover:bg-slate-700'}`}
-                  >
-                    {lvl}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {selectedTranslation.phrase && (
-              <div className="mb-3.5 pb-3.5 border-b border-slate-800 pr-8">
-                <div className="flex items-center gap-2 mb-1">
-                  <span className="text-[10px] text-indigo-400 font-extrabold uppercase tracking-wider">Kelime Grubu</span>
-                  <button onClick={() => speak(selectedTranslation.phrase.original)} className="text-xs text-indigo-300">🔊</button>
-                </div>
-                <div className="text-lg font-bold text-white leading-snug">{selectedTranslation.phrase.original}</div>
-                <div className="text-sm text-indigo-200 mt-0.5 mb-2.5 font-medium">{selectedTranslation.phrase.translated}</div>
-                <button
-                  onClick={() => toggleSaveWord(selectedTranslation.phrase, selectedLevelTag, selectedTranslation.context)}
-                  className={`text-xs px-3.5 py-2 rounded-xl font-bold flex items-center gap-2 transition ${isWordSaved(selectedTranslation.phrase.original) ? 'bg-emerald-600 text-white shadow' : 'bg-indigo-700 hover:bg-indigo-600 text-white'}`}
-                >
-                  {isWordSaved(selectedTranslation.phrase.original) 
-                    ? `⭐ [Kutu ${getSavedWordInfo(selectedTranslation.phrase.original)?.box || 1}] Defterde Kayıtlı` 
-                    : `🔖 ${selectedLevelTag} Olarak Deftere Ekle`}
-                </button>
-              </div>
-            )}
-
-            <div className="pr-8">
-              <div className="flex items-center gap-2 mb-1">
-                <span className="text-[10px] text-slate-400 font-extrabold uppercase tracking-wider">
-                  {selectedTranslation.phrase ? "Tıkladığınız Kelime" : "Kelime Çevirisi"}
-                </span>
-                <button onClick={() => speak(selectedTranslation.word.original)} className="text-xs text-slate-300">🔊</button>
-              </div>
-              <div className="text-base font-bold text-slate-100">{selectedTranslation.word.original}</div>
-              
-              {selectedTranslation.word.translated ? (
-                <>
-                  <div className="text-sm text-slate-300 mt-0.5 mb-2.5 font-medium">
-                    {selectedTranslation.word.translated}
-                  </div>
-                  <button
-                    onClick={() => toggleSaveWord(selectedTranslation.word, selectedLevelTag, selectedTranslation.context)}
-                    className={`text-xs px-3.5 py-2 rounded-xl font-bold flex items-center gap-2 transition ${isWordSaved(selectedTranslation.word.original) ? 'bg-emerald-600 text-white shadow' : 'bg-slate-800 hover:bg-slate-700 border border-slate-600 text-slate-200'}`}
-                  >
-                    {isWordSaved(selectedTranslation.word.original) 
-                      ? `⭐ [Kutu ${getSavedWordInfo(selectedTranslation.word.original)?.box || 1}] Defterde Kayıtlı` 
-                      : `🔖 ${selectedLevelTag} Olarak Deftere Ekle`}
-                  </button>
-                </>
-              ) : isSearchingOnline ? (
-                <div className="mt-3 flex items-center gap-2.5 py-2 px-3 rounded-xl bg-indigo-950/60 border border-indigo-500/30 text-indigo-300 text-xs font-semibold">
-                  <span className="inline-block w-4 h-4 border-2 border-indigo-400 border-t-transparent rounded-full animate-spin"></span>
-                  <span>Çevrimiçi sözlük taranıyor...</span>
-                </div>
-              ) : (
-                <div className="mt-2.5 space-y-2.5 bg-slate-800/80 p-3.5 rounded-2xl border border-slate-700">
-                  <p className="text-xs text-amber-300 font-semibold flex items-center gap-1.5">
-                    <span>💡</span> Yerel sözlükte bulunamadı. Anlamını girip deftere ekleyebilirsiniz:
-                  </p>
-                  <div className="flex gap-1.5">
-                    <input
-                      type="text"
-                      placeholder="Kelimenin Türkçe karşılığı..."
-                      value={customWordInput}
-                      onChange={(e) => setCustomWordInput(e.target.value)}
-                      onKeyDown={(e) => {
-                        if (e.key === 'Enter' && customWordInput.trim()) {
-                          const cleanTr = customWordInput.trim().toLowerCase();
-                          const newWordData = { original: selectedTranslation.word.original, translated: cleanTr };
-                          dictionary[selectedTranslation.word.original] = cleanTr;
-                          toggleSaveWord(newWordData, selectedLevelTag, selectedTranslation.context);
-                          setSelectedTranslation(prev => prev ? { ...prev, word: newWordData } : null);
-                          setCustomWordInput('');
-                        }
-                      }}
-                      className="flex-1 px-3 py-2 text-xs rounded-xl bg-slate-900 border border-slate-600 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-400"
-                    />
-                    <button
-                      onClick={() => {
-                        if (!customWordInput.trim()) return;
-                        const cleanTr = customWordInput.trim().toLowerCase();
-                        const newWordData = { original: selectedTranslation.word.original, translated: cleanTr };
-                        dictionary[selectedTranslation.word.original] = cleanTr;
-                        toggleSaveWord(newWordData, selectedLevelTag, selectedTranslation.context);
-                        setSelectedTranslation(prev => prev ? { ...prev, word: newWordData } : null);
-                        setCustomWordInput('');
-                      }}
-                      disabled={!customWordInput.trim()}
-                      className="px-3.5 py-2 bg-indigo-600 hover:bg-indigo-500 disabled:opacity-40 text-white rounded-xl text-xs font-bold shrink-0 shadow transition"
-                    >
-                      💾 Kaydet
-                    </button>
-                  </div>
-                  <div className="flex gap-2 pt-1 border-t border-slate-700/60">
-                    <a
-                      href={`https://translate.google.com/?sl=en&tl=tr&text=${encodeURIComponent(selectedTranslation.word.original)}&op=translate`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-xs bg-slate-900 hover:bg-slate-700 border border-slate-700 text-indigo-300 px-3 py-1.5 rounded-lg flex items-center gap-1 font-bold transition"
-                    >
-                      🌐 Google Çeviri
-                    </a>
-                    <a
-                      href={`https://tureng.com/tr/turkce-ingilizce/${encodeURIComponent(selectedTranslation.word.original)}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-xs bg-slate-900 hover:bg-slate-700 border border-slate-700 text-amber-300 px-3 py-1.5 rounded-lg flex items-center gap-1 font-bold transition"
-                    >
-                      📖 Tureng
-                    </a>
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
+      <WordTranslationModal
+        selectedTranslation={selectedTranslation}
+        onClose={closeTranslationModal}
+        selectedLevelTag={selectedLevelTag}
+        setSelectedLevelTag={setSelectedLevelTag}
+        speak={speak}
+        toggleSaveWord={toggleSaveWord}
+        isWordSaved={isWordSaved}
+        getSavedWordInfo={getSavedWordInfo}
+        isSearchingOnline={isSearchingOnline}
+        customWordInput={customWordInput}
+        setCustomWordInput={setCustomWordInput}
+        onSaveCustomWord={(cleanTr) => {
+          if (!selectedTranslation) return;
+          const newWordData = { original: selectedTranslation.word.original, translated: cleanTr };
+          dictionary[selectedTranslation.word.original] = cleanTr;
+          toggleSaveWord(newWordData, selectedLevelTag, selectedTranslation.context);
+          setSelectedTranslation(prev => prev ? { ...prev, word: newWordData } : null);
+          setCustomWordInput("");
+        }}
+      />
 
       {/* İSTATİSTİKLER & GELİŞİM MODALI */}
       <StatsModal

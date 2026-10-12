@@ -11,6 +11,10 @@ export interface AudioServiceOptions {
 class AudioService {
   private currentUtterance: SpeechSynthesisUtterance | null = null;
 
+  public getCurrentUtterance(): SpeechSynthesisUtterance | null {
+    return this.currentUtterance;
+  }
+
   public isSupported(): boolean {
     return typeof window !== 'undefined' && 'speechSynthesis' in window;
   }

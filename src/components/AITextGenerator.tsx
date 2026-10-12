@@ -30,7 +30,8 @@ export const AITextGenerator: React.FC<AITextGeneratorProps> = ({
   // Extract weak words from Box 1 and Box 2
   const weakWordsList = savedWords
     .filter(w => (w.box || 1) <= 2)
-    .map(w => w.original)
+    .map(w => w.original || w.word)
+    .filter((w): w is string => Boolean(w && typeof w === 'string'))
     .slice(0, 15);
 
   const [includedWords, setIncludedWords] = useState<string[]>(weakWordsList);

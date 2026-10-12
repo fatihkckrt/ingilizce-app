@@ -45,9 +45,11 @@ export interface PhraseMatch {
 }
 
 export interface VocabWord {
-  id: string;
-  word: string;
-  translation: string;
+  id?: string;
+  original: string;
+  translated: string;
+  word?: string;
+  translation?: string;
   level?: string;
   box: number; // 1 to 5 (Leitner boxes)
   nextReview: number; // timestamp
@@ -76,6 +78,7 @@ export interface StudyStats {
   totalQuizCorrect: number;
   totalVocabReviews: number;
   dailyActivity?: Record<string, number>;
+  history?: Record<string, { sentences?: number; texts?: number; quiz?: number; vocab?: number }>;
 }
 
 export interface ReaderSettings {
