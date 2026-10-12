@@ -4,7 +4,8 @@ import {
   PUZZLE_LEVELS, 
   PuzzleDefinition, 
   CompletedPuzzleRecord, 
-  getPuzzlesByLevelAndSize 
+  getPuzzlesByLevelAndSize,
+  getPosBadgeClasses
 } from '../puzzleData';
 import { PuzzleBoard } from './PuzzleBoard';
 import { ThemeClasses } from '../utils/themeUtils';
@@ -301,13 +302,25 @@ export const PuzzleView: React.FC<PuzzleViewProps> = ({
                   <p className="text-xs text-slate-500 dark:text-slate-400 line-clamp-1">
                     {p.description}
                   </p>
-                  <div className="flex items-center gap-3 mt-1.5 text-[11px] text-slate-400">
-                    <span>{p.clues.length} Kelime</span>
+                  <div className="flex items-center gap-1.5 mt-1.5 flex-wrap">
+                    <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400">{p.clues.length} Kelime</span>
+                    <span className="text-slate-300 dark:text-slate-700">•</span>
+                    {Array.from(new Set(p.clues.map(c => c.partOfSpeech))).slice(0, 3).map(pos => {
+                      const b = getPosBadgeClasses(pos);
+                      return (
+                        <span key={pos} className={`text-[9px] font-bold px-1.5 py-0.2 rounded border ${b.bg} ${b.text} ${b.border}`}>
+                          {b.label}
+                        </span>
+                      );
+                    })}
                     {isDone && (
-                      <span className="text-emerald-600 dark:text-emerald-400 font-bold flex items-center gap-1">
-                        <Trophy className="w-3 h-3" />
-                        {record.score} Puan • {Math.floor(record.secondsTaken / 60)}:{(record.secondsTaken % 60).toString().padStart(2, '0')}
-                      </span>
+                      <>
+                        <span className="text-slate-300 dark:text-slate-700">•</span>
+                        <span className="text-emerald-600 dark:text-emerald-400 font-bold flex items-center gap-1 text-[11px]">
+                          <Trophy className="w-3 h-3" />
+                          {record.score} Puan
+                        </span>
+                      </>
                     )}
                   </div>
                 </div>

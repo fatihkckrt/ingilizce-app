@@ -7,6 +7,8 @@ export interface PuzzleClue {
   direction: 'across' | 'down';
   word: string; // UPPERCASE
   clue: string; // Turkish clue
+  partOfSpeech: string; // e.g. 'İsim', 'Fiil', 'Sıfat', 'Zamir', 'Edat', 'Zarf'
+  partOfSpeechEn: string; // e.g. 'Noun', 'Verb', 'Adjective', 'Pronoun', 'Preposition', 'Adverb'
   row: number; // 0-based
   col: number; // 0-based
   length: number;
@@ -35,6 +37,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "HOME",
         "clue": "Ailenin yaşadığı yuva veya ev",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 0,
         "col": 0,
         "length": 4
@@ -45,6 +49,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "HAT",
         "clue": "Güneşten korunmak için başa takılan şapka",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 0,
         "col": 0,
         "length": 3
@@ -55,6 +61,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "APPLE",
         "clue": "Kırmızı veya yeşil lezzetli meyve",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 1,
         "col": 0,
         "length": 5
@@ -65,6 +73,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "TEN",
         "clue": "Dokuzdan sonra gelen çift basamaklı sayı (10)",
+        "partOfSpeech": "Sıfat",
+        "partOfSpeechEn": "Adjective",
         "row": 2,
         "col": 0,
         "length": 3
@@ -75,6 +85,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "OPEN",
         "clue": "Kapalı karşıtı, açık veya açmak",
+        "partOfSpeech": "Fiil",
+        "partOfSpeechEn": "Verb",
         "row": 0,
         "col": 1,
         "length": 4
@@ -85,6 +97,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "EGG",
         "clue": "Kahvaltıda yenen taze yumurta",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 1,
         "col": 4,
         "length": 3
@@ -104,6 +118,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "FISH",
         "clue": "Suda yaşayan pullu canlı (Balık)",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 0,
         "col": 0,
         "length": 4
@@ -114,6 +130,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "FARM",
         "clue": "Hayvanların beslendiği ekin alanı (Çiftlik)",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 0,
         "col": 0,
         "length": 4
@@ -124,6 +142,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "SHIP",
         "clue": "Denizde yol alan büyük deniz taşıtı (Gemi)",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 0,
         "col": 2,
         "length": 4
@@ -134,6 +154,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "RAIN",
         "clue": "Bulutlardan düşen su damlaları (Yağmur)",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 2,
         "col": 0,
         "length": 4
@@ -144,6 +166,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "MAP",
         "clue": "Şehir ve ülkeleri gösteren çizim (Harita)",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 3,
         "col": 0,
         "length": 3
@@ -163,6 +187,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "BLUE",
         "clue": "Gökyüzünün ve berrak denizlerin rengi (Mavi)",
+        "partOfSpeech": "Sıfat",
+        "partOfSpeechEn": "Adjective",
         "row": 0,
         "col": 0,
         "length": 4
@@ -173,6 +199,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "BOOK",
         "clue": "Okumak için sayfaları çevrilen nesne (Kitap)",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 0,
         "col": 0,
         "length": 4
@@ -183,6 +211,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "USER",
         "clue": "Bir sistemi veya telefonu kullanan kişi (Kullanıcı)",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 0,
         "col": 2,
         "length": 4
@@ -193,6 +223,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "OPEN",
         "clue": "Kapalı olmayan, giriş yapılabilen (Açık)",
+        "partOfSpeech": "Fiil",
+        "partOfSpeechEn": "Verb",
         "row": 2,
         "col": 0,
         "length": 4
@@ -203,6 +235,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "NEW",
         "clue": "Eski olmayan, yepyeni ve taze",
+        "partOfSpeech": "Sıfat",
+        "partOfSpeechEn": "Adjective",
         "row": 2,
         "col": 3,
         "length": 3
@@ -222,6 +256,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "SCHOOL",
         "clue": "Öğrencilerin eğitim aldığı kurum (Okul)",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 0,
         "col": 0,
         "length": 6
@@ -232,6 +268,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "SMILE",
         "clue": "Mutluyken yüzdeki tebessüm (Gülümsemek)",
+        "partOfSpeech": "Fiil",
+        "partOfSpeechEn": "Verb",
         "row": 0,
         "col": 0,
         "length": 5
@@ -242,6 +280,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "OPEN",
         "clue": "Kapalı olmayan, aralık veya açık",
+        "partOfSpeech": "Fiil",
+        "partOfSpeechEn": "Verb",
         "row": 0,
         "col": 3,
         "length": 4
@@ -252,6 +292,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "LIGHT",
         "clue": "Karanlığı aydınlatan parlaklık (Işık)",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 0,
         "col": 5,
         "length": 5
@@ -262,6 +304,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "ICE",
         "clue": "Suyun donmuş soğuk katı hali (Buz)",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 2,
         "col": 0,
         "length": 3
@@ -272,6 +316,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "LION",
         "clue": "Ormanların kralı yeleli yırtıcı (Aslan)",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 3,
         "col": 0,
         "length": 4
@@ -282,6 +328,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "EASY",
         "clue": "Zor olmayan, rahatça yapılan (Kolay)",
+        "partOfSpeech": "Sıfat",
+        "partOfSpeechEn": "Adjective",
         "row": 4,
         "col": 0,
         "length": 4
@@ -301,6 +349,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "BREAD",
         "clue": "Un ve sudan yapılan temel gıda (Ekmek)",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 0,
         "col": 0,
         "length": 5
@@ -311,6 +361,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "BANANA",
         "clue": "Sarı kabuklu tatlı tropikal meyve (Muz)",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 0,
         "col": 0,
         "length": 6
@@ -321,6 +373,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "EGG",
         "clue": "Kahvaltıda haşlanan veya kızartılan yumurta",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 0,
         "col": 2,
         "length": 3
@@ -331,6 +385,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "DATE",
         "clue": "Günün takvim bilgisi veya tatlı hurma",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 0,
         "col": 4,
         "length": 4
@@ -341,6 +397,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "NIGHT",
         "clue": "Güneş battıktan sonraki karanlık zaman (Gece)",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 2,
         "col": 0,
         "length": 5
@@ -351,6 +409,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "NEW",
         "clue": "Eski olmayan, taze ve gıcır gıcır (Yeni)",
+        "partOfSpeech": "Sıfat",
+        "partOfSpeechEn": "Adjective",
         "row": 4,
         "col": 0,
         "length": 3
@@ -370,6 +430,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "FARMER",
         "clue": "Tarlada ekin ekip hayvan besleyen çiftçi",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 0,
         "col": 0,
         "length": 6
@@ -380,6 +442,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "FOREST",
         "clue": "Ağaçlarla ve canlılarla kaplı ulu orman",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 0,
         "col": 0,
         "length": 6
@@ -390,6 +454,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "EARTH",
         "clue": "Üzerinde yaşadığımız mavi gezegen (Dünya)",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 0,
         "col": 4,
         "length": 5
@@ -400,6 +466,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "RIVER",
         "clue": "Denize veya göle akan tatlı su akarsuyu (Nehir)",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 2,
         "col": 0,
         "length": 5
@@ -410,6 +478,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "SUN",
         "clue": "Gökyüzündeki parlak yaşam kaynağı (Güneş)",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 4,
         "col": 0,
         "length": 3
@@ -420,6 +490,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "TEA",
         "clue": "Sıcak demlenen keyifli içecek (Çay)",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 5,
         "col": 0,
         "length": 3
@@ -439,6 +511,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "MOTHER",
         "clue": "Bizi sevgiyle büyüten anne",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 0,
         "col": 0,
         "length": 6
@@ -449,6 +523,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "MORNING",
         "clue": "Günün erken başlangıç vakti (Sabah)",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 0,
         "col": 0,
         "length": 7
@@ -459,6 +535,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "HOME",
         "clue": "Sıcak aile yuvası (Ev)",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 0,
         "col": 3,
         "length": 4
@@ -469,6 +547,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "ROOM",
         "clue": "Evin bölümlerinden her biri (Oda)",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 2,
         "col": 0,
         "length": 4
@@ -479,6 +559,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "ICE",
         "clue": "Donmuş soğuk su kalıbı (Buz)",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 4,
         "col": 0,
         "length": 3
@@ -489,6 +571,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "GARDEN",
         "clue": "Çiçek ve ağaçların olduğu yeşil bahçe",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 6,
         "col": 0,
         "length": 6
@@ -508,6 +592,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "PLAN",
         "clue": "Geziden önce yapılan hazırlık tasarımı (Plan)",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 0,
         "col": 0,
         "length": 4
@@ -518,6 +604,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "PARK",
         "clue": "Araç bırakılan alan veya dinlenme bahçesi",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 0,
         "col": 0,
         "length": 4
@@ -528,6 +616,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "AWAY",
         "clue": "Burada olmayan, uzakta ve mesafeli",
+        "partOfSpeech": "Zarf",
+        "partOfSpeechEn": "Adverb",
         "row": 0,
         "col": 2,
         "length": 4
@@ -538,6 +628,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "ROAD",
         "clue": "Araçların seyahat ettiği kara yolu",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 2,
         "col": 0,
         "length": 4
@@ -548,6 +640,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "KEY",
         "clue": "Otel odasını veya kapıyı açan anahtar",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 3,
         "col": 0,
         "length": 3
@@ -567,6 +661,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "SWIM",
         "clue": "Denizde veya havuzda kulaç atmak (Yüzmek)",
+        "partOfSpeech": "Fiil",
+        "partOfSpeechEn": "Verb",
         "row": 0,
         "col": 0,
         "length": 4
@@ -577,6 +673,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "SALT",
         "clue": "Deniz suyuna tadını veren beyaz mineral (Tuz)",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 0,
         "col": 0,
         "length": 4
@@ -587,6 +685,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "WHAT",
         "clue": "Soru sormaya yarayan kelime (Ne / Hangisi)",
+        "partOfSpeech": "Zamir",
+        "partOfSpeechEn": "Pronoun",
         "row": 0,
         "col": 1,
         "length": 4
@@ -597,6 +697,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "MEET",
         "clue": "Sahilde arkadaşlarla buluşmak / tanışmak",
+        "partOfSpeech": "Fiil",
+        "partOfSpeechEn": "Verb",
         "row": 0,
         "col": 3,
         "length": 4
@@ -607,6 +709,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "LAKE",
         "clue": "Karalarla çevrili durgun tatlı su kütlesi (Göl)",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 2,
         "col": 0,
         "length": 4
@@ -626,6 +730,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "COST",
         "clue": "Bir ürünün bedeli veya maliyeti",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 0,
         "col": 0,
         "length": 4
@@ -636,6 +742,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "COIN",
         "clue": "Cüzdandaki metal bozuk para",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 0,
         "col": 0,
         "length": 4
@@ -646,6 +754,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "SHOP",
         "clue": "Kıyafet ve eşya satılan mağaza / dükkân",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 0,
         "col": 2,
         "length": 4
@@ -656,6 +766,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "TINY",
         "clue": "Oldukça küçük, minik ve ufak",
+        "partOfSpeech": "Sıfat",
+        "partOfSpeechEn": "Adjective",
         "row": 0,
         "col": 3,
         "length": 4
@@ -666,6 +778,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "IRON",
         "clue": "Kıyafetlerin kırışıklığını açan alet (Ütü)",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 2,
         "col": 0,
         "length": 4
@@ -685,6 +799,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "PILOT",
         "clue": "Uçağı gökyüzünde yöneten kaptan",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 0,
         "col": 0,
         "length": 5
@@ -695,6 +811,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "PHONE",
         "clue": "İletişim kurduğumuz akıllı telefon",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 0,
         "col": 0,
         "length": 5
@@ -705,6 +823,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "ONION",
         "clue": "Yemeklere lezzet katan kat kat sebze (Soğan)",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 0,
         "col": 3,
         "length": 5
@@ -715,6 +835,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "OFFICE",
         "clue": "Masa başı işlerin yürütüldüğü çalışma yeri (Ofis)",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 2,
         "col": 0,
         "length": 6
@@ -725,6 +847,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "EARN",
         "clue": "Emek vererek para ve hak kazanmak",
+        "partOfSpeech": "Fiil",
+        "partOfSpeechEn": "Verb",
         "row": 4,
         "col": 0,
         "length": 4
@@ -744,6 +868,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "SLEEP",
         "clue": "Yorgunluğu atmak için yatağa yatıp uyumak",
+        "partOfSpeech": "Fiil",
+        "partOfSpeechEn": "Verb",
         "row": 0,
         "col": 0,
         "length": 5
@@ -754,6 +880,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "SMILE",
         "clue": "Neşeli olunduğunda yüzün aydınlanması",
+        "partOfSpeech": "Fiil",
+        "partOfSpeechEn": "Verb",
         "row": 0,
         "col": 0,
         "length": 5
@@ -764,6 +892,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "PAIN",
         "clue": "Hastalık anında hissedilen bedensel sızı (Ağrı)",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 0,
         "col": 4,
         "length": 4
@@ -774,6 +904,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "ILL",
         "clue": "Sağlığı bozulmuş, yatağa düşmüş (Hasta)",
+        "partOfSpeech": "Sıfat",
+        "partOfSpeechEn": "Adjective",
         "row": 2,
         "col": 0,
         "length": 3
@@ -784,6 +916,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "LEMON",
         "clue": "C vitamini deposu sarı ekşi narenciye (Limon)",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 3,
         "col": 0,
         "length": 5
@@ -794,6 +928,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "EYE",
         "clue": "Çevreyi görmemizi sağlayan duyu organımız (Göz)",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 4,
         "col": 0,
         "length": 3
@@ -813,6 +949,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "MUSEUM",
         "clue": "Eski eserlerin korunduğu tarihi sergi mekânı (Müze)",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 0,
         "col": 0,
         "length": 6
@@ -823,6 +961,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "MODERN",
         "clue": "Çağdaş, yenilikçi ve günümüze uygun",
+        "partOfSpeech": "Sıfat",
+        "partOfSpeechEn": "Adjective",
         "row": 0,
         "col": 0,
         "length": 6
@@ -833,6 +973,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "SHIP",
         "clue": "Kıtalar arası seyahat eden büyük deniz gemisi",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 0,
         "col": 2,
         "length": 4
@@ -843,6 +985,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "DRIVE",
         "clue": "Direksiyon başına geçip araç kullanmak",
+        "partOfSpeech": "Fiil",
+        "partOfSpeechEn": "Verb",
         "row": 2,
         "col": 0,
         "length": 5
@@ -853,6 +997,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "EARTH",
         "clue": "Gezegenimiz, yerküre ve tabiat",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 2,
         "col": 4,
         "length": 5
@@ -863,6 +1009,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "ROAD",
         "clue": "Şehirleri birbirine bağlayan geniş asfalt yol",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 4,
         "col": 0,
         "length": 4
@@ -882,6 +1030,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "TENNIS",
         "clue": "Raket ve topla oynanan kort sporu (Tenis)",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 0,
         "col": 0,
         "length": 6
@@ -892,6 +1042,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "TRAVEL",
         "clue": "Yeni ülkeler keşfetmek için yolculuğa çıkmak",
+        "partOfSpeech": "Fiil",
+        "partOfSpeechEn": "Verb",
         "row": 0,
         "col": 0,
         "length": 6
@@ -902,6 +1054,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "NORTH",
         "clue": "Pusulanın gösterdiği ana yön (Kuzey)",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 0,
         "col": 3,
         "length": 5
@@ -912,6 +1066,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "AWARD",
         "clue": "Yarışmayı kazanan şampiyona verilen kupa / ödül",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 2,
         "col": 0,
         "length": 5
@@ -922,6 +1078,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "EACH",
         "clue": "Gruptaki bireylerin her biri / tek tek",
+        "partOfSpeech": "Zamir",
+        "partOfSpeechEn": "Pronoun",
         "row": 4,
         "col": 0,
         "length": 4
@@ -941,6 +1099,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "FOCUS",
         "clue": "Tüm dikkati tek bir noktaya toplamak (Odaklanmak)",
+        "partOfSpeech": "Fiil",
+        "partOfSpeechEn": "Verb",
         "row": 0,
         "col": 0,
         "length": 5
@@ -951,6 +1111,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "FACT",
         "clue": "Doğruluğu kanıtlanmış somut bilgi (Gerçek)",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 0,
         "col": 0,
         "length": 4
@@ -961,6 +1123,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "CLEAN",
         "clue": "Kirden ve karmaşadan arınmış (Temiz)",
+        "partOfSpeech": "Sıfat",
+        "partOfSpeechEn": "Adjective",
         "row": 0,
         "col": 2,
         "length": 5
@@ -971,6 +1135,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "SORRY",
         "clue": "Hata yapıldığında duyulan pişmanlık (Üzgün)",
+        "partOfSpeech": "Sıfat",
+        "partOfSpeechEn": "Adjective",
         "row": 0,
         "col": 4,
         "length": 5
@@ -981,6 +1147,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "CLEAR",
         "clue": "Şüpheden uzak, anlaşılır ve net",
+        "partOfSpeech": "Sıfat",
+        "partOfSpeechEn": "Adjective",
         "row": 2,
         "col": 0,
         "length": 5
@@ -1000,6 +1168,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "HABIT",
         "clue": "Tekrar edilerek kazanılan davranış biçimi (Alışkanlık)",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 0,
         "col": 0,
         "length": 5
@@ -1010,6 +1180,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "HOPE",
         "clue": "Geleceğe dair beslenen iyimser duygu (Umut)",
+        "partOfSpeech": "Fiil",
+        "partOfSpeechEn": "Verb",
         "row": 0,
         "col": 0,
         "length": 4
@@ -1020,6 +1192,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "BRING",
         "clue": "Bir şeyi yanına alıp ulaştırmak (Getirmek)",
+        "partOfSpeech": "Fiil",
+        "partOfSpeechEn": "Verb",
         "row": 0,
         "col": 2,
         "length": 5
@@ -1030,6 +1204,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "TOTAL",
         "clue": "Tüm parçaların toplamı veya eksiksiz yekûn",
+        "partOfSpeech": "Sıfat",
+        "partOfSpeechEn": "Adjective",
         "row": 0,
         "col": 4,
         "length": 5
@@ -1040,6 +1216,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "POINT",
         "clue": "Ulaşılmak istenen ana fikir veya amaç (Nokta)",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 2,
         "col": 0,
         "length": 5
@@ -1059,6 +1237,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "SMART",
         "clue": "Hızlı kavrayan, açıkgöz ve zeki",
+        "partOfSpeech": "Sıfat",
+        "partOfSpeechEn": "Adjective",
         "row": 0,
         "col": 0,
         "length": 5
@@ -1069,6 +1249,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "SKILL",
         "clue": "Ustalıkla yapılan hüner ve el becerisi",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 0,
         "col": 0,
         "length": 5
@@ -1079,6 +1261,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "AHEAD",
         "clue": "Gelecekte veya önde olan (İleride)",
+        "partOfSpeech": "Zarf",
+        "partOfSpeechEn": "Adverb",
         "row": 0,
         "col": 2,
         "length": 5
@@ -1089,6 +1273,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "TASKS",
         "clue": "Tamamlanması gereken işler ve vazifeler",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 0,
         "col": 4,
         "length": 5
@@ -1099,6 +1285,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "IDEAS",
         "clue": "Zihinde parlayan yenilikçi düşünceler (Fikirler)",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 2,
         "col": 0,
         "length": 5
@@ -1118,6 +1306,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "PUBLIC",
         "clue": "Toplumu oluşturan halk veya kamusal alan",
+        "partOfSpeech": "Sıfat",
+        "partOfSpeechEn": "Adjective",
         "row": 0,
         "col": 0,
         "length": 6
@@ -1128,6 +1318,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "PEOPLE",
         "clue": "Bir arada yaşayan fertler (İnsanlar)",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 0,
         "col": 0,
         "length": 6
@@ -1138,6 +1330,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "BELIEF",
         "clue": "Kalpten duyulan güven ve inanç",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 0,
         "col": 2,
         "length": 6
@@ -1148,6 +1342,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "CHECKS",
         "clue": "Düzenli yapılan incelemeler ve denetimler",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 0,
         "col": 5,
         "length": 6
@@ -1158,6 +1354,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "ONLINE",
         "clue": "İnternet ağına bağlı ve çevrim içi",
+        "partOfSpeech": "Sıfat",
+        "partOfSpeechEn": "Adjective",
         "row": 2,
         "col": 0,
         "length": 6
@@ -1177,6 +1375,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "ENERGY",
         "clue": "Güneş ve rüzgardan elde edilen temiz güç",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 0,
         "col": 0,
         "length": 6
@@ -1187,6 +1387,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "EARTH",
         "clue": "Korumamız gereken evimiz olan yerküre",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 0,
         "col": 0,
         "length": 5
@@ -1197,6 +1399,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "ELDER",
         "clue": "Toplumda tecrübe sahibi saygıdeğer büyükler",
+        "partOfSpeech": "Sıfat",
+        "partOfSpeechEn": "Adjective",
         "row": 0,
         "col": 2,
         "length": 5
@@ -1207,6 +1411,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "REUSE",
         "clue": "Atık üretmemek için bir eşyayı tekrar kullanmak",
+        "partOfSpeech": "Fiil",
+        "partOfSpeechEn": "Verb",
         "row": 0,
         "col": 3,
         "length": 5
@@ -1217,6 +1423,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "REDUCE",
         "clue": "Gereksiz israfı ve tüketimi kısmak / azaltmak",
+        "partOfSpeech": "Fiil",
+        "partOfSpeechEn": "Verb",
         "row": 2,
         "col": 0,
         "length": 6
@@ -1236,6 +1444,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "SCIENCE",
         "clue": "Gözlem ve deneylere dayanan sistematik bilgi (Bilim)",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 0,
         "col": 0,
         "length": 7
@@ -1246,6 +1456,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "STUDENT",
         "clue": "Bilgi peşinde koşan üniversite öğrencisi",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 0,
         "col": 0,
         "length": 7
@@ -1256,6 +1468,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "INITIAL",
         "clue": "Bir sürecin en başındaki ilk safha",
+        "partOfSpeech": "Sıfat",
+        "partOfSpeechEn": "Adjective",
         "row": 0,
         "col": 2,
         "length": 7
@@ -1266,6 +1480,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "CHEMIST",
         "clue": "Maddelerin yapısını laboratuvarda inceleyen kimyager",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 0,
         "col": 5,
         "length": 7
@@ -1276,6 +1492,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "UNIQUE",
         "clue": "Eşi benzeri olmayan, tek ve nev-i şahsına münhasır",
+        "partOfSpeech": "Sıfat",
+        "partOfSpeechEn": "Adjective",
         "row": 2,
         "col": 0,
         "length": 6
@@ -1295,6 +1513,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "PROJECT",
         "clue": "Planlı hedeflere ulaşmak için yürütülen çalışma (Proje)",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 0,
         "col": 0,
         "length": 7
@@ -1305,6 +1525,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "PARTNER",
         "clue": "İş veya girişim yolculuğundaki ortak",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 0,
         "col": 0,
         "length": 7
@@ -1315,6 +1537,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "OBSERVE",
         "clue": "Gelişmeleri dikkatle takip edip gözlemlemek",
+        "partOfSpeech": "Fiil",
+        "partOfSpeechEn": "Verb",
         "row": 0,
         "col": 2,
         "length": 7
@@ -1325,6 +1549,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "RESULT",
         "clue": "Bir çabanın sonucunda elde edilen nihai netice",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 2,
         "col": 0,
         "length": 6
@@ -1344,6 +1570,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "LOGIC",
         "clue": "Doğru düşünme ve tutarlı muhakeme (Mantık)",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 0,
         "col": 0,
         "length": 5
@@ -1354,6 +1582,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "LEARN",
         "clue": "Deneyim ve sorgulamayla yeni kabiliyet kazanmak",
+        "partOfSpeech": "Fiil",
+        "partOfSpeechEn": "Verb",
         "row": 0,
         "col": 0,
         "length": 5
@@ -1364,6 +1594,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "GRACE",
         "clue": "Davranışlardaki incelik, asalet ve zarafet",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 0,
         "col": 2,
         "length": 5
@@ -1374,6 +1606,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "CLEAR",
         "clue": "Kuşkudan uzak, apaçık ve duru",
+        "partOfSpeech": "Sıfat",
+        "partOfSpeechEn": "Adjective",
         "row": 0,
         "col": 4,
         "length": 5
@@ -1384,6 +1618,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "AWARE",
         "clue": "İçinde bulunduğu halin bilincinde ve farkında olan",
+        "partOfSpeech": "Sıfat",
+        "partOfSpeechEn": "Adjective",
         "row": 2,
         "col": 0,
         "length": 5
@@ -1403,6 +1639,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "SCOPE",
         "clue": "Bir projenin sınırları ve etki alanı (Kapsam)",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 0,
         "col": 0,
         "length": 5
@@ -1413,6 +1651,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "SCALE",
         "clue": "Girişimin büyüme ve genişleme kapasitesi (Ölçek)",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 0,
         "col": 0,
         "length": 5
@@ -1423,6 +1663,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "ORDER",
         "clue": "Sistemli işleyiş, nizam ve intizam",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 0,
         "col": 2,
         "length": 5
@@ -1433,6 +1675,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "ENTER",
         "clue": "Yeni bir sektöre veya pazara adım atmak",
+        "partOfSpeech": "Fiil",
+        "partOfSpeechEn": "Verb",
         "row": 0,
         "col": 4,
         "length": 5
@@ -1443,6 +1687,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "AUDIT",
         "clue": "Finansal kayıtların bağımsız uzmanlarca denetimi",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 2,
         "col": 0,
         "length": 5
@@ -1462,6 +1708,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "TRUST",
         "clue": "Bir kimseye veya ilkeye sarsılmaz bağlılık (Güven)",
+        "partOfSpeech": "Fiil",
+        "partOfSpeechEn": "Verb",
         "row": 0,
         "col": 0,
         "length": 5
@@ -1472,6 +1720,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "TREND",
         "clue": "Piyasadaki ve toplumdaki genel yönelim / akım",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 0,
         "col": 0,
         "length": 5
@@ -1482,6 +1732,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "USERS",
         "clue": "Platformu aktif deneyimleyen kitle (Kullanıcılar)",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 0,
         "col": 2,
         "length": 5
@@ -1492,6 +1744,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "TOTAL",
         "clue": "Bütün bileşenlerin eksiksiz yekûnu",
+        "partOfSpeech": "Sıfat",
+        "partOfSpeechEn": "Adjective",
         "row": 0,
         "col": 4,
         "length": 5
@@ -1502,6 +1756,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "EVENT",
         "clue": "Önemli dönüm noktası teşkil eden vaka / olay",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 2,
         "col": 0,
         "length": 5
@@ -1521,6 +1777,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "IMPACT",
         "clue": "Derin iz bırakan dönüştürücü tesir (Etki)",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 0,
         "col": 0,
         "length": 6
@@ -1531,6 +1789,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "INVEST",
         "clue": "Geleceğe kaynak ve sermaye aktarmak (Yatırım)",
+        "partOfSpeech": "Fiil",
+        "partOfSpeechEn": "Verb",
         "row": 0,
         "col": 0,
         "length": 6
@@ -1541,6 +1801,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "POLICY",
         "clue": "Karar alma süreçlerini belirleyen resmi ilke (Politika)",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 0,
         "col": 2,
         "length": 6
@@ -1551,6 +1813,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "CLEVER",
         "clue": "Karmaşık engelleri ustalıkla aşan (Akıllı)",
+        "partOfSpeech": "Sıfat",
+        "partOfSpeechEn": "Adjective",
         "row": 0,
         "col": 4,
         "length": 6
@@ -1561,6 +1825,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "VALUES",
         "clue": "Kurumun ve bireyin pusulası olan ahlaki değerler",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 2,
         "col": 0,
         "length": 6
@@ -1580,6 +1846,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "REASON",
         "clue": "Mantıklı düşünme gücü veya bir olayın gerekçesi (Akıl)",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 0,
         "col": 0,
         "length": 6
@@ -1590,6 +1858,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "REMIND",
         "clue": "Unutulan bir hakikati akla getirmek (Hatırlatmak)",
+        "partOfSpeech": "Fiil",
+        "partOfSpeechEn": "Verb",
         "row": 0,
         "col": 0,
         "length": 6
@@ -1600,6 +1870,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "ACTION",
         "clue": "Kararları fiiliyata dökme hamlesi (Eylem)",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 0,
         "col": 2,
         "length": 6
@@ -1610,6 +1882,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "SCHOOL",
         "clue": "Düşünce ekolü veya kurumsal akademi",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 0,
         "col": 3,
         "length": 6
@@ -1620,6 +1894,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "METHOD",
         "clue": "Bir amaca ulaşmak için izlenen bilimsel yol (Metot)",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 2,
         "col": 0,
         "length": 6
@@ -1639,6 +1915,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "CLIMATE",
         "clue": "Gezegenin uzun vadeli atmosferik dengesi (İklim)",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 0,
         "col": 0,
         "length": 7
@@ -1649,6 +1927,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "CAPITAL",
         "clue": "Girişimleri büyüten finansal ana sermaye",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 0,
         "col": 0,
         "length": 7
@@ -1659,6 +1939,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "IRONIC",
         "clue": "Beklenenin tersi bir tezat barındıran durum (İronik)",
+        "partOfSpeech": "Sıfat",
+        "partOfSpeechEn": "Adjective",
         "row": 0,
         "col": 2,
         "length": 6
@@ -1669,6 +1951,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "ABILITY",
         "clue": "Bir işi yüksek başarıyla tamamlama kabiliyeti (Yetenek)",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 0,
         "col": 4,
         "length": 7
@@ -1679,6 +1963,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "PROFILE",
         "clue": "Bir kurumun veya bireyin uzmanlık özeti (Profil)",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 2,
         "col": 0,
         "length": 7
@@ -1698,6 +1984,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "CULTURE",
         "clue": "Toplumun asırlar boyu biriktirdiği sanat ve ahlak mirası",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 0,
         "col": 0,
         "length": 7
@@ -1708,6 +1996,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "CONCEPT",
         "clue": "Zihinde şekillenen soyut fikir veya temel kavram",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 0,
         "col": 0,
         "length": 7
@@ -1718,6 +2008,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "LATEST",
         "clue": "Zaman olarak en yeni ve güncel olan",
+        "partOfSpeech": "Sıfat",
+        "partOfSpeechEn": "Adjective",
         "row": 0,
         "col": 2,
         "length": 6
@@ -1728,6 +2020,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "down",
         "word": "RUNNER",
         "clue": "Hedeften sapmadan koşan atlet / öncü",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 0,
         "col": 5,
         "length": 6
@@ -1738,6 +2032,8 @@ export const PUZZLES: PuzzleDefinition[] = [
         "direction": "across",
         "word": "NATIONS",
         "clue": "Dünya sahnesindeki egemen toplumlar (Uluslar)",
+        "partOfSpeech": "İsim",
+        "partOfSpeechEn": "Noun",
         "row": 2,
         "col": 0,
         "length": 7
@@ -1763,4 +2059,28 @@ export function getPuzzlesByLevelAndSize(level: 'A1' | 'A2' | 'B1' | 'B2', size?
 
 export function getPuzzleById(id: string): PuzzleDefinition | undefined {
   return PUZZLES.find(p => p.id === id);
+}
+
+export function getPosBadgeClasses(pos: string): { bg: string; text: string; border: string; label: string } {
+  const normalized = (pos || '').toLowerCase().trim();
+  switch (normalized) {
+    case 'isim':
+      return { bg: 'bg-blue-50 dark:bg-blue-950/70', text: 'text-blue-700 dark:text-blue-300', border: 'border-blue-200 dark:border-blue-800/80', label: 'isim' };
+    case 'fiil':
+      return { bg: 'bg-emerald-50 dark:bg-emerald-950/70', text: 'text-emerald-700 dark:text-emerald-300', border: 'border-emerald-200 dark:border-emerald-800/80', label: 'fiil' };
+    case 'sıfat':
+    case 'sifat':
+      return { bg: 'bg-amber-50 dark:bg-amber-950/70', text: 'text-amber-800 dark:text-amber-300', border: 'border-amber-200 dark:border-amber-800/80', label: 'sıfat' };
+    case 'zamir':
+      return { bg: 'bg-purple-50 dark:bg-purple-950/70', text: 'text-purple-700 dark:text-purple-300', border: 'border-purple-200 dark:border-purple-800/80', label: 'zamir' };
+    case 'edat':
+      return { bg: 'bg-rose-50 dark:bg-rose-950/70', text: 'text-rose-700 dark:text-rose-300', border: 'border-rose-200 dark:border-rose-800/80', label: 'edat' };
+    case 'zarf':
+      return { bg: 'bg-indigo-50 dark:bg-indigo-950/70', text: 'text-indigo-700 dark:text-indigo-300', border: 'border-indigo-200 dark:border-indigo-800/80', label: 'zarf' };
+    case 'bağlaç':
+    case 'baglac':
+      return { bg: 'bg-teal-50 dark:bg-teal-950/70', text: 'text-teal-700 dark:text-teal-300', border: 'border-teal-200 dark:border-teal-800/80', label: 'bağlaç' };
+    default:
+      return { bg: 'bg-slate-50 dark:bg-slate-800/80', text: 'text-slate-700 dark:text-slate-300', border: 'border-slate-200 dark:border-slate-700', label: pos || 'kelime' };
+  }
 }

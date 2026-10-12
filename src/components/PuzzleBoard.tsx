@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { 
   PuzzleDefinition, 
   PuzzleClue, 
-  CompletedPuzzleRecord 
+  CompletedPuzzleRecord,
+  getPosBadgeClasses
 } from '../puzzleData';
 import { ThemeClasses } from '../utils/themeUtils';
 import { 
@@ -18,7 +19,9 @@ import {
   Trophy, 
   Clock, 
   Sparkles,
-  ArrowRight
+  ArrowRight,
+  List,
+  X
 } from 'lucide-react';
 
 interface PuzzleBoardProps {
@@ -137,6 +140,7 @@ export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
   const [isCompleted, setIsCompleted] = useState(false);
   const [completedWordIds, setCompletedWordIds] = useState<Set<string>>(new Set());
   const [showVictory, setShowVictory] = useState(false);
+  const [showCluesModal, setShowCluesModal] = useState(false);
   const [finalScore, setFinalScore] = useState(0);
 
   // Confetti particles container ref
@@ -505,7 +509,7 @@ export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
         {/* ACTIVE CLUE BANNER */}
         <div className="bg-white dark:bg-slate-900 rounded-2xl border border-indigo-100 dark:border-indigo-950 shadow-sm p-3 mb-2 transition">
           <div className="flex items-center justify-between gap-2 mb-1.5">
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-center gap-1.5 flex-wrap">
               <span className={`text-[10px] font-black px-2 py-0.5 rounded-md uppercase tracking-wider ${
                 activeDirection === 'across'
                   ? 'bg-blue-600 text-white'
@@ -519,9 +523,28 @@ export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
               <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400">
                 ({activeClue?.length} Harf)
               </span>
+              {activeClue?.partOfSpeech && (() => {
+                const badge = getPosBadgeClasses(activeClue.partOfSpeech);
+                return (
+                  <span className={`text-[10px] font-black px-2 py-0.5 rounded-md border ${badge.bg} ${badge.text} ${badge.border} flex items-center gap-1 shadow-2xs`}>
+                    <span>[{badge.label}]</span>
+                    {activeClue.partOfSpeechEn && (
+                      <span className="text-[9px] opacity-75 font-medium hidden sm:inline">({activeClue.partOfSpeechEn})</span>
+                    )}
+                  </span>
+                );
+              })()}
             </div>
 
             <div className="flex items-center gap-1">
+              <button
+                onClick={() => setShowCluesModal(true)}
+                className="p-1 px-1.5 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg text-slate-600 dark:text-slate-300 transition text-[11px] font-bold flex items-center gap-1"
+                title="Tüm İpuçlarını Gör"
+              >
+                <List className="w-3.5 h-3.5 text-indigo-500" />
+                <span className="hidden sm:inline">İpuçları</span>
+              </button>
               <button
                 onClick={() => cycleClue(-1)}
                 className="p-1 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg text-slate-600 dark:text-slate-300 transition"
@@ -773,6 +796,7 @@ export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
 
               {puzzle.clues.map(c => {
                 const saved = isWordSaved(c.word);
+                const badge = getPosBadgeClasses(c.partOfSpeech);
                 return (
                   <div 
                     key={c.id}
@@ -787,10 +811,17 @@ export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
                         <Volume2 className="w-3.5 h-3.5" />
                       </button>
                       <div>
-                        <span className="font-extrabold text-slate-900 dark:text-white tracking-wide">
-                          {c.word}
-                        </span>
-                        <span className="text-[11px] text-slate-500 ml-1.5 truncate max-w-[150px] inline-block align-bottom">
+                        <div className="flex items-center gap-1.5">
+                          <span className="font-extrabold text-slate-900 dark:text-white tracking-wide">
+                            {c.word}
+                          </span>
+                          {c.partOfSpeech && (
+                            <span className={`text-[9px] font-bold px-1.5 py-0.2 rounded border ${badge.bg} ${badge.text} ${badge.border}`}>
+                              [{badge.label}]
+                            </span>
+                          )}
+                        </div>
+                        <span className="text-[11px] text-slate-500 truncate max-w-[150px] inline-block align-bottom">
                           {c.clue}
                         </span>
                       </div>
@@ -828,6 +859,163 @@ export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
                 className="w-full py-2.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold rounded-2xl transition"
               >
                 Bulmacalar Listesine Dön
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ALL CLUES MODAL */}
+      {showCluesModal && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 animate-fadeIn">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-lg w-full max-h-[85vh] flex flex-col shadow-2xl overflow-hidden">
+            {/* Header */}
+            <div className="p-4 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+              <div>
+                <h3 className="text-base font-black text-slate-900 dark:text-white flex items-center gap-2">
+                  <List className="w-5 h-5 text-indigo-500" />
+                  <span>Tüm Bulmaca İpuçları</span>
+                </h3>
+                <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                  İpucuna tıklayarak doğrudan o kelimeye gidebilirsiniz.
+                </p>
+              </div>
+              <button
+                onClick={() => setShowCluesModal(false)}
+                className="p-1.5 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Clues Content List */}
+            <div className="p-4 overflow-y-auto space-y-4 flex-1">
+              {/* Yatay (Across) */}
+              <div>
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="w-2.5 h-2.5 rounded-full bg-blue-600"></span>
+                  <h4 className="text-xs font-black uppercase tracking-wider text-slate-700 dark:text-slate-300">
+                    Yatay İpuçları (➔)
+                  </h4>
+                </div>
+                <div className="space-y-2">
+                  {puzzle.clues.filter(c => c.direction === 'across').map(c => {
+                    const isCompletedWord = completedWordIds.has(c.id);
+                    const isCurrent = activeClue?.id === c.id;
+                    const badge = getPosBadgeClasses(c.partOfSpeech);
+
+                    return (
+                      <button
+                        key={c.id}
+                        onClick={() => {
+                          setActiveRow(c.row);
+                          setActiveCol(c.col);
+                          setActiveDirection('across');
+                          setShowCluesModal(false);
+                        }}
+                        className={`w-full text-left p-2.5 rounded-2xl border transition flex items-start justify-between gap-3 ${
+                          isCurrent
+                            ? 'bg-blue-50 dark:bg-blue-950/40 border-blue-400 dark:border-blue-600 shadow-xs'
+                            : 'bg-slate-50 dark:bg-slate-800/40 border-slate-200 dark:border-slate-800 hover:border-blue-300'
+                        }`}
+                      >
+                        <div className="flex items-start gap-2">
+                          <span className="w-5 h-5 rounded-lg bg-blue-100 dark:bg-blue-900/60 text-blue-700 dark:text-blue-300 font-black text-xs flex items-center justify-center shrink-0 mt-0.5">
+                            {c.number}
+                          </span>
+                          <div>
+                            <div className="flex items-center gap-1.5 mb-0.5">
+                              <span className={`text-[10px] font-black px-1.5 py-0.2 rounded border ${badge.bg} ${badge.text} ${badge.border}`}>
+                                [{badge.label}]
+                              </span>
+                              <span className="text-[11px] font-bold text-slate-500">
+                                ({c.length} harf)
+                              </span>
+                              {isCompletedWord && (
+                                <span className="text-[10px] font-black text-emerald-600 dark:text-emerald-400 flex items-center gap-0.5">
+                                  <CheckCircle2 className="w-3 h-3" />
+                                  <span>{c.word}</span>
+                                </span>
+                              )}
+                            </div>
+                            <p className="text-xs font-medium text-slate-800 dark:text-slate-200 leading-snug">
+                              {c.clue}
+                            </p>
+                          </div>
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Dikey (Down) */}
+              <div>
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-600"></span>
+                  <h4 className="text-xs font-black uppercase tracking-wider text-slate-700 dark:text-slate-300">
+                    Dikey İpuçları (⬇)
+                  </h4>
+                </div>
+                <div className="space-y-2">
+                  {puzzle.clues.filter(c => c.direction === 'down').map(c => {
+                    const isCompletedWord = completedWordIds.has(c.id);
+                    const isCurrent = activeClue?.id === c.id;
+                    const badge = getPosBadgeClasses(c.partOfSpeech);
+
+                    return (
+                      <button
+                        key={c.id}
+                        onClick={() => {
+                          setActiveRow(c.row);
+                          setActiveCol(c.col);
+                          setActiveDirection('down');
+                          setShowCluesModal(false);
+                        }}
+                        className={`w-full text-left p-2.5 rounded-2xl border transition flex items-start justify-between gap-3 ${
+                          isCurrent
+                            ? 'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-400 dark:border-emerald-600 shadow-xs'
+                            : 'bg-slate-50 dark:bg-slate-800/40 border-slate-200 dark:border-slate-800 hover:border-emerald-300'
+                        }`}
+                      >
+                        <div className="flex items-start gap-2">
+                          <span className="w-5 h-5 rounded-lg bg-emerald-100 dark:bg-emerald-900/60 text-emerald-700 dark:text-emerald-300 font-black text-xs flex items-center justify-center shrink-0 mt-0.5">
+                            {c.number}
+                          </span>
+                          <div>
+                            <div className="flex items-center gap-1.5 mb-0.5">
+                              <span className={`text-[10px] font-black px-1.5 py-0.2 rounded border ${badge.bg} ${badge.text} ${badge.border}`}>
+                                [{badge.label}]
+                              </span>
+                              <span className="text-[11px] font-bold text-slate-500">
+                                ({c.length} harf)
+                              </span>
+                              {isCompletedWord && (
+                                <span className="text-[10px] font-black text-emerald-600 dark:text-emerald-400 flex items-center gap-0.5">
+                                  <CheckCircle2 className="w-3 h-3" />
+                                  <span>{c.word}</span>
+                                </span>
+                              )}
+                            </div>
+                            <p className="text-xs font-medium text-slate-800 dark:text-slate-200 leading-snug">
+                              {c.clue}
+                            </p>
+                          </div>
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+
+            {/* Footer */}
+            <div className="p-3 bg-slate-50 dark:bg-slate-800/50 border-t border-slate-100 dark:border-slate-800 text-center">
+              <button
+                onClick={() => setShowCluesModal(false)}
+                className="w-full py-2 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl text-xs transition"
+              >
+                Kapat ve Bulmacaya Dön
               </button>
             </div>
           </div>
