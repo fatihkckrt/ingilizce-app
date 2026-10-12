@@ -1,14 +1,21 @@
 // src/puzzleData.ts
 // Comprehensive verified Crossword / Kare Bulmaca Dataset for English Learning App
 
+export interface WordSense {
+  pos: string; // 'i.', 'f.', 's.', 'zf.', 'zm.', 'e.', 'b.'
+  posName: string; // 'İsim', 'Fiil', 'Sıfat', etc.
+  meaning: string;
+}
+
 export interface PuzzleClue {
   id: string; // e.g., '1-across', '2-down'
   number: number;
   direction: 'across' | 'down';
   word: string; // UPPERCASE
-  clue: string; // Turkish clue
-  partOfSpeech: string; // e.g. 'İsim', 'Fiil', 'Sıfat', 'Zamir', 'Edat', 'Zarf'
-  partOfSpeechEn: string; // e.g. 'Noun', 'Verb', 'Adjective', 'Pronoun', 'Preposition', 'Adverb'
+  clue: string; // Turkish dictionary entry
+  senses: WordSense[];
+  partOfSpeech: string; // 'i.', 'f.', 's.', 'zf.', 'zm.', 'e.', 'b.'
+  partOfSpeechName: string; // 'İsim', 'Fiil', 'Sıfat'
   row: number; // 0-based
   col: number; // 0-based
   length: number;
@@ -36,9 +43,26 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 1,
         "direction": "across",
         "word": "HOME",
-        "clue": "Ailenin yaşadığı yuva veya ev",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) ev, yuva, konut, yurt  •  (zf.) eve, evde  •  (s.) evdeki, iç saha",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "ev, yuva, konut, yurt"
+          },
+          {
+            "pos": "zf.",
+            "posName": "Zarf",
+            "meaning": "eve, evde"
+          },
+          {
+            "pos": "s.",
+            "posName": "Sıfat",
+            "meaning": "evdeki, iç saha"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 0,
         "col": 0,
         "length": 4
@@ -48,9 +72,16 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 1,
         "direction": "down",
         "word": "HAT",
-        "clue": "Güneşten korunmak için başa takılan şapka",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) şapka, başlık",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "şapka, başlık"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 0,
         "col": 0,
         "length": 3
@@ -60,9 +91,16 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 2,
         "direction": "across",
         "word": "APPLE",
-        "clue": "Kırmızı veya yeşil lezzetli meyve",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) elma",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "elma"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 1,
         "col": 0,
         "length": 5
@@ -72,9 +110,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 3,
         "direction": "across",
         "word": "TEN",
-        "clue": "Dokuzdan sonra gelen çift basamaklı sayı (10)",
-        "partOfSpeech": "Sıfat",
-        "partOfSpeechEn": "Adjective",
+        "clue": "(s.) on  •  (i.) on sayısı",
+        "senses": [
+          {
+            "pos": "s.",
+            "posName": "Sıfat",
+            "meaning": "on"
+          },
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "on sayısı"
+          }
+        ],
+        "partOfSpeech": "s.",
+        "partOfSpeechName": "Sıfat",
         "row": 2,
         "col": 0,
         "length": 3
@@ -84,9 +134,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 4,
         "direction": "down",
         "word": "OPEN",
-        "clue": "Kapalı karşıtı, açık veya açmak",
-        "partOfSpeech": "Fiil",
-        "partOfSpeechEn": "Verb",
+        "clue": "(s.) açık, engelsiz; samimi  •  (f.) açmak, açılmak, başlatmak",
+        "senses": [
+          {
+            "pos": "s.",
+            "posName": "Sıfat",
+            "meaning": "açık, engelsiz; samimi"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "açmak, açılmak, başlatmak"
+          }
+        ],
+        "partOfSpeech": "s.",
+        "partOfSpeechName": "Sıfat",
         "row": 0,
         "col": 1,
         "length": 4
@@ -96,9 +158,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 5,
         "direction": "down",
         "word": "EGG",
-        "clue": "Kahvaltıda yenen taze yumurta",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) yumurta  •  (f.) kışkırtmak, teşvik etmek (egg on)",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "yumurta"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "kışkırtmak, teşvik etmek (egg on)"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 1,
         "col": 4,
         "length": 3
@@ -117,9 +191,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 1,
         "direction": "across",
         "word": "FISH",
-        "clue": "Suda yaşayan pullu canlı (Balık)",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) balık  •  (f.) balık tutmak, avlamak; aramak",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "balık"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "balık tutmak, avlamak; aramak"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 0,
         "col": 0,
         "length": 4
@@ -129,9 +215,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 1,
         "direction": "down",
         "word": "FARM",
-        "clue": "Hayvanların beslendiği ekin alanı (Çiftlik)",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) çiftlik  •  (f.) çiftçilik yapmak, ekip biçmek",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "çiftlik"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "çiftçilik yapmak, ekip biçmek"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 0,
         "col": 0,
         "length": 4
@@ -141,9 +239,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 2,
         "direction": "down",
         "word": "SHIP",
-        "clue": "Denizde yol alan büyük deniz taşıtı (Gemi)",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) gemi  •  (f.) sevk etmek, göndermek, nakletmek",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "gemi"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "sevk etmek, göndermek, nakletmek"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 0,
         "col": 2,
         "length": 4
@@ -153,9 +263,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 3,
         "direction": "across",
         "word": "RAIN",
-        "clue": "Bulutlardan düşen su damlaları (Yağmur)",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) yağmur  •  (f.) yağmur yağmak",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "yağmur"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "yağmur yağmak"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 2,
         "col": 0,
         "length": 4
@@ -165,9 +287,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 4,
         "direction": "across",
         "word": "MAP",
-        "clue": "Şehir ve ülkeleri gösteren çizim (Harita)",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) harita  •  (f.) haritasını çıkarmak, planlamak",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "harita"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "haritasını çıkarmak, planlamak"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 3,
         "col": 0,
         "length": 3
@@ -186,9 +320,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 1,
         "direction": "across",
         "word": "BLUE",
-        "clue": "Gökyüzünün ve berrak denizlerin rengi (Mavi)",
-        "partOfSpeech": "Sıfat",
-        "partOfSpeechEn": "Adjective",
+        "clue": "(s.) mavi renkli; kederli, hüzünlü  •  (i.) mavi renk, gökyüzü mavisi",
+        "senses": [
+          {
+            "pos": "s.",
+            "posName": "Sıfat",
+            "meaning": "mavi renkli; kederli, hüzünlü"
+          },
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "mavi renk, gökyüzü mavisi"
+          }
+        ],
+        "partOfSpeech": "s.",
+        "partOfSpeechName": "Sıfat",
         "row": 0,
         "col": 0,
         "length": 4
@@ -198,9 +344,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 1,
         "direction": "down",
         "word": "BOOK",
-        "clue": "Okumak için sayfaları çevrilen nesne (Kitap)",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) kitap  •  (f.) ayırtmak, rezervasyon yaptırmak",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "kitap"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "ayırtmak, rezervasyon yaptırmak"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 0,
         "col": 0,
         "length": 4
@@ -210,9 +368,16 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 2,
         "direction": "down",
         "word": "USER",
-        "clue": "Bir sistemi veya telefonu kullanan kişi (Kullanıcı)",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) kullanıcı",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "kullanıcı"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 0,
         "col": 2,
         "length": 4
@@ -222,9 +387,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 3,
         "direction": "across",
         "word": "OPEN",
-        "clue": "Kapalı olmayan, giriş yapılabilen (Açık)",
-        "partOfSpeech": "Fiil",
-        "partOfSpeechEn": "Verb",
+        "clue": "(s.) açık, engelsiz; samimi  •  (f.) açmak, açılmak, başlatmak",
+        "senses": [
+          {
+            "pos": "s.",
+            "posName": "Sıfat",
+            "meaning": "açık, engelsiz; samimi"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "açmak, açılmak, başlatmak"
+          }
+        ],
+        "partOfSpeech": "s.",
+        "partOfSpeechName": "Sıfat",
         "row": 2,
         "col": 0,
         "length": 4
@@ -234,9 +411,16 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 4,
         "direction": "down",
         "word": "NEW",
-        "clue": "Eski olmayan, yepyeni ve taze",
-        "partOfSpeech": "Sıfat",
-        "partOfSpeechEn": "Adjective",
+        "clue": "(s.) yeni, taze, henüz çıkmış",
+        "senses": [
+          {
+            "pos": "s.",
+            "posName": "Sıfat",
+            "meaning": "yeni, taze, henüz çıkmış"
+          }
+        ],
+        "partOfSpeech": "s.",
+        "partOfSpeechName": "Sıfat",
         "row": 2,
         "col": 3,
         "length": 3
@@ -255,9 +439,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 1,
         "direction": "across",
         "word": "SCHOOL",
-        "clue": "Öğrencilerin eğitim aldığı kurum (Okul)",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) okul, mektep; ekol; balık sürüsü  •  (f.) eğitmek, yetiştirmek",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "okul, mektep; ekol; balık sürüsü"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "eğitmek, yetiştirmek"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 0,
         "col": 0,
         "length": 6
@@ -267,9 +463,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 1,
         "direction": "down",
         "word": "SMILE",
-        "clue": "Mutluyken yüzdeki tebessüm (Gülümsemek)",
-        "partOfSpeech": "Fiil",
-        "partOfSpeechEn": "Verb",
+        "clue": "(f.) gülümsemek, tebessüm etmek  •  (i.) tebessüm, gülümseme",
+        "senses": [
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "gülümsemek, tebessüm etmek"
+          },
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "tebessüm, gülümseme"
+          }
+        ],
+        "partOfSpeech": "f.",
+        "partOfSpeechName": "Fiil",
         "row": 0,
         "col": 0,
         "length": 5
@@ -279,9 +487,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 2,
         "direction": "down",
         "word": "OPEN",
-        "clue": "Kapalı olmayan, aralık veya açık",
-        "partOfSpeech": "Fiil",
-        "partOfSpeechEn": "Verb",
+        "clue": "(s.) açık, engelsiz; samimi  •  (f.) açmak, açılmak, başlatmak",
+        "senses": [
+          {
+            "pos": "s.",
+            "posName": "Sıfat",
+            "meaning": "açık, engelsiz; samimi"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "açmak, açılmak, başlatmak"
+          }
+        ],
+        "partOfSpeech": "s.",
+        "partOfSpeechName": "Sıfat",
         "row": 0,
         "col": 3,
         "length": 4
@@ -291,9 +511,26 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 3,
         "direction": "down",
         "word": "LIGHT",
-        "clue": "Karanlığı aydınlatan parlaklık (Işık)",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) ışık, aydınlık; lamba, fener  •  (s.) hafif (ağırlık); açık renkli  •  (f.) aydınlatmak, yakmak, tutuşturmak",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "ışık, aydınlık; lamba, fener"
+          },
+          {
+            "pos": "s.",
+            "posName": "Sıfat",
+            "meaning": "hafif (ağırlık); açık renkli"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "aydınlatmak, yakmak, tutuşturmak"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 0,
         "col": 5,
         "length": 5
@@ -303,9 +540,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 4,
         "direction": "across",
         "word": "ICE",
-        "clue": "Suyun donmuş soğuk katı hali (Buz)",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) buz; dondurma  •  (f.) buzlanmak; buzla kaplamak",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "buz; dondurma"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "buzlanmak; buzla kaplamak"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 2,
         "col": 0,
         "length": 3
@@ -315,9 +564,16 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 5,
         "direction": "across",
         "word": "LION",
-        "clue": "Ormanların kralı yeleli yırtıcı (Aslan)",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) aslan",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "aslan"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 3,
         "col": 0,
         "length": 4
@@ -327,9 +583,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 6,
         "direction": "across",
         "word": "EASY",
-        "clue": "Zor olmayan, rahatça yapılan (Kolay)",
-        "partOfSpeech": "Sıfat",
-        "partOfSpeechEn": "Adjective",
+        "clue": "(s.) kolay, zahmetsiz, rahat, uysal  •  (zf.) yavaşça, sakince",
+        "senses": [
+          {
+            "pos": "s.",
+            "posName": "Sıfat",
+            "meaning": "kolay, zahmetsiz, rahat, uysal"
+          },
+          {
+            "pos": "zf.",
+            "posName": "Zarf",
+            "meaning": "yavaşça, sakince"
+          }
+        ],
+        "partOfSpeech": "s.",
+        "partOfSpeechName": "Sıfat",
         "row": 4,
         "col": 0,
         "length": 4
@@ -348,9 +616,16 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 1,
         "direction": "across",
         "word": "BREAD",
-        "clue": "Un ve sudan yapılan temel gıda (Ekmek)",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) ekmek; geçim, nafaka",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "ekmek; geçim, nafaka"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 0,
         "col": 0,
         "length": 5
@@ -360,9 +635,16 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 1,
         "direction": "down",
         "word": "BANANA",
-        "clue": "Sarı kabuklu tatlı tropikal meyve (Muz)",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) muz",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "muz"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 0,
         "col": 0,
         "length": 6
@@ -372,9 +654,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 2,
         "direction": "down",
         "word": "EGG",
-        "clue": "Kahvaltıda haşlanan veya kızartılan yumurta",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) yumurta  •  (f.) kışkırtmak, teşvik etmek (egg on)",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "yumurta"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "kışkırtmak, teşvik etmek (egg on)"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 0,
         "col": 2,
         "length": 3
@@ -384,9 +678,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 3,
         "direction": "down",
         "word": "DATE",
-        "clue": "Günün takvim bilgisi veya tatlı hurma",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) tarih; randevu, buluşma; hurma  •  (f.) flört etmek, çıkmak; tarih atmak",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "tarih; randevu, buluşma; hurma"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "flört etmek, çıkmak; tarih atmak"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 0,
         "col": 4,
         "length": 4
@@ -396,9 +702,16 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 4,
         "direction": "across",
         "word": "NIGHT",
-        "clue": "Güneş battıktan sonraki karanlık zaman (Gece)",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) gece, akşam karanlığı",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "gece, akşam karanlığı"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 2,
         "col": 0,
         "length": 5
@@ -408,9 +721,16 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 5,
         "direction": "across",
         "word": "NEW",
-        "clue": "Eski olmayan, taze ve gıcır gıcır (Yeni)",
-        "partOfSpeech": "Sıfat",
-        "partOfSpeechEn": "Adjective",
+        "clue": "(s.) yeni, taze, henüz çıkmış",
+        "senses": [
+          {
+            "pos": "s.",
+            "posName": "Sıfat",
+            "meaning": "yeni, taze, henüz çıkmış"
+          }
+        ],
+        "partOfSpeech": "s.",
+        "partOfSpeechName": "Sıfat",
         "row": 4,
         "col": 0,
         "length": 3
@@ -429,9 +749,16 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 1,
         "direction": "across",
         "word": "FARMER",
-        "clue": "Tarlada ekin ekip hayvan besleyen çiftçi",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) çiftçi, tarımcı, köylü",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "çiftçi, tarımcı, köylü"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 0,
         "col": 0,
         "length": 6
@@ -441,9 +768,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 1,
         "direction": "down",
         "word": "FOREST",
-        "clue": "Ağaçlarla ve canlılarla kaplı ulu orman",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) orman  •  (f.) ağaçlandırmak, orman yapmak",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "orman"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "ağaçlandırmak, orman yapmak"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 0,
         "col": 0,
         "length": 6
@@ -453,9 +792,16 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 2,
         "direction": "down",
         "word": "EARTH",
-        "clue": "Üzerinde yaşadığımız mavi gezegen (Dünya)",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) dünya, yeryüzü; toprak; topraklama",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "dünya, yeryüzü; toprak; topraklama"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 0,
         "col": 4,
         "length": 5
@@ -465,9 +811,16 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 3,
         "direction": "across",
         "word": "RIVER",
-        "clue": "Denize veya göle akan tatlı su akarsuyu (Nehir)",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) nehir, ırmak, akarsu",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "nehir, ırmak, akarsu"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 2,
         "col": 0,
         "length": 5
@@ -477,9 +830,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 4,
         "direction": "across",
         "word": "SUN",
-        "clue": "Gökyüzündeki parlak yaşam kaynağı (Güneş)",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) güneş  •  (f.) güneşlenmek",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "güneş"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "güneşlenmek"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 4,
         "col": 0,
         "length": 3
@@ -489,9 +854,16 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 5,
         "direction": "across",
         "word": "TEA",
-        "clue": "Sıcak demlenen keyifli içecek (Çay)",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) çay içeceği; ikindi çayı",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "çay içeceği; ikindi çayı"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 5,
         "col": 0,
         "length": 3
@@ -510,9 +882,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 1,
         "direction": "across",
         "word": "MOTHER",
-        "clue": "Bizi sevgiyle büyüten anne",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) anne, valide  •  (f.) annelik etmek, büyütmek",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "anne, valide"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "annelik etmek, büyütmek"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 0,
         "col": 0,
         "length": 6
@@ -522,9 +906,16 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 1,
         "direction": "down",
         "word": "MORNING",
-        "clue": "Günün erken başlangıç vakti (Sabah)",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) sabah, sabah vakti",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "sabah, sabah vakti"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 0,
         "col": 0,
         "length": 7
@@ -534,9 +925,26 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 2,
         "direction": "down",
         "word": "HOME",
-        "clue": "Sıcak aile yuvası (Ev)",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) ev, yuva, konut, yurt  •  (zf.) eve, evde  •  (s.) evdeki, iç saha",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "ev, yuva, konut, yurt"
+          },
+          {
+            "pos": "zf.",
+            "posName": "Zarf",
+            "meaning": "eve, evde"
+          },
+          {
+            "pos": "s.",
+            "posName": "Sıfat",
+            "meaning": "evdeki, iç saha"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 0,
         "col": 3,
         "length": 4
@@ -546,9 +954,16 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 3,
         "direction": "across",
         "word": "ROOM",
-        "clue": "Evin bölümlerinden her biri (Oda)",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) oda; yer, mahal, alan",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "oda; yer, mahal, alan"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 2,
         "col": 0,
         "length": 4
@@ -558,9 +973,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 4,
         "direction": "across",
         "word": "ICE",
-        "clue": "Donmuş soğuk su kalıbı (Buz)",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) buz; dondurma  •  (f.) buzlanmak; buzla kaplamak",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "buz; dondurma"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "buzlanmak; buzla kaplamak"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 4,
         "col": 0,
         "length": 3
@@ -570,9 +997,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 5,
         "direction": "across",
         "word": "GARDEN",
-        "clue": "Çiçek ve ağaçların olduğu yeşil bahçe",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) bahçe  •  (f.) bahçe işleriyle uğraşmak",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "bahçe"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "bahçe işleriyle uğraşmak"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 6,
         "col": 0,
         "length": 6
@@ -591,9 +1030,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 1,
         "direction": "across",
         "word": "PLAN",
-        "clue": "Geziden önce yapılan hazırlık tasarımı (Plan)",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) plan, tasarı, çizim  •  (f.) planlamak, tasarlamak",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "plan, tasarı, çizim"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "planlamak, tasarlamak"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 0,
         "col": 0,
         "length": 4
@@ -603,9 +1054,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 1,
         "direction": "down",
         "word": "PARK",
-        "clue": "Araç bırakılan alan veya dinlenme bahçesi",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) park, dinlenme alanı  •  (f.) park etmek, aracı bırakmak",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "park, dinlenme alanı"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "park etmek, aracı bırakmak"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 0,
         "col": 0,
         "length": 4
@@ -615,9 +1078,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 2,
         "direction": "down",
         "word": "AWAY",
-        "clue": "Burada olmayan, uzakta ve mesafeli",
-        "partOfSpeech": "Zarf",
-        "partOfSpeechEn": "Adverb",
+        "clue": "(zf.) uzakta, uzağa, dışarıda  •  (s.) deplasmanda",
+        "senses": [
+          {
+            "pos": "zf.",
+            "posName": "Zarf",
+            "meaning": "uzakta, uzağa, dışarıda"
+          },
+          {
+            "pos": "s.",
+            "posName": "Sıfat",
+            "meaning": "deplasmanda"
+          }
+        ],
+        "partOfSpeech": "zf.",
+        "partOfSpeechName": "Zarf",
         "row": 0,
         "col": 2,
         "length": 4
@@ -627,9 +1102,16 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 3,
         "direction": "across",
         "word": "ROAD",
-        "clue": "Araçların seyahat ettiği kara yolu",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) yol, kara yolu, güzergah",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "yol, kara yolu, güzergah"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 2,
         "col": 0,
         "length": 4
@@ -639,9 +1121,26 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 4,
         "direction": "across",
         "word": "KEY",
-        "clue": "Otel odasını veya kapıyı açan anahtar",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) anahtar; klavye tuşu; kilit unsur  •  (s.) kilit, can alıcı, başlıca  •  (f.) tuşlamak, veri girmek",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "anahtar; klavye tuşu; kilit unsur"
+          },
+          {
+            "pos": "s.",
+            "posName": "Sıfat",
+            "meaning": "kilit, can alıcı, başlıca"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "tuşlamak, veri girmek"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 3,
         "col": 0,
         "length": 3
@@ -660,9 +1159,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 1,
         "direction": "across",
         "word": "SWIM",
-        "clue": "Denizde veya havuzda kulaç atmak (Yüzmek)",
-        "partOfSpeech": "Fiil",
-        "partOfSpeechEn": "Verb",
+        "clue": "(f.) yüzmek  •  (i.) yüzüş, yüzme",
+        "senses": [
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "yüzmek"
+          },
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "yüzüş, yüzme"
+          }
+        ],
+        "partOfSpeech": "f.",
+        "partOfSpeechName": "Fiil",
         "row": 0,
         "col": 0,
         "length": 4
@@ -672,9 +1183,26 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 1,
         "direction": "down",
         "word": "SALT",
-        "clue": "Deniz suyuna tadını veren beyaz mineral (Tuz)",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) tuz  •  (f.) tuzlamak  •  (s.) tuzlu",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "tuz"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "tuzlamak"
+          },
+          {
+            "pos": "s.",
+            "posName": "Sıfat",
+            "meaning": "tuzlu"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 0,
         "col": 0,
         "length": 4
@@ -684,9 +1212,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 2,
         "direction": "down",
         "word": "WHAT",
-        "clue": "Soru sormaya yarayan kelime (Ne / Hangisi)",
-        "partOfSpeech": "Zamir",
-        "partOfSpeechEn": "Pronoun",
+        "clue": "(zm.) ne, hangi şey  •  (s.) hangi, ne tür",
+        "senses": [
+          {
+            "pos": "zm.",
+            "posName": "Zamir",
+            "meaning": "ne, hangi şey"
+          },
+          {
+            "pos": "s.",
+            "posName": "Sıfat",
+            "meaning": "hangi, ne tür"
+          }
+        ],
+        "partOfSpeech": "zm.",
+        "partOfSpeechName": "Zamir",
         "row": 0,
         "col": 1,
         "length": 4
@@ -696,9 +1236,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 3,
         "direction": "down",
         "word": "MEET",
-        "clue": "Sahilde arkadaşlarla buluşmak / tanışmak",
-        "partOfSpeech": "Fiil",
-        "partOfSpeechEn": "Verb",
+        "clue": "(f.) buluşmak, tanışmak; karşılamak  •  (i.) karşılaşma, spor müsabakası",
+        "senses": [
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "buluşmak, tanışmak; karşılamak"
+          },
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "karşılaşma, spor müsabakası"
+          }
+        ],
+        "partOfSpeech": "f.",
+        "partOfSpeechName": "Fiil",
         "row": 0,
         "col": 3,
         "length": 4
@@ -708,9 +1260,16 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 4,
         "direction": "across",
         "word": "LAKE",
-        "clue": "Karalarla çevrili durgun tatlı su kütlesi (Göl)",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) göl",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "göl"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 2,
         "col": 0,
         "length": 4
@@ -729,9 +1288,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 1,
         "direction": "across",
         "word": "COST",
-        "clue": "Bir ürünün bedeli veya maliyeti",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) maliyet, fiyat, masraf  •  (f.) mal olmak, değerinde olmak",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "maliyet, fiyat, masraf"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "mal olmak, değerinde olmak"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 0,
         "col": 0,
         "length": 4
@@ -741,9 +1312,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 1,
         "direction": "down",
         "word": "COIN",
-        "clue": "Cüzdandaki metal bozuk para",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) madeni para, bozukluk  •  (f.) yeni terim türetmek; para basmak",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "madeni para, bozukluk"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "yeni terim türetmek; para basmak"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 0,
         "col": 0,
         "length": 4
@@ -753,9 +1336,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 2,
         "direction": "down",
         "word": "SHOP",
-        "clue": "Kıyafet ve eşya satılan mağaza / dükkân",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) dükkan, mağaza; atölye  •  (f.) alışveriş yapmak",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "dükkan, mağaza; atölye"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "alışveriş yapmak"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 0,
         "col": 2,
         "length": 4
@@ -765,9 +1360,16 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 3,
         "direction": "down",
         "word": "TINY",
-        "clue": "Oldukça küçük, minik ve ufak",
-        "partOfSpeech": "Sıfat",
-        "partOfSpeechEn": "Adjective",
+        "clue": "(s.) küçücük, minik, ufak tefek",
+        "senses": [
+          {
+            "pos": "s.",
+            "posName": "Sıfat",
+            "meaning": "küçücük, minik, ufak tefek"
+          }
+        ],
+        "partOfSpeech": "s.",
+        "partOfSpeechName": "Sıfat",
         "row": 0,
         "col": 3,
         "length": 4
@@ -777,9 +1379,26 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 4,
         "direction": "across",
         "word": "IRON",
-        "clue": "Kıyafetlerin kırışıklığını açan alet (Ütü)",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) demir madeni; ütü  •  (f.) ütülemek  •  (s.) demirden, çok sert, katı",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "demir madeni; ütü"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "ütülemek"
+          },
+          {
+            "pos": "s.",
+            "posName": "Sıfat",
+            "meaning": "demirden, çok sert, katı"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 2,
         "col": 0,
         "length": 4
@@ -798,9 +1417,26 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 1,
         "direction": "across",
         "word": "PILOT",
-        "clue": "Uçağı gökyüzünde yöneten kaptan",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) pilot, uçak kaptanı; kılavuz kaptan  •  (s.) deneme niteliğinde (pilot uygulama)  •  (f.) pilotluk etmek, yönlendirmek",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "pilot, uçak kaptanı; kılavuz kaptan"
+          },
+          {
+            "pos": "s.",
+            "posName": "Sıfat",
+            "meaning": "deneme niteliğinde (pilot uygulama)"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "pilotluk etmek, yönlendirmek"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 0,
         "col": 0,
         "length": 5
@@ -810,9 +1446,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 1,
         "direction": "down",
         "word": "PHONE",
-        "clue": "İletişim kurduğumuz akıllı telefon",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) telefon  •  (f.) telefon etmek, aramak",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "telefon"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "telefon etmek, aramak"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 0,
         "col": 0,
         "length": 5
@@ -822,9 +1470,16 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 2,
         "direction": "down",
         "word": "ONION",
-        "clue": "Yemeklere lezzet katan kat kat sebze (Soğan)",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) soğan",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "soğan"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 0,
         "col": 3,
         "length": 5
@@ -834,9 +1489,16 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 3,
         "direction": "across",
         "word": "OFFICE",
-        "clue": "Masa başı işlerin yürütüldüğü çalışma yeri (Ofis)",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) ofis, yazıhane, büro; görev",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "ofis, yazıhane, büro; görev"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 2,
         "col": 0,
         "length": 6
@@ -846,9 +1508,16 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 4,
         "direction": "across",
         "word": "EARN",
-        "clue": "Emek vererek para ve hak kazanmak",
-        "partOfSpeech": "Fiil",
-        "partOfSpeechEn": "Verb",
+        "clue": "(f.) para kazanmak; hak etmek, layık olmak",
+        "senses": [
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "para kazanmak; hak etmek, layık olmak"
+          }
+        ],
+        "partOfSpeech": "f.",
+        "partOfSpeechName": "Fiil",
         "row": 4,
         "col": 0,
         "length": 4
@@ -867,9 +1536,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 1,
         "direction": "across",
         "word": "SLEEP",
-        "clue": "Yorgunluğu atmak için yatağa yatıp uyumak",
-        "partOfSpeech": "Fiil",
-        "partOfSpeechEn": "Verb",
+        "clue": "(f.) uyumak  •  (i.) uyku",
+        "senses": [
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "uyumak"
+          },
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "uyku"
+          }
+        ],
+        "partOfSpeech": "f.",
+        "partOfSpeechName": "Fiil",
         "row": 0,
         "col": 0,
         "length": 5
@@ -879,9 +1560,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 1,
         "direction": "down",
         "word": "SMILE",
-        "clue": "Neşeli olunduğunda yüzün aydınlanması",
-        "partOfSpeech": "Fiil",
-        "partOfSpeechEn": "Verb",
+        "clue": "(f.) gülümsemek, tebessüm etmek  •  (i.) tebessüm, gülümseme",
+        "senses": [
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "gülümsemek, tebessüm etmek"
+          },
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "tebessüm, gülümseme"
+          }
+        ],
+        "partOfSpeech": "f.",
+        "partOfSpeechName": "Fiil",
         "row": 0,
         "col": 0,
         "length": 5
@@ -891,9 +1584,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 2,
         "direction": "down",
         "word": "PAIN",
-        "clue": "Hastalık anında hissedilen bedensel sızı (Ağrı)",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) ağrı, sızı, keder, acı  •  (f.) acı vermek, üzmek",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "ağrı, sızı, keder, acı"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "acı vermek, üzmek"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 0,
         "col": 4,
         "length": 4
@@ -903,9 +1608,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 3,
         "direction": "across",
         "word": "ILL",
-        "clue": "Sağlığı bozulmuş, yatağa düşmüş (Hasta)",
-        "partOfSpeech": "Sıfat",
-        "partOfSpeechEn": "Adjective",
+        "clue": "(s.) hasta, rahatsız; kötü, fena  •  (zf.) kötü biçimde, güçlükle",
+        "senses": [
+          {
+            "pos": "s.",
+            "posName": "Sıfat",
+            "meaning": "hasta, rahatsız; kötü, fena"
+          },
+          {
+            "pos": "zf.",
+            "posName": "Zarf",
+            "meaning": "kötü biçimde, güçlükle"
+          }
+        ],
+        "partOfSpeech": "s.",
+        "partOfSpeechName": "Sıfat",
         "row": 2,
         "col": 0,
         "length": 3
@@ -915,9 +1632,16 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 4,
         "direction": "across",
         "word": "LEMON",
-        "clue": "C vitamini deposu sarı ekşi narenciye (Limon)",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) limon",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "limon"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 3,
         "col": 0,
         "length": 5
@@ -927,9 +1651,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 5,
         "direction": "across",
         "word": "EYE",
-        "clue": "Çevreyi görmemizi sağlayan duyu organımız (Göz)",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) göz; görme duyusu; bakış  •  (f.) göz dikmek, süzmek, dikkatle bakmak",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "göz; görme duyusu; bakış"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "göz dikmek, süzmek, dikkatle bakmak"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 4,
         "col": 0,
         "length": 3
@@ -948,9 +1684,16 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 1,
         "direction": "across",
         "word": "MUSEUM",
-        "clue": "Eski eserlerin korunduğu tarihi sergi mekânı (Müze)",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) müze",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "müze"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 0,
         "col": 0,
         "length": 6
@@ -960,9 +1703,16 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 1,
         "direction": "down",
         "word": "MODERN",
-        "clue": "Çağdaş, yenilikçi ve günümüze uygun",
-        "partOfSpeech": "Sıfat",
-        "partOfSpeechEn": "Adjective",
+        "clue": "(s.) modern, çağdaş, yeni tarz",
+        "senses": [
+          {
+            "pos": "s.",
+            "posName": "Sıfat",
+            "meaning": "modern, çağdaş, yeni tarz"
+          }
+        ],
+        "partOfSpeech": "s.",
+        "partOfSpeechName": "Sıfat",
         "row": 0,
         "col": 0,
         "length": 6
@@ -972,9 +1722,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 2,
         "direction": "down",
         "word": "SHIP",
-        "clue": "Kıtalar arası seyahat eden büyük deniz gemisi",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) gemi  •  (f.) sevk etmek, göndermek, nakletmek",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "gemi"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "sevk etmek, göndermek, nakletmek"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 0,
         "col": 2,
         "length": 4
@@ -984,9 +1746,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 3,
         "direction": "across",
         "word": "DRIVE",
-        "clue": "Direksiyon başına geçip araç kullanmak",
-        "partOfSpeech": "Fiil",
-        "partOfSpeechEn": "Verb",
+        "clue": "(f.) araba sürmek, kullanmak; yöneltmek  •  (i.) sürüş, gezinti; heves, dürtü; sürücü",
+        "senses": [
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "araba sürmek, kullanmak; yöneltmek"
+          },
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "sürüş, gezinti; heves, dürtü; sürücü"
+          }
+        ],
+        "partOfSpeech": "f.",
+        "partOfSpeechName": "Fiil",
         "row": 2,
         "col": 0,
         "length": 5
@@ -996,9 +1770,16 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 4,
         "direction": "down",
         "word": "EARTH",
-        "clue": "Gezegenimiz, yerküre ve tabiat",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) dünya, yeryüzü; toprak; topraklama",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "dünya, yeryüzü; toprak; topraklama"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 2,
         "col": 4,
         "length": 5
@@ -1008,9 +1789,16 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 5,
         "direction": "across",
         "word": "ROAD",
-        "clue": "Şehirleri birbirine bağlayan geniş asfalt yol",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) yol, kara yolu, güzergah",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "yol, kara yolu, güzergah"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 4,
         "col": 0,
         "length": 4
@@ -1029,9 +1817,16 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 1,
         "direction": "across",
         "word": "TENNIS",
-        "clue": "Raket ve topla oynanan kort sporu (Tenis)",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) tenis oyunu",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "tenis oyunu"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 0,
         "col": 0,
         "length": 6
@@ -1041,9 +1836,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 1,
         "direction": "down",
         "word": "TRAVEL",
-        "clue": "Yeni ülkeler keşfetmek için yolculuğa çıkmak",
-        "partOfSpeech": "Fiil",
-        "partOfSpeechEn": "Verb",
+        "clue": "(f.) seyahat etmek, gezmek, yolculuk etmek  •  (i.) seyahat, yolculuk, gezi",
+        "senses": [
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "seyahat etmek, gezmek, yolculuk etmek"
+          },
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "seyahat, yolculuk, gezi"
+          }
+        ],
+        "partOfSpeech": "f.",
+        "partOfSpeechName": "Fiil",
         "row": 0,
         "col": 0,
         "length": 6
@@ -1053,9 +1860,26 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 2,
         "direction": "down",
         "word": "NORTH",
-        "clue": "Pusulanın gösterdiği ana yön (Kuzey)",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) kuzey yönü  •  (s.) kuzeydeki, kuzey  •  (zf.) kuzeye doğru",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "kuzey yönü"
+          },
+          {
+            "pos": "s.",
+            "posName": "Sıfat",
+            "meaning": "kuzeydeki, kuzey"
+          },
+          {
+            "pos": "zf.",
+            "posName": "Zarf",
+            "meaning": "kuzeye doğru"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 0,
         "col": 3,
         "length": 5
@@ -1065,9 +1889,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 3,
         "direction": "across",
         "word": "AWARD",
-        "clue": "Yarışmayı kazanan şampiyona verilen kupa / ödül",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) ödül, mükafat  •  (f.) ödüllendirmek, layık görmek",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "ödül, mükafat"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "ödüllendirmek, layık görmek"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 2,
         "col": 0,
         "length": 5
@@ -1077,9 +1913,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 4,
         "direction": "across",
         "word": "EACH",
-        "clue": "Gruptaki bireylerin her biri / tek tek",
-        "partOfSpeech": "Zamir",
-        "partOfSpeechEn": "Pronoun",
+        "clue": "(zm.) her biri, teker teker  •  (s.) her, her bir",
+        "senses": [
+          {
+            "pos": "zm.",
+            "posName": "Zamir",
+            "meaning": "her biri, teker teker"
+          },
+          {
+            "pos": "s.",
+            "posName": "Sıfat",
+            "meaning": "her, her bir"
+          }
+        ],
+        "partOfSpeech": "zm.",
+        "partOfSpeechName": "Zamir",
         "row": 4,
         "col": 0,
         "length": 4
@@ -1098,9 +1946,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 1,
         "direction": "across",
         "word": "FOCUS",
-        "clue": "Tüm dikkati tek bir noktaya toplamak (Odaklanmak)",
-        "partOfSpeech": "Fiil",
-        "partOfSpeechEn": "Verb",
+        "clue": "(i.) odak noktası, ilgi merkezi  •  (f.) odaklanmak, odaklamak",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "odak noktası, ilgi merkezi"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "odaklanmak, odaklamak"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 0,
         "col": 0,
         "length": 5
@@ -1110,9 +1970,16 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 1,
         "direction": "down",
         "word": "FACT",
-        "clue": "Doğruluğu kanıtlanmış somut bilgi (Gerçek)",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) gerçek, hakikat, somut olgu",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "gerçek, hakikat, somut olgu"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 0,
         "col": 0,
         "length": 4
@@ -1122,9 +1989,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 2,
         "direction": "down",
         "word": "CLEAN",
-        "clue": "Kirden ve karmaşadan arınmış (Temiz)",
-        "partOfSpeech": "Sıfat",
-        "partOfSpeechEn": "Adjective",
+        "clue": "(s.) temiz, pak, arı, saf  •  (f.) temizlemek, arındırmak",
+        "senses": [
+          {
+            "pos": "s.",
+            "posName": "Sıfat",
+            "meaning": "temiz, pak, arı, saf"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "temizlemek, arındırmak"
+          }
+        ],
+        "partOfSpeech": "s.",
+        "partOfSpeechName": "Sıfat",
         "row": 0,
         "col": 2,
         "length": 5
@@ -1134,9 +2013,16 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 3,
         "direction": "down",
         "word": "SORRY",
-        "clue": "Hata yapıldığında duyulan pişmanlık (Üzgün)",
-        "partOfSpeech": "Sıfat",
-        "partOfSpeechEn": "Adjective",
+        "clue": "(s.) üzgün, pişman; affedersiniz",
+        "senses": [
+          {
+            "pos": "s.",
+            "posName": "Sıfat",
+            "meaning": "üzgün, pişman; affedersiniz"
+          }
+        ],
+        "partOfSpeech": "s.",
+        "partOfSpeechName": "Sıfat",
         "row": 0,
         "col": 4,
         "length": 5
@@ -1146,9 +2032,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 4,
         "direction": "across",
         "word": "CLEAR",
-        "clue": "Şüpheden uzak, anlaşılır ve net",
-        "partOfSpeech": "Sıfat",
-        "partOfSpeechEn": "Adjective",
+        "clue": "(s.) berrak, açık, net, belirgin  •  (f.) temizlemek, açmak, aklamak",
+        "senses": [
+          {
+            "pos": "s.",
+            "posName": "Sıfat",
+            "meaning": "berrak, açık, net, belirgin"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "temizlemek, açmak, aklamak"
+          }
+        ],
+        "partOfSpeech": "s.",
+        "partOfSpeechName": "Sıfat",
         "row": 2,
         "col": 0,
         "length": 5
@@ -1167,9 +2065,16 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 1,
         "direction": "across",
         "word": "HABIT",
-        "clue": "Tekrar edilerek kazanılan davranış biçimi (Alışkanlık)",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) alışkanlık, huy, itiyat",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "alışkanlık, huy, itiyat"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 0,
         "col": 0,
         "length": 5
@@ -1179,9 +2084,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 1,
         "direction": "down",
         "word": "HOPE",
-        "clue": "Geleceğe dair beslenen iyimser duygu (Umut)",
-        "partOfSpeech": "Fiil",
-        "partOfSpeechEn": "Verb",
+        "clue": "(i.) umut, ümit  •  (f.) ummak, ümit etmek, beklemek",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "umut, ümit"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "ummak, ümit etmek, beklemek"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 0,
         "col": 0,
         "length": 4
@@ -1191,9 +2108,16 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 2,
         "direction": "down",
         "word": "BRING",
-        "clue": "Bir şeyi yanına alıp ulaştırmak (Getirmek)",
-        "partOfSpeech": "Fiil",
-        "partOfSpeechEn": "Verb",
+        "clue": "(f.) getirmek, neden olmak, kazandırmak",
+        "senses": [
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "getirmek, neden olmak, kazandırmak"
+          }
+        ],
+        "partOfSpeech": "f.",
+        "partOfSpeechName": "Fiil",
         "row": 0,
         "col": 2,
         "length": 5
@@ -1203,9 +2127,26 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 3,
         "direction": "down",
         "word": "TOTAL",
-        "clue": "Tüm parçaların toplamı veya eksiksiz yekûn",
-        "partOfSpeech": "Sıfat",
-        "partOfSpeechEn": "Adjective",
+        "clue": "(s.) toplam, bütün, eksiksiz  •  (i.) toplam tutar, genel yekun  •  (f.) toplamak, yekun tutmak",
+        "senses": [
+          {
+            "pos": "s.",
+            "posName": "Sıfat",
+            "meaning": "toplam, bütün, eksiksiz"
+          },
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "toplam tutar, genel yekun"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "toplamak, yekun tutmak"
+          }
+        ],
+        "partOfSpeech": "s.",
+        "partOfSpeechName": "Sıfat",
         "row": 0,
         "col": 4,
         "length": 5
@@ -1215,9 +2156,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 4,
         "direction": "across",
         "word": "POINT",
-        "clue": "Ulaşılmak istenen ana fikir veya amaç (Nokta)",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) nokta; puan; uç; konu, ana fikir  •  (f.) işaret etmek, göstermek, doğrultmak",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "nokta; puan; uç; konu, ana fikir"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "işaret etmek, göstermek, doğrultmak"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 2,
         "col": 0,
         "length": 5
@@ -1236,9 +2189,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 1,
         "direction": "across",
         "word": "SMART",
-        "clue": "Hızlı kavrayan, açıkgöz ve zeki",
-        "partOfSpeech": "Sıfat",
-        "partOfSpeechEn": "Adjective",
+        "clue": "(s.) akıllı, zeki; şık, zarif  •  (f.) sızlamak, acımak",
+        "senses": [
+          {
+            "pos": "s.",
+            "posName": "Sıfat",
+            "meaning": "akıllı, zeki; şık, zarif"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "sızlamak, acımak"
+          }
+        ],
+        "partOfSpeech": "s.",
+        "partOfSpeechName": "Sıfat",
         "row": 0,
         "col": 0,
         "length": 5
@@ -1248,9 +2213,16 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 1,
         "direction": "down",
         "word": "SKILL",
-        "clue": "Ustalıkla yapılan hüner ve el becerisi",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) beceri, ustalık, hüner, yetenek",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "beceri, ustalık, hüner, yetenek"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 0,
         "col": 0,
         "length": 5
@@ -1260,9 +2232,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 2,
         "direction": "down",
         "word": "AHEAD",
-        "clue": "Gelecekte veya önde olan (İleride)",
-        "partOfSpeech": "Zarf",
-        "partOfSpeechEn": "Adverb",
+        "clue": "(zf.) ileride, önde, önceden  •  (e.) önünde, karşısında",
+        "senses": [
+          {
+            "pos": "zf.",
+            "posName": "Zarf",
+            "meaning": "ileride, önde, önceden"
+          },
+          {
+            "pos": "e.",
+            "posName": "Edat",
+            "meaning": "önünde, karşısında"
+          }
+        ],
+        "partOfSpeech": "zf.",
+        "partOfSpeechName": "Zarf",
         "row": 0,
         "col": 2,
         "length": 5
@@ -1272,9 +2256,16 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 3,
         "direction": "down",
         "word": "TASKS",
-        "clue": "Tamamlanması gereken işler ve vazifeler",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) görevler, işler, vazifeler",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "görevler, işler, vazifeler"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 0,
         "col": 4,
         "length": 5
@@ -1284,9 +2275,16 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 4,
         "direction": "across",
         "word": "IDEAS",
-        "clue": "Zihinde parlayan yenilikçi düşünceler (Fikirler)",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) fikirler, düşünceler, tasarılar",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "fikirler, düşünceler, tasarılar"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 2,
         "col": 0,
         "length": 5
@@ -1305,9 +2303,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 1,
         "direction": "across",
         "word": "PUBLIC",
-        "clue": "Toplumu oluşturan halk veya kamusal alan",
-        "partOfSpeech": "Sıfat",
-        "partOfSpeechEn": "Adjective",
+        "clue": "(s.) kamusal, halka açık, genel  •  (i.) halk, kamu, ahali",
+        "senses": [
+          {
+            "pos": "s.",
+            "posName": "Sıfat",
+            "meaning": "kamusal, halka açık, genel"
+          },
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "halk, kamu, ahali"
+          }
+        ],
+        "partOfSpeech": "s.",
+        "partOfSpeechName": "Sıfat",
         "row": 0,
         "col": 0,
         "length": 6
@@ -1317,9 +2327,16 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 1,
         "direction": "down",
         "word": "PEOPLE",
-        "clue": "Bir arada yaşayan fertler (İnsanlar)",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) insanlar, kişiler, halk",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "insanlar, kişiler, halk"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 0,
         "col": 0,
         "length": 6
@@ -1329,9 +2346,16 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 2,
         "direction": "down",
         "word": "BELIEF",
-        "clue": "Kalpten duyulan güven ve inanç",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) inanç, inanış, güven",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "inanç, inanış, güven"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 0,
         "col": 2,
         "length": 6
@@ -1341,9 +2365,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 3,
         "direction": "down",
         "word": "CHECKS",
-        "clue": "Düzenli yapılan incelemeler ve denetimler",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) kontroller, denetimler; banka çekleri  •  (f.) kontrol etmek, denetlemek, durdurmak",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "kontroller, denetimler; banka çekleri"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "kontrol etmek, denetlemek, durdurmak"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 0,
         "col": 5,
         "length": 6
@@ -1353,9 +2389,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 4,
         "direction": "across",
         "word": "ONLINE",
-        "clue": "İnternet ağına bağlı ve çevrim içi",
-        "partOfSpeech": "Sıfat",
-        "partOfSpeechEn": "Adjective",
+        "clue": "(s.) çevrim içi, internete bağlı  •  (zf.) internetten, çevrim içi olarak",
+        "senses": [
+          {
+            "pos": "s.",
+            "posName": "Sıfat",
+            "meaning": "çevrim içi, internete bağlı"
+          },
+          {
+            "pos": "zf.",
+            "posName": "Zarf",
+            "meaning": "internetten, çevrim içi olarak"
+          }
+        ],
+        "partOfSpeech": "s.",
+        "partOfSpeechName": "Sıfat",
         "row": 2,
         "col": 0,
         "length": 6
@@ -1374,9 +2422,16 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 1,
         "direction": "across",
         "word": "ENERGY",
-        "clue": "Güneş ve rüzgardan elde edilen temiz güç",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) enerji, güç, derman, canlılık",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "enerji, güç, derman, canlılık"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 0,
         "col": 0,
         "length": 6
@@ -1386,9 +2441,16 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 1,
         "direction": "down",
         "word": "EARTH",
-        "clue": "Korumamız gereken evimiz olan yerküre",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) dünya, yeryüzü; toprak; topraklama",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "dünya, yeryüzü; toprak; topraklama"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 0,
         "col": 0,
         "length": 5
@@ -1398,9 +2460,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 2,
         "direction": "down",
         "word": "ELDER",
-        "clue": "Toplumda tecrübe sahibi saygıdeğer büyükler",
-        "partOfSpeech": "Sıfat",
-        "partOfSpeechEn": "Adjective",
+        "clue": "(s.) yaşça büyük, kıdemli  •  (i.) aile büyüğü, ihtiyar",
+        "senses": [
+          {
+            "pos": "s.",
+            "posName": "Sıfat",
+            "meaning": "yaşça büyük, kıdemli"
+          },
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "aile büyüğü, ihtiyar"
+          }
+        ],
+        "partOfSpeech": "s.",
+        "partOfSpeechName": "Sıfat",
         "row": 0,
         "col": 2,
         "length": 5
@@ -1410,9 +2484,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 3,
         "direction": "down",
         "word": "REUSE",
-        "clue": "Atık üretmemek için bir eşyayı tekrar kullanmak",
-        "partOfSpeech": "Fiil",
-        "partOfSpeechEn": "Verb",
+        "clue": "(f.) yeniden kullanmak  •  (i.) yeniden kullanım",
+        "senses": [
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "yeniden kullanmak"
+          },
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "yeniden kullanım"
+          }
+        ],
+        "partOfSpeech": "f.",
+        "partOfSpeechName": "Fiil",
         "row": 0,
         "col": 3,
         "length": 5
@@ -1422,9 +2508,16 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 4,
         "direction": "across",
         "word": "REDUCE",
-        "clue": "Gereksiz israfı ve tüketimi kısmak / azaltmak",
-        "partOfSpeech": "Fiil",
-        "partOfSpeechEn": "Verb",
+        "clue": "(f.) azaltmak, indirmek, düşürmek",
+        "senses": [
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "azaltmak, indirmek, düşürmek"
+          }
+        ],
+        "partOfSpeech": "f.",
+        "partOfSpeechName": "Fiil",
         "row": 2,
         "col": 0,
         "length": 6
@@ -1443,9 +2536,16 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 1,
         "direction": "across",
         "word": "SCIENCE",
-        "clue": "Gözlem ve deneylere dayanan sistematik bilgi (Bilim)",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) bilim, fen, ilim",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "bilim, fen, ilim"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 0,
         "col": 0,
         "length": 7
@@ -1455,9 +2555,16 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 1,
         "direction": "down",
         "word": "STUDENT",
-        "clue": "Bilgi peşinde koşan üniversite öğrencisi",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) öğrenci, talebe",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "öğrenci, talebe"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 0,
         "col": 0,
         "length": 7
@@ -1467,9 +2574,26 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 2,
         "direction": "down",
         "word": "INITIAL",
-        "clue": "Bir sürecin en başındaki ilk safha",
-        "partOfSpeech": "Sıfat",
-        "partOfSpeechEn": "Adjective",
+        "clue": "(s.) ilk, baştaki, başlangıçtaki  •  (i.) adın baş harfi  •  (f.) paraf atmak, baş harflerini yazmak",
+        "senses": [
+          {
+            "pos": "s.",
+            "posName": "Sıfat",
+            "meaning": "ilk, baştaki, başlangıçtaki"
+          },
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "adın baş harfi"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "paraf atmak, baş harflerini yazmak"
+          }
+        ],
+        "partOfSpeech": "s.",
+        "partOfSpeechName": "Sıfat",
         "row": 0,
         "col": 2,
         "length": 7
@@ -1479,9 +2603,16 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 3,
         "direction": "down",
         "word": "CHEMIST",
-        "clue": "Maddelerin yapısını laboratuvarda inceleyen kimyager",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) eczacı, kimyager",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "eczacı, kimyager"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 0,
         "col": 5,
         "length": 7
@@ -1491,9 +2622,16 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 4,
         "direction": "across",
         "word": "UNIQUE",
-        "clue": "Eşi benzeri olmayan, tek ve nev-i şahsına münhasır",
-        "partOfSpeech": "Sıfat",
-        "partOfSpeechEn": "Adjective",
+        "clue": "(s.) benzersiz, eşsiz, tek, özgün",
+        "senses": [
+          {
+            "pos": "s.",
+            "posName": "Sıfat",
+            "meaning": "benzersiz, eşsiz, tek, özgün"
+          }
+        ],
+        "partOfSpeech": "s.",
+        "partOfSpeechName": "Sıfat",
         "row": 2,
         "col": 0,
         "length": 6
@@ -1512,9 +2650,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 1,
         "direction": "across",
         "word": "PROJECT",
-        "clue": "Planlı hedeflere ulaşmak için yürütülen çalışma (Proje)",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) proje, tasarı, girişim  •  (f.) yansıtmak; öngörmek; tasarlamak",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "proje, tasarı, girişim"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "yansıtmak; öngörmek; tasarlamak"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 0,
         "col": 0,
         "length": 7
@@ -1524,9 +2674,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 1,
         "direction": "down",
         "word": "PARTNER",
-        "clue": "İş veya girişim yolculuğundaki ortak",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) ortak, eş, arkadaş, partner  •  (f.) ortaklık kurmak, eşleşmek",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "ortak, eş, arkadaş, partner"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "ortaklık kurmak, eşleşmek"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 0,
         "col": 0,
         "length": 7
@@ -1536,9 +2698,16 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 2,
         "direction": "down",
         "word": "OBSERVE",
-        "clue": "Gelişmeleri dikkatle takip edip gözlemlemek",
-        "partOfSpeech": "Fiil",
-        "partOfSpeechEn": "Verb",
+        "clue": "(f.) gözlemlemek, incelemek; uymak (kurala)",
+        "senses": [
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "gözlemlemek, incelemek; uymak (kurala)"
+          }
+        ],
+        "partOfSpeech": "f.",
+        "partOfSpeechName": "Fiil",
         "row": 0,
         "col": 2,
         "length": 7
@@ -1548,9 +2717,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 3,
         "direction": "across",
         "word": "RESULT",
-        "clue": "Bir çabanın sonucunda elde edilen nihai netice",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) sonuç, netice, akıbet  •  (f.) sonuçlanmak, -den kaynaklanmak",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "sonuç, netice, akıbet"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "sonuçlanmak, -den kaynaklanmak"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 2,
         "col": 0,
         "length": 6
@@ -1569,9 +2750,16 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 1,
         "direction": "across",
         "word": "LOGIC",
-        "clue": "Doğru düşünme ve tutarlı muhakeme (Mantık)",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) mantık, mantıklılık, mantık bilimi",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "mantık, mantıklılık, mantık bilimi"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 0,
         "col": 0,
         "length": 5
@@ -1581,9 +2769,16 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 1,
         "direction": "down",
         "word": "LEARN",
-        "clue": "Deneyim ve sorgulamayla yeni kabiliyet kazanmak",
-        "partOfSpeech": "Fiil",
-        "partOfSpeechEn": "Verb",
+        "clue": "(f.) öğrenmek; bilgi edinmek, duymak",
+        "senses": [
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "öğrenmek; bilgi edinmek, duymak"
+          }
+        ],
+        "partOfSpeech": "f.",
+        "partOfSpeechName": "Fiil",
         "row": 0,
         "col": 0,
         "length": 5
@@ -1593,9 +2788,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 2,
         "direction": "down",
         "word": "GRACE",
-        "clue": "Davranışlardaki incelik, asalet ve zarafet",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) zarafet, incelik, lütuf, merhamet  •  (f.) şereflendirmek, güzelleştirmek",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "zarafet, incelik, lütuf, merhamet"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "şereflendirmek, güzelleştirmek"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 0,
         "col": 2,
         "length": 5
@@ -1605,9 +2812,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 3,
         "direction": "down",
         "word": "CLEAR",
-        "clue": "Kuşkudan uzak, apaçık ve duru",
-        "partOfSpeech": "Sıfat",
-        "partOfSpeechEn": "Adjective",
+        "clue": "(s.) berrak, açık, net, belirgin  •  (f.) temizlemek, açmak, aklamak",
+        "senses": [
+          {
+            "pos": "s.",
+            "posName": "Sıfat",
+            "meaning": "berrak, açık, net, belirgin"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "temizlemek, açmak, aklamak"
+          }
+        ],
+        "partOfSpeech": "s.",
+        "partOfSpeechName": "Sıfat",
         "row": 0,
         "col": 4,
         "length": 5
@@ -1617,9 +2836,16 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 4,
         "direction": "across",
         "word": "AWARE",
-        "clue": "İçinde bulunduğu halin bilincinde ve farkında olan",
-        "partOfSpeech": "Sıfat",
-        "partOfSpeechEn": "Adjective",
+        "clue": "(s.) farkında, haberdar, bilinçli",
+        "senses": [
+          {
+            "pos": "s.",
+            "posName": "Sıfat",
+            "meaning": "farkında, haberdar, bilinçli"
+          }
+        ],
+        "partOfSpeech": "s.",
+        "partOfSpeechName": "Sıfat",
         "row": 2,
         "col": 0,
         "length": 5
@@ -1638,9 +2864,16 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 1,
         "direction": "across",
         "word": "SCOPE",
-        "clue": "Bir projenin sınırları ve etki alanı (Kapsam)",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) kapsam, faaliyet alanı; görüş alanı",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "kapsam, faaliyet alanı; görüş alanı"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 0,
         "col": 0,
         "length": 5
@@ -1650,9 +2883,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 1,
         "direction": "down",
         "word": "SCALE",
-        "clue": "Girişimin büyüme ve genişleme kapasitesi (Ölçek)",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) ölçek; terazi, tartı; balık pulu  •  (f.) tırmanmak; ölçeklendirmek",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "ölçek; terazi, tartı; balık pulu"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "tırmanmak; ölçeklendirmek"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 0,
         "col": 0,
         "length": 5
@@ -1662,9 +2907,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 2,
         "direction": "down",
         "word": "ORDER",
-        "clue": "Sistemli işleyiş, nizam ve intizam",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) sipariş; emir, buyruk; düzen, sıra  •  (f.) sipariş etmek; emretmek; düzenlemek",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "sipariş; emir, buyruk; düzen, sıra"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "sipariş etmek; emretmek; düzenlemek"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 0,
         "col": 2,
         "length": 5
@@ -1674,9 +2931,16 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 3,
         "direction": "down",
         "word": "ENTER",
-        "clue": "Yeni bir sektöre veya pazara adım atmak",
-        "partOfSpeech": "Fiil",
-        "partOfSpeechEn": "Verb",
+        "clue": "(f.) içeri girmek; katılmak; veri girmek",
+        "senses": [
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "içeri girmek; katılmak; veri girmek"
+          }
+        ],
+        "partOfSpeech": "f.",
+        "partOfSpeechName": "Fiil",
         "row": 0,
         "col": 4,
         "length": 5
@@ -1686,9 +2950,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 4,
         "direction": "across",
         "word": "AUDIT",
-        "clue": "Finansal kayıtların bağımsız uzmanlarca denetimi",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) denetim, teftiş, hesap incelemesi  •  (f.) denetlemek, teftiş etmek",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "denetim, teftiş, hesap incelemesi"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "denetlemek, teftiş etmek"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 2,
         "col": 0,
         "length": 5
@@ -1707,9 +2983,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 1,
         "direction": "across",
         "word": "TRUST",
-        "clue": "Bir kimseye veya ilkeye sarsılmaz bağlılık (Güven)",
-        "partOfSpeech": "Fiil",
-        "partOfSpeechEn": "Verb",
+        "clue": "(i.) güven, inanç, itimat; vakıf  •  (f.) güvenmek, itimat etmek",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "güven, inanç, itimat; vakıf"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "güvenmek, itimat etmek"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 0,
         "col": 0,
         "length": 5
@@ -1719,9 +3007,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 1,
         "direction": "down",
         "word": "TREND",
-        "clue": "Piyasadaki ve toplumdaki genel yönelim / akım",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) eğilim, yönelim, akım, trend  •  (f.) eğilim göstermek, trend olmak",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "eğilim, yönelim, akım, trend"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "eğilim göstermek, trend olmak"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 0,
         "col": 0,
         "length": 5
@@ -1731,9 +3031,16 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 2,
         "direction": "down",
         "word": "USERS",
-        "clue": "Platformu aktif deneyimleyen kitle (Kullanıcılar)",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) kullanıcılar",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "kullanıcılar"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 0,
         "col": 2,
         "length": 5
@@ -1743,9 +3050,26 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 3,
         "direction": "down",
         "word": "TOTAL",
-        "clue": "Bütün bileşenlerin eksiksiz yekûnu",
-        "partOfSpeech": "Sıfat",
-        "partOfSpeechEn": "Adjective",
+        "clue": "(s.) toplam, bütün, eksiksiz  •  (i.) toplam tutar, genel yekun  •  (f.) toplamak, yekun tutmak",
+        "senses": [
+          {
+            "pos": "s.",
+            "posName": "Sıfat",
+            "meaning": "toplam, bütün, eksiksiz"
+          },
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "toplam tutar, genel yekun"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "toplamak, yekun tutmak"
+          }
+        ],
+        "partOfSpeech": "s.",
+        "partOfSpeechName": "Sıfat",
         "row": 0,
         "col": 4,
         "length": 5
@@ -1755,9 +3079,16 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 4,
         "direction": "across",
         "word": "EVENT",
-        "clue": "Önemli dönüm noktası teşkil eden vaka / olay",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) olay, etkinlik, hadise, müsabaka",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "olay, etkinlik, hadise, müsabaka"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 2,
         "col": 0,
         "length": 5
@@ -1776,9 +3107,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 1,
         "direction": "across",
         "word": "IMPACT",
-        "clue": "Derin iz bırakan dönüştürücü tesir (Etki)",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) etki, tesir; çarpma, vuruş  •  (f.) etkilemek; çarpmak",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "etki, tesir; çarpma, vuruş"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "etkilemek; çarpmak"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 0,
         "col": 0,
         "length": 6
@@ -1788,9 +3131,16 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 1,
         "direction": "down",
         "word": "INVEST",
-        "clue": "Geleceğe kaynak ve sermaye aktarmak (Yatırım)",
-        "partOfSpeech": "Fiil",
-        "partOfSpeechEn": "Verb",
+        "clue": "(f.) yatırım yapmak; emek/zaman ayırmak",
+        "senses": [
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "yatırım yapmak; emek/zaman ayırmak"
+          }
+        ],
+        "partOfSpeech": "f.",
+        "partOfSpeechName": "Fiil",
         "row": 0,
         "col": 0,
         "length": 6
@@ -1800,9 +3150,16 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 2,
         "direction": "down",
         "word": "POLICY",
-        "clue": "Karar alma süreçlerini belirleyen resmi ilke (Politika)",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) politika, ilke, strateji; poliçe",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "politika, ilke, strateji; poliçe"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 0,
         "col": 2,
         "length": 6
@@ -1812,9 +3169,16 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 3,
         "direction": "down",
         "word": "CLEVER",
-        "clue": "Karmaşık engelleri ustalıkla aşan (Akıllı)",
-        "partOfSpeech": "Sıfat",
-        "partOfSpeechEn": "Adjective",
+        "clue": "(s.) akıllı, zeki, kurnaz, becerikli",
+        "senses": [
+          {
+            "pos": "s.",
+            "posName": "Sıfat",
+            "meaning": "akıllı, zeki, kurnaz, becerikli"
+          }
+        ],
+        "partOfSpeech": "s.",
+        "partOfSpeechName": "Sıfat",
         "row": 0,
         "col": 4,
         "length": 6
@@ -1824,9 +3188,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 4,
         "direction": "across",
         "word": "VALUES",
-        "clue": "Kurumun ve bireyin pusulası olan ahlaki değerler",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) değerler, kıymetler, ahlaki ilkeler  •  (f.) değer vermek, kıymet biçmek",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "değerler, kıymetler, ahlaki ilkeler"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "değer vermek, kıymet biçmek"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 2,
         "col": 0,
         "length": 6
@@ -1845,9 +3221,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 1,
         "direction": "across",
         "word": "REASON",
-        "clue": "Mantıklı düşünme gücü veya bir olayın gerekçesi (Akıl)",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) sebep, neden; akıl, mantık  •  (f.) akıl yürütmek, mantık kurmak",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "sebep, neden; akıl, mantık"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "akıl yürütmek, mantık kurmak"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 0,
         "col": 0,
         "length": 6
@@ -1857,9 +3245,16 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 1,
         "direction": "down",
         "word": "REMIND",
-        "clue": "Unutulan bir hakikati akla getirmek (Hatırlatmak)",
-        "partOfSpeech": "Fiil",
-        "partOfSpeechEn": "Verb",
+        "clue": "(f.) hatırlatmak, anımsatmak",
+        "senses": [
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "hatırlatmak, anımsatmak"
+          }
+        ],
+        "partOfSpeech": "f.",
+        "partOfSpeechName": "Fiil",
         "row": 0,
         "col": 0,
         "length": 6
@@ -1869,9 +3264,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 2,
         "direction": "down",
         "word": "ACTION",
-        "clue": "Kararları fiiliyata dökme hamlesi (Eylem)",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) eylem, hareket, aksiyon  •  (f.) harekete geçirmek, işleme koymak",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "eylem, hareket, aksiyon"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "harekete geçirmek, işleme koymak"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 0,
         "col": 2,
         "length": 6
@@ -1881,9 +3288,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 3,
         "direction": "down",
         "word": "SCHOOL",
-        "clue": "Düşünce ekolü veya kurumsal akademi",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) okul, mektep; ekol; balık sürüsü  •  (f.) eğitmek, yetiştirmek",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "okul, mektep; ekol; balık sürüsü"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "eğitmek, yetiştirmek"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 0,
         "col": 3,
         "length": 6
@@ -1893,9 +3312,16 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 4,
         "direction": "across",
         "word": "METHOD",
-        "clue": "Bir amaca ulaşmak için izlenen bilimsel yol (Metot)",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) yöntem, metot, usul, yol",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "yöntem, metot, usul, yol"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 2,
         "col": 0,
         "length": 6
@@ -1914,9 +3340,16 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 1,
         "direction": "across",
         "word": "CLIMATE",
-        "clue": "Gezegenin uzun vadeli atmosferik dengesi (İklim)",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) iklim, hava şartları, genel ortam",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "iklim, hava şartları, genel ortam"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 0,
         "col": 0,
         "length": 7
@@ -1926,9 +3359,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 1,
         "direction": "down",
         "word": "CAPITAL",
-        "clue": "Girişimleri büyüten finansal ana sermaye",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) başkent; sermaye, anapara; büyük harf  •  (s.) başlıca, temel, büyük",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "başkent; sermaye, anapara; büyük harf"
+          },
+          {
+            "pos": "s.",
+            "posName": "Sıfat",
+            "meaning": "başlıca, temel, büyük"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 0,
         "col": 0,
         "length": 7
@@ -1938,9 +3383,16 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 2,
         "direction": "down",
         "word": "IRONIC",
-        "clue": "Beklenenin tersi bir tezat barındıran durum (İronik)",
-        "partOfSpeech": "Sıfat",
-        "partOfSpeechEn": "Adjective",
+        "clue": "(s.) alaylı, kinayeli, ironik",
+        "senses": [
+          {
+            "pos": "s.",
+            "posName": "Sıfat",
+            "meaning": "alaylı, kinayeli, ironik"
+          }
+        ],
+        "partOfSpeech": "s.",
+        "partOfSpeechName": "Sıfat",
         "row": 0,
         "col": 2,
         "length": 6
@@ -1950,9 +3402,16 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 3,
         "direction": "down",
         "word": "ABILITY",
-        "clue": "Bir işi yüksek başarıyla tamamlama kabiliyeti (Yetenek)",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) yetenek, kabiliyet, beceri",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "yetenek, kabiliyet, beceri"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 0,
         "col": 4,
         "length": 7
@@ -1962,9 +3421,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 4,
         "direction": "across",
         "word": "PROFILE",
-        "clue": "Bir kurumun veya bireyin uzmanlık özeti (Profil)",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) profil, tanıtım, yan görünüş  •  (f.) profilini çıkarmak, tanıtmak",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "profil, tanıtım, yan görünüş"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "profilini çıkarmak, tanıtmak"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 2,
         "col": 0,
         "length": 7
@@ -1983,9 +3454,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 1,
         "direction": "across",
         "word": "CULTURE",
-        "clue": "Toplumun asırlar boyu biriktirdiği sanat ve ahlak mirası",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) kültür, ekin; tarım  •  (f.) kültüre almak, yetiştirmek",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "kültür, ekin; tarım"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "kültüre almak, yetiştirmek"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 0,
         "col": 0,
         "length": 7
@@ -1995,9 +3478,16 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 1,
         "direction": "down",
         "word": "CONCEPT",
-        "clue": "Zihinde şekillenen soyut fikir veya temel kavram",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) kavram, fikir, genel anlayış",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "kavram, fikir, genel anlayış"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 0,
         "col": 0,
         "length": 7
@@ -2007,9 +3497,21 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 2,
         "direction": "down",
         "word": "LATEST",
-        "clue": "Zaman olarak en yeni ve güncel olan",
-        "partOfSpeech": "Sıfat",
-        "partOfSpeechEn": "Adjective",
+        "clue": "(s.) en son, en yeni, son çıkan  •  (zf.) en geç",
+        "senses": [
+          {
+            "pos": "s.",
+            "posName": "Sıfat",
+            "meaning": "en son, en yeni, son çıkan"
+          },
+          {
+            "pos": "zf.",
+            "posName": "Zarf",
+            "meaning": "en geç"
+          }
+        ],
+        "partOfSpeech": "s.",
+        "partOfSpeechName": "Sıfat",
         "row": 0,
         "col": 2,
         "length": 6
@@ -2019,9 +3521,16 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 3,
         "direction": "down",
         "word": "RUNNER",
-        "clue": "Hedeften sapmadan koşan atlet / öncü",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) koşucu; masa örtüsü (runner)",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "koşucu; masa örtüsü (runner)"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 0,
         "col": 5,
         "length": 6
@@ -2031,9 +3540,16 @@ export const PUZZLES: PuzzleDefinition[] = [
         "number": 4,
         "direction": "across",
         "word": "NATIONS",
-        "clue": "Dünya sahnesindeki egemen toplumlar (Uluslar)",
-        "partOfSpeech": "İsim",
-        "partOfSpeechEn": "Noun",
+        "clue": "(i.) uluslar, milletler, devletler",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "uluslar, milletler, devletler"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
         "row": 2,
         "col": 0,
         "length": 7
@@ -2061,26 +3577,81 @@ export function getPuzzleById(id: string): PuzzleDefinition | undefined {
   return PUZZLES.find(p => p.id === id);
 }
 
-export function getPosBadgeClasses(pos: string): { bg: string; text: string; border: string; label: string } {
-  const normalized = (pos || '').toLowerCase().trim();
+export function getPosBadgeClasses(pos: string): { bg: string; text: string; border: string; label: string; fullName: string } {
+  const normalized = (pos || '').toLowerCase().trim().replace(/[().]/g, '');
   switch (normalized) {
+    case 'i':
     case 'isim':
-      return { bg: 'bg-blue-50 dark:bg-blue-950/70', text: 'text-blue-700 dark:text-blue-300', border: 'border-blue-200 dark:border-blue-800/80', label: 'isim' };
+      return { 
+        bg: 'bg-blue-500/10 dark:bg-blue-400/15', 
+        text: 'text-blue-700 dark:text-blue-300 font-black', 
+        border: 'border-blue-300/80 dark:border-blue-600/70', 
+        label: 'i.',
+        fullName: 'İsim'
+      };
+    case 'f':
     case 'fiil':
-      return { bg: 'bg-emerald-50 dark:bg-emerald-950/70', text: 'text-emerald-700 dark:text-emerald-300', border: 'border-emerald-200 dark:border-emerald-800/80', label: 'fiil' };
-    case 'sıfat':
+      return { 
+        bg: 'bg-emerald-500/10 dark:bg-emerald-400/15', 
+        text: 'text-emerald-700 dark:text-emerald-300 font-black', 
+        border: 'border-emerald-300/80 dark:border-emerald-600/70', 
+        label: 'f.',
+        fullName: 'Fiil'
+      };
+    case 's':
     case 'sifat':
-      return { bg: 'bg-amber-50 dark:bg-amber-950/70', text: 'text-amber-800 dark:text-amber-300', border: 'border-amber-200 dark:border-amber-800/80', label: 'sıfat' };
-    case 'zamir':
-      return { bg: 'bg-purple-50 dark:bg-purple-950/70', text: 'text-purple-700 dark:text-purple-300', border: 'border-purple-200 dark:border-purple-800/80', label: 'zamir' };
-    case 'edat':
-      return { bg: 'bg-rose-50 dark:bg-rose-950/70', text: 'text-rose-700 dark:text-rose-300', border: 'border-rose-200 dark:border-rose-800/80', label: 'edat' };
+    case 'sıfat':
+      return { 
+        bg: 'bg-amber-500/10 dark:bg-amber-400/15', 
+        text: 'text-amber-800 dark:text-amber-300 font-black', 
+        border: 'border-amber-300/80 dark:border-amber-600/70', 
+        label: 's.',
+        fullName: 'Sıfat'
+      };
+    case 'zf':
     case 'zarf':
-      return { bg: 'bg-indigo-50 dark:bg-indigo-950/70', text: 'text-indigo-700 dark:text-indigo-300', border: 'border-indigo-200 dark:border-indigo-800/80', label: 'zarf' };
-    case 'bağlaç':
+      return { 
+        bg: 'bg-indigo-500/10 dark:bg-indigo-400/15', 
+        text: 'text-indigo-700 dark:text-indigo-300 font-black', 
+        border: 'border-indigo-300/80 dark:border-indigo-600/70', 
+        label: 'zf.',
+        fullName: 'Zarf'
+      };
+    case 'zm':
+    case 'zamir':
+      return { 
+        bg: 'bg-purple-500/10 dark:bg-purple-400/15', 
+        text: 'text-purple-700 dark:text-purple-300 font-black', 
+        border: 'border-purple-300/80 dark:border-purple-600/70', 
+        label: 'zm.',
+        fullName: 'Zamir'
+      };
+    case 'e':
+    case 'edat':
+      return { 
+        bg: 'bg-rose-500/10 dark:bg-rose-400/15', 
+        text: 'text-rose-700 dark:text-rose-300 font-black', 
+        border: 'border-rose-300/80 dark:border-rose-600/70', 
+        label: 'e.',
+        fullName: 'Edat'
+      };
+    case 'b':
     case 'baglac':
-      return { bg: 'bg-teal-50 dark:bg-teal-950/70', text: 'text-teal-700 dark:text-teal-300', border: 'border-teal-200 dark:border-teal-800/80', label: 'bağlaç' };
+    case 'bağlaç':
+      return { 
+        bg: 'bg-teal-500/10 dark:bg-teal-400/15', 
+        text: 'text-teal-700 dark:text-teal-300 font-black', 
+        border: 'border-teal-300/80 dark:border-teal-600/70', 
+        label: 'b.',
+        fullName: 'Bağlaç'
+      };
     default:
-      return { bg: 'bg-slate-50 dark:bg-slate-800/80', text: 'text-slate-700 dark:text-slate-300', border: 'border-slate-200 dark:border-slate-700', label: pos || 'kelime' };
+      return { 
+        bg: 'bg-slate-100 dark:bg-slate-800', 
+        text: 'text-slate-700 dark:text-slate-300 font-bold', 
+        border: 'border-slate-300 dark:border-slate-700', 
+        label: pos || 'kelime',
+        fullName: 'Kelime'
+      };
   }
 }

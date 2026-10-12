@@ -295,28 +295,28 @@ export const PuzzleView: React.FC<PuzzleViewProps> = ({
                     <span className="font-extrabold text-sm sm:text-base text-slate-900 dark:text-white group-hover:text-indigo-600 transition">
                       {p.title}
                     </span>
-                    <span className="text-[10px] font-black px-1.5 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+                    <span className="text-[10px] font-black px-1.5 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
                       {p.size}x{p.size}
                     </span>
                   </div>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 line-clamp-1">
+                  <p className="text-xs text-slate-600 dark:text-slate-300 font-medium line-clamp-1">
                     {p.description}
                   </p>
                   <div className="flex items-center gap-1.5 mt-1.5 flex-wrap">
-                    <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400">{p.clues.length} Kelime</span>
+                    <span className="text-[11px] font-bold text-slate-600 dark:text-slate-400">{p.clues.length} Kelime</span>
                     <span className="text-slate-300 dark:text-slate-700">•</span>
                     {Array.from(new Set(p.clues.map(c => c.partOfSpeech))).slice(0, 3).map(pos => {
                       const b = getPosBadgeClasses(pos);
                       return (
-                        <span key={pos} className={`text-[9px] font-bold px-1.5 py-0.2 rounded border ${b.bg} ${b.text} ${b.border}`}>
-                          {b.label}
+                        <span key={pos} className={`text-[10px] font-black px-1.5 py-0.2 rounded border ${b.bg} ${b.text} ${b.border}`}>
+                          ({b.label.replace(/[().]/g, '')}.)
                         </span>
                       );
                     })}
                     {isDone && (
                       <>
                         <span className="text-slate-300 dark:text-slate-700">•</span>
-                        <span className="text-emerald-600 dark:text-emerald-400 font-bold flex items-center gap-1 text-[11px]">
+                        <span className="text-emerald-600 dark:text-emerald-400 font-black flex items-center gap-1 text-[11px]">
                           <Trophy className="w-3 h-3" />
                           {record.score} Puan
                         </span>

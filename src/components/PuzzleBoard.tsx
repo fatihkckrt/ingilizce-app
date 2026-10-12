@@ -85,6 +85,50 @@ function playSuccessChime() {
   } catch (e) {}
 }
 
+function playWrongBuzzer() {
+  try {
+    const AudioCtx = window.AudioContext || (window as any).webkitAudioContext;
+    if (!AudioCtx) return;
+    const ctx = new AudioCtx();
+    const now = ctx.currentTime;
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = 'sawtooth';
+    osc.frequency.setValueAtTime(160, now);
+    osc.frequency.exponentialRampToValueAtTime(100, now + 0.16);
+    
+    gain.gain.setValueAtTime(0.18, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.18);
+    
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start(now);
+    osc.stop(now + 0.18);
+  } catch (e) {}
+}
+
+function playKeyTap() {
+  try {
+    const AudioCtx = window.AudioContext || (window as any).webkitAudioContext;
+    if (!AudioCtx) return;
+    const ctx = new AudioCtx();
+    const now = ctx.currentTime;
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(480, now);
+    osc.frequency.exponentialRampToValueAtTime(320, now + 0.04);
+    
+    gain.gain.setValueAtTime(0.05, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+    
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start(now);
+    osc.stop(now + 0.04);
+  } catch (e) {}
+}
+
 export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
   puzzle,
   themeStyle,
@@ -134,7 +178,7 @@ export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
   const [activeCol, setActiveCol] = useState<number>(() => puzzle.clues[0]?.col ?? 0);
   const [activeDirection, setActiveDirection] = useState<'across' | 'down'>(() => puzzle.clues[0]?.direction ?? 'across');
 
-  // Stats
+  // Stats & Error Feedback
   const [seconds, setSeconds] = useState(0);
   const [hintsUsed, setHintsUsed] = useState(0);
   const [isCompleted, setIsCompleted] = useState(false);
@@ -142,6 +186,8 @@ export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
   const [showVictory, setShowVictory] = useState(false);
   const [showCluesModal, setShowCluesModal] = useState(false);
   const [finalScore, setFinalScore] = useState(0);
+  const [wrongCellKey, setWrongCellKey] = useState<string | null>(null);
+  const [wrongFeedback, setWrongFeedback] = useState<string | null>(null);
 
   // Confetti particles container ref
   const confettiCanvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -291,17 +337,104 @@ export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
     }
   };
 
-  // Keyboard navigation & Input handler
+  // Keyboard navigation & Input handler with validation & auto-advance
   const handleKeyPress = (letter: string) => {
     if (isCompleted || !activeClue) return;
 
     const char = letter.toUpperCase();
+    const expectedChar = targetGrid[activeRow][activeCol];
+
+    if (!expectedChar) return;
+
+    // 1. REJECT WRONG LETTER & PROVIDE IMMEDIATE FEEDBACK
+    if (char !== expectedChar) {
+      const cellKey = `${activeRow},${activeCol}`;
+      setWrongCellKey(cellKey);
+      setWrongFeedback(`Yanlış harf! Tekrar dene.`);
+      playWrongBuzzer();
+      if ('vibrate' in navigator) {
+        try { (navigator as any).vibrate(60); } catch (e) {}
+      }
+      setTimeout(() => {
+        setWrongCellKey(prev => prev === cellKey ? null : prev);
+      }, 350);
+      setTimeout(() => {
+        setWrongFeedback(null);
+      }, 1000);
+      return;
+    }
+
+    // 2. ACCEPT CORRECT LETTER
+    playKeyTap();
+    setWrongFeedback(null);
     const newGrid = userGrid.map(row => [...row]);
     newGrid[activeRow][activeCol] = char;
     setUserGrid(newGrid);
 
-    // Advance to next cell in current clue
-    advanceCursor();
+    // 3. CHECK IF CURRENT ACTIVE CLUE IS COMPLETED
+    let activeClueCompleted = true;
+    for (let i = 0; i < activeClue.length; i++) {
+      const cr = activeClue.direction === 'across' ? activeClue.row : activeClue.row + i;
+      const cc = activeClue.direction === 'across' ? activeClue.col + i : activeClue.col;
+      if (newGrid[cr][cc].toUpperCase() !== activeClue.word[i]) {
+        activeClueCompleted = false;
+        break;
+      }
+    }
+
+    if (activeClueCompleted) {
+      playWordDing();
+
+      // Check if all clues are solved
+      const allSolved = puzzle.clues.every(c => {
+        for (let i = 0; i < c.length; i++) {
+          const cr = c.direction === 'across' ? c.row : c.row + i;
+          const cc = c.direction === 'across' ? c.col + i : c.col;
+          if (newGrid[cr][cc].toUpperCase() !== c.word[i]) return false;
+        }
+        return true;
+      });
+
+      if (!allSolved) {
+        // AUTO-ADVANCE TO NEXT INCOMPLETE CLUE
+        const currentIdx = puzzle.clues.findIndex(c => c.id === activeClue.id);
+        const remainingClues = puzzle.clues.filter(c => {
+          for (let i = 0; i < c.length; i++) {
+            const cr = c.direction === 'across' ? c.row : c.row + i;
+            const cc = c.direction === 'across' ? c.col + i : c.col;
+            if (newGrid[cr][cc].toUpperCase() !== c.word[i]) return true;
+          }
+          return false;
+        });
+
+        if (remainingClues.length > 0) {
+          let nextClue = puzzle.clues.slice(currentIdx + 1).find(c => remainingClues.some(rc => rc.id === c.id));
+          if (!nextClue) {
+            nextClue = remainingClues[0];
+          }
+          if (nextClue) {
+            // Find first empty cell in nextClue
+            let targetR = nextClue.row;
+            let targetC = nextClue.col;
+            for (let i = 0; i < nextClue.length; i++) {
+              const cr = nextClue.direction === 'across' ? nextClue.row : nextClue.row + i;
+              const cc = nextClue.direction === 'across' ? nextClue.col + i : nextClue.col;
+              if (newGrid[cr][cc] === '') {
+                targetR = cr;
+                targetC = cc;
+                break;
+              }
+            }
+            setActiveRow(targetR);
+            setActiveCol(targetC);
+            setActiveDirection(nextClue.direction);
+          }
+        }
+      }
+    } else {
+      // Advance to next empty or next cell in current word
+      advanceCursor(newGrid);
+    }
   };
 
   const handleBackspace = () => {
@@ -317,14 +450,32 @@ export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
     }
   };
 
-  const advanceCursor = () => {
+  const advanceCursor = (grid?: string[][]) => {
     if (!activeClue) return;
+    const g = grid || userGrid;
+
     if (activeDirection === 'across') {
+      // Look for next empty cell first
+      for (let c = activeCol + 1; c < activeClue.col + activeClue.length; c++) {
+        if (g[activeRow][c] === '') {
+          setActiveCol(c);
+          return;
+        }
+      }
+      // If none empty, move to next sequential cell
       const nextCol = activeCol + 1;
       if (nextCol < activeClue.col + activeClue.length) {
         setActiveCol(nextCol);
       }
     } else {
+      // Look for next empty cell first
+      for (let r = activeRow + 1; r < activeClue.row + activeClue.length; r++) {
+        if (g[r][activeCol] === '') {
+          setActiveRow(r);
+          return;
+        }
+      }
+      // If none empty, move to next sequential cell
       const nextRow = activeRow + 1;
       if (nextRow < activeClue.row + activeClue.length) {
         setActiveRow(nextRow);
@@ -507,54 +658,43 @@ export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
       <div className="flex-1 flex flex-col justify-between overflow-y-auto p-2 sm:p-4 max-w-xl mx-auto w-full">
         
         {/* ACTIVE CLUE BANNER */}
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-indigo-100 dark:border-indigo-950 shadow-sm p-3 mb-2 transition">
-          <div className="flex items-center justify-between gap-2 mb-1.5">
+        <div className="bg-white dark:bg-slate-900 rounded-2xl border-2 border-indigo-200 dark:border-indigo-900/80 shadow-md p-3 mb-2 transition">
+          <div className="flex items-center justify-between gap-2 mb-2 pb-1.5 border-b border-slate-100 dark:border-slate-800">
             <div className="flex items-center gap-1.5 flex-wrap">
-              <span className={`text-[10px] font-black px-2 py-0.5 rounded-md uppercase tracking-wider ${
+              <span className={`text-[10px] sm:text-[11px] font-black px-2.5 py-0.5 rounded-lg uppercase tracking-wider ${
                 activeDirection === 'across'
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-emerald-600 text-white'
+                  ? 'bg-blue-600 text-white shadow-xs'
+                  : 'bg-emerald-600 text-white shadow-xs'
               }`}>
                 {activeDirection === 'across' ? 'Yatay ➔' : 'Dikey ⬇'}
               </span>
               <span className="text-xs font-black text-slate-900 dark:text-white">
                 {activeClue?.number}. İpucu
               </span>
-              <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400">
-                ({activeClue?.length} Harf)
+              <span className="text-[11px] font-black px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+                {activeClue?.length} Harf
               </span>
-              {activeClue?.partOfSpeech && (() => {
-                const badge = getPosBadgeClasses(activeClue.partOfSpeech);
-                return (
-                  <span className={`text-[10px] font-black px-2 py-0.5 rounded-md border ${badge.bg} ${badge.text} ${badge.border} flex items-center gap-1 shadow-2xs`}>
-                    <span>[{badge.label}]</span>
-                    {activeClue.partOfSpeechEn && (
-                      <span className="text-[9px] opacity-75 font-medium hidden sm:inline">({activeClue.partOfSpeechEn})</span>
-                    )}
-                  </span>
-                );
-              })()}
             </div>
 
             <div className="flex items-center gap-1">
               <button
                 onClick={() => setShowCluesModal(true)}
-                className="p-1 px-1.5 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg text-slate-600 dark:text-slate-300 transition text-[11px] font-bold flex items-center gap-1"
+                className="px-2 py-1 bg-indigo-50 hover:bg-indigo-100 dark:bg-indigo-950/70 dark:hover:bg-indigo-900/70 rounded-xl text-indigo-700 dark:text-indigo-300 transition text-[11px] font-black flex items-center gap-1"
                 title="Tüm İpuçlarını Gör"
               >
-                <List className="w-3.5 h-3.5 text-indigo-500" />
+                <List className="w-3.5 h-3.5" />
                 <span className="hidden sm:inline">İpuçları</span>
               </button>
               <button
                 onClick={() => cycleClue(-1)}
-                className="p-1 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg text-slate-600 dark:text-slate-300 transition"
+                className="p-1 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg text-slate-700 dark:text-slate-300 transition"
                 title="Önceki İpucu"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
               <button
                 onClick={() => cycleClue(1)}
-                className="p-1 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg text-slate-600 dark:text-slate-300 transition"
+                className="p-1 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg text-slate-700 dark:text-slate-300 transition"
                 title="Sonraki İpucu"
               >
                 <ChevronRight className="w-4 h-4" />
@@ -562,15 +702,45 @@ export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
             </div>
           </div>
 
-          <p className="text-sm font-semibold text-slate-800 dark:text-slate-200 leading-snug">
-            {activeClue?.clue}
-          </p>
+          {/* SENSES DISPLAY (Kelime türü: i., f., s., e., vb. ve Türkçe anlamları) */}
+          <div className="space-y-1.5">
+            {activeClue?.senses && activeClue.senses.length > 0 ? (
+              activeClue.senses.map((sense, idx) => {
+                const badge = getPosBadgeClasses(sense.pos);
+                return (
+                  <div 
+                    key={idx} 
+                    className="flex items-start gap-2 bg-slate-50 dark:bg-slate-800/80 px-2.5 py-1.5 rounded-xl border border-slate-200/80 dark:border-slate-700/80"
+                  >
+                    <span className={`text-[11px] font-black px-1.5 py-0.2 rounded-md border shrink-0 ${badge.bg} ${badge.text} ${badge.border}`}>
+                      ({sense.pos.replace(/[().]/g, '')}.)
+                    </span>
+                    <span className="text-xs sm:text-sm font-extrabold text-slate-900 dark:text-slate-100 leading-snug">
+                      {sense.meaning}
+                    </span>
+                  </div>
+                );
+              })
+            ) : (
+              <p className="text-sm font-extrabold text-slate-900 dark:text-white">
+                {activeClue?.clue}
+              </p>
+            )}
+          </div>
+
+          {/* Wrong feedback banner */}
+          {wrongFeedback && (
+            <div className="mt-2 py-1 px-2.5 rounded-xl bg-rose-500 text-white text-xs font-black animate-shake flex items-center gap-1.5 shadow-md">
+              <span className="w-2 h-2 rounded-full bg-white animate-ping"></span>
+              <span>{wrongFeedback}</span>
+            </div>
+          )}
         </div>
 
         {/* CROSSWORD BOARD GRID */}
         <div className="flex items-center justify-center my-auto py-1">
           <div 
-            className="grid gap-1 sm:gap-1.5 p-2 bg-slate-200 dark:bg-slate-800/80 rounded-2xl shadow-inner border border-slate-300 dark:border-slate-700/60"
+            className="grid gap-1 sm:gap-1.5 p-2.5 bg-slate-200 dark:bg-slate-800/90 rounded-2xl shadow-inner border border-slate-300 dark:border-slate-700"
             style={{
               gridTemplateColumns: `repeat(${size}, minmax(0, 1fr))`,
               width: '100%',
@@ -581,39 +751,43 @@ export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
             {Array.from({ length: size }).map((_, r) => (
               Array.from({ length: size }).map((__, c) => {
                 const isTargetCell = targetGrid[r][c] !== null;
+                const cellKey = `${r},${c}`;
                 const isSelectedCell = r === activeRow && c === activeCol;
                 const inActiveClue = isCellInActiveClue(r, c);
+                const isWrong = wrongCellKey === cellKey;
                 const clueNum = startNumbers[r][c];
                 const char = userGrid[r][c];
 
                 if (!isTargetCell) {
                   return (
                     <div
-                      key={`${r}-${c}`}
-                      className="w-full h-full rounded-xl bg-slate-300/60 dark:bg-slate-900/60 opacity-80"
+                      key={cellKey}
+                      className="w-full h-full rounded-xl bg-slate-300/80 dark:bg-slate-900/90 shadow-2xs"
                     />
                   );
                 }
 
                 return (
                   <button
-                    key={`${r}-${c}`}
+                    key={cellKey}
                     onClick={() => handleCellClick(r, c)}
-                    className={`relative w-full h-full rounded-xl flex items-center justify-center font-black transition text-lg sm:text-xl active:scale-95 select-none ${
-                      isSelectedCell
-                        ? 'bg-amber-300 dark:bg-amber-400 text-amber-950 ring-3 ring-indigo-500 shadow-md z-10 scale-105'
+                    className={`relative w-full h-full rounded-xl flex items-center justify-center font-black transition text-lg sm:text-2xl active:scale-95 select-none ${
+                      isWrong
+                        ? 'cell-shake bg-rose-500 text-white ring-4 ring-rose-400 z-20 shadow-lg'
+                        : isSelectedCell
+                        ? 'bg-amber-300 dark:bg-amber-400 text-slate-950 ring-4 ring-indigo-500 shadow-lg z-10 scale-105 border-2 border-amber-500'
                         : inActiveClue
-                        ? 'bg-indigo-100 dark:bg-indigo-900/60 text-indigo-950 dark:text-indigo-100 border border-indigo-300 dark:border-indigo-700'
-                        : 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-700 hover:border-indigo-300'
+                        ? 'bg-indigo-100 dark:bg-indigo-950/80 text-indigo-950 dark:text-indigo-100 border-2 border-indigo-400 dark:border-indigo-600 shadow-xs'
+                        : 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white border-2 border-slate-300 dark:border-slate-700 hover:border-indigo-400 shadow-2xs'
                     }`}
                   >
                     {/* Clue Number Badge */}
                     {clueNum && (
-                      <span className="absolute top-0.5 left-1 text-[9px] sm:text-[10px] font-bold text-slate-500 dark:text-slate-400 leading-none">
+                      <span className="absolute top-0.5 left-1 text-[9px] sm:text-[10px] font-black text-slate-600 dark:text-slate-300 leading-none">
                         {clueNum}
                       </span>
                     )}
-                    <span className="mt-1 leading-none">
+                    <span className="mt-1 leading-none font-mono">
                       {char}
                     </span>
                   </button>
@@ -627,20 +801,20 @@ export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
         <div className="flex items-center justify-between gap-1.5 py-2 px-1 max-w-md mx-auto w-full">
           <button
             onClick={handleUseHint}
-            className="flex-1 py-1.5 px-2 bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 dark:text-amber-300 border border-amber-300/40 rounded-xl text-xs font-bold flex items-center justify-center gap-1 transition active:scale-95"
+            className="flex-1 py-2 px-2 bg-amber-500/15 hover:bg-amber-500/25 text-amber-800 dark:text-amber-200 border border-amber-400/50 rounded-xl text-xs font-black flex items-center justify-center gap-1 transition active:scale-95 shadow-xs"
             title="Seçili kutucuğun harfini açar"
           >
-            <Lightbulb className="w-3.5 h-3.5" />
+            <Lightbulb className="w-3.5 h-3.5 text-amber-500" />
             <span>Harf Aç ({hintsUsed})</span>
           </button>
 
           {activeClue && (
             <button
               onClick={() => speak(activeClue.word)}
-              className="flex-1 py-1.5 px-2 bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-700 dark:text-indigo-300 border border-indigo-300/40 rounded-xl text-xs font-bold flex items-center justify-center gap-1 transition active:scale-95"
+              className="flex-1 py-2 px-2 bg-indigo-500/15 hover:bg-indigo-500/25 text-indigo-800 dark:text-indigo-200 border border-indigo-400/50 rounded-xl text-xs font-black flex items-center justify-center gap-1 transition active:scale-95 shadow-xs"
               title="İngilizce kelimeyi sesli dinle"
             >
-              <Volume2 className="w-3.5 h-3.5" />
+              <Volume2 className="w-3.5 h-3.5 text-indigo-500" />
               <span>Dinle</span>
             </button>
           )}
@@ -648,10 +822,10 @@ export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
           {activeClue && (
             <button
               onClick={() => onSaveWord(activeClue.word, activeClue.clue, puzzle.level)}
-              className={`flex-1 py-1.5 px-2 rounded-xl text-xs font-bold flex items-center justify-center gap-1 transition active:scale-95 border ${
+              className={`flex-1 py-2 px-2 rounded-xl text-xs font-black flex items-center justify-center gap-1 transition active:scale-95 border shadow-xs ${
                 isWordSaved(activeClue.word)
-                  ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border-emerald-400/40'
-                  : 'bg-orange-500/10 hover:bg-orange-500/20 text-orange-700 dark:text-orange-300 border-orange-300/40'
+                  ? 'bg-emerald-500/20 text-emerald-800 dark:text-emerald-200 border-emerald-500/50'
+                  : 'bg-orange-500/15 hover:bg-orange-500/25 text-orange-800 dark:text-orange-200 border-orange-400/50'
               }`}
               title="Leitner Defterine Ekle"
             >
@@ -662,8 +836,8 @@ export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
                 </>
               ) : (
                 <>
-                  <Bookmark className="w-3.5 h-3.5" />
-                  <span>Deftere Ekle</span>
+                  <Bookmark className="w-3.5 h-3.5 text-orange-500" />
+                  <span>Kaydet</span>
                 </>
               )}
             </button>
@@ -671,22 +845,22 @@ export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
 
           <button
             onClick={handleClearWord}
-            className="py-1.5 px-2.5 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-xl text-xs font-bold flex items-center justify-center gap-1 hover:bg-slate-200 transition active:scale-95"
+            className="py-2 px-3 bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 rounded-xl text-xs font-black flex items-center justify-center gap-1 transition active:scale-95 shadow-xs border border-slate-300 dark:border-slate-700"
             title="Bu kelimedeki harfleri temizle"
           >
             <RotateCcw className="w-3.5 h-3.5" />
           </button>
         </div>
 
-        {/* VIRTUAL MOBILE KEYBOARD */}
-        <div className="bg-white/95 dark:bg-slate-900/95 backdrop-blur rounded-2xl border border-slate-200 dark:border-slate-800 p-1.5 shadow-sm space-y-1 mt-1">
+        {/* TACTILE VIRTUAL KEYBOARD */}
+        <div className="bg-slate-200/90 dark:bg-slate-900/95 backdrop-blur-md rounded-2xl border-2 border-slate-300 dark:border-slate-800 p-2 shadow-md space-y-1.5 mt-1 select-none max-w-lg mx-auto w-full">
           {/* Row 1 */}
           <div className="flex gap-1 justify-center">
             {kbRows[0].map(k => (
               <button
                 key={k}
                 onClick={() => handleKeyPress(k)}
-                className="flex-1 max-w-[38px] h-10 bg-slate-100 hover:bg-indigo-600 hover:text-white dark:bg-slate-800 dark:hover:bg-indigo-600 text-slate-900 dark:text-white font-extrabold text-sm rounded-lg shadow-xs transition active:scale-90 flex items-center justify-center"
+                className="flex-1 min-w-[28px] max-w-[42px] h-11 bg-white hover:bg-slate-50 dark:bg-slate-800 dark:hover:bg-slate-750 text-slate-900 dark:text-white font-black text-base rounded-xl shadow-xs border-b-[3px] border-slate-300 dark:border-slate-950 active:translate-y-0.5 active:border-b-0 transition flex items-center justify-center"
               >
                 {k}
               </button>
@@ -694,12 +868,12 @@ export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
           </div>
 
           {/* Row 2 */}
-          <div className="flex gap-1 justify-center px-2">
+          <div className="flex gap-1 justify-center px-1.5">
             {kbRows[1].map(k => (
               <button
                 key={k}
                 onClick={() => handleKeyPress(k)}
-                className="flex-1 max-w-[38px] h-10 bg-slate-100 hover:bg-indigo-600 hover:text-white dark:bg-slate-800 dark:hover:bg-indigo-600 text-slate-900 dark:text-white font-extrabold text-sm rounded-lg shadow-xs transition active:scale-90 flex items-center justify-center"
+                className="flex-1 min-w-[28px] max-w-[42px] h-11 bg-white hover:bg-slate-50 dark:bg-slate-800 dark:hover:bg-slate-750 text-slate-900 dark:text-white font-black text-base rounded-xl shadow-xs border-b-[3px] border-slate-300 dark:border-slate-950 active:translate-y-0.5 active:border-b-0 transition flex items-center justify-center"
               >
                 {k}
               </button>
@@ -710,7 +884,7 @@ export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
           <div className="flex gap-1 justify-center">
             <button
               onClick={handleBackspace}
-              className="flex-1 max-w-[48px] h-10 bg-rose-100 dark:bg-rose-950/60 text-rose-700 dark:text-rose-300 font-black text-xs rounded-lg shadow-xs transition active:scale-90 flex items-center justify-center"
+              className="min-w-[46px] max-w-[56px] h-11 bg-rose-100 hover:bg-rose-200 dark:bg-rose-950/70 dark:hover:bg-rose-900/80 text-rose-800 dark:text-rose-200 font-black text-sm rounded-xl shadow-xs border-b-[3px] border-rose-300 dark:border-rose-900 active:translate-y-0.5 active:border-b-0 transition flex items-center justify-center"
               title="Geri Sil"
             >
               ⌫
@@ -720,7 +894,7 @@ export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
               <button
                 key={k}
                 onClick={() => handleKeyPress(k)}
-                className="flex-1 max-w-[38px] h-10 bg-slate-100 hover:bg-indigo-600 hover:text-white dark:bg-slate-800 dark:hover:bg-indigo-600 text-slate-900 dark:text-white font-extrabold text-sm rounded-lg shadow-xs transition active:scale-90 flex items-center justify-center"
+                className="flex-1 min-w-[28px] max-w-[42px] h-11 bg-white hover:bg-slate-50 dark:bg-slate-800 dark:hover:bg-slate-750 text-slate-900 dark:text-white font-black text-base rounded-xl shadow-xs border-b-[3px] border-slate-300 dark:border-slate-950 active:translate-y-0.5 active:border-b-0 transition flex items-center justify-center"
               >
                 {k}
               </button>
@@ -728,7 +902,7 @@ export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
 
             <button
               onClick={() => cycleClue(1)}
-              className="flex-1 max-w-[48px] h-10 bg-indigo-100 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 font-black text-xs rounded-lg shadow-xs transition active:scale-90 flex items-center justify-center"
+              className="min-w-[46px] max-w-[56px] h-11 bg-indigo-600 hover:bg-indigo-500 text-white font-black text-sm rounded-xl shadow-xs border-b-[3px] border-indigo-800 active:translate-y-0.5 active:border-b-0 transition flex items-center justify-center gap-1"
               title="Sonraki Kelime"
             >
               ➔
@@ -811,17 +985,17 @@ export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
                         <Volume2 className="w-3.5 h-3.5" />
                       </button>
                       <div>
-                        <div className="flex items-center gap-1.5">
+                        <div className="flex items-center gap-1.5 flex-wrap">
                           <span className="font-extrabold text-slate-900 dark:text-white tracking-wide">
                             {c.word}
                           </span>
                           {c.partOfSpeech && (
-                            <span className={`text-[9px] font-bold px-1.5 py-0.2 rounded border ${badge.bg} ${badge.text} ${badge.border}`}>
-                              [{badge.label}]
+                            <span className={`text-[10px] font-black px-1.5 py-0.2 rounded border ${badge.bg} ${badge.text} ${badge.border}`}>
+                              ({c.partOfSpeech.replace(/[().]/g, '')}.)
                             </span>
                           )}
                         </div>
-                        <span className="text-[11px] text-slate-500 truncate max-w-[150px] inline-block align-bottom">
+                        <span className="text-xs text-slate-700 dark:text-slate-300 font-bold truncate max-w-[210px] inline-block align-bottom">
                           {c.clue}
                         </span>
                       </div>
@@ -924,23 +1098,38 @@ export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
                             {c.number}
                           </span>
                           <div>
-                            <div className="flex items-center gap-1.5 mb-0.5">
-                              <span className={`text-[10px] font-black px-1.5 py-0.2 rounded border ${badge.bg} ${badge.text} ${badge.border}`}>
-                                [{badge.label}]
-                              </span>
-                              <span className="text-[11px] font-bold text-slate-500">
+                            <div className="flex items-center gap-1.5 mb-1">
+                              <span className="text-[11px] font-black text-slate-500 dark:text-slate-400">
                                 ({c.length} harf)
                               </span>
                               {isCompletedWord && (
-                                <span className="text-[10px] font-black text-emerald-600 dark:text-emerald-400 flex items-center gap-0.5">
+                                <span className="text-[10px] font-black text-emerald-600 dark:text-emerald-400 flex items-center gap-0.5 ml-auto">
                                   <CheckCircle2 className="w-3 h-3" />
                                   <span>{c.word}</span>
                                 </span>
                               )}
                             </div>
-                            <p className="text-xs font-medium text-slate-800 dark:text-slate-200 leading-snug">
-                              {c.clue}
-                            </p>
+                            <div className="space-y-1">
+                              {c.senses && c.senses.length > 0 ? (
+                                c.senses.map((s, sIdx) => {
+                                  const b = getPosBadgeClasses(s.pos);
+                                  return (
+                                    <div key={sIdx} className="flex items-start gap-1.5 text-xs">
+                                      <span className={`text-[10px] font-black px-1.5 py-0.2 rounded border shrink-0 ${b.bg} ${b.text} ${b.border}`}>
+                                        ({s.pos.replace(/[().]/g, '')}.)
+                                      </span>
+                                      <span className="font-bold text-slate-800 dark:text-slate-200 leading-snug">
+                                        {s.meaning}
+                                      </span>
+                                    </div>
+                                  );
+                                })
+                              ) : (
+                                <p className="text-xs font-bold text-slate-800 dark:text-slate-200 leading-snug">
+                                  {c.clue}
+                                </p>
+                              )}
+                            </div>
                           </div>
                         </div>
                       </button>
@@ -961,7 +1150,6 @@ export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
                   {puzzle.clues.filter(c => c.direction === 'down').map(c => {
                     const isCompletedWord = completedWordIds.has(c.id);
                     const isCurrent = activeClue?.id === c.id;
-                    const badge = getPosBadgeClasses(c.partOfSpeech);
 
                     return (
                       <button
@@ -978,28 +1166,43 @@ export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
                             : 'bg-slate-50 dark:bg-slate-800/40 border-slate-200 dark:border-slate-800 hover:border-emerald-300'
                         }`}
                       >
-                        <div className="flex items-start gap-2">
+                        <div className="flex items-start gap-2 w-full">
                           <span className="w-5 h-5 rounded-lg bg-emerald-100 dark:bg-emerald-900/60 text-emerald-700 dark:text-emerald-300 font-black text-xs flex items-center justify-center shrink-0 mt-0.5">
                             {c.number}
                           </span>
                           <div>
-                            <div className="flex items-center gap-1.5 mb-0.5">
-                              <span className={`text-[10px] font-black px-1.5 py-0.2 rounded border ${badge.bg} ${badge.text} ${badge.border}`}>
-                                [{badge.label}]
-                              </span>
-                              <span className="text-[11px] font-bold text-slate-500">
+                            <div className="flex items-center gap-1.5 mb-1">
+                              <span className="text-[11px] font-black text-slate-500 dark:text-slate-400">
                                 ({c.length} harf)
                               </span>
                               {isCompletedWord && (
-                                <span className="text-[10px] font-black text-emerald-600 dark:text-emerald-400 flex items-center gap-0.5">
+                                <span className="text-[10px] font-black text-emerald-600 dark:text-emerald-400 flex items-center gap-0.5 ml-auto">
                                   <CheckCircle2 className="w-3 h-3" />
                                   <span>{c.word}</span>
                                 </span>
                               )}
                             </div>
-                            <p className="text-xs font-medium text-slate-800 dark:text-slate-200 leading-snug">
-                              {c.clue}
-                            </p>
+                            <div className="space-y-1">
+                              {c.senses && c.senses.length > 0 ? (
+                                c.senses.map((s, sIdx) => {
+                                  const b = getPosBadgeClasses(s.pos);
+                                  return (
+                                    <div key={sIdx} className="flex items-start gap-1.5 text-xs">
+                                      <span className={`text-[10px] font-black px-1.5 py-0.2 rounded border shrink-0 ${b.bg} ${b.text} ${b.border}`}>
+                                        ({s.pos.replace(/[().]/g, '')}.)
+                                      </span>
+                                      <span className="font-bold text-slate-800 dark:text-slate-200 leading-snug">
+                                        {s.meaning}
+                                      </span>
+                                    </div>
+                                  );
+                                })
+                              ) : (
+                                <p className="text-xs font-bold text-slate-800 dark:text-slate-200 leading-snug">
+                                  {c.clue}
+                                </p>
+                              )}
+                            </div>
                           </div>
                         </div>
                       </button>

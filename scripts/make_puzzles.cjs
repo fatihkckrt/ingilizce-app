@@ -5,141 +5,7 @@ const path = require('path');
 // Let's create an array of fully validated, verified puzzles.
 // Each puzzle is verified cell-by-cell.
 
-const posMap = {
-  ABILITY: { tr: 'İsim', en: 'Noun' },
-  ACTION: { tr: 'İsim', en: 'Noun' },
-  AHEAD: { tr: 'Zarf', en: 'Adverb' },
-  APPLE: { tr: 'İsim', en: 'Noun' },
-  AUDIT: { tr: 'İsim', en: 'Noun' },
-  AWARD: { tr: 'İsim', en: 'Noun' },
-  AWARE: { tr: 'Sıfat', en: 'Adjective' },
-  AWAY: { tr: 'Zarf', en: 'Adverb' },
-  BANANA: { tr: 'İsim', en: 'Noun' },
-  BELIEF: { tr: 'İsim', en: 'Noun' },
-  BLUE: { tr: 'Sıfat', en: 'Adjective' },
-  BOOK: { tr: 'İsim', en: 'Noun' },
-  BREAD: { tr: 'İsim', en: 'Noun' },
-  BRING: { tr: 'Fiil', en: 'Verb' },
-  CAPITAL: { tr: 'İsim', en: 'Noun' },
-  CHECKS: { tr: 'İsim', en: 'Noun' },
-  CHEMIST: { tr: 'İsim', en: 'Noun' },
-  CLEAN: { tr: 'Sıfat', en: 'Adjective' },
-  CLEAR: { tr: 'Sıfat', en: 'Adjective' },
-  CLEVER: { tr: 'Sıfat', en: 'Adjective' },
-  CLIMATE: { tr: 'İsim', en: 'Noun' },
-  COIN: { tr: 'İsim', en: 'Noun' },
-  CONCEPT: { tr: 'İsim', en: 'Noun' },
-  COST: { tr: 'İsim', en: 'Noun' },
-  CULTURE: { tr: 'İsim', en: 'Noun' },
-  DATE: { tr: 'İsim', en: 'Noun' },
-  DRIVE: { tr: 'Fiil', en: 'Verb' },
-  EACH: { tr: 'Zamir', en: 'Pronoun' },
-  EARN: { tr: 'Fiil', en: 'Verb' },
-  EARTH: { tr: 'İsim', en: 'Noun' },
-  EASY: { tr: 'Sıfat', en: 'Adjective' },
-  EGG: { tr: 'İsim', en: 'Noun' },
-  ELDER: { tr: 'Sıfat', en: 'Adjective' },
-  ENERGY: { tr: 'İsim', en: 'Noun' },
-  ENTER: { tr: 'Fiil', en: 'Verb' },
-  EVENT: { tr: 'İsim', en: 'Noun' },
-  EYE: { tr: 'İsim', en: 'Noun' },
-  FACT: { tr: 'İsim', en: 'Noun' },
-  FARM: { tr: 'İsim', en: 'Noun' },
-  FARMER: { tr: 'İsim', en: 'Noun' },
-  FISH: { tr: 'İsim', en: 'Noun' },
-  FOCUS: { tr: 'Fiil', en: 'Verb' },
-  FOREST: { tr: 'İsim', en: 'Noun' },
-  GARDEN: { tr: 'İsim', en: 'Noun' },
-  GRACE: { tr: 'İsim', en: 'Noun' },
-  HABIT: { tr: 'İsim', en: 'Noun' },
-  HAT: { tr: 'İsim', en: 'Noun' },
-  HOME: { tr: 'İsim', en: 'Noun' },
-  HOPE: { tr: 'Fiil', en: 'Verb' },
-  ICE: { tr: 'İsim', en: 'Noun' },
-  IDEAS: { tr: 'İsim', en: 'Noun' },
-  ILL: { tr: 'Sıfat', en: 'Adjective' },
-  IMPACT: { tr: 'İsim', en: 'Noun' },
-  INITIAL: { tr: 'Sıfat', en: 'Adjective' },
-  INVEST: { tr: 'Fiil', en: 'Verb' },
-  IRON: { tr: 'İsim', en: 'Noun' },
-  IRONIC: { tr: 'Sıfat', en: 'Adjective' },
-  KEY: { tr: 'İsim', en: 'Noun' },
-  LAKE: { tr: 'İsim', en: 'Noun' },
-  LATEST: { tr: 'Sıfat', en: 'Adjective' },
-  LEARN: { tr: 'Fiil', en: 'Verb' },
-  LEMON: { tr: 'İsim', en: 'Noun' },
-  LIGHT: { tr: 'İsim', en: 'Noun' },
-  LION: { tr: 'İsim', en: 'Noun' },
-  LOGIC: { tr: 'İsim', en: 'Noun' },
-  MAP: { tr: 'İsim', en: 'Noun' },
-  MEET: { tr: 'Fiil', en: 'Verb' },
-  METHOD: { tr: 'İsim', en: 'Noun' },
-  MODERN: { tr: 'Sıfat', en: 'Adjective' },
-  MORNING: { tr: 'İsim', en: 'Noun' },
-  MOTHER: { tr: 'İsim', en: 'Noun' },
-  MUSEUM: { tr: 'İsim', en: 'Noun' },
-  NATIONS: { tr: 'İsim', en: 'Noun' },
-  NEW: { tr: 'Sıfat', en: 'Adjective' },
-  NIGHT: { tr: 'İsim', en: 'Noun' },
-  NORTH: { tr: 'İsim', en: 'Noun' },
-  OBSERVE: { tr: 'Fiil', en: 'Verb' },
-  OFFICE: { tr: 'İsim', en: 'Noun' },
-  ONION: { tr: 'İsim', en: 'Noun' },
-  ONLINE: { tr: 'Sıfat', en: 'Adjective' },
-  OPEN: { tr: 'Fiil', en: 'Verb' },
-  ORDER: { tr: 'İsim', en: 'Noun' },
-  PAIN: { tr: 'İsim', en: 'Noun' },
-  PARK: { tr: 'İsim', en: 'Noun' },
-  PARTNER: { tr: 'İsim', en: 'Noun' },
-  PEOPLE: { tr: 'İsim', en: 'Noun' },
-  PHONE: { tr: 'İsim', en: 'Noun' },
-  PILOT: { tr: 'İsim', en: 'Noun' },
-  PLAN: { tr: 'İsim', en: 'Noun' },
-  POINT: { tr: 'İsim', en: 'Noun' },
-  POLICY: { tr: 'İsim', en: 'Noun' },
-  PROFILE: { tr: 'İsim', en: 'Noun' },
-  PROJECT: { tr: 'İsim', en: 'Noun' },
-  PUBLIC: { tr: 'Sıfat', en: 'Adjective' },
-  RAIN: { tr: 'İsim', en: 'Noun' },
-  REASON: { tr: 'İsim', en: 'Noun' },
-  REDUCE: { tr: 'Fiil', en: 'Verb' },
-  REMIND: { tr: 'Fiil', en: 'Verb' },
-  RESULT: { tr: 'İsim', en: 'Noun' },
-  REUSE: { tr: 'Fiil', en: 'Verb' },
-  RIVER: { tr: 'İsim', en: 'Noun' },
-  ROAD: { tr: 'İsim', en: 'Noun' },
-  ROOM: { tr: 'İsim', en: 'Noun' },
-  RUNNER: { tr: 'İsim', en: 'Noun' },
-  SALT: { tr: 'İsim', en: 'Noun' },
-  SCALE: { tr: 'İsim', en: 'Noun' },
-  SCHOOL: { tr: 'İsim', en: 'Noun' },
-  SCIENCE: { tr: 'İsim', en: 'Noun' },
-  SCOPE: { tr: 'İsim', en: 'Noun' },
-  SHIP: { tr: 'İsim', en: 'Noun' },
-  SHOP: { tr: 'İsim', en: 'Noun' },
-  SKILL: { tr: 'İsim', en: 'Noun' },
-  SLEEP: { tr: 'Fiil', en: 'Verb' },
-  SMART: { tr: 'Sıfat', en: 'Adjective' },
-  SMILE: { tr: 'Fiil', en: 'Verb' },
-  SORRY: { tr: 'Sıfat', en: 'Adjective' },
-  STUDENT: { tr: 'İsim', en: 'Noun' },
-  SUN: { tr: 'İsim', en: 'Noun' },
-  SWIM: { tr: 'Fiil', en: 'Verb' },
-  TASKS: { tr: 'İsim', en: 'Noun' },
-  TEA: { tr: 'İsim', en: 'Noun' },
-  TEN: { tr: 'Sıfat', en: 'Adjective' },
-  TENNIS: { tr: 'İsim', en: 'Noun' },
-  TINY: { tr: 'Sıfat', en: 'Adjective' },
-  TOTAL: { tr: 'Sıfat', en: 'Adjective' },
-  TRAVEL: { tr: 'Fiil', en: 'Verb' },
-  TREND: { tr: 'İsim', en: 'Noun' },
-  TRUST: { tr: 'Fiil', en: 'Verb' },
-  UNIQUE: { tr: 'Sıfat', en: 'Adjective' },
-  USER: { tr: 'İsim', en: 'Noun' },
-  USERS: { tr: 'İsim', en: 'Noun' },
-  VALUES: { tr: 'İsim', en: 'Noun' },
-  WHAT: { tr: 'Zamir', en: 'Pronoun' }
-};
+const { WORD_SENSES } = require('./word_senses.cjs');
 
 function createPuzzle(id, title, level, size, description, cluesInput) {
   const grid = Array.from({ length: size }, () => Array(size).fill(null));
@@ -176,15 +42,19 @@ function createPuzzle(id, title, level, size, description, cluesInput) {
       }
     }
 
-    const pos = posMap[word] || { tr: 'İsim', en: 'Noun' };
+    const senses = WORD_SENSES[word] || [{ pos: 'i.', posName: 'İsim', meaning: item.clue }];
+    const formattedClue = senses.map(s => `(${s.pos}) ${s.meaning}`).join('  •  ');
+    const primarySense = senses[0];
+
     clues.push({
       id: `${item.number}-${dir}`,
       number: item.number,
       direction: dir,
       word,
-      clue: item.clue,
-      partOfSpeech: pos.tr,
-      partOfSpeechEn: pos.en,
+      clue: formattedClue,
+      senses,
+      partOfSpeech: primarySense.pos,
+      partOfSpeechName: primarySense.posName,
       row: r,
       col: c,
       length: len
@@ -1264,14 +1134,21 @@ console.log(`Generated ${allPuzzles.length} verified puzzles!`);
 const tsContent = `// src/puzzleData.ts
 // Comprehensive verified Crossword / Kare Bulmaca Dataset for English Learning App
 
+export interface WordSense {
+  pos: string; // 'i.', 'f.', 's.', 'zf.', 'zm.', 'e.', 'b.'
+  posName: string; // 'İsim', 'Fiil', 'Sıfat', etc.
+  meaning: string;
+}
+
 export interface PuzzleClue {
   id: string; // e.g., '1-across', '2-down'
   number: number;
   direction: 'across' | 'down';
   word: string; // UPPERCASE
-  clue: string; // Turkish clue
-  partOfSpeech: string; // e.g. 'İsim', 'Fiil', 'Sıfat', 'Zamir', 'Edat', 'Zarf'
-  partOfSpeechEn: string; // e.g. 'Noun', 'Verb', 'Adjective', 'Pronoun', 'Preposition', 'Adverb'
+  clue: string; // Turkish dictionary entry
+  senses: WordSense[];
+  partOfSpeech: string; // 'i.', 'f.', 's.', 'zf.', 'zm.', 'e.', 'b.'
+  partOfSpeechName: string; // 'İsim', 'Fiil', 'Sıfat'
   row: number; // 0-based
   col: number; // 0-based
   length: number;
@@ -1307,27 +1184,82 @@ export function getPuzzleById(id: string): PuzzleDefinition | undefined {
   return PUZZLES.find(p => p.id === id);
 }
 
-export function getPosBadgeClasses(pos: string): { bg: string; text: string; border: string; label: string } {
-  const normalized = (pos || '').toLowerCase().trim();
+export function getPosBadgeClasses(pos: string): { bg: string; text: string; border: string; label: string; fullName: string } {
+  const normalized = (pos || '').toLowerCase().trim().replace(/[().]/g, '');
   switch (normalized) {
+    case 'i':
     case 'isim':
-      return { bg: 'bg-blue-50 dark:bg-blue-950/70', text: 'text-blue-700 dark:text-blue-300', border: 'border-blue-200 dark:border-blue-800/80', label: 'isim' };
+      return { 
+        bg: 'bg-blue-500/10 dark:bg-blue-400/15', 
+        text: 'text-blue-700 dark:text-blue-300 font-black', 
+        border: 'border-blue-300/80 dark:border-blue-600/70', 
+        label: 'i.',
+        fullName: 'İsim'
+      };
+    case 'f':
     case 'fiil':
-      return { bg: 'bg-emerald-50 dark:bg-emerald-950/70', text: 'text-emerald-700 dark:text-emerald-300', border: 'border-emerald-200 dark:border-emerald-800/80', label: 'fiil' };
-    case 'sıfat':
+      return { 
+        bg: 'bg-emerald-500/10 dark:bg-emerald-400/15', 
+        text: 'text-emerald-700 dark:text-emerald-300 font-black', 
+        border: 'border-emerald-300/80 dark:border-emerald-600/70', 
+        label: 'f.',
+        fullName: 'Fiil'
+      };
+    case 's':
     case 'sifat':
-      return { bg: 'bg-amber-50 dark:bg-amber-950/70', text: 'text-amber-800 dark:text-amber-300', border: 'border-amber-200 dark:border-amber-800/80', label: 'sıfat' };
-    case 'zamir':
-      return { bg: 'bg-purple-50 dark:bg-purple-950/70', text: 'text-purple-700 dark:text-purple-300', border: 'border-purple-200 dark:border-purple-800/80', label: 'zamir' };
-    case 'edat':
-      return { bg: 'bg-rose-50 dark:bg-rose-950/70', text: 'text-rose-700 dark:text-rose-300', border: 'border-rose-200 dark:border-rose-800/80', label: 'edat' };
+    case 'sıfat':
+      return { 
+        bg: 'bg-amber-500/10 dark:bg-amber-400/15', 
+        text: 'text-amber-800 dark:text-amber-300 font-black', 
+        border: 'border-amber-300/80 dark:border-amber-600/70', 
+        label: 's.',
+        fullName: 'Sıfat'
+      };
+    case 'zf':
     case 'zarf':
-      return { bg: 'bg-indigo-50 dark:bg-indigo-950/70', text: 'text-indigo-700 dark:text-indigo-300', border: 'border-indigo-200 dark:border-indigo-800/80', label: 'zarf' };
-    case 'bağlaç':
+      return { 
+        bg: 'bg-indigo-500/10 dark:bg-indigo-400/15', 
+        text: 'text-indigo-700 dark:text-indigo-300 font-black', 
+        border: 'border-indigo-300/80 dark:border-indigo-600/70', 
+        label: 'zf.',
+        fullName: 'Zarf'
+      };
+    case 'zm':
+    case 'zamir':
+      return { 
+        bg: 'bg-purple-500/10 dark:bg-purple-400/15', 
+        text: 'text-purple-700 dark:text-purple-300 font-black', 
+        border: 'border-purple-300/80 dark:border-purple-600/70', 
+        label: 'zm.',
+        fullName: 'Zamir'
+      };
+    case 'e':
+    case 'edat':
+      return { 
+        bg: 'bg-rose-500/10 dark:bg-rose-400/15', 
+        text: 'text-rose-700 dark:text-rose-300 font-black', 
+        border: 'border-rose-300/80 dark:border-rose-600/70', 
+        label: 'e.',
+        fullName: 'Edat'
+      };
+    case 'b':
     case 'baglac':
-      return { bg: 'bg-teal-50 dark:bg-teal-950/70', text: 'text-teal-700 dark:text-teal-300', border: 'border-teal-200 dark:border-teal-800/80', label: 'bağlaç' };
+    case 'bağlaç':
+      return { 
+        bg: 'bg-teal-500/10 dark:bg-teal-400/15', 
+        text: 'text-teal-700 dark:text-teal-300 font-black', 
+        border: 'border-teal-300/80 dark:border-teal-600/70', 
+        label: 'b.',
+        fullName: 'Bağlaç'
+      };
     default:
-      return { bg: 'bg-slate-50 dark:bg-slate-800/80', text: 'text-slate-700 dark:text-slate-300', border: 'border-slate-200 dark:border-slate-700', label: pos || 'kelime' };
+      return { 
+        bg: 'bg-slate-100 dark:bg-slate-800', 
+        text: 'text-slate-700 dark:text-slate-300 font-bold', 
+        border: 'border-slate-300 dark:border-slate-700', 
+        label: pos || 'kelime',
+        fullName: 'Kelime'
+      };
   }
 }
 `;
