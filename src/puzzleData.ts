@@ -428,6 +428,480 @@ export const PUZZLES: PuzzleDefinition[] = [
     ]
   },
   {
+    "id": "a1-5x5-4",
+    "title": "Masa & Okuma",
+    "level": "A1",
+    "size": 5,
+    "description": "Çalışma masası, kitaplar, anlaşma ve dinlenme parkı.",
+    "clues": [
+      {
+        "id": "1-across",
+        "number": 1,
+        "direction": "across",
+        "word": "DEAL",
+        "clue": "(i.) anlaşma, uzlaşma, pazarlık  •  (f.) ilgilenmek, dağıtmak, ticaret yapmak",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "anlaşma, uzlaşma, pazarlık"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "ilgilenmek, dağıtmak, ticaret yapmak"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 0,
+        "length": 4
+      },
+      {
+        "id": "1-down",
+        "number": 1,
+        "direction": "down",
+        "word": "DIP",
+        "clue": "(f.) batırmak, daldırmak  •  (i.) düşüş, sos",
+        "senses": [
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "batırmak, daldırmak"
+          },
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "düşüş, sos"
+          }
+        ],
+        "partOfSpeech": "f.",
+        "partOfSpeechName": "Fiil",
+        "row": 0,
+        "col": 0,
+        "length": 3
+      },
+      {
+        "id": "2-across",
+        "number": 2,
+        "direction": "across",
+        "word": "PARK",
+        "clue": "(i.) park, yeşil alan  •  (f.) araba park etmek",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "park, yeşil alan"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "araba park etmek"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 2,
+        "col": 0,
+        "length": 4
+      },
+      {
+        "id": "3-down",
+        "number": 3,
+        "direction": "down",
+        "word": "ERA",
+        "clue": "(i.) çağ, devir, dönem",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "çağ, devir, dönem"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 1,
+        "length": 3
+      },
+      {
+        "id": "4-down",
+        "number": 4,
+        "direction": "down",
+        "word": "LIKE",
+        "clue": "(f.) beğenmek, hoşlanmak  •  (e.) gibi, benzer",
+        "senses": [
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "beğenmek, hoşlanmak"
+          },
+          {
+            "pos": "e.",
+            "posName": "Edat",
+            "meaning": "gibi, benzer"
+          }
+        ],
+        "partOfSpeech": "f.",
+        "partOfSpeechName": "Fiil",
+        "row": 0,
+        "col": 3,
+        "length": 4
+      }
+    ]
+  },
+  {
+    "id": "a1-5x5-5",
+    "title": "Şehir & Zaman",
+    "level": "A1",
+    "size": 5,
+    "description": "Evcil hayvan kedi, araba, oda, geçmiş zaman ve sayılar.",
+    "clues": [
+      {
+        "id": "1-across",
+        "number": 1,
+        "direction": "across",
+        "word": "CAT",
+        "clue": "(i.) Evcil sevimli kedi",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Evcil sevimli kedi"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 0,
+        "length": 3
+      },
+      {
+        "id": "1-down",
+        "number": 1,
+        "direction": "down",
+        "word": "CAR",
+        "clue": "(i.) Ulaşımda kullanılan otomobil veya araba",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Ulaşımda kullanılan otomobil veya araba"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 0,
+        "length": 3
+      },
+      {
+        "id": "2-across",
+        "number": 2,
+        "direction": "across",
+        "word": "ROOM",
+        "clue": "(i.) oda; yer, boşluk",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "oda; yer, boşluk"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 2,
+        "col": 0,
+        "length": 4
+      },
+      {
+        "id": "3-down",
+        "number": 3,
+        "direction": "down",
+        "word": "AGO",
+        "clue": "(i.) Önce, geçmişte kalan zaman dilimi",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Önce, geçmişte kalan zaman dilimi"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 1,
+        "length": 3
+      },
+      {
+        "id": "4-down",
+        "number": 4,
+        "direction": "down",
+        "word": "TWO",
+        "clue": "(i.) Birden sonra gelen çift sayı (2)",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Birden sonra gelen çift sayı (2)"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 2,
+        "length": 3
+      }
+    ]
+  },
+  {
+    "id": "a1-5x5-6",
+    "title": "Yoğun Gün & Otobüs",
+    "level": "A1",
+    "size": 5,
+    "description": "Meşgul bir gün, otobüs koltuğu ve deniz.",
+    "clues": [
+      {
+        "id": "1-across",
+        "number": 1,
+        "direction": "across",
+        "word": "BUSY",
+        "clue": "(i.) Çok işi olan, meşgul veya yoğun",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Çok işi olan, meşgul veya yoğun"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 0,
+        "length": 4
+      },
+      {
+        "id": "1-down",
+        "number": 1,
+        "direction": "down",
+        "word": "BUS",
+        "clue": "(i.) Şehir içi toplu taşıma otobüsü",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Şehir içi toplu taşıma otobüsü"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 0,
+        "length": 3
+      },
+      {
+        "id": "2-across",
+        "number": 2,
+        "direction": "across",
+        "word": "SEAT",
+        "clue": "(i.) Oturacak yer, sandalye veya koltuk",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Oturacak yer, sandalye veya koltuk"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 2,
+        "col": 0,
+        "length": 4
+      },
+      {
+        "id": "3-down",
+        "number": 3,
+        "direction": "down",
+        "word": "USE",
+        "clue": "(i.) Bir eşyayı veya aleti kullanmak",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Bir eşyayı veya aleti kullanmak"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 1,
+        "length": 3
+      },
+      {
+        "id": "4-down",
+        "number": 4,
+        "direction": "down",
+        "word": "SEA",
+        "clue": "(i.) deniz",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "deniz"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 2,
+        "length": 3
+      },
+      {
+        "id": "5-down",
+        "number": 5,
+        "direction": "down",
+        "word": "YET",
+        "clue": "(i.) Henüz, şimdiye kadar veya buna rağmen",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Henüz, şimdiye kadar veya buna rağmen"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 3,
+        "length": 3
+      }
+    ]
+  },
+  {
+    "id": "a1-5x5-7",
+    "title": "Çiftlik & Kamp Çadırı",
+    "level": "A1",
+    "size": 5,
+    "description": "Kedi, çadır, kamp ateşi ve yemek.",
+    "clues": [
+      {
+        "id": "1-across",
+        "number": 1,
+        "direction": "across",
+        "word": "CAME",
+        "clue": "(i.) Geldi (come eyleminin geçmiş hali)",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Geldi (come eyleminin geçmiş hali)"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 0,
+        "length": 4
+      },
+      {
+        "id": "1-down",
+        "number": 1,
+        "direction": "down",
+        "word": "CAT",
+        "clue": "(i.) Miyavlayan sevimli evcil kedi",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Miyavlayan sevimli evcil kedi"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 0,
+        "length": 3
+      },
+      {
+        "id": "2-across",
+        "number": 2,
+        "direction": "across",
+        "word": "TENT",
+        "clue": "(i.) çadır",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "çadır"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 2,
+        "col": 0,
+        "length": 4
+      },
+      {
+        "id": "3-down",
+        "number": 3,
+        "direction": "down",
+        "word": "ATE",
+        "clue": "(i.) Yemek yedi (eat eyleminin geçmiş hali)",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Yemek yedi (eat eyleminin geçmiş hali)"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 1,
+        "length": 3
+      },
+      {
+        "id": "4-down",
+        "number": 4,
+        "direction": "down",
+        "word": "MAN",
+        "clue": "(i.) Yetişkin erkek, insan",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Yetişkin erkek, insan"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 2,
+        "length": 3
+      },
+      {
+        "id": "5-down",
+        "number": 5,
+        "direction": "down",
+        "word": "EAT",
+        "clue": "(i.) Yiyecek tüketmek, karnını doyurmak",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Yiyecek tüketmek, karnını doyurmak"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 3,
+        "length": 3
+      }
+    ]
+  },
+  {
     "id": "a1-6x6-1",
     "title": "Sınıf & Okul Dünyası",
     "level": "A1",
@@ -738,6 +1212,381 @@ export const PUZZLES: PuzzleDefinition[] = [
     ]
   },
   {
+    "id": "a1-6x6-3",
+    "title": "Gökyüzü & Ağaçlar",
+    "level": "A1",
+    "size": 6,
+    "description": "Ağaç, gece parlayan ay, ev çatısı ve zaman kavramı.",
+    "clues": [
+      {
+        "id": "1-across",
+        "number": 1,
+        "direction": "across",
+        "word": "TREE",
+        "clue": "(i.) ağaç",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "ağaç"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 0,
+        "length": 4
+      },
+      {
+        "id": "1-down",
+        "number": 1,
+        "direction": "down",
+        "word": "TIME",
+        "clue": "(i.) Geçen saatler, vakit veya zaman",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Geçen saatler, vakit veya zaman"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 0,
+        "length": 4
+      },
+      {
+        "id": "2-across",
+        "number": 2,
+        "direction": "across",
+        "word": "MOON",
+        "clue": "(i.) ay",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "ay"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 2,
+        "col": 0,
+        "length": 4
+      },
+      {
+        "id": "3-down",
+        "number": 3,
+        "direction": "down",
+        "word": "ROOF",
+        "clue": "(i.) çatı, tavan",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "çatı, tavan"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 1,
+        "length": 4
+      },
+      {
+        "id": "4-down",
+        "number": 4,
+        "direction": "down",
+        "word": "EGO",
+        "clue": "(i.) Benlik, gurur veya kişinin kendi bilinci",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Benlik, gurur veya kişinin kendi bilinci"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 2,
+        "length": 3
+      }
+    ]
+  },
+  {
+    "id": "a1-6x6-4",
+    "title": "Kış & Sanat",
+    "level": "A1",
+    "size": 6,
+    "description": "Kışın yağan kar, parlayan yıldız, kuzey yönü ve sanat.",
+    "clues": [
+      {
+        "id": "1-across",
+        "number": 1,
+        "direction": "across",
+        "word": "SNOW",
+        "clue": "(i.) kar  •  (f.) kar yağmak",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "kar"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "kar yağmak"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 0,
+        "length": 4
+      },
+      {
+        "id": "1-down",
+        "number": 1,
+        "direction": "down",
+        "word": "STAR",
+        "clue": "(i.) yıldız  •  (f.) başrolde oynamak",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "yıldız"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "başrolde oynamak"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 0,
+        "length": 4
+      },
+      {
+        "id": "2-across",
+        "number": 2,
+        "direction": "across",
+        "word": "ART",
+        "clue": "(i.) Resim, heykel ve yaratıcı güzel sanatlar",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Resim, heykel ve yaratıcı güzel sanatlar"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 2,
+        "col": 0,
+        "length": 3
+      },
+      {
+        "id": "3-down",
+        "number": 3,
+        "direction": "down",
+        "word": "NORTH",
+        "clue": "(i.) kuzey yönü  •  (s.) kuzeydeki, kuzey  •  (zf.) kuzeye doğru",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "kuzey yönü"
+          },
+          {
+            "pos": "s.",
+            "posName": "Sıfat",
+            "meaning": "kuzeydeki, kuzey"
+          },
+          {
+            "pos": "zf.",
+            "posName": "Zarf",
+            "meaning": "kuzeye doğru"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 1,
+        "length": 5
+      },
+      {
+        "id": "4-down",
+        "number": 4,
+        "direction": "down",
+        "word": "OUT",
+        "clue": "(i.) Dışarı, hariç veya dışarıda",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Dışarı, hariç veya dışarıda"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 2,
+        "length": 3
+      }
+    ]
+  },
+  {
+    "id": "a1-6x6-5",
+    "title": "Açık Hava & Dağ Zirvesi",
+    "level": "A1",
+    "size": 6,
+    "description": "Konuşmak, dağ doruğu, kolay hedefler ve ferahlık.",
+    "clues": [
+      {
+        "id": "1-across",
+        "number": 1,
+        "direction": "across",
+        "word": "SPOKE",
+        "clue": "(i.) Söz söyledi, konuştu (speak geçmiş hali)",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Söz söyledi, konuştu (speak geçmiş hali)"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 0,
+        "length": 5
+      },
+      {
+        "id": "1-down",
+        "number": 1,
+        "direction": "down",
+        "word": "SODA",
+        "clue": "(i.) Gazlı ferahlatıcı içecek, soda",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Gazlı ferahlatıcı içecek, soda"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 0,
+        "length": 4
+      },
+      {
+        "id": "2-across",
+        "number": 2,
+        "direction": "across",
+        "word": "DATES",
+        "clue": "(i.) Takvim günleri veya tatlı hurmalar",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Takvim günleri veya tatlı hurmalar"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 2,
+        "col": 0,
+        "length": 5
+      },
+      {
+        "id": "3-down",
+        "number": 3,
+        "direction": "down",
+        "word": "PEAK",
+        "clue": "(i.) Dağın en yüksek sivri zirvesi, doruk",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Dağın en yüksek sivri zirvesi, doruk"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 1,
+        "length": 4
+      },
+      {
+        "id": "4-down",
+        "number": 4,
+        "direction": "down",
+        "word": "ONTO",
+        "clue": "(i.) Bir şeyin üstüne doğru, üzerine",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Bir şeyin üstüne doğru, üzerine"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 2,
+        "length": 4
+      },
+      {
+        "id": "5-down",
+        "number": 5,
+        "direction": "down",
+        "word": "KEEP",
+        "clue": "(i.) Korumak, muhafaza etmek, saklamak",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Korumak, muhafaza etmek, saklamak"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 3,
+        "length": 4
+      },
+      {
+        "id": "6-down",
+        "number": 6,
+        "direction": "down",
+        "word": "EASY",
+        "clue": "(s.) kolay, zahmetsiz, rahat, uysal  •  (zf.) yavaşça, sakince",
+        "senses": [
+          {
+            "pos": "s.",
+            "posName": "Sıfat",
+            "meaning": "kolay, zahmetsiz, rahat, uysal"
+          },
+          {
+            "pos": "zf.",
+            "posName": "Zarf",
+            "meaning": "yavaşça, sakince"
+          }
+        ],
+        "partOfSpeech": "s.",
+        "partOfSpeechName": "Sıfat",
+        "row": 0,
+        "col": 4,
+        "length": 4
+      }
+    ]
+  },
+  {
     "id": "a1-7x7-1",
     "title": "Büyük Doğa Gezisi",
     "level": "A1",
@@ -1005,6 +1854,144 @@ export const PUZZLES: PuzzleDefinition[] = [
         "row": 6,
         "col": 0,
         "length": 6
+      }
+    ]
+  },
+  {
+    "id": "a1-7x7-3",
+    "title": "Gündüz & Gece Işığı",
+    "level": "A1",
+    "size": 7,
+    "description": "Güneş ışığı, gece karanlığı, eylem, öğrenme ve sayılar.",
+    "clues": [
+      {
+        "id": "1-across",
+        "number": 1,
+        "direction": "across",
+        "word": "LIGHT",
+        "clue": "(i.) ışık, aydınlık  •  (s.) hafif; açık renkli  •  (f.) yakmak, aydınlatmak",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "ışık, aydınlık"
+          },
+          {
+            "pos": "s.",
+            "posName": "Sıfat",
+            "meaning": "hafif; açık renkli"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "yakmak, aydınlatmak"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 0,
+        "length": 5
+      },
+      {
+        "id": "1-down",
+        "number": 1,
+        "direction": "down",
+        "word": "LEARN",
+        "clue": "(f.) öğrenmek, bilgi edinmek",
+        "senses": [
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "öğrenmek, bilgi edinmek"
+          }
+        ],
+        "partOfSpeech": "f.",
+        "partOfSpeechName": "Fiil",
+        "row": 0,
+        "col": 0,
+        "length": 5
+      },
+      {
+        "id": "2-across",
+        "number": 2,
+        "direction": "across",
+        "word": "ACTION",
+        "clue": "(i.) eylem, hareket, aksiyon  •  (f.) harekete geçirmek, işleme koymak",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "eylem, hareket, aksiyon"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "harekete geçirmek, işleme koymak"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 2,
+        "col": 0,
+        "length": 6
+      },
+      {
+        "id": "3-across",
+        "number": 3,
+        "direction": "across",
+        "word": "NIGHT",
+        "clue": "(i.) gece",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "gece"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 4,
+        "col": 0,
+        "length": 5
+      },
+      {
+        "id": "4-down",
+        "number": 4,
+        "direction": "down",
+        "word": "GET",
+        "clue": "(i.) Elde etmek, almak veya varmak",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Elde etmek, almak veya varmak"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 2,
+        "length": 3
+      },
+      {
+        "id": "5-down",
+        "number": 5,
+        "direction": "down",
+        "word": "TWO",
+        "clue": "(i.) Birden sonraki çift sayı (2)",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Birden sonraki çift sayı (2)"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 4,
+        "length": 3
       }
     ]
   },
@@ -1396,6 +2383,509 @@ export const PUZZLES: PuzzleDefinition[] = [
     ]
   },
   {
+    "id": "a2-5x5-4",
+    "title": "Gezi & Seyahat Turu",
+    "level": "A2",
+    "size": 5,
+    "description": "Tur, seyahat, bir kere deneyimleme ve buz.",
+    "clues": [
+      {
+        "id": "1-across",
+        "number": 1,
+        "direction": "across",
+        "word": "TOUR",
+        "clue": "(i.) tur, gezi  •  (f.) turlamak, gezmek",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "tur, gezi"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "turlamak, gezmek"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 0,
+        "length": 4
+      },
+      {
+        "id": "1-down",
+        "number": 1,
+        "direction": "down",
+        "word": "TRIP",
+        "clue": "(i.) gezi, seyahat, yolculuk  •  (f.) tökezlemek",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "gezi, seyahat, yolculuk"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "tökezlemek"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 0,
+        "length": 4
+      },
+      {
+        "id": "2-across",
+        "number": 2,
+        "direction": "across",
+        "word": "ICE",
+        "clue": "(i.) buz; dondurma  •  (f.) buzlanmak; buzla kaplamak",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "buz; dondurma"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "buzlanmak; buzla kaplamak"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 2,
+        "col": 0,
+        "length": 3
+      },
+      {
+        "id": "3-down",
+        "number": 3,
+        "direction": "down",
+        "word": "ONCE",
+        "clue": "(i.) Bir zamanlar veya bir kere",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Bir zamanlar veya bir kere"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 1,
+        "length": 4
+      },
+      {
+        "id": "4-down",
+        "number": 4,
+        "direction": "down",
+        "word": "USE",
+        "clue": "(i.) Kullanmak, faydalanmak veya yararlanmak",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Kullanmak, faydalanmak veya yararlanmak"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 2,
+        "length": 3
+      }
+    ]
+  },
+  {
+    "id": "a2-5x5-5",
+    "title": "Otel Odası & Dinlenme",
+    "level": "A2",
+    "size": 5,
+    "description": "Dinlenme, otel odası, sipariş vermek ve kulak.",
+    "clues": [
+      {
+        "id": "1-across",
+        "number": 1,
+        "direction": "across",
+        "word": "REST",
+        "clue": "(f.) dinlenmek, mola vermek  •  (i.) dinlenme, istirahat; geri kalan",
+        "senses": [
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "dinlenmek, mola vermek"
+          },
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "dinlenme, istirahat; geri kalan"
+          }
+        ],
+        "partOfSpeech": "f.",
+        "partOfSpeechName": "Fiil",
+        "row": 0,
+        "col": 0,
+        "length": 4
+      },
+      {
+        "id": "1-down",
+        "number": 1,
+        "direction": "down",
+        "word": "ROOM",
+        "clue": "(i.) oda; yer, boşluk",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "oda; yer, boşluk"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 0,
+        "length": 4
+      },
+      {
+        "id": "2-across",
+        "number": 2,
+        "direction": "across",
+        "word": "ORDER",
+        "clue": "(i.) sipariş; emir, buyruk; düzen, sıra  •  (f.) sipariş etmek; emretmek; düzenlemek",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "sipariş; emir, buyruk; düzen, sıra"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "sipariş etmek; emretmek; düzenlemek"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 2,
+        "col": 0,
+        "length": 5
+      },
+      {
+        "id": "3-down",
+        "number": 3,
+        "direction": "down",
+        "word": "EAR",
+        "clue": "(i.) Sesleri duymaya yarayan kulak",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Sesleri duymaya yarayan kulak"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 1,
+        "length": 3
+      },
+      {
+        "id": "4-down",
+        "number": 4,
+        "direction": "down",
+        "word": "SAD",
+        "clue": "(i.) Hüzünlü, üzgün veya kederli",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Hüzünlü, üzgün veya kederli"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 2,
+        "length": 3
+      },
+      {
+        "id": "5-down",
+        "number": 5,
+        "direction": "down",
+        "word": "TIE",
+        "clue": "(i.) Kravat veya bağlamak",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Kravat veya bağlamak"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 3,
+        "length": 3
+      }
+    ]
+  },
+  {
+    "id": "a2-5x5-6",
+    "title": "Oyun Alanı & Mesaj",
+    "level": "A2",
+    "size": 5,
+    "description": "Oyun, mesaj göndermek, enerji ve son.",
+    "clues": [
+      {
+        "id": "1-across",
+        "number": 1,
+        "direction": "across",
+        "word": "GAME",
+        "clue": "(i.) Eğlenceli oyun, takım maçı veya yarışma",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Eğlenceli oyun, takım maçı veya yarışma"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 0,
+        "length": 4
+      },
+      {
+        "id": "1-down",
+        "number": 1,
+        "direction": "down",
+        "word": "GAS",
+        "clue": "(i.) Havadar yakıt, gaz veya benzin",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Havadar yakıt, gaz veya benzin"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 0,
+        "length": 3
+      },
+      {
+        "id": "2-across",
+        "number": 2,
+        "direction": "across",
+        "word": "SEND",
+        "clue": "(i.) Posta, mektup veya mesaj yollamak",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Posta, mektup veya mesaj yollamak"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 2,
+        "col": 0,
+        "length": 4
+      },
+      {
+        "id": "3-down",
+        "number": 3,
+        "direction": "down",
+        "word": "ATE",
+        "clue": "(i.) Gıdayı tüketti (eat geçmişi)",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Gıdayı tüketti (eat geçmişi)"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 1,
+        "length": 3
+      },
+      {
+        "id": "4-down",
+        "number": 4,
+        "direction": "down",
+        "word": "MAN",
+        "clue": "(i.) Yetişkin birey veya insan",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Yetişkin birey veya insan"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 2,
+        "length": 3
+      },
+      {
+        "id": "5-down",
+        "number": 5,
+        "direction": "down",
+        "word": "END",
+        "clue": "(i.) son, uç, bitiş  •  (f.) bitirmek, sona ermek",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "son, uç, bitiş"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "bitirmek, sona ermek"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 3,
+        "length": 3
+      }
+    ]
+  },
+  {
+    "id": "a2-5x5-7",
+    "title": "Doğa Yürüyüşü & Patika",
+    "level": "A2",
+    "size": 5,
+    "description": "Orman patikası, metin okuma ve sıcak hava.",
+    "clues": [
+      {
+        "id": "1-across",
+        "number": 1,
+        "direction": "across",
+        "word": "PATH",
+        "clue": "(i.) Orman içi yürüyüş patikası, dar keçi yolu",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Orman içi yürüyüş patikası, dar keçi yolu"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 0,
+        "length": 4
+      },
+      {
+        "id": "1-down",
+        "number": 1,
+        "direction": "down",
+        "word": "PUT",
+        "clue": "(i.) Bir nesneyi masaya veya rafa koymak",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Bir nesneyi masaya veya rafa koymak"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 0,
+        "length": 3
+      },
+      {
+        "id": "2-across",
+        "number": 2,
+        "direction": "across",
+        "word": "TEXT",
+        "clue": "(i.) Yazılı metin, ders parçası veya mesaj",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Yazılı metin, ders parçası veya mesaj"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 2,
+        "col": 0,
+        "length": 4
+      },
+      {
+        "id": "3-down",
+        "number": 3,
+        "direction": "down",
+        "word": "ATE",
+        "clue": "(i.) Öğün yedi (eat geçmiş zamanı)",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Öğün yedi (eat geçmiş zamanı)"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 1,
+        "length": 3
+      },
+      {
+        "id": "4-down",
+        "number": 4,
+        "direction": "down",
+        "word": "TAX",
+        "clue": "(i.) Kamu hizmetleri için ödenen vergi harcı",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Kamu hizmetleri için ödenen vergi harcı"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 2,
+        "length": 3
+      },
+      {
+        "id": "5-down",
+        "number": 5,
+        "direction": "down",
+        "word": "HOT",
+        "clue": "(i.) Yüksek sıcaklıkta, kaynar veya çok sıcak",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Yüksek sıcaklıkta, kaynar veya çok sıcak"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 3,
+        "length": 3
+      }
+    ]
+  },
+  {
     "id": "a2-6x6-1",
     "title": "Meslekler & Kariyer",
     "level": "A2",
@@ -1663,6 +3153,409 @@ export const PUZZLES: PuzzleDefinition[] = [
     ]
   },
   {
+    "id": "a2-6x6-3",
+    "title": "Şifa & Bakım",
+    "level": "A2",
+    "size": 6,
+    "description": "Özenle bakım gösterme, tedavi, oda ve beslenme.",
+    "clues": [
+      {
+        "id": "1-across",
+        "number": 1,
+        "direction": "across",
+        "word": "CARE",
+        "clue": "(f.) önemsemek, ilgilenmek  •  (i.) bakım, özen, dikkat",
+        "senses": [
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "önemsemek, ilgilenmek"
+          },
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "bakım, özen, dikkat"
+          }
+        ],
+        "partOfSpeech": "f.",
+        "partOfSpeechName": "Fiil",
+        "row": 0,
+        "col": 0,
+        "length": 4
+      },
+      {
+        "id": "1-down",
+        "number": 1,
+        "direction": "down",
+        "word": "CURE",
+        "clue": "(i.) Hastalığı iyileştirmek, şifa veya tedavi",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Hastalığı iyileştirmek, şifa veya tedavi"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 0,
+        "length": 4
+      },
+      {
+        "id": "2-across",
+        "number": 2,
+        "direction": "across",
+        "word": "ROOT",
+        "clue": "(i.) Bitkinin topraktaki kökü veya köken",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Bitkinin topraktaki kökü veya köken"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 2,
+        "col": 0,
+        "length": 4
+      },
+      {
+        "id": "3-down",
+        "number": 3,
+        "direction": "down",
+        "word": "AGO",
+        "clue": "(i.) Geçmişte veya önce",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Geçmişte veya önce"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 1,
+        "length": 3
+      },
+      {
+        "id": "4-down",
+        "number": 4,
+        "direction": "down",
+        "word": "ROOM",
+        "clue": "(i.) oda; yer, boşluk",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "oda; yer, boşluk"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 2,
+        "length": 4
+      },
+      {
+        "id": "5-down",
+        "number": 5,
+        "direction": "down",
+        "word": "EAT",
+        "clue": "(i.) Yemek yemek veya beslenmek",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Yemek yemek veya beslenmek"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 3,
+        "length": 3
+      }
+    ]
+  },
+  {
+    "id": "a2-6x6-4",
+    "title": "Haber & Basın Medyası",
+    "level": "A2",
+    "size": 6,
+    "description": "Güncel haberler, geniş medya organları, isim ve bakış.",
+    "clues": [
+      {
+        "id": "1-across",
+        "number": 1,
+        "direction": "across",
+        "word": "NEWS",
+        "clue": "(i.) haberler, havadis",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "haberler, havadis"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 0,
+        "length": 4
+      },
+      {
+        "id": "1-down",
+        "number": 1,
+        "direction": "down",
+        "word": "NAME",
+        "clue": "(i.) Kişi veya kuruma verilen isim, ad",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Kişi veya kuruma verilen isim, ad"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 0,
+        "length": 4
+      },
+      {
+        "id": "2-across",
+        "number": 2,
+        "direction": "across",
+        "word": "MEDIA",
+        "clue": "(i.) medya, basın-yayın",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "medya, basın-yayın"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 2,
+        "col": 0,
+        "length": 5
+      },
+      {
+        "id": "3-down",
+        "number": 3,
+        "direction": "down",
+        "word": "EYE",
+        "clue": "(i.) göz; görme duyusu; bakış  •  (f.) göz dikmek, süzmek, dikkatle bakmak",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "göz; görme duyusu; bakış"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "göz dikmek, süzmek, dikkatle bakmak"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 1,
+        "length": 3
+      },
+      {
+        "id": "4-down",
+        "number": 4,
+        "direction": "down",
+        "word": "WIDE",
+        "clue": "(i.) Geniş, kapsamlı veya ferah",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Geniş, kapsamlı veya ferah"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 2,
+        "length": 4
+      },
+      {
+        "id": "5-down",
+        "number": 5,
+        "direction": "down",
+        "word": "SKI",
+        "clue": "(i.) Karda yapılan kış sporu kayağı",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Karda yapılan kış sporu kayağı"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 3,
+        "length": 3
+      }
+    ]
+  },
+  {
+    "id": "a2-6x6-5",
+    "title": "Gece Dinlenmesi & Ziyafet",
+    "level": "A2",
+    "size": 6,
+    "description": "Ayakta beklemek, lezzetli yemek ve açık kapılar.",
+    "clues": [
+      {
+        "id": "1-across",
+        "number": 1,
+        "direction": "across",
+        "word": "STOOD",
+        "clue": "(i.) Ayakta dikildi (stand eyleminin geçmiş hali)",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Ayakta dikildi (stand eyleminin geçmiş hali)"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 0,
+        "length": 5
+      },
+      {
+        "id": "1-down",
+        "number": 1,
+        "direction": "down",
+        "word": "SEEN",
+        "clue": "(i.) Fark edilmiş, görülmüş (see 3. hali)",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Fark edilmiş, görülmüş (see 3. hali)"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 0,
+        "length": 4
+      },
+      {
+        "id": "2-across",
+        "number": 2,
+        "direction": "across",
+        "word": "EATEN",
+        "clue": "(i.) Tüketilmiş, yenmiş (eat fiili 3. hali)",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Tüketilmiş, yenmiş (eat fiili 3. hali)"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 2,
+        "col": 0,
+        "length": 5
+      },
+      {
+        "id": "3-down",
+        "number": 3,
+        "direction": "down",
+        "word": "THAT",
+        "clue": "(i.) Şu, o veya işaret edilen nesne",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Şu, o veya işaret edilen nesne"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 1,
+        "length": 4
+      },
+      {
+        "id": "4-down",
+        "number": 4,
+        "direction": "down",
+        "word": "ONTO",
+        "clue": "(i.) Yüzeyin üzerine doğru yönelme",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Yüzeyin üzerine doğru yönelme"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 2,
+        "length": 4
+      },
+      {
+        "id": "5-down",
+        "number": 5,
+        "direction": "down",
+        "word": "OPEN",
+        "clue": "(s.) açık, engelsiz; samimi  •  (f.) açmak, açılmak, başlatmak",
+        "senses": [
+          {
+            "pos": "s.",
+            "posName": "Sıfat",
+            "meaning": "açık, engelsiz; samimi"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "açmak, açılmak, başlatmak"
+          }
+        ],
+        "partOfSpeech": "s.",
+        "partOfSpeechName": "Sıfat",
+        "row": 0,
+        "col": 3,
+        "length": 4
+      },
+      {
+        "id": "6-down",
+        "number": 6,
+        "direction": "down",
+        "word": "DINE",
+        "clue": "(i.) Restoranda akşam yemeği ziyafeti çekmek",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Restoranda akşam yemeği ziyafeti çekmek"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 4,
+        "length": 4
+      }
+    ]
+  },
+  {
     "id": "a2-7x7-1",
     "title": "Kültür & Şehirler",
     "level": "A2",
@@ -1920,6 +3813,177 @@ export const PUZZLES: PuzzleDefinition[] = [
         "partOfSpeechName": "Zamir",
         "row": 4,
         "col": 0,
+        "length": 4
+      }
+    ]
+  },
+  {
+    "id": "a2-7x7-3",
+    "title": "Orman Kampı & Doğa",
+    "level": "A2",
+    "size": 7,
+    "description": "Büyük orman, kamp çadırı, kamp ateşi, gökte yıldızlar ve dinlenme.",
+    "clues": [
+      {
+        "id": "1-across",
+        "number": 1,
+        "direction": "across",
+        "word": "FOREST",
+        "clue": "(i.) orman",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "orman"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 0,
+        "length": 6
+      },
+      {
+        "id": "1-down",
+        "number": 1,
+        "direction": "down",
+        "word": "FIRE",
+        "clue": "(i.) Isınmak için yakılan kamp ateşi",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Isınmak için yakılan kamp ateşi"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 0,
+        "length": 4
+      },
+      {
+        "id": "2-across",
+        "number": 2,
+        "direction": "across",
+        "word": "REST",
+        "clue": "(f.) dinlenmek, mola vermek  •  (i.) dinlenme, istirahat; geri kalan",
+        "senses": [
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "dinlenmek, mola vermek"
+          },
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "dinlenme, istirahat; geri kalan"
+          }
+        ],
+        "partOfSpeech": "f.",
+        "partOfSpeechName": "Fiil",
+        "row": 2,
+        "col": 0,
+        "length": 4
+      },
+      {
+        "id": "3-down",
+        "number": 3,
+        "direction": "down",
+        "word": "ONE",
+        "clue": "(i.) Tek veya bir sayısı (1)",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Tek veya bir sayısı (1)"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 1,
+        "length": 3
+      },
+      {
+        "id": "4-down",
+        "number": 4,
+        "direction": "down",
+        "word": "RISE",
+        "clue": "(i.) Güneşin doğması veya yükselmek",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Güneşin doğması veya yükselmek"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 2,
+        "length": 4
+      },
+      {
+        "id": "5-down",
+        "number": 5,
+        "direction": "down",
+        "word": "EAT",
+        "clue": "(i.) Kampta lezzetli yemek yemek",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Kampta lezzetli yemek yemek"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 3,
+        "length": 3
+      },
+      {
+        "id": "6-down",
+        "number": 6,
+        "direction": "down",
+        "word": "STAR",
+        "clue": "(i.) yıldız  •  (f.) başrolde oynamak",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "yıldız"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "başrolde oynamak"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 4,
+        "length": 4
+      },
+      {
+        "id": "7-down",
+        "number": 7,
+        "direction": "down",
+        "word": "TENT",
+        "clue": "(i.) çadır",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "çadır"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 5,
         "length": 4
       }
     ]
@@ -2277,6 +4341,400 @@ export const PUZZLES: PuzzleDefinition[] = [
     ]
   },
   {
+    "id": "b1-5x5-4",
+    "title": "Zeka & Yetenek Gelişimi",
+    "level": "B1",
+    "size": 5,
+    "description": "Zeka, kişisel beceri, demir irade ve daha fazlası.",
+    "clues": [
+      {
+        "id": "1-across",
+        "number": 1,
+        "direction": "across",
+        "word": "SMART",
+        "clue": "(s.) akıllı, zeki, şık",
+        "senses": [
+          {
+            "pos": "s.",
+            "posName": "Sıfat",
+            "meaning": "akıllı, zeki, şık"
+          }
+        ],
+        "partOfSpeech": "s.",
+        "partOfSpeechName": "Sıfat",
+        "row": 0,
+        "col": 0,
+        "length": 5
+      },
+      {
+        "id": "1-down",
+        "number": 1,
+        "direction": "down",
+        "word": "SKILL",
+        "clue": "(i.) beceri, maharet, uzmanlık",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "beceri, maharet, uzmanlık"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 0,
+        "length": 5
+      },
+      {
+        "id": "2-across",
+        "number": 2,
+        "direction": "across",
+        "word": "IRON",
+        "clue": "(i.) demir madeni; ütü  •  (f.) ütülemek  •  (s.) demirden, çok sert, katı",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "demir madeni; ütü"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "ütülemek"
+          },
+          {
+            "pos": "s.",
+            "posName": "Sıfat",
+            "meaning": "demirden, çok sert, katı"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 2,
+        "col": 0,
+        "length": 4
+      },
+      {
+        "id": "3-down",
+        "number": 3,
+        "direction": "down",
+        "word": "MORE",
+        "clue": "(i.) Daha çok, daha fazla veya ziyade",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Daha çok, daha fazla veya ziyade"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 1,
+        "length": 4
+      },
+      {
+        "id": "4-down",
+        "number": 4,
+        "direction": "down",
+        "word": "AGO",
+        "clue": "(i.) Geçmişte kalan zaman veya önce",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Geçmişte kalan zaman veya önce"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 2,
+        "length": 3
+      },
+      {
+        "id": "5-down",
+        "number": 5,
+        "direction": "down",
+        "word": "RUN",
+        "clue": "(i.) Koşmak, yönetmek veya işletmek",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Koşmak, yönetmek veya işletmek"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 3,
+        "length": 3
+      }
+    ]
+  },
+  {
+    "id": "b1-5x5-5",
+    "title": "Fiyat & Mal Varlığı",
+    "level": "B1",
+    "size": 5,
+    "description": "Ürün fiyatı, ödenmiş bedel, madde ve piyasa kalemi.",
+    "clues": [
+      {
+        "id": "1-across",
+        "number": 1,
+        "direction": "across",
+        "word": "PRICE",
+        "clue": "(i.) fiyat, bedel, eder  •  (f.) fiyat belirlemek",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "fiyat, bedel, eder"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "fiyat belirlemek"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 0,
+        "length": 5
+      },
+      {
+        "id": "1-down",
+        "number": 1,
+        "direction": "down",
+        "word": "PAID",
+        "clue": "(i.) Ödemesi yapılmış, tahsil edilmiş borç",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Ödemesi yapılmış, tahsil edilmiş borç"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 0,
+        "length": 4
+      },
+      {
+        "id": "2-across",
+        "number": 2,
+        "direction": "across",
+        "word": "ITEM",
+        "clue": "(i.) Listelenen madde, mal kalemi veya eşya",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Listelenen madde, mal kalemi veya eşya"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 2,
+        "col": 0,
+        "length": 4
+      },
+      {
+        "id": "3-down",
+        "number": 3,
+        "direction": "down",
+        "word": "RAT",
+        "clue": "(i.) Kemirgen fare veya deneme hayvanı",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Kemirgen fare veya deneme hayvanı"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 1,
+        "length": 3
+      },
+      {
+        "id": "4-down",
+        "number": 4,
+        "direction": "down",
+        "word": "ICE",
+        "clue": "(i.) buz; dondurma  •  (f.) buzlanmak; buzla kaplamak",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "buz; dondurma"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "buzlanmak; buzla kaplamak"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 2,
+        "length": 3
+      },
+      {
+        "id": "5-down",
+        "number": 5,
+        "direction": "down",
+        "word": "CAM",
+        "clue": "(i.) Kamera veya mekanik mil parçası",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Kamera veya mekanik mil parçası"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 3,
+        "length": 3
+      }
+    ]
+  },
+  {
+    "id": "b1-5x5-6",
+    "title": "Yalın Gerçekler & Gönderim",
+    "level": "B1",
+    "size": 5,
+    "description": "Yalın gerçek, mektup göndermek ve koşu.",
+    "clues": [
+      {
+        "id": "1-across",
+        "number": 1,
+        "direction": "across",
+        "word": "BARE",
+        "clue": "(i.) Yalın, örtüsüz, çıplak veya sade",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Yalın, örtüsüz, çıplak veya sade"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 0,
+        "length": 4
+      },
+      {
+        "id": "1-down",
+        "number": 1,
+        "direction": "down",
+        "word": "BUS",
+        "clue": "(i.) Yolcu taşıyan şehirlerarası otobüs",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Yolcu taşıyan şehirlerarası otobüs"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 0,
+        "length": 3
+      },
+      {
+        "id": "2-across",
+        "number": 2,
+        "direction": "across",
+        "word": "SEND",
+        "clue": "(i.) Belge veya paketi hedefe göndermek",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Belge veya paketi hedefe göndermek"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 2,
+        "col": 0,
+        "length": 4
+      },
+      {
+        "id": "3-down",
+        "number": 3,
+        "direction": "down",
+        "word": "ATE",
+        "clue": "(i.) Besin aldı (eat geçmişi)",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Besin aldı (eat geçmişi)"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 1,
+        "length": 3
+      },
+      {
+        "id": "4-down",
+        "number": 4,
+        "direction": "down",
+        "word": "RAN",
+        "clue": "(i.) Hızla koştu (run eyleminin geçmiş hali)",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Hızla koştu (run eyleminin geçmiş hali)"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 2,
+        "length": 3
+      },
+      {
+        "id": "5-down",
+        "number": 5,
+        "direction": "down",
+        "word": "END",
+        "clue": "(i.) son, uç, bitiş  •  (f.) bitirmek, sona ermek",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "son, uç, bitiş"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "bitirmek, sona ermek"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 3,
+        "length": 3
+      }
+    ]
+  },
+  {
     "id": "b1-6x6-1",
     "title": "Toplum & İletişim",
     "level": "B1",
@@ -2510,6 +4968,429 @@ export const PUZZLES: PuzzleDefinition[] = [
     ]
   },
   {
+    "id": "b1-6x6-3",
+    "title": "Sistem & Denetim",
+    "level": "B1",
+    "size": 6,
+    "description": "Bilişim sistemi, ölçekleme, hesap denetimi ve süreçler.",
+    "clues": [
+      {
+        "id": "1-across",
+        "number": 1,
+        "direction": "across",
+        "word": "SYSTEM",
+        "clue": "(i.) sistem, düzen, mekanizma",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "sistem, düzen, mekanizma"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 0,
+        "length": 6
+      },
+      {
+        "id": "1-down",
+        "number": 1,
+        "direction": "down",
+        "word": "SCALE",
+        "clue": "(i.) ölçek; terazi, tartı; balık pulu  •  (f.) tırmanmak; ölçeklendirmek",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "ölçek; terazi, tartı; balık pulu"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "tırmanmak; ölçeklendirmek"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 0,
+        "length": 5
+      },
+      {
+        "id": "2-across",
+        "number": 2,
+        "direction": "across",
+        "word": "AUDIT",
+        "clue": "(i.) denetim, teftiş, hesap incelemesi  •  (f.) denetlemek, teftiş etmek",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "denetim, teftiş, hesap incelemesi"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "denetlemek, teftiş etmek"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 2,
+        "col": 0,
+        "length": 5
+      },
+      {
+        "id": "3-down",
+        "number": 3,
+        "direction": "down",
+        "word": "SAD",
+        "clue": "(i.) Üzüntülü veya kederli durum",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Üzüntülü veya kederli durum"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 2,
+        "length": 3
+      },
+      {
+        "id": "4-down",
+        "number": 4,
+        "direction": "down",
+        "word": "TRIP",
+        "clue": "(i.) gezi, seyahat, yolculuk  •  (f.) tökezlemek",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "gezi, seyahat, yolculuk"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "tökezlemek"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 3,
+        "length": 4
+      },
+      {
+        "id": "5-down",
+        "number": 5,
+        "direction": "down",
+        "word": "EAT",
+        "clue": "(i.) Tüketmek veya beslenmek",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Tüketmek veya beslenmek"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 4,
+        "length": 3
+      }
+    ]
+  },
+  {
+    "id": "b1-6x6-4",
+    "title": "Zanaat & Dünya Mirası",
+    "level": "B1",
+    "size": 6,
+    "description": "El sanatı, zanaat, yerküre ve berrak zihin.",
+    "clues": [
+      {
+        "id": "1-across",
+        "number": 1,
+        "direction": "across",
+        "word": "CRAFT",
+        "clue": "(i.) zanaat, el sanatı, beceri; taşıt  •  (f.) özenle yapmak",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "zanaat, el sanatı, beceri; taşıt"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "özenle yapmak"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 0,
+        "length": 5
+      },
+      {
+        "id": "1-down",
+        "number": 1,
+        "direction": "down",
+        "word": "CLEAR",
+        "clue": "(s.) berrak, açık, net, belirgin  •  (f.) temizlemek, açmak, aklamak",
+        "senses": [
+          {
+            "pos": "s.",
+            "posName": "Sıfat",
+            "meaning": "berrak, açık, net, belirgin"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "temizlemek, açmak, aklamak"
+          }
+        ],
+        "partOfSpeech": "s.",
+        "partOfSpeechName": "Sıfat",
+        "row": 0,
+        "col": 0,
+        "length": 5
+      },
+      {
+        "id": "2-across",
+        "number": 2,
+        "direction": "across",
+        "word": "EARTH",
+        "clue": "(i.) dünya, yeryüzü; toprak; topraklama",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "dünya, yeryüzü; toprak; topraklama"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 2,
+        "col": 0,
+        "length": 5
+      },
+      {
+        "id": "3-down",
+        "number": 3,
+        "direction": "down",
+        "word": "READ",
+        "clue": "(i.) Kitap veya metin okuyarak anlamak",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Kitap veya metin okuyarak anlamak"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 1,
+        "length": 4
+      },
+      {
+        "id": "4-down",
+        "number": 4,
+        "direction": "down",
+        "word": "AIR",
+        "clue": "(i.) hava, atmosfer  •  (f.) havalandırmak",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "hava, atmosfer"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "havalandırmak"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 2,
+        "length": 3
+      },
+      {
+        "id": "5-down",
+        "number": 5,
+        "direction": "down",
+        "word": "FAT",
+        "clue": "(i.) Şişman, dolgun veya vücut yağı",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Şişman, dolgun veya vücut yağı"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 3,
+        "length": 3
+      }
+    ]
+  },
+  {
+    "id": "b1-6x6-5",
+    "title": "Edebi Yazı & Ağaç Gölgesi",
+    "level": "B1",
+    "size": 6,
+    "description": "Mektup yazmak, giyinmek, oranlar ve ulu ağaçlar.",
+    "clues": [
+      {
+        "id": "1-across",
+        "number": 1,
+        "direction": "across",
+        "word": "WROTE",
+        "clue": "(i.) Kalemle kağıda döktü, yazdı (write geçmişi)",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Kalemle kağıda döktü, yazdı (write geçmişi)"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 0,
+        "length": 5
+      },
+      {
+        "id": "1-down",
+        "number": 1,
+        "direction": "down",
+        "word": "WORE",
+        "clue": "(i.) Kıyafet giyindi (wear eyleminin geçmişi)",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Kıyafet giyindi (wear eyleminin geçmişi)"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 0,
+        "length": 4
+      },
+      {
+        "id": "2-across",
+        "number": 2,
+        "direction": "across",
+        "word": "RATES",
+        "clue": "(i.) İstatistiksel oranlar veya döviz kurları",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "İstatistiksel oranlar veya döviz kurları"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 2,
+        "col": 0,
+        "length": 5
+      },
+      {
+        "id": "3-down",
+        "number": 3,
+        "direction": "down",
+        "word": "READ",
+        "clue": "(i.) Metni gözle takip ederek okumak",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Metni gözle takip ederek okumak"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 1,
+        "length": 4
+      },
+      {
+        "id": "4-down",
+        "number": 4,
+        "direction": "down",
+        "word": "ONTO",
+        "clue": "(i.) Bir zemin üzerine intikal etmek",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Bir zemin üzerine intikal etmek"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 2,
+        "length": 4
+      },
+      {
+        "id": "5-down",
+        "number": 5,
+        "direction": "down",
+        "word": "TREE",
+        "clue": "(i.) ağaç",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "ağaç"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 3,
+        "length": 4
+      },
+      {
+        "id": "6-down",
+        "number": 6,
+        "direction": "down",
+        "word": "EASY",
+        "clue": "(s.) kolay, zahmetsiz, rahat, uysal  •  (zf.) yavaşça, sakince",
+        "senses": [
+          {
+            "pos": "s.",
+            "posName": "Sıfat",
+            "meaning": "kolay, zahmetsiz, rahat, uysal"
+          },
+          {
+            "pos": "zf.",
+            "posName": "Zarf",
+            "meaning": "yavaşça, sakince"
+          }
+        ],
+        "partOfSpeech": "s.",
+        "partOfSpeechName": "Sıfat",
+        "row": 0,
+        "col": 4,
+        "length": 4
+      }
+    ]
+  },
+  {
     "id": "b1-7x7-1",
     "title": "Bilim & Keşifler",
     "level": "B1",
@@ -2720,6 +5601,309 @@ export const PUZZLES: PuzzleDefinition[] = [
         "row": 2,
         "col": 0,
         "length": 6
+      }
+    ]
+  },
+  {
+    "id": "b1-7x7-3",
+    "title": "Liderlik & Çalışma",
+    "level": "B1",
+    "size": 7,
+    "description": "Vizyoner lider, emek, kısa brifing ve dönüm ekseni.",
+    "clues": [
+      {
+        "id": "1-across",
+        "number": 1,
+        "direction": "across",
+        "word": "LEADER",
+        "clue": "(i.) lider, önder, rehber",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "lider, önder, rehber"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 0,
+        "length": 6
+      },
+      {
+        "id": "1-down",
+        "number": 1,
+        "direction": "down",
+        "word": "LABOR",
+        "clue": "(i.) Zihinsel veya bedensel emek, iş gücü",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Zihinsel veya bedensel emek, iş gücü"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 0,
+        "length": 5
+      },
+      {
+        "id": "2-across",
+        "number": 2,
+        "direction": "across",
+        "word": "BRIEF",
+        "clue": "(i.) Kısa, öz ve net bilgilendirme toplantısı",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Kısa, öz ve net bilgilendirme toplantısı"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 2,
+        "col": 0,
+        "length": 5
+      },
+      {
+        "id": "3-down",
+        "number": 3,
+        "direction": "down",
+        "word": "EAR",
+        "clue": "(i.) Dinleme ve algı organı kulak",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Dinleme ve algı organı kulak"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 1,
+        "length": 3
+      },
+      {
+        "id": "4-down",
+        "number": 4,
+        "direction": "down",
+        "word": "AXIS",
+        "clue": "(i.) Dönme ekseni, mihver veya ana hat",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Dönme ekseni, mihver veya ana hat"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 2,
+        "length": 4
+      },
+      {
+        "id": "5-down",
+        "number": 5,
+        "direction": "down",
+        "word": "DIE",
+        "clue": "(i.) Zar veya sona ermek",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Zar veya sona ermek"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 3,
+        "length": 3
+      },
+      {
+        "id": "6-down",
+        "number": 6,
+        "direction": "down",
+        "word": "ELF",
+        "clue": "(i.) Mitolojik peri veya minik varlık",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Mitolojik peri veya minik varlık"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 4,
+        "length": 3
+      }
+    ]
+  },
+  {
+    "id": "b1-7x7-4",
+    "title": "Doğa Kanunları & Seçkin Bilgeler",
+    "level": "B1",
+    "size": 7,
+    "description": "Doğanın dengesi, araştırma yapmak ve dış dünya.",
+    "clues": [
+      {
+        "id": "1-across",
+        "number": 1,
+        "direction": "across",
+        "word": "CHOSEN",
+        "clue": "(i.) Özel yeteneklerle seçilmiş, seçkin kişi",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Özel yeteneklerle seçilmiş, seçkin kişi"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 0,
+        "length": 6
+      },
+      {
+        "id": "1-down",
+        "number": 1,
+        "direction": "down",
+        "word": "CANAL",
+        "clue": "(i.) İnsan eliyle açılan yapay su kanalı",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "İnsan eliyle açılan yapay su kanalı"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 0,
+        "length": 5
+      },
+      {
+        "id": "2-across",
+        "number": 2,
+        "direction": "across",
+        "word": "NATURE",
+        "clue": "(i.) Yaban hayatı, ekosistem ve ulu doğa",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Yaban hayatı, ekosistem ve ulu doğa"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 2,
+        "col": 0,
+        "length": 6
+      },
+      {
+        "id": "3-down",
+        "number": 3,
+        "direction": "down",
+        "word": "HEARD",
+        "clue": "(i.) Kulağına çalındı, duydu (hear geçmişi)",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Kulağına çalındı, duydu (hear geçmişi)"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 1,
+        "length": 5
+      },
+      {
+        "id": "4-down",
+        "number": 4,
+        "direction": "down",
+        "word": "OUTER",
+        "clue": "(i.) Merkezin dışındaki, harici veya dışsal",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Merkezin dışındaki, harici veya dışsal"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 2,
+        "length": 5
+      },
+      {
+        "id": "5-down",
+        "number": 5,
+        "direction": "down",
+        "word": "STUDY",
+        "clue": "(i.) Derinlemesine ders çalışmak ve inceleme",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Derinlemesine ders çalışmak ve inceleme"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 3,
+        "length": 5
+      },
+      {
+        "id": "6-down",
+        "number": 6,
+        "direction": "down",
+        "word": "ERROR",
+        "clue": "(i.) Hesaplamada ortaya çıkan hata veya yanılgı",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Hesaplamada ortaya çıkan hata veya yanılgı"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 4,
+        "length": 5
+      },
+      {
+        "id": "7-down",
+        "number": 7,
+        "direction": "down",
+        "word": "NEEDS",
+        "clue": "(i.) Zorunlu ihtiyaçlar ve temel gereksinimler",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Zorunlu ihtiyaçlar ve temel gereksinimler"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 5,
+        "length": 5
       }
     ]
   },
@@ -3081,2424 +6265,6 @@ export const PUZZLES: PuzzleDefinition[] = [
     ]
   },
   {
-    "id": "b2-6x6-1",
-    "title": "Liderlik & Vizyon",
-    "level": "B2",
-    "size": 6,
-    "description": "Kalıcı etki bırakma, stratejik yatırım, ilkeler ve kurumsal değerler.",
-    "clues": [
-      {
-        "id": "1-across",
-        "number": 1,
-        "direction": "across",
-        "word": "IMPACT",
-        "clue": "(i.) etki, tesir; çarpma, vuruş  •  (f.) etkilemek; çarpmak",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "etki, tesir; çarpma, vuruş"
-          },
-          {
-            "pos": "f.",
-            "posName": "Fiil",
-            "meaning": "etkilemek; çarpmak"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 0,
-        "length": 6
-      },
-      {
-        "id": "1-down",
-        "number": 1,
-        "direction": "down",
-        "word": "INVEST",
-        "clue": "(f.) yatırım yapmak; emek/zaman ayırmak",
-        "senses": [
-          {
-            "pos": "f.",
-            "posName": "Fiil",
-            "meaning": "yatırım yapmak; emek/zaman ayırmak"
-          }
-        ],
-        "partOfSpeech": "f.",
-        "partOfSpeechName": "Fiil",
-        "row": 0,
-        "col": 0,
-        "length": 6
-      },
-      {
-        "id": "2-down",
-        "number": 2,
-        "direction": "down",
-        "word": "POLICY",
-        "clue": "(i.) politika, ilke, strateji; poliçe",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "politika, ilke, strateji; poliçe"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 2,
-        "length": 6
-      },
-      {
-        "id": "3-down",
-        "number": 3,
-        "direction": "down",
-        "word": "CLEVER",
-        "clue": "(s.) akıllı, zeki, kurnaz, becerikli",
-        "senses": [
-          {
-            "pos": "s.",
-            "posName": "Sıfat",
-            "meaning": "akıllı, zeki, kurnaz, becerikli"
-          }
-        ],
-        "partOfSpeech": "s.",
-        "partOfSpeechName": "Sıfat",
-        "row": 0,
-        "col": 4,
-        "length": 6
-      },
-      {
-        "id": "4-across",
-        "number": 4,
-        "direction": "across",
-        "word": "VALUES",
-        "clue": "(i.) değerler, kıymetler, ahlaki ilkeler  •  (f.) değer vermek, kıymet biçmek",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "değerler, kıymetler, ahlaki ilkeler"
-          },
-          {
-            "pos": "f.",
-            "posName": "Fiil",
-            "meaning": "değer vermek, kıymet biçmek"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 2,
-        "col": 0,
-        "length": 6
-      }
-    ]
-  },
-  {
-    "id": "b2-6x6-2",
-    "title": "Bilişsel Esneklik",
-    "level": "B2",
-    "size": 6,
-    "description": "Mantık yürütme, hafızayı tazeleme, eyleme geçme ve sistematik metot.",
-    "clues": [
-      {
-        "id": "1-across",
-        "number": 1,
-        "direction": "across",
-        "word": "REASON",
-        "clue": "(i.) sebep, neden; akıl, mantık  •  (f.) akıl yürütmek, mantık kurmak",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "sebep, neden; akıl, mantık"
-          },
-          {
-            "pos": "f.",
-            "posName": "Fiil",
-            "meaning": "akıl yürütmek, mantık kurmak"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 0,
-        "length": 6
-      },
-      {
-        "id": "1-down",
-        "number": 1,
-        "direction": "down",
-        "word": "REMIND",
-        "clue": "(f.) hatırlatmak, anımsatmak",
-        "senses": [
-          {
-            "pos": "f.",
-            "posName": "Fiil",
-            "meaning": "hatırlatmak, anımsatmak"
-          }
-        ],
-        "partOfSpeech": "f.",
-        "partOfSpeechName": "Fiil",
-        "row": 0,
-        "col": 0,
-        "length": 6
-      },
-      {
-        "id": "2-down",
-        "number": 2,
-        "direction": "down",
-        "word": "ACTION",
-        "clue": "(i.) eylem, hareket, aksiyon  •  (f.) harekete geçirmek, işleme koymak",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "eylem, hareket, aksiyon"
-          },
-          {
-            "pos": "f.",
-            "posName": "Fiil",
-            "meaning": "harekete geçirmek, işleme koymak"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 2,
-        "length": 6
-      },
-      {
-        "id": "3-down",
-        "number": 3,
-        "direction": "down",
-        "word": "SCHOOL",
-        "clue": "(i.) okul, mektep; ekol; balık sürüsü  •  (f.) eğitmek, yetiştirmek",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "okul, mektep; ekol; balık sürüsü"
-          },
-          {
-            "pos": "f.",
-            "posName": "Fiil",
-            "meaning": "eğitmek, yetiştirmek"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 3,
-        "length": 6
-      },
-      {
-        "id": "4-across",
-        "number": 4,
-        "direction": "across",
-        "word": "METHOD",
-        "clue": "(i.) yöntem, metot, usul, yol",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "yöntem, metot, usul, yol"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 2,
-        "col": 0,
-        "length": 6
-      }
-    ]
-  },
-  {
-    "id": "b2-7x7-1",
-    "title": "Küresel Ekonomi & İklim",
-    "level": "B2",
-    "size": 7,
-    "description": "İklim dinamikleri, küresel sermaye, yetenek yönetimi ve kurumsal profil.",
-    "clues": [
-      {
-        "id": "1-across",
-        "number": 1,
-        "direction": "across",
-        "word": "CLIMATE",
-        "clue": "(i.) iklim, hava şartları, genel ortam",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "iklim, hava şartları, genel ortam"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 0,
-        "length": 7
-      },
-      {
-        "id": "1-down",
-        "number": 1,
-        "direction": "down",
-        "word": "CAPITAL",
-        "clue": "(i.) başkent; sermaye, anapara; büyük harf  •  (s.) başlıca, temel, büyük",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "başkent; sermaye, anapara; büyük harf"
-          },
-          {
-            "pos": "s.",
-            "posName": "Sıfat",
-            "meaning": "başlıca, temel, büyük"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 0,
-        "length": 7
-      },
-      {
-        "id": "2-down",
-        "number": 2,
-        "direction": "down",
-        "word": "IRONIC",
-        "clue": "(s.) alaylı, kinayeli, ironik",
-        "senses": [
-          {
-            "pos": "s.",
-            "posName": "Sıfat",
-            "meaning": "alaylı, kinayeli, ironik"
-          }
-        ],
-        "partOfSpeech": "s.",
-        "partOfSpeechName": "Sıfat",
-        "row": 0,
-        "col": 2,
-        "length": 6
-      },
-      {
-        "id": "3-down",
-        "number": 3,
-        "direction": "down",
-        "word": "ABILITY",
-        "clue": "(i.) yetenek, kabiliyet, beceri",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "yetenek, kabiliyet, beceri"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 4,
-        "length": 7
-      },
-      {
-        "id": "4-across",
-        "number": 4,
-        "direction": "across",
-        "word": "PROFILE",
-        "clue": "(i.) profil, tanıtım, yan görünüş  •  (f.) profilini çıkarmak, tanıtmak",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "profil, tanıtım, yan görünüş"
-          },
-          {
-            "pos": "f.",
-            "posName": "Fiil",
-            "meaning": "profilini çıkarmak, tanıtmak"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 2,
-        "col": 0,
-        "length": 7
-      }
-    ]
-  },
-  {
-    "id": "b2-7x7-2",
-    "title": "Felsefe & Adalet",
-    "level": "B2",
-    "size": 7,
-    "description": "Kültür mirası, soyut kavramlar, uluslar ve en güncel ilkeler.",
-    "clues": [
-      {
-        "id": "1-across",
-        "number": 1,
-        "direction": "across",
-        "word": "CULTURE",
-        "clue": "(i.) kültür, ekin; tarım  •  (f.) kültüre almak, yetiştirmek",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "kültür, ekin; tarım"
-          },
-          {
-            "pos": "f.",
-            "posName": "Fiil",
-            "meaning": "kültüre almak, yetiştirmek"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 0,
-        "length": 7
-      },
-      {
-        "id": "1-down",
-        "number": 1,
-        "direction": "down",
-        "word": "CONCEPT",
-        "clue": "(i.) kavram, fikir, genel anlayış",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "kavram, fikir, genel anlayış"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 0,
-        "length": 7
-      },
-      {
-        "id": "2-down",
-        "number": 2,
-        "direction": "down",
-        "word": "LATEST",
-        "clue": "(s.) en son, en yeni, son çıkan  •  (zf.) en geç",
-        "senses": [
-          {
-            "pos": "s.",
-            "posName": "Sıfat",
-            "meaning": "en son, en yeni, son çıkan"
-          },
-          {
-            "pos": "zf.",
-            "posName": "Zarf",
-            "meaning": "en geç"
-          }
-        ],
-        "partOfSpeech": "s.",
-        "partOfSpeechName": "Sıfat",
-        "row": 0,
-        "col": 2,
-        "length": 6
-      },
-      {
-        "id": "3-down",
-        "number": 3,
-        "direction": "down",
-        "word": "RUNNER",
-        "clue": "(i.) koşucu; masa örtüsü (runner)",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "koşucu; masa örtüsü (runner)"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 5,
-        "length": 6
-      },
-      {
-        "id": "4-across",
-        "number": 4,
-        "direction": "across",
-        "word": "NATIONS",
-        "clue": "(i.) uluslar, milletler, devletler",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "uluslar, milletler, devletler"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 2,
-        "col": 0,
-        "length": 7
-      }
-    ]
-  },
-  {
-    "id": "a1-5x5-4",
-    "title": "Masa & Okuma",
-    "level": "A1",
-    "size": 5,
-    "description": "Çalışma masası, kitaplar, anlaşma ve dinlenme parkı.",
-    "clues": [
-      {
-        "id": "1-across",
-        "number": 1,
-        "direction": "across",
-        "word": "DEAL",
-        "clue": "(i.) anlaşma, uzlaşma, pazarlık  •  (f.) ilgilenmek, dağıtmak, ticaret yapmak",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "anlaşma, uzlaşma, pazarlık"
-          },
-          {
-            "pos": "f.",
-            "posName": "Fiil",
-            "meaning": "ilgilenmek, dağıtmak, ticaret yapmak"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 0,
-        "length": 4
-      },
-      {
-        "id": "1-down",
-        "number": 1,
-        "direction": "down",
-        "word": "DIP",
-        "clue": "(f.) batırmak, daldırmak  •  (i.) düşüş, sos",
-        "senses": [
-          {
-            "pos": "f.",
-            "posName": "Fiil",
-            "meaning": "batırmak, daldırmak"
-          },
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "düşüş, sos"
-          }
-        ],
-        "partOfSpeech": "f.",
-        "partOfSpeechName": "Fiil",
-        "row": 0,
-        "col": 0,
-        "length": 3
-      },
-      {
-        "id": "2-across",
-        "number": 2,
-        "direction": "across",
-        "word": "PARK",
-        "clue": "(i.) park, yeşil alan  •  (f.) araba park etmek",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "park, yeşil alan"
-          },
-          {
-            "pos": "f.",
-            "posName": "Fiil",
-            "meaning": "araba park etmek"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 2,
-        "col": 0,
-        "length": 4
-      },
-      {
-        "id": "3-down",
-        "number": 3,
-        "direction": "down",
-        "word": "ERA",
-        "clue": "(i.) çağ, devir, dönem",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "çağ, devir, dönem"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 1,
-        "length": 3
-      },
-      {
-        "id": "4-down",
-        "number": 4,
-        "direction": "down",
-        "word": "LIKE",
-        "clue": "(f.) beğenmek, hoşlanmak  •  (e.) gibi, benzer",
-        "senses": [
-          {
-            "pos": "f.",
-            "posName": "Fiil",
-            "meaning": "beğenmek, hoşlanmak"
-          },
-          {
-            "pos": "e.",
-            "posName": "Edat",
-            "meaning": "gibi, benzer"
-          }
-        ],
-        "partOfSpeech": "f.",
-        "partOfSpeechName": "Fiil",
-        "row": 0,
-        "col": 3,
-        "length": 4
-      }
-    ]
-  },
-  {
-    "id": "a1-5x5-5",
-    "title": "Şehir & Zaman",
-    "level": "A1",
-    "size": 5,
-    "description": "Evcil hayvan kedi, araba, oda, geçmiş zaman ve sayılar.",
-    "clues": [
-      {
-        "id": "1-across",
-        "number": 1,
-        "direction": "across",
-        "word": "CAT",
-        "clue": "(i.) Evcil sevimli kedi",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "Evcil sevimli kedi"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 0,
-        "length": 3
-      },
-      {
-        "id": "1-down",
-        "number": 1,
-        "direction": "down",
-        "word": "CAR",
-        "clue": "(i.) Ulaşımda kullanılan otomobil veya araba",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "Ulaşımda kullanılan otomobil veya araba"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 0,
-        "length": 3
-      },
-      {
-        "id": "2-across",
-        "number": 2,
-        "direction": "across",
-        "word": "ROOM",
-        "clue": "(i.) oda; yer, boşluk",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "oda; yer, boşluk"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 2,
-        "col": 0,
-        "length": 4
-      },
-      {
-        "id": "3-down",
-        "number": 3,
-        "direction": "down",
-        "word": "AGO",
-        "clue": "(i.) Önce, geçmişte kalan zaman dilimi",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "Önce, geçmişte kalan zaman dilimi"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 1,
-        "length": 3
-      },
-      {
-        "id": "4-down",
-        "number": 4,
-        "direction": "down",
-        "word": "TWO",
-        "clue": "(i.) Birden sonra gelen çift sayı (2)",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "Birden sonra gelen çift sayı (2)"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 2,
-        "length": 3
-      }
-    ]
-  },
-  {
-    "id": "a1-6x6-3",
-    "title": "Gökyüzü & Ağaçlar",
-    "level": "A1",
-    "size": 6,
-    "description": "Ağaç, gece parlayan ay, ev çatısı ve zaman kavramı.",
-    "clues": [
-      {
-        "id": "1-across",
-        "number": 1,
-        "direction": "across",
-        "word": "TREE",
-        "clue": "(i.) ağaç",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "ağaç"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 0,
-        "length": 4
-      },
-      {
-        "id": "1-down",
-        "number": 1,
-        "direction": "down",
-        "word": "TIME",
-        "clue": "(i.) Geçen saatler, vakit veya zaman",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "Geçen saatler, vakit veya zaman"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 0,
-        "length": 4
-      },
-      {
-        "id": "2-across",
-        "number": 2,
-        "direction": "across",
-        "word": "MOON",
-        "clue": "(i.) ay",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "ay"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 2,
-        "col": 0,
-        "length": 4
-      },
-      {
-        "id": "3-down",
-        "number": 3,
-        "direction": "down",
-        "word": "ROOF",
-        "clue": "(i.) çatı, tavan",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "çatı, tavan"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 1,
-        "length": 4
-      },
-      {
-        "id": "4-down",
-        "number": 4,
-        "direction": "down",
-        "word": "EGO",
-        "clue": "(i.) Benlik, gurur veya kişinin kendi bilinci",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "Benlik, gurur veya kişinin kendi bilinci"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 2,
-        "length": 3
-      }
-    ]
-  },
-  {
-    "id": "a1-6x6-4",
-    "title": "Kış & Sanat",
-    "level": "A1",
-    "size": 6,
-    "description": "Kışın yağan kar, parlayan yıldız, kuzey yönü ve sanat.",
-    "clues": [
-      {
-        "id": "1-across",
-        "number": 1,
-        "direction": "across",
-        "word": "SNOW",
-        "clue": "(i.) kar  •  (f.) kar yağmak",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "kar"
-          },
-          {
-            "pos": "f.",
-            "posName": "Fiil",
-            "meaning": "kar yağmak"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 0,
-        "length": 4
-      },
-      {
-        "id": "1-down",
-        "number": 1,
-        "direction": "down",
-        "word": "STAR",
-        "clue": "(i.) yıldız  •  (f.) başrolde oynamak",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "yıldız"
-          },
-          {
-            "pos": "f.",
-            "posName": "Fiil",
-            "meaning": "başrolde oynamak"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 0,
-        "length": 4
-      },
-      {
-        "id": "2-across",
-        "number": 2,
-        "direction": "across",
-        "word": "ART",
-        "clue": "(i.) Resim, heykel ve yaratıcı güzel sanatlar",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "Resim, heykel ve yaratıcı güzel sanatlar"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 2,
-        "col": 0,
-        "length": 3
-      },
-      {
-        "id": "3-down",
-        "number": 3,
-        "direction": "down",
-        "word": "NORTH",
-        "clue": "(i.) kuzey yönü  •  (s.) kuzeydeki, kuzey  •  (zf.) kuzeye doğru",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "kuzey yönü"
-          },
-          {
-            "pos": "s.",
-            "posName": "Sıfat",
-            "meaning": "kuzeydeki, kuzey"
-          },
-          {
-            "pos": "zf.",
-            "posName": "Zarf",
-            "meaning": "kuzeye doğru"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 1,
-        "length": 5
-      },
-      {
-        "id": "4-down",
-        "number": 4,
-        "direction": "down",
-        "word": "OUT",
-        "clue": "(i.) Dışarı, hariç veya dışarıda",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "Dışarı, hariç veya dışarıda"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 2,
-        "length": 3
-      }
-    ]
-  },
-  {
-    "id": "a1-7x7-3",
-    "title": "Gündüz & Gece Işığı",
-    "level": "A1",
-    "size": 7,
-    "description": "Güneş ışığı, gece karanlığı, eylem, öğrenme ve sayılar.",
-    "clues": [
-      {
-        "id": "1-across",
-        "number": 1,
-        "direction": "across",
-        "word": "LIGHT",
-        "clue": "(i.) ışık, aydınlık  •  (s.) hafif; açık renkli  •  (f.) yakmak, aydınlatmak",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "ışık, aydınlık"
-          },
-          {
-            "pos": "s.",
-            "posName": "Sıfat",
-            "meaning": "hafif; açık renkli"
-          },
-          {
-            "pos": "f.",
-            "posName": "Fiil",
-            "meaning": "yakmak, aydınlatmak"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 0,
-        "length": 5
-      },
-      {
-        "id": "1-down",
-        "number": 1,
-        "direction": "down",
-        "word": "LEARN",
-        "clue": "(f.) öğrenmek, bilgi edinmek",
-        "senses": [
-          {
-            "pos": "f.",
-            "posName": "Fiil",
-            "meaning": "öğrenmek, bilgi edinmek"
-          }
-        ],
-        "partOfSpeech": "f.",
-        "partOfSpeechName": "Fiil",
-        "row": 0,
-        "col": 0,
-        "length": 5
-      },
-      {
-        "id": "2-across",
-        "number": 2,
-        "direction": "across",
-        "word": "ACTION",
-        "clue": "(i.) eylem, hareket, aksiyon  •  (f.) harekete geçirmek, işleme koymak",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "eylem, hareket, aksiyon"
-          },
-          {
-            "pos": "f.",
-            "posName": "Fiil",
-            "meaning": "harekete geçirmek, işleme koymak"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 2,
-        "col": 0,
-        "length": 6
-      },
-      {
-        "id": "3-across",
-        "number": 3,
-        "direction": "across",
-        "word": "NIGHT",
-        "clue": "(i.) gece",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "gece"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 4,
-        "col": 0,
-        "length": 5
-      },
-      {
-        "id": "4-down",
-        "number": 4,
-        "direction": "down",
-        "word": "GET",
-        "clue": "(i.) Elde etmek, almak veya varmak",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "Elde etmek, almak veya varmak"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 2,
-        "length": 3
-      },
-      {
-        "id": "5-down",
-        "number": 5,
-        "direction": "down",
-        "word": "TWO",
-        "clue": "(i.) Birden sonraki çift sayı (2)",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "Birden sonraki çift sayı (2)"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 4,
-        "length": 3
-      }
-    ]
-  },
-  {
-    "id": "a2-5x5-4",
-    "title": "Gezi & Seyahat Turu",
-    "level": "A2",
-    "size": 5,
-    "description": "Tur, seyahat, bir kere deneyimleme ve buz.",
-    "clues": [
-      {
-        "id": "1-across",
-        "number": 1,
-        "direction": "across",
-        "word": "TOUR",
-        "clue": "(i.) tur, gezi  •  (f.) turlamak, gezmek",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "tur, gezi"
-          },
-          {
-            "pos": "f.",
-            "posName": "Fiil",
-            "meaning": "turlamak, gezmek"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 0,
-        "length": 4
-      },
-      {
-        "id": "1-down",
-        "number": 1,
-        "direction": "down",
-        "word": "TRIP",
-        "clue": "(i.) gezi, seyahat, yolculuk  •  (f.) tökezlemek",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "gezi, seyahat, yolculuk"
-          },
-          {
-            "pos": "f.",
-            "posName": "Fiil",
-            "meaning": "tökezlemek"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 0,
-        "length": 4
-      },
-      {
-        "id": "2-across",
-        "number": 2,
-        "direction": "across",
-        "word": "ICE",
-        "clue": "(i.) buz; dondurma  •  (f.) buzlanmak; buzla kaplamak",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "buz; dondurma"
-          },
-          {
-            "pos": "f.",
-            "posName": "Fiil",
-            "meaning": "buzlanmak; buzla kaplamak"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 2,
-        "col": 0,
-        "length": 3
-      },
-      {
-        "id": "3-down",
-        "number": 3,
-        "direction": "down",
-        "word": "ONCE",
-        "clue": "(i.) Bir zamanlar veya bir kere",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "Bir zamanlar veya bir kere"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 1,
-        "length": 4
-      },
-      {
-        "id": "4-down",
-        "number": 4,
-        "direction": "down",
-        "word": "USE",
-        "clue": "(i.) Kullanmak, faydalanmak veya yararlanmak",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "Kullanmak, faydalanmak veya yararlanmak"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 2,
-        "length": 3
-      }
-    ]
-  },
-  {
-    "id": "a2-5x5-5",
-    "title": "Otel Odası & Dinlenme",
-    "level": "A2",
-    "size": 5,
-    "description": "Dinlenme, otel odası, sipariş vermek ve kulak.",
-    "clues": [
-      {
-        "id": "1-across",
-        "number": 1,
-        "direction": "across",
-        "word": "REST",
-        "clue": "(f.) dinlenmek, mola vermek  •  (i.) dinlenme, istirahat; geri kalan",
-        "senses": [
-          {
-            "pos": "f.",
-            "posName": "Fiil",
-            "meaning": "dinlenmek, mola vermek"
-          },
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "dinlenme, istirahat; geri kalan"
-          }
-        ],
-        "partOfSpeech": "f.",
-        "partOfSpeechName": "Fiil",
-        "row": 0,
-        "col": 0,
-        "length": 4
-      },
-      {
-        "id": "1-down",
-        "number": 1,
-        "direction": "down",
-        "word": "ROOM",
-        "clue": "(i.) oda; yer, boşluk",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "oda; yer, boşluk"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 0,
-        "length": 4
-      },
-      {
-        "id": "2-across",
-        "number": 2,
-        "direction": "across",
-        "word": "ORDER",
-        "clue": "(i.) sipariş; emir, buyruk; düzen, sıra  •  (f.) sipariş etmek; emretmek; düzenlemek",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "sipariş; emir, buyruk; düzen, sıra"
-          },
-          {
-            "pos": "f.",
-            "posName": "Fiil",
-            "meaning": "sipariş etmek; emretmek; düzenlemek"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 2,
-        "col": 0,
-        "length": 5
-      },
-      {
-        "id": "3-down",
-        "number": 3,
-        "direction": "down",
-        "word": "EAR",
-        "clue": "(i.) Sesleri duymaya yarayan kulak",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "Sesleri duymaya yarayan kulak"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 1,
-        "length": 3
-      },
-      {
-        "id": "4-down",
-        "number": 4,
-        "direction": "down",
-        "word": "SAD",
-        "clue": "(i.) Hüzünlü, üzgün veya kederli",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "Hüzünlü, üzgün veya kederli"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 2,
-        "length": 3
-      },
-      {
-        "id": "5-down",
-        "number": 5,
-        "direction": "down",
-        "word": "TIE",
-        "clue": "(i.) Kravat veya bağlamak",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "Kravat veya bağlamak"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 3,
-        "length": 3
-      }
-    ]
-  },
-  {
-    "id": "a2-6x6-3",
-    "title": "Şifa & Bakım",
-    "level": "A2",
-    "size": 6,
-    "description": "Özenle bakım gösterme, tedavi, oda ve beslenme.",
-    "clues": [
-      {
-        "id": "1-across",
-        "number": 1,
-        "direction": "across",
-        "word": "CARE",
-        "clue": "(f.) önemsemek, ilgilenmek  •  (i.) bakım, özen, dikkat",
-        "senses": [
-          {
-            "pos": "f.",
-            "posName": "Fiil",
-            "meaning": "önemsemek, ilgilenmek"
-          },
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "bakım, özen, dikkat"
-          }
-        ],
-        "partOfSpeech": "f.",
-        "partOfSpeechName": "Fiil",
-        "row": 0,
-        "col": 0,
-        "length": 4
-      },
-      {
-        "id": "1-down",
-        "number": 1,
-        "direction": "down",
-        "word": "CURE",
-        "clue": "(i.) Hastalığı iyileştirmek, şifa veya tedavi",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "Hastalığı iyileştirmek, şifa veya tedavi"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 0,
-        "length": 4
-      },
-      {
-        "id": "2-across",
-        "number": 2,
-        "direction": "across",
-        "word": "ROOT",
-        "clue": "(i.) Bitkinin topraktaki kökü veya köken",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "Bitkinin topraktaki kökü veya köken"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 2,
-        "col": 0,
-        "length": 4
-      },
-      {
-        "id": "3-down",
-        "number": 3,
-        "direction": "down",
-        "word": "AGO",
-        "clue": "(i.) Geçmişte veya önce",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "Geçmişte veya önce"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 1,
-        "length": 3
-      },
-      {
-        "id": "4-down",
-        "number": 4,
-        "direction": "down",
-        "word": "ROOM",
-        "clue": "(i.) oda; yer, boşluk",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "oda; yer, boşluk"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 2,
-        "length": 4
-      },
-      {
-        "id": "5-down",
-        "number": 5,
-        "direction": "down",
-        "word": "EAT",
-        "clue": "(i.) Yemek yemek veya beslenmek",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "Yemek yemek veya beslenmek"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 3,
-        "length": 3
-      }
-    ]
-  },
-  {
-    "id": "a2-6x6-4",
-    "title": "Haber & Basın Medyası",
-    "level": "A2",
-    "size": 6,
-    "description": "Güncel haberler, geniş medya organları, isim ve bakış.",
-    "clues": [
-      {
-        "id": "1-across",
-        "number": 1,
-        "direction": "across",
-        "word": "NEWS",
-        "clue": "(i.) haberler, havadis",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "haberler, havadis"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 0,
-        "length": 4
-      },
-      {
-        "id": "1-down",
-        "number": 1,
-        "direction": "down",
-        "word": "NAME",
-        "clue": "(i.) Kişi veya kuruma verilen isim, ad",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "Kişi veya kuruma verilen isim, ad"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 0,
-        "length": 4
-      },
-      {
-        "id": "2-across",
-        "number": 2,
-        "direction": "across",
-        "word": "MEDIA",
-        "clue": "(i.) medya, basın-yayın",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "medya, basın-yayın"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 2,
-        "col": 0,
-        "length": 5
-      },
-      {
-        "id": "3-down",
-        "number": 3,
-        "direction": "down",
-        "word": "EYE",
-        "clue": "(i.) göz; görme duyusu; bakış  •  (f.) göz dikmek, süzmek, dikkatle bakmak",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "göz; görme duyusu; bakış"
-          },
-          {
-            "pos": "f.",
-            "posName": "Fiil",
-            "meaning": "göz dikmek, süzmek, dikkatle bakmak"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 1,
-        "length": 3
-      },
-      {
-        "id": "4-down",
-        "number": 4,
-        "direction": "down",
-        "word": "WIDE",
-        "clue": "(i.) Geniş, kapsamlı veya ferah",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "Geniş, kapsamlı veya ferah"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 2,
-        "length": 4
-      },
-      {
-        "id": "5-down",
-        "number": 5,
-        "direction": "down",
-        "word": "SKI",
-        "clue": "(i.) Karda yapılan kış sporu kayağı",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "Karda yapılan kış sporu kayağı"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 3,
-        "length": 3
-      }
-    ]
-  },
-  {
-    "id": "a2-7x7-3",
-    "title": "Orman Kampı & Doğa",
-    "level": "A2",
-    "size": 7,
-    "description": "Büyük orman, kamp çadırı, kamp ateşi, gökte yıldızlar ve dinlenme.",
-    "clues": [
-      {
-        "id": "1-across",
-        "number": 1,
-        "direction": "across",
-        "word": "FOREST",
-        "clue": "(i.) orman",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "orman"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 0,
-        "length": 6
-      },
-      {
-        "id": "1-down",
-        "number": 1,
-        "direction": "down",
-        "word": "FIRE",
-        "clue": "(i.) Isınmak için yakılan kamp ateşi",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "Isınmak için yakılan kamp ateşi"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 0,
-        "length": 4
-      },
-      {
-        "id": "2-across",
-        "number": 2,
-        "direction": "across",
-        "word": "REST",
-        "clue": "(f.) dinlenmek, mola vermek  •  (i.) dinlenme, istirahat; geri kalan",
-        "senses": [
-          {
-            "pos": "f.",
-            "posName": "Fiil",
-            "meaning": "dinlenmek, mola vermek"
-          },
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "dinlenme, istirahat; geri kalan"
-          }
-        ],
-        "partOfSpeech": "f.",
-        "partOfSpeechName": "Fiil",
-        "row": 2,
-        "col": 0,
-        "length": 4
-      },
-      {
-        "id": "3-down",
-        "number": 3,
-        "direction": "down",
-        "word": "ONE",
-        "clue": "(i.) Tek veya bir sayısı (1)",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "Tek veya bir sayısı (1)"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 1,
-        "length": 3
-      },
-      {
-        "id": "4-down",
-        "number": 4,
-        "direction": "down",
-        "word": "RISE",
-        "clue": "(i.) Güneşin doğması veya yükselmek",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "Güneşin doğması veya yükselmek"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 2,
-        "length": 4
-      },
-      {
-        "id": "5-down",
-        "number": 5,
-        "direction": "down",
-        "word": "EAT",
-        "clue": "(i.) Kampta lezzetli yemek yemek",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "Kampta lezzetli yemek yemek"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 3,
-        "length": 3
-      },
-      {
-        "id": "6-down",
-        "number": 6,
-        "direction": "down",
-        "word": "STAR",
-        "clue": "(i.) yıldız  •  (f.) başrolde oynamak",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "yıldız"
-          },
-          {
-            "pos": "f.",
-            "posName": "Fiil",
-            "meaning": "başrolde oynamak"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 4,
-        "length": 4
-      },
-      {
-        "id": "7-down",
-        "number": 7,
-        "direction": "down",
-        "word": "TENT",
-        "clue": "(i.) çadır",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "çadır"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 5,
-        "length": 4
-      }
-    ]
-  },
-  {
-    "id": "b1-5x5-4",
-    "title": "Zeka & Yetenek Gelişimi",
-    "level": "B1",
-    "size": 5,
-    "description": "Zeka, kişisel beceri, demir irade ve daha fazlası.",
-    "clues": [
-      {
-        "id": "1-across",
-        "number": 1,
-        "direction": "across",
-        "word": "SMART",
-        "clue": "(s.) akıllı, zeki, şık",
-        "senses": [
-          {
-            "pos": "s.",
-            "posName": "Sıfat",
-            "meaning": "akıllı, zeki, şık"
-          }
-        ],
-        "partOfSpeech": "s.",
-        "partOfSpeechName": "Sıfat",
-        "row": 0,
-        "col": 0,
-        "length": 5
-      },
-      {
-        "id": "1-down",
-        "number": 1,
-        "direction": "down",
-        "word": "SKILL",
-        "clue": "(i.) beceri, maharet, uzmanlık",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "beceri, maharet, uzmanlık"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 0,
-        "length": 5
-      },
-      {
-        "id": "2-across",
-        "number": 2,
-        "direction": "across",
-        "word": "IRON",
-        "clue": "(i.) demir madeni; ütü  •  (f.) ütülemek  •  (s.) demirden, çok sert, katı",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "demir madeni; ütü"
-          },
-          {
-            "pos": "f.",
-            "posName": "Fiil",
-            "meaning": "ütülemek"
-          },
-          {
-            "pos": "s.",
-            "posName": "Sıfat",
-            "meaning": "demirden, çok sert, katı"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 2,
-        "col": 0,
-        "length": 4
-      },
-      {
-        "id": "3-down",
-        "number": 3,
-        "direction": "down",
-        "word": "MORE",
-        "clue": "(i.) Daha çok, daha fazla veya ziyade",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "Daha çok, daha fazla veya ziyade"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 1,
-        "length": 4
-      },
-      {
-        "id": "4-down",
-        "number": 4,
-        "direction": "down",
-        "word": "AGO",
-        "clue": "(i.) Geçmişte kalan zaman veya önce",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "Geçmişte kalan zaman veya önce"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 2,
-        "length": 3
-      },
-      {
-        "id": "5-down",
-        "number": 5,
-        "direction": "down",
-        "word": "RUN",
-        "clue": "(i.) Koşmak, yönetmek veya işletmek",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "Koşmak, yönetmek veya işletmek"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 3,
-        "length": 3
-      }
-    ]
-  },
-  {
-    "id": "b1-5x5-5",
-    "title": "Fiyat & Mal Varlığı",
-    "level": "B1",
-    "size": 5,
-    "description": "Ürün fiyatı, ödenmiş bedel, madde ve piyasa kalemi.",
-    "clues": [
-      {
-        "id": "1-across",
-        "number": 1,
-        "direction": "across",
-        "word": "PRICE",
-        "clue": "(i.) fiyat, bedel, eder  •  (f.) fiyat belirlemek",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "fiyat, bedel, eder"
-          },
-          {
-            "pos": "f.",
-            "posName": "Fiil",
-            "meaning": "fiyat belirlemek"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 0,
-        "length": 5
-      },
-      {
-        "id": "1-down",
-        "number": 1,
-        "direction": "down",
-        "word": "PAID",
-        "clue": "(i.) Ödemesi yapılmış, tahsil edilmiş borç",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "Ödemesi yapılmış, tahsil edilmiş borç"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 0,
-        "length": 4
-      },
-      {
-        "id": "2-across",
-        "number": 2,
-        "direction": "across",
-        "word": "ITEM",
-        "clue": "(i.) Listelenen madde, mal kalemi veya eşya",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "Listelenen madde, mal kalemi veya eşya"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 2,
-        "col": 0,
-        "length": 4
-      },
-      {
-        "id": "3-down",
-        "number": 3,
-        "direction": "down",
-        "word": "RAT",
-        "clue": "(i.) Kemirgen fare veya deneme hayvanı",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "Kemirgen fare veya deneme hayvanı"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 1,
-        "length": 3
-      },
-      {
-        "id": "4-down",
-        "number": 4,
-        "direction": "down",
-        "word": "ICE",
-        "clue": "(i.) buz; dondurma  •  (f.) buzlanmak; buzla kaplamak",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "buz; dondurma"
-          },
-          {
-            "pos": "f.",
-            "posName": "Fiil",
-            "meaning": "buzlanmak; buzla kaplamak"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 2,
-        "length": 3
-      },
-      {
-        "id": "5-down",
-        "number": 5,
-        "direction": "down",
-        "word": "CAM",
-        "clue": "(i.) Kamera veya mekanik mil parçası",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "Kamera veya mekanik mil parçası"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 3,
-        "length": 3
-      }
-    ]
-  },
-  {
-    "id": "b1-6x6-3",
-    "title": "Sistem & Denetim",
-    "level": "B1",
-    "size": 6,
-    "description": "Bilişim sistemi, ölçekleme, hesap denetimi ve süreçler.",
-    "clues": [
-      {
-        "id": "1-across",
-        "number": 1,
-        "direction": "across",
-        "word": "SYSTEM",
-        "clue": "(i.) sistem, düzen, mekanizma",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "sistem, düzen, mekanizma"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 0,
-        "length": 6
-      },
-      {
-        "id": "1-down",
-        "number": 1,
-        "direction": "down",
-        "word": "SCALE",
-        "clue": "(i.) ölçek; terazi, tartı; balık pulu  •  (f.) tırmanmak; ölçeklendirmek",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "ölçek; terazi, tartı; balık pulu"
-          },
-          {
-            "pos": "f.",
-            "posName": "Fiil",
-            "meaning": "tırmanmak; ölçeklendirmek"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 0,
-        "length": 5
-      },
-      {
-        "id": "2-across",
-        "number": 2,
-        "direction": "across",
-        "word": "AUDIT",
-        "clue": "(i.) denetim, teftiş, hesap incelemesi  •  (f.) denetlemek, teftiş etmek",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "denetim, teftiş, hesap incelemesi"
-          },
-          {
-            "pos": "f.",
-            "posName": "Fiil",
-            "meaning": "denetlemek, teftiş etmek"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 2,
-        "col": 0,
-        "length": 5
-      },
-      {
-        "id": "3-down",
-        "number": 3,
-        "direction": "down",
-        "word": "SAD",
-        "clue": "(i.) Üzüntülü veya kederli durum",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "Üzüntülü veya kederli durum"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 2,
-        "length": 3
-      },
-      {
-        "id": "4-down",
-        "number": 4,
-        "direction": "down",
-        "word": "TRIP",
-        "clue": "(i.) gezi, seyahat, yolculuk  •  (f.) tökezlemek",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "gezi, seyahat, yolculuk"
-          },
-          {
-            "pos": "f.",
-            "posName": "Fiil",
-            "meaning": "tökezlemek"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 3,
-        "length": 4
-      },
-      {
-        "id": "5-down",
-        "number": 5,
-        "direction": "down",
-        "word": "EAT",
-        "clue": "(i.) Tüketmek veya beslenmek",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "Tüketmek veya beslenmek"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 4,
-        "length": 3
-      }
-    ]
-  },
-  {
-    "id": "b1-6x6-4",
-    "title": "Zanaat & Dünya Mirası",
-    "level": "B1",
-    "size": 6,
-    "description": "El sanatı, zanaat, yerküre ve berrak zihin.",
-    "clues": [
-      {
-        "id": "1-across",
-        "number": 1,
-        "direction": "across",
-        "word": "CRAFT",
-        "clue": "(i.) zanaat, el sanatı, beceri; taşıt  •  (f.) özenle yapmak",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "zanaat, el sanatı, beceri; taşıt"
-          },
-          {
-            "pos": "f.",
-            "posName": "Fiil",
-            "meaning": "özenle yapmak"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 0,
-        "length": 5
-      },
-      {
-        "id": "1-down",
-        "number": 1,
-        "direction": "down",
-        "word": "CLEAR",
-        "clue": "(s.) berrak, açık, net, belirgin  •  (f.) temizlemek, açmak, aklamak",
-        "senses": [
-          {
-            "pos": "s.",
-            "posName": "Sıfat",
-            "meaning": "berrak, açık, net, belirgin"
-          },
-          {
-            "pos": "f.",
-            "posName": "Fiil",
-            "meaning": "temizlemek, açmak, aklamak"
-          }
-        ],
-        "partOfSpeech": "s.",
-        "partOfSpeechName": "Sıfat",
-        "row": 0,
-        "col": 0,
-        "length": 5
-      },
-      {
-        "id": "2-across",
-        "number": 2,
-        "direction": "across",
-        "word": "EARTH",
-        "clue": "(i.) dünya, yeryüzü; toprak; topraklama",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "dünya, yeryüzü; toprak; topraklama"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 2,
-        "col": 0,
-        "length": 5
-      },
-      {
-        "id": "3-down",
-        "number": 3,
-        "direction": "down",
-        "word": "READ",
-        "clue": "(i.) Kitap veya metin okuyarak anlamak",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "Kitap veya metin okuyarak anlamak"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 1,
-        "length": 4
-      },
-      {
-        "id": "4-down",
-        "number": 4,
-        "direction": "down",
-        "word": "AIR",
-        "clue": "(i.) hava, atmosfer  •  (f.) havalandırmak",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "hava, atmosfer"
-          },
-          {
-            "pos": "f.",
-            "posName": "Fiil",
-            "meaning": "havalandırmak"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 2,
-        "length": 3
-      },
-      {
-        "id": "5-down",
-        "number": 5,
-        "direction": "down",
-        "word": "FAT",
-        "clue": "(i.) Şişman, dolgun veya vücut yağı",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "Şişman, dolgun veya vücut yağı"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 3,
-        "length": 3
-      }
-    ]
-  },
-  {
-    "id": "b1-7x7-3",
-    "title": "Liderlik & Çalışma",
-    "level": "B1",
-    "size": 7,
-    "description": "Vizyoner lider, emek, kısa brifing ve dönüm ekseni.",
-    "clues": [
-      {
-        "id": "1-across",
-        "number": 1,
-        "direction": "across",
-        "word": "LEADER",
-        "clue": "(i.) lider, önder, rehber",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "lider, önder, rehber"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 0,
-        "length": 6
-      },
-      {
-        "id": "1-down",
-        "number": 1,
-        "direction": "down",
-        "word": "LABOR",
-        "clue": "(i.) Zihinsel veya bedensel emek, iş gücü",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "Zihinsel veya bedensel emek, iş gücü"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 0,
-        "length": 5
-      },
-      {
-        "id": "2-across",
-        "number": 2,
-        "direction": "across",
-        "word": "BRIEF",
-        "clue": "(i.) Kısa, öz ve net bilgilendirme toplantısı",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "Kısa, öz ve net bilgilendirme toplantısı"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 2,
-        "col": 0,
-        "length": 5
-      },
-      {
-        "id": "3-down",
-        "number": 3,
-        "direction": "down",
-        "word": "EAR",
-        "clue": "(i.) Dinleme ve algı organı kulak",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "Dinleme ve algı organı kulak"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 1,
-        "length": 3
-      },
-      {
-        "id": "4-down",
-        "number": 4,
-        "direction": "down",
-        "word": "AXIS",
-        "clue": "(i.) Dönme ekseni, mihver veya ana hat",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "Dönme ekseni, mihver veya ana hat"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 2,
-        "length": 4
-      },
-      {
-        "id": "5-down",
-        "number": 5,
-        "direction": "down",
-        "word": "DIE",
-        "clue": "(i.) Zar veya sona ermek",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "Zar veya sona ermek"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 3,
-        "length": 3
-      },
-      {
-        "id": "6-down",
-        "number": 6,
-        "direction": "down",
-        "word": "ELF",
-        "clue": "(i.) Mitolojik peri veya minik varlık",
-        "senses": [
-          {
-            "pos": "i.",
-            "posName": "İsim",
-            "meaning": "Mitolojik peri veya minik varlık"
-          }
-        ],
-        "partOfSpeech": "i.",
-        "partOfSpeechName": "İsim",
-        "row": 0,
-        "col": 4,
-        "length": 3
-      }
-    ]
-  },
-  {
     "id": "b2-5x5-4",
     "title": "Ahlak & Hakkaniyet",
     "level": "B2",
@@ -5779,6 +6545,362 @@ export const PUZZLES: PuzzleDefinition[] = [
     ]
   },
   {
+    "id": "b2-5x5-6",
+    "title": "Strateji Merkezi & Test",
+    "level": "B2",
+    "size": 5,
+    "description": "Merkez üsler, kritik test ve dikkatli kullanım.",
+    "clues": [
+      {
+        "id": "1-across",
+        "number": 1,
+        "direction": "across",
+        "word": "HUBS",
+        "clue": "(i.) Büyük ağ bağlantı merkezleri, odaklar",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Büyük ağ bağlantı merkezleri, odaklar"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 0,
+        "length": 4
+      },
+      {
+        "id": "1-down",
+        "number": 1,
+        "direction": "down",
+        "word": "HOT",
+        "clue": "(i.) Kızgın, hararetli veya yüksek sıcaklıkta",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Kızgın, hararetli veya yüksek sıcaklıkta"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 0,
+        "length": 3
+      },
+      {
+        "id": "2-across",
+        "number": 2,
+        "direction": "across",
+        "word": "TEST",
+        "clue": "(i.) Kapsamlı dayanıklılık veya bilgi sınavı",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Kapsamlı dayanıklılık veya bilgi sınavı"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 2,
+        "col": 0,
+        "length": 4
+      },
+      {
+        "id": "3-down",
+        "number": 3,
+        "direction": "down",
+        "word": "USE",
+        "clue": "(i.) Bir kaynak veya yeteneği değerlendirmek",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Bir kaynak veya yeteneği değerlendirmek"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 1,
+        "length": 3
+      },
+      {
+        "id": "4-down",
+        "number": 4,
+        "direction": "down",
+        "word": "BUS",
+        "clue": "(i.) Büyük yolcu aktarma taşıtı",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Büyük yolcu aktarma taşıtı"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 2,
+        "length": 3
+      },
+      {
+        "id": "5-down",
+        "number": 5,
+        "direction": "down",
+        "word": "SAT",
+        "clue": "(i.) Oturdu (sit eyleminin geçmiş hali)",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Oturdu (sit eyleminin geçmiş hali)"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 3,
+        "length": 3
+      }
+    ]
+  },
+  {
+    "id": "b2-6x6-1",
+    "title": "Liderlik & Vizyon",
+    "level": "B2",
+    "size": 6,
+    "description": "Kalıcı etki bırakma, stratejik yatırım, ilkeler ve kurumsal değerler.",
+    "clues": [
+      {
+        "id": "1-across",
+        "number": 1,
+        "direction": "across",
+        "word": "IMPACT",
+        "clue": "(i.) etki, tesir; çarpma, vuruş  •  (f.) etkilemek; çarpmak",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "etki, tesir; çarpma, vuruş"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "etkilemek; çarpmak"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 0,
+        "length": 6
+      },
+      {
+        "id": "1-down",
+        "number": 1,
+        "direction": "down",
+        "word": "INVEST",
+        "clue": "(f.) yatırım yapmak; emek/zaman ayırmak",
+        "senses": [
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "yatırım yapmak; emek/zaman ayırmak"
+          }
+        ],
+        "partOfSpeech": "f.",
+        "partOfSpeechName": "Fiil",
+        "row": 0,
+        "col": 0,
+        "length": 6
+      },
+      {
+        "id": "2-down",
+        "number": 2,
+        "direction": "down",
+        "word": "POLICY",
+        "clue": "(i.) politika, ilke, strateji; poliçe",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "politika, ilke, strateji; poliçe"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 2,
+        "length": 6
+      },
+      {
+        "id": "3-down",
+        "number": 3,
+        "direction": "down",
+        "word": "CLEVER",
+        "clue": "(s.) akıllı, zeki, kurnaz, becerikli",
+        "senses": [
+          {
+            "pos": "s.",
+            "posName": "Sıfat",
+            "meaning": "akıllı, zeki, kurnaz, becerikli"
+          }
+        ],
+        "partOfSpeech": "s.",
+        "partOfSpeechName": "Sıfat",
+        "row": 0,
+        "col": 4,
+        "length": 6
+      },
+      {
+        "id": "4-across",
+        "number": 4,
+        "direction": "across",
+        "word": "VALUES",
+        "clue": "(i.) değerler, kıymetler, ahlaki ilkeler  •  (f.) değer vermek, kıymet biçmek",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "değerler, kıymetler, ahlaki ilkeler"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "değer vermek, kıymet biçmek"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 2,
+        "col": 0,
+        "length": 6
+      }
+    ]
+  },
+  {
+    "id": "b2-6x6-2",
+    "title": "Bilişsel Esneklik",
+    "level": "B2",
+    "size": 6,
+    "description": "Mantık yürütme, hafızayı tazeleme, eyleme geçme ve sistematik metot.",
+    "clues": [
+      {
+        "id": "1-across",
+        "number": 1,
+        "direction": "across",
+        "word": "REASON",
+        "clue": "(i.) sebep, neden; akıl, mantık  •  (f.) akıl yürütmek, mantık kurmak",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "sebep, neden; akıl, mantık"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "akıl yürütmek, mantık kurmak"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 0,
+        "length": 6
+      },
+      {
+        "id": "1-down",
+        "number": 1,
+        "direction": "down",
+        "word": "REMIND",
+        "clue": "(f.) hatırlatmak, anımsatmak",
+        "senses": [
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "hatırlatmak, anımsatmak"
+          }
+        ],
+        "partOfSpeech": "f.",
+        "partOfSpeechName": "Fiil",
+        "row": 0,
+        "col": 0,
+        "length": 6
+      },
+      {
+        "id": "2-down",
+        "number": 2,
+        "direction": "down",
+        "word": "ACTION",
+        "clue": "(i.) eylem, hareket, aksiyon  •  (f.) harekete geçirmek, işleme koymak",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "eylem, hareket, aksiyon"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "harekete geçirmek, işleme koymak"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 2,
+        "length": 6
+      },
+      {
+        "id": "3-down",
+        "number": 3,
+        "direction": "down",
+        "word": "SCHOOL",
+        "clue": "(i.) okul, mektep; ekol; balık sürüsü  •  (f.) eğitmek, yetiştirmek",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "okul, mektep; ekol; balık sürüsü"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "eğitmek, yetiştirmek"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 3,
+        "length": 6
+      },
+      {
+        "id": "4-across",
+        "number": 4,
+        "direction": "across",
+        "word": "METHOD",
+        "clue": "(i.) yöntem, metot, usul, yol",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "yöntem, metot, usul, yol"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 2,
+        "col": 0,
+        "length": 6
+      }
+    ]
+  },
+  {
     "id": "b2-6x6-3",
     "title": "Kuram & Bilimsel Dizin",
     "level": "B2",
@@ -6045,6 +7167,381 @@ export const PUZZLES: PuzzleDefinition[] = [
     ]
   },
   {
+    "id": "b2-6x6-5",
+    "title": "Maliyet Analizi & Görev Dağılımı",
+    "level": "B2",
+    "size": 6,
+    "description": "Proje görevleri, bütçe maliyeti ve analiz.",
+    "clues": [
+      {
+        "id": "1-across",
+        "number": 1,
+        "direction": "across",
+        "word": "SLEPT",
+        "clue": "(i.) Uykudaydı, dinlendi (sleep geçmişi)",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Uykudaydı, dinlendi (sleep geçmişi)"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 0,
+        "length": 5
+      },
+      {
+        "id": "1-down",
+        "number": 1,
+        "direction": "down",
+        "word": "SUCH",
+        "clue": "(i.) Öylesine çarpıcı veya bu türden",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Öylesine çarpıcı veya bu türden"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 0,
+        "length": 4
+      },
+      {
+        "id": "2-across",
+        "number": 2,
+        "direction": "across",
+        "word": "COSTS",
+        "clue": "(i.) İşletme masrafları ve finansal maliyetler",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "İşletme masrafları ve finansal maliyetler"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 2,
+        "col": 0,
+        "length": 5
+      },
+      {
+        "id": "3-down",
+        "number": 3,
+        "direction": "down",
+        "word": "LOOK",
+        "clue": "(i.) Dikkatle gözlemlemek veya dış görünüş",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Dikkatle gözlemlemek veya dış görünüş"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 1,
+        "length": 4
+      },
+      {
+        "id": "4-down",
+        "number": 4,
+        "direction": "down",
+        "word": "EASY",
+        "clue": "(s.) kolay, zahmetsiz, rahat, uysal  •  (zf.) yavaşça, sakince",
+        "senses": [
+          {
+            "pos": "s.",
+            "posName": "Sıfat",
+            "meaning": "kolay, zahmetsiz, rahat, uysal"
+          },
+          {
+            "pos": "zf.",
+            "posName": "Zarf",
+            "meaning": "yavaşça, sakince"
+          }
+        ],
+        "partOfSpeech": "s.",
+        "partOfSpeechName": "Sıfat",
+        "row": 0,
+        "col": 2,
+        "length": 4
+      },
+      {
+        "id": "5-down",
+        "number": 5,
+        "direction": "down",
+        "word": "PUTS",
+        "clue": "(i.) Yerleştirir, öne sürer",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Yerleştirir, öne sürer"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 3,
+        "length": 4
+      },
+      {
+        "id": "6-down",
+        "number": 6,
+        "direction": "down",
+        "word": "TASK",
+        "clue": "(i.) Sorumluluk gerektiren önemli görev",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Sorumluluk gerektiren önemli görev"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 4,
+        "length": 4
+      }
+    ]
+  },
+  {
+    "id": "b2-7x7-1",
+    "title": "Küresel Ekonomi & İklim",
+    "level": "B2",
+    "size": 7,
+    "description": "İklim dinamikleri, küresel sermaye, yetenek yönetimi ve kurumsal profil.",
+    "clues": [
+      {
+        "id": "1-across",
+        "number": 1,
+        "direction": "across",
+        "word": "CLIMATE",
+        "clue": "(i.) iklim, hava şartları, genel ortam",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "iklim, hava şartları, genel ortam"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 0,
+        "length": 7
+      },
+      {
+        "id": "1-down",
+        "number": 1,
+        "direction": "down",
+        "word": "CAPITAL",
+        "clue": "(i.) başkent; sermaye, anapara; büyük harf  •  (s.) başlıca, temel, büyük",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "başkent; sermaye, anapara; büyük harf"
+          },
+          {
+            "pos": "s.",
+            "posName": "Sıfat",
+            "meaning": "başlıca, temel, büyük"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 0,
+        "length": 7
+      },
+      {
+        "id": "2-down",
+        "number": 2,
+        "direction": "down",
+        "word": "IRONIC",
+        "clue": "(s.) alaylı, kinayeli, ironik",
+        "senses": [
+          {
+            "pos": "s.",
+            "posName": "Sıfat",
+            "meaning": "alaylı, kinayeli, ironik"
+          }
+        ],
+        "partOfSpeech": "s.",
+        "partOfSpeechName": "Sıfat",
+        "row": 0,
+        "col": 2,
+        "length": 6
+      },
+      {
+        "id": "3-down",
+        "number": 3,
+        "direction": "down",
+        "word": "ABILITY",
+        "clue": "(i.) yetenek, kabiliyet, beceri",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "yetenek, kabiliyet, beceri"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 4,
+        "length": 7
+      },
+      {
+        "id": "4-across",
+        "number": 4,
+        "direction": "across",
+        "word": "PROFILE",
+        "clue": "(i.) profil, tanıtım, yan görünüş  •  (f.) profilini çıkarmak, tanıtmak",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "profil, tanıtım, yan görünüş"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "profilini çıkarmak, tanıtmak"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 2,
+        "col": 0,
+        "length": 7
+      }
+    ]
+  },
+  {
+    "id": "b2-7x7-2",
+    "title": "Felsefe & Adalet",
+    "level": "B2",
+    "size": 7,
+    "description": "Kültür mirası, soyut kavramlar, uluslar ve en güncel ilkeler.",
+    "clues": [
+      {
+        "id": "1-across",
+        "number": 1,
+        "direction": "across",
+        "word": "CULTURE",
+        "clue": "(i.) kültür, ekin; tarım  •  (f.) kültüre almak, yetiştirmek",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "kültür, ekin; tarım"
+          },
+          {
+            "pos": "f.",
+            "posName": "Fiil",
+            "meaning": "kültüre almak, yetiştirmek"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 0,
+        "length": 7
+      },
+      {
+        "id": "1-down",
+        "number": 1,
+        "direction": "down",
+        "word": "CONCEPT",
+        "clue": "(i.) kavram, fikir, genel anlayış",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "kavram, fikir, genel anlayış"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 0,
+        "length": 7
+      },
+      {
+        "id": "2-down",
+        "number": 2,
+        "direction": "down",
+        "word": "LATEST",
+        "clue": "(s.) en son, en yeni, son çıkan  •  (zf.) en geç",
+        "senses": [
+          {
+            "pos": "s.",
+            "posName": "Sıfat",
+            "meaning": "en son, en yeni, son çıkan"
+          },
+          {
+            "pos": "zf.",
+            "posName": "Zarf",
+            "meaning": "en geç"
+          }
+        ],
+        "partOfSpeech": "s.",
+        "partOfSpeechName": "Sıfat",
+        "row": 0,
+        "col": 2,
+        "length": 6
+      },
+      {
+        "id": "3-down",
+        "number": 3,
+        "direction": "down",
+        "word": "RUNNER",
+        "clue": "(i.) koşucu; masa örtüsü (runner)",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "koşucu; masa örtüsü (runner)"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 5,
+        "length": 6
+      },
+      {
+        "id": "4-across",
+        "number": 4,
+        "direction": "across",
+        "word": "NATIONS",
+        "clue": "(i.) uluslar, milletler, devletler",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "uluslar, milletler, devletler"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 2,
+        "col": 0,
+        "length": 7
+      }
+    ]
+  },
+  {
     "id": "b2-7x7-3",
     "title": "Hukuk & Adli Karar",
     "level": "B2",
@@ -6193,6 +7690,167 @@ export const PUZZLES: PuzzleDefinition[] = [
         "row": 0,
         "col": 4,
         "length": 3
+      }
+    ]
+  },
+  {
+    "id": "b2-7x7-4",
+    "title": "Birey & Yaratıcı Tasarım",
+    "level": "B2",
+    "size": 7,
+    "description": "Bireysel potansiyel, yeni tasarım üretmek ve resifler.",
+    "clues": [
+      {
+        "id": "1-across",
+        "number": 1,
+        "direction": "across",
+        "word": "PERSON",
+        "clue": "(i.) Toplumu oluşturan bağımsız fert, birey",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Toplumu oluşturan bağımsız fert, birey"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 0,
+        "length": 6
+      },
+      {
+        "id": "1-down",
+        "number": 1,
+        "direction": "down",
+        "word": "PACKS",
+        "clue": "(i.) Ekipman çantalarını ve paketleri hazırlar",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Ekipman çantalarını ve paketleri hazırlar"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 0,
+        "length": 5
+      },
+      {
+        "id": "2-across",
+        "number": 2,
+        "direction": "across",
+        "word": "CREATE",
+        "clue": "(i.) Özgün bir eser veya çözüm yaratmak",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Özgün bir eser veya çözüm yaratmak"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 2,
+        "col": 0,
+        "length": 6
+      },
+      {
+        "id": "3-down",
+        "number": 3,
+        "direction": "down",
+        "word": "ERROR",
+        "clue": "(i.) Sistemdeki kritik aksaklık veya hata",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Sistemdeki kritik aksaklık veya hata"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 1,
+        "length": 5
+      },
+      {
+        "id": "4-down",
+        "number": 4,
+        "direction": "down",
+        "word": "REEFS",
+        "clue": "(i.) Deniz tabanındaki zengin mercan kayalıkları",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Deniz tabanındaki zengin mercan kayalıkları"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 2,
+        "length": 5
+      },
+      {
+        "id": "5-down",
+        "number": 5,
+        "direction": "down",
+        "word": "SMALL",
+        "clue": "(i.) Boyutça ufak, mütevazı veya küçük",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Boyutça ufak, mütevazı veya küçük"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 3,
+        "length": 5
+      },
+      {
+        "id": "6-down",
+        "number": 6,
+        "direction": "down",
+        "word": "OUTER",
+        "clue": "(i.) Harici katman, dış çevre",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Harici katman, dış çevre"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 4,
+        "length": 5
+      },
+      {
+        "id": "7-down",
+        "number": 7,
+        "direction": "down",
+        "word": "NEEDS",
+        "clue": "(i.) Hayati gereksinimler ve talepler",
+        "senses": [
+          {
+            "pos": "i.",
+            "posName": "İsim",
+            "meaning": "Hayati gereksinimler ve talepler"
+          }
+        ],
+        "partOfSpeech": "i.",
+        "partOfSpeechName": "İsim",
+        "row": 0,
+        "col": 5,
+        "length": 5
       }
     ]
   }

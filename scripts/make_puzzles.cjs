@@ -1134,6 +1134,17 @@ for (const np of NEW_PUZZLES) {
   allPuzzles.push(createPuzzle(np.id, np.title, np.level, np.size, np.description, np.clues));
 }
 
+const levelOrder = { 'A1': 1, 'A2': 2, 'B1': 3, 'B2': 4 };
+allPuzzles.sort((a, b) => {
+  if (levelOrder[a.level] !== levelOrder[b.level]) {
+    return levelOrder[a.level] - levelOrder[b.level];
+  }
+  if (a.size !== b.size) {
+    return a.size - b.size;
+  }
+  return a.id.localeCompare(b.id);
+});
+
 console.log(`Generated ${allPuzzles.length} verified puzzles!`);
 
 const tsContent = `// src/puzzleData.ts

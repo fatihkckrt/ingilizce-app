@@ -625,17 +625,17 @@ export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
   ];
 
   return (
-    <div className="flex-1 flex flex-col h-full bg-slate-50 dark:bg-slate-950 overflow-hidden relative select-none">
+    <div className={`flex-1 flex flex-col h-full ${themeStyle.container} overflow-hidden relative select-none`}>
       <canvas
         ref={confettiCanvasRef}
         className="pointer-events-none fixed inset-0 z-50"
       />
 
       {/* TOP HEADER */}
-      <div className="px-4 py-3 bg-white/95 dark:bg-slate-900/95 backdrop-blur border-b border-slate-200 dark:border-slate-800 flex items-center justify-between shadow-xs z-10">
+      <div className={`px-4 py-3 ${themeStyle.header} border-b flex items-center justify-between shadow-xs z-10`}>
         <button
           onClick={onBack}
-          className="p-2 -ml-1 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition flex items-center gap-1 active:scale-95"
+          className="p-2 -ml-1 text-inherit hover:opacity-80 rounded-xl transition flex items-center gap-1 active:scale-95 cursor-pointer"
           title="Geri"
         >
           <ArrowLeft className="w-5 h-5" />
@@ -644,31 +644,59 @@ export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
 
         <div className="text-center">
           <div className="flex items-center justify-center gap-1.5">
-            <span className="text-xs font-black px-2 py-0.5 rounded-md bg-indigo-100 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300">
+            <span className="text-xs font-black px-2 py-0.5 rounded-md bg-indigo-500/20 text-white border border-indigo-400/30">
               {puzzle.level}
             </span>
-            <span className="text-xs font-bold px-1.5 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">
+            <span className="text-xs font-bold px-1.5 py-0.5 rounded-md bg-white/15 text-white">
               {puzzle.size}x{puzzle.size}
             </span>
-            <h2 className="text-sm font-extrabold text-slate-900 dark:text-white truncate max-w-[150px] sm:max-w-[220px]">
+            <h2 className="text-sm font-extrabold truncate max-w-[150px] sm:max-w-[220px]">
               {puzzle.title}
             </h2>
           </div>
         </div>
 
         <div className="flex items-center gap-2">
-          <div className="flex items-center gap-1 text-xs font-mono font-bold text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-lg">
-            <Clock className="w-3.5 h-3.5 text-indigo-500" />
+          <div className="flex items-center gap-1 text-xs font-mono font-bold bg-white/15 text-white px-2 py-1 rounded-lg">
+            <Clock className="w-3.5 h-3.5 text-indigo-200" />
             <span>{formatTime(seconds)}</span>
           </div>
         </div>
       </div>
 
+      {/* PERSISTENT SUCCESS BANNER WHEN PUZZLE SOLVED */}
+      {isCompleted && (
+        <div className="bg-emerald-600 text-white px-4 py-2.5 flex items-center justify-between shadow-md z-20 shrink-0 animate-fadeIn">
+          <div className="flex items-center gap-2 min-w-0">
+            <Trophy className="w-4 h-4 text-amber-300 shrink-0" />
+            <span className="text-xs font-black truncate">Bulmaca Tamamlandı ({finalScore} Puan)!</span>
+          </div>
+          {hasNextPuzzle && onNextPuzzle ? (
+            <button
+              type="button"
+              onClick={onNextPuzzle}
+              className="px-3.5 py-1.5 bg-white text-emerald-900 hover:bg-emerald-100 rounded-xl text-xs font-black flex items-center gap-1 shadow-sm transition active:scale-95 cursor-pointer shrink-0 ml-2"
+            >
+              <span>Sonraki Bulmaca</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+          ) : (
+            <button
+              type="button"
+              onClick={onBack}
+              className="px-3.5 py-1.5 bg-white text-emerald-900 hover:bg-emerald-100 rounded-xl text-xs font-black transition active:scale-95 cursor-pointer shrink-0 ml-2"
+            >
+              Listeye Dön
+            </button>
+          )}
+        </div>
+      )}
+
       {/* SCROLLABLE MAIN CONTENT (GRID + CLUE + KEYBOARD) */}
       <div className="flex-1 flex flex-col justify-between overflow-y-auto p-2 sm:p-4 max-w-xl mx-auto w-full">
         
         {/* ACTIVE CLUE BANNER */}
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border-2 border-indigo-200 dark:border-indigo-900/80 shadow-md p-3 mb-2 transition">
+        <div className={`${themeStyle.card} rounded-2xl border-2 border-indigo-300 dark:border-indigo-800 shadow-md p-3 mb-2 transition`}>
           <div className="flex items-center justify-between gap-2 mb-2 pb-1.5 border-b border-slate-100 dark:border-slate-800">
             <div className="flex items-center gap-1.5 flex-wrap">
               <span className={`text-[10px] sm:text-[11px] font-black px-2.5 py-0.5 rounded-lg uppercase tracking-wider ${
@@ -720,19 +748,19 @@ export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
                 return (
                   <div 
                     key={idx} 
-                    className="flex items-start gap-2 bg-slate-50 dark:bg-slate-800/80 px-2.5 py-1.5 rounded-xl border border-slate-200/80 dark:border-slate-700/80"
+                    className="flex items-start gap-2 bg-black/5 dark:bg-white/5 px-2.5 py-1.5 rounded-xl border border-black/10 dark:border-white/10"
                   >
                     <span className={`text-[11px] font-black px-1.5 py-0.2 rounded-md border shrink-0 ${badge.bg} ${badge.text} ${badge.border}`}>
                       ({sense.pos.replace(/[().]/g, '')}.)
                     </span>
-                    <span className="text-xs sm:text-sm font-extrabold text-slate-900 dark:text-slate-100 leading-snug">
+                    <span className="text-xs sm:text-sm font-extrabold leading-snug">
                       {sense.meaning}
                     </span>
                   </div>
                 );
               })
             ) : (
-              <p className="text-sm font-extrabold text-slate-900 dark:text-white">
+              <p className="text-sm font-extrabold">
                 {activeClue?.clue}
               </p>
             )}
@@ -917,7 +945,7 @@ export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
       {/* VICTORY MODAL */}
       {showVictory && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 animate-fadeIn">
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-md w-full p-6 text-center shadow-2xl relative overflow-hidden">
+          <div className={`${themeStyle.card} border rounded-3xl max-w-md w-full p-6 text-center shadow-2xl relative overflow-hidden`}>
             <div className="w-16 h-16 bg-emerald-100 dark:bg-emerald-950/60 border border-emerald-300/40 rounded-full flex items-center justify-center mx-auto mb-3 shadow-inner">
               <Trophy className="w-8 h-8 text-emerald-600 dark:text-emerald-400" />
             </div>
@@ -1050,7 +1078,7 @@ export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
       {/* ALL CLUES MODAL */}
       {showCluesModal && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 animate-fadeIn">
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-lg w-full max-h-[85vh] flex flex-col shadow-2xl overflow-hidden">
+          <div className={`${themeStyle.card} border rounded-3xl max-w-lg w-full max-h-[85vh] flex flex-col shadow-2xl overflow-hidden`}>
             {/* Header */}
             <div className="p-4 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
               <div>

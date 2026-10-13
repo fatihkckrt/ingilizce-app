@@ -87,39 +87,36 @@ export const PuzzleView: React.FC<PuzzleViewProps> = ({
     const allInLevel = PUZZLES.filter(p => p.level === activePuzzle.level);
     const currentLevelIdx = allInLevel.findIndex(p => p.id === activePuzzle.id);
 
+    let nextPuzzle: PuzzleDefinition | null = null;
     if (currentLevelIdx >= 0 && currentLevelIdx < allInLevel.length - 1) {
-      setActivePuzzle(allInLevel[currentLevelIdx + 1]);
-      return;
+      nextPuzzle = allInLevel[currentLevelIdx + 1];
+    } else {
+      // 2. Next level in sequence (A1 -> A2 -> B1 -> B2 -> loop)
+      const levelsOrder: ('A1' | 'A2' | 'B1' | 'B2')[] = ['A1', 'A2', 'B1', 'B2'];
+      const currentLevelPos = levelsOrder.indexOf(activePuzzle.level);
+      const nextLevel = levelsOrder[(currentLevelPos + 1) % levelsOrder.length];
+      const nextLevelPuzzles = PUZZLES.filter(p => p.level === nextLevel);
+      if (nextLevelPuzzles.length > 0) {
+        nextPuzzle = nextLevelPuzzles[0];
+      } else {
+        // 3. Fallback to any uncompleted puzzle or first puzzle
+        const uncompleted = PUZZLES.find(p => !completedRecords[p.id]);
+        nextPuzzle = uncompleted || PUZZLES[0] || null;
+      }
     }
 
-    // 2. Try next puzzle in full list
-    const allPuzzlesIndex = PUZZLES.findIndex(p => p.id === activePuzzle.id);
-    if (allPuzzlesIndex >= 0 && allPuzzlesIndex < PUZZLES.length - 1) {
-      const nextP = PUZZLES[allPuzzlesIndex + 1];
-      setSelectedLevel(nextP.level);
-      setActivePuzzle(nextP);
-      return;
-    }
-
-    // 3. Try first uncompleted puzzle anywhere
-    const uncompleted = PUZZLES.find(p => !completedRecords[p.id]);
-    if (uncompleted && uncompleted.id !== activePuzzle.id) {
-      setSelectedLevel(uncompleted.level);
-      setActivePuzzle(uncompleted);
-      return;
-    }
-
-    // 4. Loop back to first puzzle
-    if (PUZZLES.length > 0 && PUZZLES[0].id !== activePuzzle.id) {
-      setSelectedLevel(PUZZLES[0].level);
-      setActivePuzzle(PUZZLES[0]);
+    if (nextPuzzle) {
+      setSelectedLevel(nextPuzzle.level);
+      setActivePuzzle(nextPuzzle);
+      try {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } catch (e) {}
     } else {
       setActivePuzzle(null);
     }
   };
 
   const hasNextPuzzle = (): boolean => {
-    if (!activePuzzle) return false;
     return PUZZLES.length > 1;
   };
 
@@ -225,12 +222,12 @@ export const PuzzleView: React.FC<PuzzleViewProps> = ({
                 onClick={() => setSelectedLevel(lvl)}
                 className={`py-3 px-2 rounded-2xl font-black text-center transition flex flex-col items-center justify-center gap-0.5 shadow-sm active:scale-95 border cursor-pointer ${
                   isSelected
-                    ? 'bg-indigo-600 text-white border-indigo-700 shadow-md ring-2 ring-indigo-300'
-                    : 'bg-white dark:bg-slate-800/90 border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100 hover:border-indigo-400'
+                    ? 'bg-indigo-600 text-white border-indigo-700 shadow-md ring-2 ring-indigo-400'
+                    : `${themeStyle.card} border-slate-200 dark:border-slate-700 hover:border-indigo-400`
                 }`}
               >
                 <span className="text-base tracking-wide font-black">{lvl}</span>
-                <span className={`text-[11px] font-bold ${isSelected ? 'text-indigo-100' : 'text-slate-500 dark:text-slate-400'}`}>
+                <span className={`text-[11px] font-bold ${isSelected ? 'text-indigo-100' : 'opacity-70'}`}>
                   {completedInLevel}/{countInLevel}
                 </span>
               </button>
@@ -250,7 +247,7 @@ export const PuzzleView: React.FC<PuzzleViewProps> = ({
             className={`flex-1 py-2.5 rounded-xl text-xs font-black transition active:scale-95 border cursor-pointer ${
               selectedSize === 'ALL'
                 ? 'bg-indigo-600 text-white border-indigo-700 shadow-sm'
-                : 'bg-white dark:bg-slate-800/90 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:border-indigo-300'
+                : `${themeStyle.card} border-slate-200 dark:border-slate-700 hover:border-indigo-300`
             }`}
           >
             Tümü
@@ -262,7 +259,7 @@ export const PuzzleView: React.FC<PuzzleViewProps> = ({
               className={`flex-1 py-2.5 rounded-xl text-xs font-black transition active:scale-95 border cursor-pointer ${
                 selectedSize === sz
                   ? 'bg-indigo-600 text-white border-indigo-700 shadow-sm'
-                  : 'bg-white dark:bg-slate-800/90 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:border-indigo-300'
+                  : `${themeStyle.card} border-slate-200 dark:border-slate-700 hover:border-indigo-300`
               }`}
             >
               {sz}x{sz}
@@ -292,8 +289,8 @@ export const PuzzleView: React.FC<PuzzleViewProps> = ({
               onClick={() => setActivePuzzle(p)}
               className={`p-4 rounded-2xl border transition shadow-xs hover:shadow-md cursor-pointer flex items-center justify-between gap-3 group active:scale-[0.99] ${
                 isDone
-                  ? 'bg-emerald-50/50 dark:bg-emerald-950/20 border-emerald-300 dark:border-emerald-800/80'
-                  : 'bg-white dark:bg-slate-850 border-slate-200 dark:border-slate-700/80 hover:border-indigo-400'
+                  ? 'bg-emerald-500/10 dark:bg-emerald-950/20 border-emerald-300 dark:border-emerald-800'
+                  : `${themeStyle.card} border-slate-200 dark:border-slate-700 hover:border-indigo-400`
               }`}
             >
               <div className="flex items-center gap-3.5">

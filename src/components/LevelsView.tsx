@@ -39,7 +39,7 @@ export const LevelsView: React.FC<LevelsViewProps> = ({
               <h3 className="font-bold text-base">{text.title}</h3>
               <p className="text-xs opacity-60 mt-0.5 font-medium">{text.sentences.length} Cümle • {text.questions?.length || 0} Soru</p>
             </div>
-            <span className="text-base text-indigo-700 font-bold">Oku ➔</span>
+            <span className="text-sm sm:text-base text-indigo-600 dark:text-indigo-400 font-extrabold group-hover:translate-x-0.5 transition">Oku ➔</span>
           </button>
         );
       })}
