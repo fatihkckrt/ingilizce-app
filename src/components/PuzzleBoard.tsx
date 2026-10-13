@@ -21,7 +21,8 @@ import {
   Sparkles,
   ArrowRight,
   List,
-  X
+  X,
+  Settings
 } from 'lucide-react';
 
 interface PuzzleBoardProps {
@@ -34,6 +35,7 @@ interface PuzzleBoardProps {
   onSaveWord: (word: string, translation: string, level: string) => void;
   speak: (text: string) => void;
   isWordSaved: (word: string) => boolean;
+  onOpenSettings?: () => void;
 }
 
 // Lightweight Audio Synthesis using Web Audio API
@@ -138,7 +140,8 @@ export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
   hasNextPuzzle,
   onSaveWord,
   speak,
-  isWordSaved
+  isWordSaved,
+  onOpenSettings
 }) => {
   const size = puzzle.size;
 
@@ -656,11 +659,20 @@ export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5">
           <div className="flex items-center gap-1 text-xs font-mono font-bold bg-white/15 text-white px-2 py-1 rounded-lg">
             <Clock className="w-3.5 h-3.5 text-indigo-200" />
             <span>{formatTime(seconds)}</span>
           </div>
+          {onOpenSettings && (
+            <button
+              onClick={onOpenSettings}
+              className="p-1.5 bg-white/15 hover:bg-white/25 text-white rounded-lg transition flex items-center justify-center cursor-pointer active:scale-95"
+              title="Ayarlar (Tema, Ses, Yazı)"
+            >
+              <Settings className="w-4 h-4" />
+            </button>
+          )}
         </div>
       </div>
 

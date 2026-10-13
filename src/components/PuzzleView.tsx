@@ -18,7 +18,8 @@ import {
   ArrowLeft,
   Grid,
   Zap,
-  Bookmark
+  Bookmark,
+  Settings
 } from 'lucide-react';
 import { idbGet, idbSet } from '../data';
 
@@ -28,6 +29,7 @@ interface PuzzleViewProps {
   onSaveWord: (word: string, translation: string, level: string) => void;
   speak: (text: string) => void;
   isWordSaved: (word: string) => boolean;
+  onOpenSettings?: () => void;
 }
 
 export const PuzzleView: React.FC<PuzzleViewProps> = ({
@@ -35,7 +37,8 @@ export const PuzzleView: React.FC<PuzzleViewProps> = ({
   onBackToHome,
   onSaveWord,
   speak,
-  isWordSaved
+  isWordSaved,
+  onOpenSettings
 }) => {
   const [selectedLevel, setSelectedLevel] = useState<'A1' | 'A2' | 'B1' | 'B2'>('A1');
   const [selectedSize, setSelectedSize] = useState<number | 'ALL'>('ALL');
@@ -138,6 +141,7 @@ export const PuzzleView: React.FC<PuzzleViewProps> = ({
         onSaveWord={onSaveWord}
         speak={speak}
         isWordSaved={isWordSaved}
+        onOpenSettings={onOpenSettings}
       />
     );
   }
@@ -150,16 +154,27 @@ export const PuzzleView: React.FC<PuzzleViewProps> = ({
         <div className="flex items-center justify-between mb-3">
           <button
             onClick={onBackToHome}
-            className="p-2 -ml-2 text-slate-700 dark:text-slate-300 hover:bg-black/5 dark:hover:bg-white/10 rounded-2xl transition flex items-center gap-1 active:scale-95"
+            className="p-2 -ml-2 text-slate-700 dark:text-slate-300 hover:bg-black/5 dark:hover:bg-white/10 rounded-2xl transition flex items-center gap-1 active:scale-95 cursor-pointer"
             title="Ana Ekrana Dön"
           >
             <ArrowLeft className="w-5 h-5" />
             <span className="text-xs font-bold">Ana Sayfa</span>
           </button>
 
-          <span className="text-[11px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full bg-indigo-600 text-white shadow-xs">
-            🧩 Kare & Çengel Bulmaca
-          </span>
+          <div className="flex items-center gap-2">
+            <span className="text-[11px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full bg-indigo-600 text-white shadow-xs">
+              🧩 Kare & Çengel Bulmaca
+            </span>
+            {onOpenSettings && (
+              <button
+                onClick={onOpenSettings}
+                className="p-2 text-slate-700 dark:text-slate-300 hover:bg-black/5 dark:hover:bg-white/10 rounded-2xl transition flex items-center justify-center cursor-pointer active:scale-95 border border-slate-200 dark:border-slate-700"
+                title="Ayarlar (Tema, Ses, Yazı)"
+              >
+                <Settings className="w-4 h-4" />
+              </button>
+            )}
+          </div>
         </div>
 
         <div className="flex items-start justify-between gap-4">

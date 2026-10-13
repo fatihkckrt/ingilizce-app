@@ -1398,8 +1398,8 @@ function MainApp() {
           </h1>
 
           <div className="flex items-center gap-1.5 ml-1">
-            {/* Ayarlar Butonu (Giriş ekranında ve okuma ekranında gözükür) */}
-            {(currentView === 'home' || currentView === 'reading') && (
+            {/* Ayarlar Butonu (Giriş ekranında, okuma ekranında ve bulmacalarda gözükür) */}
+            {(currentView === 'home' || currentView === 'reading' || currentView === 'puzzle') && (
               <button 
                 onClick={toggleTypeSettings} 
                 className={`p-2 rounded-xl transition flex items-center justify-center shadow-xs active:scale-95 ${
@@ -1616,6 +1616,7 @@ function MainApp() {
           <PuzzleView
             themeStyle={themeStyle}
             onBackToHome={() => navigateTo('home')}
+            onOpenSettings={() => setShowTypeSettings(true)}
             onSaveWord={(word, translation, level) => {
               const cleanWord = (word || '').toLowerCase().trim();
               const exists = savedWords.some(w => (w.word || '').toLowerCase() === cleanWord);
