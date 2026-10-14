@@ -97,7 +97,7 @@ export const PuzzleView: React.FC<PuzzleViewProps> = ({
   // Filtered puzzle list
   const filteredPuzzles = getPuzzlesByLevelAndSize(
     selectedLevel, 
-    selectedSize === 'ALL' ? undefined : (selectedSize as 5 | 6 | 7)
+    selectedSize === 'ALL' ? undefined : (selectedSize as 5 | 6 | 7 | 8 | 9 | 10)
   );
 
   // Handle Next Puzzle
@@ -260,15 +260,20 @@ export const PuzzleView: React.FC<PuzzleViewProps> = ({
         </div>
       </div>
 
-      {/* SIZE FILTER TABS (5x5, 6x6, 7x7) */}
+      {/* SIZE FILTER TABS (5x5, 6x6, 7x7, 8x8, 9x9, 10x10) */}
       <div className="space-y-1.5">
-        <label className="text-xs font-black uppercase tracking-wider text-slate-600 dark:text-slate-300 px-1">
-          Izgara Boyutu
-        </label>
-        <div className="flex gap-2">
+        <div className="flex items-center justify-between px-1">
+          <label className="text-xs font-black uppercase tracking-wider text-slate-600 dark:text-slate-300">
+            Izgara Boyutu
+          </label>
+          <span className="text-[10px] text-slate-600 dark:text-slate-300 font-bold">
+            Kolaydan zora (5x5 ➔ 10x10)
+          </span>
+        </div>
+        <div className="flex gap-1.5 overflow-x-auto pb-1 scrollbar-none">
           <button
             onClick={() => setSelectedSize('ALL')}
-            className={`flex-1 py-2.5 rounded-xl text-xs font-black transition active:scale-95 border cursor-pointer ${
+            className={`px-3.5 py-2 shrink-0 rounded-xl text-xs font-black transition active:scale-95 border cursor-pointer ${
               selectedSize === 'ALL'
                 ? 'bg-indigo-600 text-white border-indigo-700 shadow-sm'
                 : `${themeStyle.card} border-slate-200 dark:border-slate-700 hover:border-indigo-300`
@@ -276,11 +281,11 @@ export const PuzzleView: React.FC<PuzzleViewProps> = ({
           >
             Tümü
           </button>
-          {[5, 6, 7].map(sz => (
+          {[5, 6, 7, 8, 9, 10].map(sz => (
             <button
               key={sz}
               onClick={() => setSelectedSize(sz)}
-              className={`flex-1 py-2.5 rounded-xl text-xs font-black transition active:scale-95 border cursor-pointer ${
+              className={`px-3 py-2 shrink-0 rounded-xl text-xs font-black transition active:scale-95 border cursor-pointer ${
                 selectedSize === sz
                   ? 'bg-indigo-600 text-white border-indigo-700 shadow-sm'
                   : `${themeStyle.card} border-slate-200 dark:border-slate-700 hover:border-indigo-300`

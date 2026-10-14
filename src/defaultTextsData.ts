@@ -1,5 +1,5 @@
 // src/defaultTextsData.ts
-// Comprehensive Reading Texts Database: 30 A1, 30 A2, 5 B1, 5 B2 (70 total)
+// Comprehensive Reading Texts Database: 33 A1, 34 A2, 9 B1, 9 B2 (85 total)
 
 export interface SentenceItem {
   id: number;
@@ -7862,5 +7862,1505 @@ export const defaultTexts: ReadingText[] = [
         "answer": 1
       }
     ]
-  }
+  },
+{
+  "id": 71,
+  "level": "A1",
+  "title": "A Visit to the Grand Bazaar",
+  "bgImage": "https://images.unsplash.com/photo-1527838832700-5059252407fa?auto=format&fit=crop&w=1200&q=80",
+  "sentences": [
+    {
+      "id": 1,
+      "eng": "The Grand Bazaar is one of the oldest covered markets in Istanbul.",
+      "tr": "Kapalıçarşı, İstanbul'un en eski kapalı çarşılarından biridir."
+    },
+    {
+      "id": 2,
+      "eng": "My brother and I visit the market on Saturday morning.",
+      "tr": "Kardeşim ve ben cumartesi sabahı çarşıyı ziyaret ederiz."
+    },
+    {
+      "id": 3,
+      "eng": "There are thousands of colorful little shops under the arched roof.",
+      "tr": "Kemerli çatının altında binlerce renkli küçük dükkân vardır."
+    },
+    {
+      "id": 4,
+      "eng": "We can smell sweet Turkish delight and fresh spices everywhere.",
+      "tr": "Her yerde tatlı lokum ve taze baharat kokusu alabiliyoruz."
+    },
+    {
+      "id": 5,
+      "eng": "A kind shopkeeper offers us small glasses of hot apple tea.",
+      "tr": "Nazik bir dükkân sahibi bize küçük bardaklarda sıcak elma çayı ikram eder."
+    },
+    {
+      "id": 6,
+      "eng": "The tea is delicious and warms our hands.",
+      "tr": "Çay çok lezzetli ve ellerimizi ısıtır."
+    },
+    {
+      "id": 7,
+      "eng": "I look at beautiful handmade carpets and shiny lamps.",
+      "tr": "Güzel el yapımı halılara ve parıldayan lambalara bakarım."
+    },
+    {
+      "id": 8,
+      "eng": "My brother buys a small blue ceramic bowl for our mother.",
+      "tr": "Kardeşim annemiz için küçük mavi seramik bir kase satın alır."
+    },
+    {
+      "id": 9,
+      "eng": "People from many different countries walk together happily.",
+      "tr": "Birçok farklı ülkeden insan birlikte neşeyle yürür."
+    },
+    {
+      "id": 10,
+      "eng": "We take photos near the historic stone gates.",
+      "tr": "Tarihi taş kapıların yanında fotoğraflar çekeriz."
+    },
+    {
+      "id": 11,
+      "eng": "At noon, we sit at a quiet cafe and eat warm simit.",
+      "tr": "Öğleyin sakin bir kafede oturup sıcak simit yeriz."
+    },
+    {
+      "id": 12,
+      "eng": "It is an unforgettable and lively day in Istanbul.",
+      "tr": "İstanbul'da unutulmaz ve cıvıl cıvıl bir gün olur."
+    }
+  ],
+  "questions": [
+    {
+      "q": "When do the narrator and brother visit the Grand Bazaar?",
+      "options": [
+        "On Friday evening",
+        "On Saturday morning",
+        "On Monday afternoon",
+        "On Sunday night"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What does the kind shopkeeper offer them?",
+      "options": [
+        "Cold orange juice",
+        "Hot apple tea",
+        "Dark coffee",
+        "Lemon cake"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What does the brother buy for their mother?",
+      "options": [
+        "A silver watch",
+        "A blue ceramic bowl",
+        "A silk scarf",
+        "A wooden toy"
+      ],
+      "answer": 1
+    }
+  ]
+},
+{
+  "id": 72,
+  "level": "A1",
+  "title": "My Weekend at the Beach",
+  "bgImage": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80",
+  "sentences": [
+    {
+      "id": 1,
+      "eng": "The summer sun is bright and warm today.",
+      "tr": "Yaz güneşi bugün parlak ve sıcacık."
+    },
+    {
+      "id": 2,
+      "eng": "My family drives to the public beach early in the morning.",
+      "tr": "Ailem sabah erkenden halk plajına arabayla gider."
+    },
+    {
+      "id": 3,
+      "eng": "The sea water is blue, clear, and calm.",
+      "tr": "Deniz suyu mavi, berrak ve sakindir."
+    },
+    {
+      "id": 4,
+      "eng": "We place our large towels on the golden sand.",
+      "tr": "Büyük havlularımızı altın sarısı kumsalın üzerine sereriz."
+    },
+    {
+      "id": 5,
+      "eng": "My little sister builds a tall sandcastle with seashells.",
+      "tr": "Küçük kız kardeşim deniz kabuklarıyla yüksek bir kumdan kale yapar."
+    },
+    {
+      "id": 6,
+      "eng": "I swim in the gentle waves with my yellow inflatable ring.",
+      "tr": "Sarı simidimle yumuşak dalgaların arasında yüzerim."
+    },
+    {
+      "id": 7,
+      "eng": "White seagulls fly high in the blue sky.",
+      "tr": "Beyaz martılar mavi gökyüzünde yükseklerde uçar."
+    },
+    {
+      "id": 8,
+      "eng": "My mother opens a picnic box with watermelon and cheese.",
+      "tr": "Annem karpuz ve peynir dolu bir piknik kutusu açar."
+    },
+    {
+      "id": 9,
+      "eng": "Cold watermelon tastes wonderful on a hot sunny day.",
+      "tr": "Sıcak güneşli bir günde soğuk karpuz harika gelir."
+    },
+    {
+      "id": 10,
+      "eng": "In the afternoon, we walk along the shoreline.",
+      "tr": "Öğleden sonra kıyı şeridi boyunca yürürüz."
+    },
+    {
+      "id": 11,
+      "eng": "We collect shiny stones and smooth shells.",
+      "tr": "Parlak taşlar ve pürüzsüz kabuklar toplarız."
+    },
+    {
+      "id": 12,
+      "eng": "We return home tired but very happy.",
+      "tr": "Eve yorgun ama çok mutlu döneriz."
+    }
+  ],
+  "questions": [
+    {
+      "q": "What does the little sister build on the beach?",
+      "options": [
+        "A wooden boat",
+        "A tall sandcastle",
+        "A paper kite",
+        "A small tent"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What food does the mother serve from the picnic box?",
+      "options": [
+        "Pizza and soda",
+        "Watermelon and cheese",
+        "Fish and rice",
+        "Soup and bread"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "How does the family feel when returning home?",
+      "options": [
+        "Angry and cold",
+        "Tired but very happy",
+        "Bored and sleepy",
+        "Worried and hungry"
+      ],
+      "answer": 1
+    }
+  ]
+},
+{
+  "id": 73,
+  "level": "A1",
+  "title": "Cooking a Family Dinner",
+  "bgImage": "https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=1200&q=80",
+  "sentences": [
+    {
+      "id": 1,
+      "eng": "Sunday evening is our favorite family dinner time.",
+      "tr": "Pazar akşamı en sevdiğimiz aile yemeği vaktidir."
+    },
+    {
+      "id": 2,
+      "eng": "We all meet in the warm kitchen to cook together.",
+      "tr": "Birlikte yemek pişirmek için hepimiz sıcak mutfakta buluşuruz."
+    },
+    {
+      "id": 3,
+      "eng": "My father washes fresh red tomatoes and green cucumbers.",
+      "tr": "Babam taze kırmızı domatesleri ve yeşil salatalıkları yıkar."
+    },
+    {
+      "id": 4,
+      "eng": "I help him cut the vegetables for a colorful salad.",
+      "tr": "Renkli bir salata için sebzeleri doğramasına yardım ederim."
+    },
+    {
+      "id": 5,
+      "eng": "My mother boils delicious pasta in a large stainless pot.",
+      "tr": "Annem büyük bir çelik tencerede lezzetli makarna haşlar."
+    },
+    {
+      "id": 6,
+      "eng": "The kitchen smells like garlic, olive oil, and tomato sauce.",
+      "tr": "Mutfak sarımsak, zeytinyağı ve domates sosu gibi kokar."
+    },
+    {
+      "id": 7,
+      "eng": "My brother sets the wooden table with white plates and napkins.",
+      "tr": "Kardeşim ahşap masayı beyaz tabaklar ve peçetelerle hazırlar."
+    },
+    {
+      "id": 8,
+      "eng": "We put yellow cheese on top of the warm pasta.",
+      "tr": "Sıcak makarnanın üzerine sarı peynir koyarız."
+    },
+    {
+      "id": 9,
+      "eng": "We sit down together and share stories about our week.",
+      "tr": "Birlikte oturur ve haftamızla ilgili hikâyeleri paylaşırız."
+    },
+    {
+      "id": 10,
+      "eng": "Everyone laughs and enjoys the tasty homemade food.",
+      "tr": "Herkes güler ve leziz ev yapımı yemeğin tadını çıkarır."
+    },
+    {
+      "id": 11,
+      "eng": "After dinner, my brother and I wash the dirty dishes.",
+      "tr": "Yemekten sonra kardeşimle ben kirli bulaşıkları yıkarız."
+    },
+    {
+      "id": 12,
+      "eng": "Eating together brings our family closer.",
+      "tr": "Birlikte yemek yemek ailemizi birbirine daha da yakınlaştırır."
+    }
+  ],
+  "questions": [
+    {
+      "q": "What does the father wash in the kitchen?",
+      "options": [
+        "Apples and oranges",
+        "Tomatoes and cucumbers",
+        "Potatoes and onions",
+        "Carrots and lettuce"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What does the mother boil in the pot?",
+      "options": [
+        "Chicken soup",
+        "Fresh pasta",
+        "Rice and peas",
+        "Tea and milk"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "Who washes the dishes after dinner?",
+      "options": [
+        "The mother",
+        "The father",
+        "The narrator and brother",
+        "The neighbors"
+      ],
+      "answer": 2
+    }
+  ]
+},
+{
+  "id": 74,
+  "level": "A2",
+  "title": "A Train Journey across Cappadocia",
+  "bgImage": "https://images.unsplash.com/photo-1641128324972-af3212f0f6bd?auto=format&fit=crop&w=1200&q=80",
+  "sentences": [
+    {
+      "id": 1,
+      "eng": "Traveling by passenger train offers a relaxing way to explore rural landscapes.",
+      "tr": "Yolcu treniyle seyahat etmek kırsal manzaraları keşfetmenin dinlendirici bir yolunu sunar."
+    },
+    {
+      "id": 2,
+      "eng": "Last October, I booked a window seat for a scenic journey to Cappadocia.",
+      "tr": "Geçen ekim ayında Kapadokya'ya manzaralı bir yolculuk için cam kenarı bilet ayırttım."
+    },
+    {
+      "id": 3,
+      "eng": "The early morning departure was quiet and punctual.",
+      "tr": "Sabahın erken saatlerindeki kalkış sakin ve tam vaktindeydi."
+    },
+    {
+      "id": 4,
+      "eng": "As the train moved steadily forward, yellow valleys and stone houses appeared.",
+      "tr": "Tren istikrarlı biçimde ilerledikçe sarı vadiler ve taş evler belirdi."
+    },
+    {
+      "id": 5,
+      "eng": "I brought a notebook to record my thoughts and sketches of the trip.",
+      "tr": "Yolculukla ilgili düşüncelerimi ve eskizlerimi kaydetmek için bir not defteri getirdim."
+    },
+    {
+      "id": 6,
+      "eng": "A polite train attendant served hot Turkish coffee and toasted sandwiches.",
+      "tr": "Kibar bir tren görevlisi sıcak Türk kahvesi ve tost servisi yaptı."
+    },
+    {
+      "id": 7,
+      "eng": "I met an elderly traveler who shared fascinating local folklore with me.",
+      "tr": "Benimle büyüleyici yerel efsaneleri paylaşan yaşlı bir gezginle tanıştım."
+    },
+    {
+      "id": 8,
+      "eng": "Suddenly, dozens of colorful hot air balloons filled the horizon.",
+      "tr": "Aniden onlarca renkli sıcak hava balonu ufku doldurdu."
+    },
+    {
+      "id": 9,
+      "eng": "The passengers stood up in excitement and captured spectacular photos.",
+      "tr": "Yolcular heyecanla ayağa kalktı ve muhteşem fotoğraflar çekti."
+    },
+    {
+      "id": 10,
+      "eng": "The rock formations resembled magical towers sculpted by wind and rain.",
+      "tr": "Kaya oluşumları rüzgâr ve yağmurla yontulmuş sihirli kulelere benziyordu."
+    },
+    {
+      "id": 11,
+      "eng": "Upon arrival at the central station, I felt inspired and completely refreshed.",
+      "tr": "Merkez istasyona vardığımda kendimi ilham dolu ve tamamen tazelenmiş hissettim."
+    },
+    {
+      "id": 12,
+      "eng": "Train travel reminds us that the journey itself is as meaningful as the destination.",
+      "tr": "Tren yolculuğu bize yolun kendisinin de varış noktası kadar anlamlı olduğunu hatırlatır."
+    }
+  ],
+  "questions": [
+    {
+      "q": "What type of seat did the traveler book for the journey?",
+      "options": [
+        "An aisle seat",
+        "A window seat",
+        "A sleeper bed",
+        "A dining car seat"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What exciting sight appeared in the sky during the train ride?",
+      "options": [
+        "Dozens of colorful hot air balloons",
+        "A flock of golden eagles",
+        "A rare rainbow storm",
+        "A meteor shower"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What lesson does the narrator draw from train travel?",
+      "options": [
+        "It is always faster than flying",
+        "The journey is as meaningful as the destination",
+        "Traveling alone is dangerous",
+        "Trains are only for summer holidays"
+      ],
+      "answer": 1
+    }
+  ]
+},
+{
+  "id": 75,
+  "level": "A2",
+  "title": "Adopting a Rescue Dog",
+  "bgImage": "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=1200&q=80",
+  "sentences": [
+    {
+      "id": 1,
+      "eng": "Adopting an animal from a rescue shelter can transform a life completely.",
+      "tr": "Bir barınaktan hayvan sahiplenmek bir hayatı tamamen dönüştürebilir."
+    },
+    {
+      "id": 2,
+      "eng": "Last month, my family decided to visit the local municipal shelter.",
+      "tr": "Geçen ay ailem yerel belediye barınağını ziyaret etmeye karar verdi."
+    },
+    {
+      "id": 3,
+      "eng": "Dozens of friendly dogs wagged their tails behind the wire gates.",
+      "tr": "Onlarca arkadaş canlısı köpek tel kapıların ardında kuyruk sallıyordu."
+    },
+    {
+      "id": 4,
+      "eng": "One small golden dog with curious brown eyes sat quietly in the corner.",
+      "tr": "Meraklı kahverengi gözleri olan küçük sarı bir köpek köşede sakince oturuyordu."
+    },
+    {
+      "id": 5,
+      "eng": "The shelter volunteer explained that his name was Leo.",
+      "tr": "Barınak gönüllüsü onun adının Leo olduğunu açıkladı."
+    },
+    {
+      "id": 6,
+      "eng": "Leo was rescued from a rainy street two weeks before.",
+      "tr": "Leo iki hafta önce yağmurlu bir sokaktan kurtarılmıştı."
+    },
+    {
+      "id": 7,
+      "eng": "When we stepped into his enclosure, Leo gently placed his paw on my knee.",
+      "tr": "Bölmesine girdiğimizde Leo patisini nazikçe dizimin üzerine koydu."
+    },
+    {
+      "id": 8,
+      "eng": "We instantly knew that he was the perfect companion for our home.",
+      "tr": "Onun evimiz için mükemmel bir can yoldaşı olduğunu hemen anladık."
+    },
+    {
+      "id": 9,
+      "eng": "We signed the official adoption papers and bought a soft dog bed.",
+      "tr": "Resmi sahiplenme evraklarını imzaladık ve yumuşak bir köpek yatağı aldık."
+    },
+    {
+      "id": 10,
+      "eng": "At home, Leo explored every single room with joyful curiosity.",
+      "tr": "Evde Leo her bir odayı neşeli bir merakla keşfetti."
+    },
+    {
+      "id": 11,
+      "eng": "Now, morning walks in the nearby park are full of energy and fun.",
+      "tr": "Artık yakındaki parkta sabah yürüyüşleri enerji ve eğlenceyle dolu."
+    },
+    {
+      "id": 12,
+      "eng": "Giving a rescue pet a second chance brings unconditional happiness.",
+      "tr": "Bir barınak hayvanına ikinci bir şans vermek koşulsuz mutluluk getirir."
+    }
+  ],
+  "questions": [
+    {
+      "q": "Where was Leo rescued from two weeks earlier?",
+      "options": [
+        "A tall mountain forest",
+        "A rainy street",
+        "An old factory",
+        "A neighbor's yard"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "How did Leo greet the family in his enclosure?",
+      "options": [
+        "He barked aggressively",
+        "He gently placed his paw on the knee",
+        "He ran away under a bench",
+        "He fell asleep immediately"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What does adopting a rescue animal bring to the household?",
+      "options": [
+        "Continuous stress",
+        "Unconditional happiness",
+        "Too much work",
+        "Unpleasant surprises"
+      ],
+      "answer": 1
+    }
+  ]
+},
+{
+  "id": 76,
+  "level": "A2",
+  "title": "A Day at the Science Museum",
+  "bgImage": "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=1200&q=80",
+  "sentences": [
+    {
+      "id": 1,
+      "eng": "Interactive museums make scientific principles thrilling for all ages.",
+      "tr": "Etkileşimli müzeler bilimsel ilkeleri her yaş için heyecan verici kılar."
+    },
+    {
+      "id": 2,
+      "eng": "Our school organized an educational field trip to the National Science Center.",
+      "tr": "Okulumuz Ulusal Bilim Merkezi'ne eğitici bir okul gezisi düzenledi."
+    },
+    {
+      "id": 3,
+      "eng": "The main exhibition hall featured modern robots and renewable energy models.",
+      "tr": "Ana sergi salonunda modern robotlar ve yenilenebilir enerji modelleri yer alıyordu."
+    },
+    {
+      "id": 4,
+      "eng": "We participated in a physics workshop demonstrating static electricity.",
+      "tr": "Statik elektriği gösteren bir fizik atölyesine katıldık."
+    },
+    {
+      "id": 5,
+      "eng": "When our classmate touched the silver sphere, his hair stood straight up.",
+      "tr": "Sınıf arkadaşımız gümüş küreye dokunduğunda saçları dimdik havaya kalktı."
+    },
+    {
+      "id": 6,
+      "eng": "The entire class cheered and took entertaining photographs.",
+      "tr": "Bütün sınıf sevinçle tezahürat yaptı ve eğlenceli fotoğraflar çekti."
+    },
+    {
+      "id": 7,
+      "eng": "Next, we visited the digital planetarium on the top floor.",
+      "tr": "Sonra en üst kattaki dijital planetaryumu ziyaret ettik."
+    },
+    {
+      "id": 8,
+      "eng": "The dome ceiling showed realistic constellations and distant planetary systems.",
+      "tr": "Kubbe tavan gerçekçi takımyıldızları ve uzak gezegen sistemlerini gösterdi."
+    },
+    {
+      "id": 9,
+      "eng": "A resident astronomer explained how telescopes detect ancient starlight.",
+      "tr": "Merkez astronomu teleskopların kadim yıldız ışığını nasıl tespit ettiğini anlattı."
+    },
+    {
+      "id": 10,
+      "eng": "We also programmed simple mini-rovers to navigate an obstacle course.",
+      "tr": "Ayrıca bir engelli parkurda ilerlemesi için basit mini keşif araçları kodladık."
+    },
+    {
+      "id": 11,
+      "eng": "The hands-on activities sparked great curiosity among all the students.",
+      "tr": "Uygulamalı etkinlikler tüm öğrenciler arasında büyük bir merak uyandırdı."
+    },
+    {
+      "id": 12,
+      "eng": "Science is not just memorizing formulas; it is active exploration.",
+      "tr": "Bilim sadece formül ezberlemek değil, aktif bir keşif sürecidir."
+    }
+  ],
+  "questions": [
+    {
+      "q": "What happened when a classmate touched the silver sphere?",
+      "options": [
+        "He got a minor burn",
+        "His hair stood straight up",
+        "The lights turned off",
+        "The sphere began to sing"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What was displayed on the ceiling of the planetarium?",
+      "options": [
+        "Underwater marine life",
+        "Constellations and planetary systems",
+        "Ancient cave paintings",
+        "Flying airplane prototypes"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What did students program in the workshop?",
+      "options": [
+        "Mini-rovers for an obstacle course",
+        "Music playlists",
+        "Digital calculators",
+        "Weather satellites"
+      ],
+      "answer": 0
+    }
+  ]
+},
+{
+  "id": 77,
+  "level": "A2",
+  "title": "Starting a Small Balcony Garden",
+  "bgImage": "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&w=1200&q=80",
+  "sentences": [
+    {
+      "id": 1,
+      "eng": "You do not need a huge backyard to experience the joy of gardening.",
+      "tr": "Bahçıvanlığın keyfini yaşamak için devasa bir arka bahçeye ihtiyacınız yoktur."
+    },
+    {
+      "id": 2,
+      "eng": "This spring, I transformed my narrow apartment balcony into a green oasis.",
+      "tr": "Bu bahar dar apartman balkonumu yemyeşil bir vahaya dönüştürdüm."
+    },
+    {
+      "id": 3,
+      "eng": "I purchased ceramic planters, organic potting soil, and small gardening tools.",
+      "tr": "Seramik saksılar, organik saksı toprağı ve küçük bahçe aletleri satın aldım."
+    },
+    {
+      "id": 4,
+      "eng": "First, I planted aromatic herbs such as fresh basil, mint, and rosemary.",
+      "tr": "İlk önce taze fesleğen, nane ve biberiye gibi aromatik otlar ektim."
+    },
+    {
+      "id": 5,
+      "eng": "Herbs grow quickly and fill the entire balcony with a delightful aroma.",
+      "tr": "Otlar hızla büyür ve tüm balkonu enfes bir kokuyla doldurur."
+    },
+    {
+      "id": 6,
+      "eng": "I also planted dwarf cherry tomato seedlings in deep containers.",
+      "tr": "Derin kaplara bodur kiraz domates fideleri de diktim."
+    },
+    {
+      "id": 7,
+      "eng": "Every morning before work, I inspect the moist soil and water the plants.",
+      "tr": "Her sabah işe gitmeden önce nemli toprağı kontrol edip bitkileri sularım."
+    },
+    {
+      "id": 8,
+      "eng": "Within three weeks, tiny green tomatoes began to form on the branches.",
+      "tr": "Üç hafta içinde dallarda minik yeşil domatesler belirmeye başladı."
+    },
+    {
+      "id": 9,
+      "eng": "Watching living plants grow teaches patience and attentiveness.",
+      "tr": "Canlı bitkilerin büyümesini izlemek insana sabır ve özen göstermeyi öğretir."
+    },
+    {
+      "id": 10,
+      "eng": "I regularly pick fresh basil leaves to garnish evening pasta dishes.",
+      "tr": "Akşam makarnalarını süslemek için düzenli olarak taze fesleğen yaprakları koparırım."
+    },
+    {
+      "id": 11,
+      "eng": "My green balcony has become my favorite place to relax and read books.",
+      "tr": "Yeşil balkonum dinlenmek ve kitap okumak için en sevdiğim yer haline geldi."
+    },
+    {
+      "id": 12,
+      "eng": "Urban gardening brings people closer to nature even in noisy cities.",
+      "tr": "Kentsel bahçecilik gürültülü şehirlerde bile insanları doğaya yaklaştırır."
+    }
+  ],
+  "questions": [
+    {
+      "q": "What herbs did the narrator plant on the balcony?",
+      "options": [
+        "Cactus and orchids",
+        "Basil, mint, and rosemary",
+        "Wheat and corn",
+        "Roses and tulips"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What virtue does caring for living plants cultivate?",
+      "options": [
+        "Patience and attentiveness",
+        "Fast financial gains",
+        "Physical strength",
+        "Competitive spirit"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "How does the narrator use the freshly picked basil?",
+      "options": [
+        "To sell at the market",
+        "To garnish evening pasta dishes",
+        "To feed birds",
+        "To make perfume"
+      ],
+      "answer": 1
+    }
+  ]
+},
+{
+  "id": 78,
+  "level": "B1",
+  "title": "The Rise of Remote Work and Digital Nomads",
+  "bgImage": "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80",
+  "sentences": [
+    {
+      "id": 1,
+      "eng": "Technological advancements have radically reshaped the modern workplace over the last decade.",
+      "tr": "Teknolojik ilerlemeler son on yılda modern çalışma ortamını kökten yeniden biçimlendirdi."
+    },
+    {
+      "id": 2,
+      "eng": "Cloud computing and video conferencing allow millions of professionals to work from anywhere.",
+      "tr": "Bulut bilişim ve video konferans milyonlarca uzmanın her yerden çalışmasına imkân tanıyor."
+    },
+    {
+      "id": 3,
+      "eng": "A growing segment of the global workforce has adopted the lifestyle of digital nomads.",
+      "tr": "Küresel iş gücünün büyüyen bir kesimi dijital göçebe yaşam tarzını benimsedi."
+    },
+    {
+      "id": 4,
+      "eng": "These individuals combine full-time careers with continuous international travel.",
+      "tr": "Bu bireyler tam zamanlı kariyerlerini sürekli uluslararası seyahatle birleştiriyor."
+    },
+    {
+      "id": 5,
+      "eng": "Instead of commuting to corporate skyscrapers, they work from co-working spaces or beachside cafes.",
+      "tr": "Kurumsal gökdelenlere her gün gidip gelmek yerine ortak çalışma alanlarından veya sahil kafelerinden çalışırlar."
+    },
+    {
+      "id": 6,
+      "eng": "This flexibility fosters higher autonomy, personal freedom, and cross-cultural exchange.",
+      "tr": "Bu esneklik daha yüksek özerkliği, kişisel özgürlüğü ve kültürlerarası etkileşimi teşvik eder."
+    },
+    {
+      "id": 7,
+      "eng": "However, remote working also introduces unique personal and professional challenges.",
+      "tr": "Bununla birlikte uzaktan çalışma kendine özgü kişisel ve mesleki zorlukları da beraberinde getirir."
+    },
+    {
+      "id": 8,
+      "eng": "Navigating different time zones can disrupt sleep schedules and team coordination.",
+      "tr": "Farklı saat dilimlerinde çalışmak uyku düzenini ve ekip koordinasyonunu bozabilir."
+    },
+    {
+      "id": 9,
+      "eng": "Furthermore, the absence of physical colleagues occasionally leads to social isolation.",
+      "tr": "Dahası, fiziksel meslektaşların yokluğu kimi zaman sosyal yalnızlaşmaya yol açar."
+    },
+    {
+      "id": 10,
+      "eng": "Successful remote workers establish strict routines and clear boundaries between work and leisure.",
+      "tr": "Başarılı uzaktan çalışanlar katı rutinler ve iş ile dinlenme arasında net sınırlar belirler."
+    },
+    {
+      "id": 11,
+      "eng": "Forward-thinking countries now offer specialized nomad visas to stimulate local economies.",
+      "tr": "İleri görüşlü ülkeler artık yerel ekonomileri canlandırmak için özel göçebe vizeleri sunmaktadır."
+    },
+    {
+      "id": 12,
+      "eng": "The future of employment will likely blend digital mobility with purposeful community collaboration.",
+      "tr": "İstihdamın geleceği muhtemelen dijital hareketlilik ile amaca yönelik topluluk iş birliğini harmanlayacaktır."
+    }
+  ],
+  "questions": [
+    {
+      "q": "What technologies primarily enable remote professional work?",
+      "options": [
+        "Radio transmitters and print media",
+        "Cloud computing and video conferencing",
+        "Postal delivery and analog phones",
+        "Factory conveyor belts"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What is a prominent challenge faced by digital nomads?",
+      "options": [
+        "Overpriced train tickets",
+        "Time zone navigation and social isolation",
+        "Inability to learn languages",
+        "A lack of travel options"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "Why do some countries introduce digital nomad visas?",
+      "options": [
+        "To discourage foreign tourists",
+        "To stimulate their local economies",
+        "To replace traditional universities",
+        "To shut down corporate offices"
+      ],
+      "answer": 1
+    }
+  ]
+},
+{
+  "id": 79,
+  "level": "B1",
+  "title": "Protecting Coastal Ecosystems",
+  "bgImage": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80",
+  "sentences": [
+    {
+      "id": 1,
+      "eng": "Coastal ecosystems represent some of the most biodiverse and vulnerable environments on Earth.",
+      "tr": "Kıyı ekosistemleri yeryüzündeki en yüksek biyolojik çeşitliliğe sahip ve en hassas ortamlar arasındadır."
+    },
+    {
+      "id": 2,
+      "eng": "Mangrove forests, coral reefs, and seagrass meadows protect shorelines from severe storm surges.",
+      "tr": "Mangrov ormanları, mercan resifleri ve deniz çayırları kıyıları şiddetli fırtına dalgalarından korur."
+    },
+    {
+      "id": 3,
+      "eng": "Additionally, underwater plants absorb massive amounts of carbon dioxide from the atmosphere.",
+      "tr": "Ayrıca su altı bitkileri atmosferdeki muazzam miktarda karbondioksiti bünyesine çeker."
+    },
+    {
+      "id": 4,
+      "eng": "This blue carbon storage plays a critical role in mitigating global climate changes.",
+      "tr": "Bu 'mavi karbon' depolaması küresel iklim değişikliklerini hafifletmede hayati bir rol oynar."
+    },
+    {
+      "id": 5,
+      "eng": "Regrettably, coastal areas worldwide face severe pressures from uncontrolled urban development.",
+      "tr": "Ne yazık ki dünya çapındaki kıyı bölgeleri kontrolsüz kentsel gelişimden kaynaklanan ağır baskılarla karşı karşıyadır."
+    },
+    {
+      "id": 6,
+      "eng": "Industrial wastewater and single-use plastic debris pollute pristine marine habitats.",
+      "tr": "Endüstriyel atık sular ve tek kullanımlık plastik çöpler el değmemiş deniz yaşam alanlarını kirletmektedir."
+    },
+    {
+      "id": 7,
+      "eng": "Overfishing disrupts delicate food chains, threatening species like sea turtles and reef fish.",
+      "tr": "Aşırı avlanma hassas besin zincirlerini bozarak deniz kaplumbağaları ve resif balıkları gibi türleri tehdit eder."
+    },
+    {
+      "id": 8,
+      "eng": "In response, marine biologists and local communities are establishing marine protected areas.",
+      "tr": "Buna karşılık deniz biyologları ve yerel topluluklar deniz koruma alanları oluşturmaktadır."
+    },
+    {
+      "id": 9,
+      "eng": "Artificial reefs and coral restoration nurseries help damaged marine ecosystems recover.",
+      "tr": "Yapay resifler ve mercan restorasyon fidanlıkları zarar görmüş deniz ekosistemlerinin toparlanmasına yardımcı olur."
+    },
+    {
+      "id": 10,
+      "eng": "Sustainable tourism practices ensure that travelers respect wildlife without damaging natural habitats.",
+      "tr": "Sürdürülebilir turizm uygulamaları gezginlerin doğal yaşam alanlarına zarar vermeden yaban hayatına saygı duymasını sağlar."
+    },
+    {
+      "id": 11,
+      "eng": "Public awareness campaigns inspire citizens to reduce plastic consumption in everyday life.",
+      "tr": "Toplumsal farkındalık kampanyaları vatandaşları günlük hayatta plastik tüketimini azaltmaya teşvik eder."
+    },
+    {
+      "id": 12,
+      "eng": "Preserving marine health guarantees food security and prosperity for future generations.",
+      "tr": "Deniz sağlığını muhafaza etmek gelecek nesiller için gıda güvenliğini ve refahı güvence altına alır."
+    }
+  ],
+  "questions": [
+    {
+      "q": "What term describes carbon stored by marine and coastal ecosystems?",
+      "options": [
+        "Green coal",
+        "Blue carbon",
+        "Solar ash",
+        "Fossil soot"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "How do mangrove forests and coral reefs benefit human coastal settlements?",
+      "options": [
+        "They generate artificial electricity",
+        "They protect shorelines from severe storm surges",
+        "They eliminate the need for fishing",
+        "They create warm winter breezes"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What proactive measure helps damaged coral ecosystems recover?",
+      "options": [
+        "Building deeper shipping canals",
+        "Establishing coral restoration nurseries",
+        "Increasing industrial fishing quotas",
+        "Paving sand dunes with concrete"
+      ],
+      "answer": 1
+    }
+  ]
+},
+{
+  "id": 80,
+  "level": "B1",
+  "title": "The Psychology of Time Management",
+  "bgImage": "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&w=1200&q=80",
+  "sentences": [
+    {
+      "id": 1,
+      "eng": "Effective time management is not merely about executing more tasks in fewer hours.",
+      "tr": "Etkili zaman yönetimi sadece daha az saatte daha fazla iş bitirmekle ilgili değildir."
+    },
+    {
+      "id": 2,
+      "eng": "At its core, time management involves emotional self-regulation and strategic prioritization.",
+      "tr": "Özünde zaman yönetimi duygusal öz denetimi ve stratejik önceliklendirmeyi içerir."
+    },
+    {
+      "id": 3,
+      "eng": "Many individuals struggle with chronic procrastination due to an underlying fear of failure.",
+      "tr": "Pek çok birey başarısızlık korkusu nedeniyle kronik erteleme alışkanlığıyla mücadele eder."
+    },
+    {
+      "id": 4,
+      "eng": "When confronted with complex projects, the human brain often seeks instant gratification.",
+      "tr": "İnsan beyni karmaşık projelerle karşılaştığında genellikle anlık haz arayışına girer."
+    },
+    {
+      "id": 5,
+      "eng": "Scrolling through social media or cleaning a desk provides temporary psychological relief.",
+      "tr": "Sosyal medyada gezinmek veya masa temizlemek geçici bir psikolojik rahatlama sağlar."
+    },
+    {
+      "id": 6,
+      "eng": "To overcome this cognitive obstacle, psychologists recommend the Pomodoro Technique.",
+      "tr": "Bu bilişsel engeli aşmak için psikologlar Pomodoro Tekniği'ni önermektedir."
+    },
+    {
+      "id": 7,
+      "eng": "This method divides working intervals into focused twenty-five minute sessions followed by short breaks.",
+      "tr": "Bu yöntem çalışma aralıklarını yirmi beş dakikalık odaklanmış seanslara ve ardından kısa molalara böler."
+    },
+    {
+      "id": 8,
+      "eng": "Another powerful framework is the Eisenhower Matrix, which separates urgent tasks from important ones.",
+      "tr": "Bir diğer güçlü yöntem, acil görevleri önemli olanlardan ayıran Eisenhower Matrisi'dir."
+    },
+    {
+      "id": 9,
+      "eng": "Important long-term goals frequently lack immediate urgency and risk being neglected.",
+      "tr": "Önemli uzun vadeli hedefler sıklıkla anlık aciliyetten yoksundur ve ihmal edilme riski taşır."
+    },
+    {
+      "id": 10,
+      "eng": "Protecting dedicated blocks of deep work enables substantial intellectual breakthroughs.",
+      "tr": "Derin çalışma için ayrılmış özel zaman bloklarını korumak kayda değer zihinsel atılımlara zemin hazırlar."
+    },
+    {
+      "id": 11,
+      "eng": "Learning to decline non-essential commitments is essential for personal well-being.",
+      "tr": "Gerekli olmayan taahhütleri geri çevirmeyi öğrenmek kişisel esenlik için şarttır."
+    },
+    {
+      "id": 12,
+      "eng": "Mastering your schedule ultimately grants you control over your destiny.",
+      "tr": "Programınıza hakim olmak nihayetinde kendi kaderinizi kontrol etmenizi sağlar."
+    }
+  ],
+  "questions": [
+    {
+      "q": "What underlying psychological factor often fuels procrastination?",
+      "options": [
+        "Excessive physical energy",
+        "Fear of failure",
+        "Overwhelming happiness",
+        "Lack of internet connection"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "How does the Pomodoro Technique structure work time?",
+      "options": [
+        "Continuous eight-hour marathons",
+        "Twenty-five minute focused sessions with short breaks",
+        "Working only late at night",
+        "Skipping breakfast and lunch"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What distinction is central to the Eisenhower Matrix?",
+      "options": [
+        "Expensive versus cheap tasks",
+        "Urgent versus important tasks",
+        "Solo versus group activities",
+        "Manual versus digital work"
+      ],
+      "answer": 1
+    }
+  ]
+},
+{
+  "id": 81,
+  "level": "B1",
+  "title": "The Evolution of Urban Architecture",
+  "bgImage": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80",
+  "sentences": [
+    {
+      "id": 1,
+      "eng": "Architecture reflects the cultural values, economic priorities, and technological limits of every era.",
+      "tr": "Mimarlık her dönemin kültürel değerlerini, ekonomik önceliklerini ve teknolojik sınırlarını yansıtır."
+    },
+    {
+      "id": 2,
+      "eng": "Ancient civilizations constructed monuments from natural stone to project permanence and authority.",
+      "tr": "Kadim medeniyetler kalıcılığı ve otoriteyi yansıtmak amacıyla doğal taştan anıtlar inşa etti."
+    },
+    {
+      "id": 3,
+      "eng": "The Industrial Revolution transformed construction techniques through mass-produced steel and glass.",
+      "tr": "Sanayi Devrimi seri üretim çelik ve cam sayesinde inşaat tekniklerini kökten değiştirdi."
+    },
+    {
+      "id": 4,
+      "eng": "Skyscrapers emerged in twentieth-century metropolises, maximizing limited downtown land.",
+      "tr": "Sınırlı şehir merkezi arazisinden en üst düzeyde yararlanan gökdelenler yirminci yüzyıl metropollerinde ortaya çıktı."
+    },
+    {
+      "id": 5,
+      "eng": "Today, rapid climate challenges demand a profound paradigm shift toward green architecture.",
+      "tr": "Günümüzde hızlı iklim zorlukları yeşil mimariye doğru köklü bir paradigma değişimi talep ediyor."
+    },
+    {
+      "id": 6,
+      "eng": "Contemporary architects prioritize energy-efficient designs with integrated solar panels.",
+      "tr": "Çağdaş mimarlar entegre güneş panellerine sahip enerji tasarruflu tasarımlara öncelik veriyor."
+    },
+    {
+      "id": 7,
+      "eng": "Living vertical gardens and green rooftops reduce urban heat island effects significantly.",
+      "tr": "Yaşayan dikey bahçeler ve yeşil çatılar kentsel ısı adası etkisini belirgin ölçüde azaltır."
+    },
+    {
+      "id": 8,
+      "eng": "Recycled construction materials and mass timber structures are replacing energy-intensive concrete.",
+      "tr": "Geri dönüştürülmüş yapı malzemeleri ve ahşap kütük strüktürler yüksek enerji tüketen betonun yerini alıyor."
+    },
+    {
+      "id": 9,
+      "eng": "Furthermore, smart building management systems optimize temperature and lighting automatically.",
+      "tr": "Dahası, akıllı bina yönetim sistemleri sıcaklığı ve aydınlatmayı otomatik olarak optimize eder."
+    },
+    {
+      "id": 10,
+      "eng": "Pedestrian-friendly urban plazas encourage social interaction and public wellness.",
+      "tr": "Yaya dostu kentsel meydanlar sosyal etkileşimi ve toplumsal sağlığı teşvik eder."
+    },
+    {
+      "id": 11,
+      "eng": "Harmonizing human structures with ecological systems is no longer an optional luxury.",
+      "tr": "İnsan yapılarını ekolojik sistemlerle uyumlu hale getirmek artık isteğe bağlı bir lüks değildir."
+    },
+    {
+      "id": 12,
+      "eng": "Sustainable cities demonstrate that human ingenuity can thrive in balance with nature.",
+      "tr": "Sürdürülebilir şehirler insan dehasının doğayla denge içinde serpilebileceğini kanıtlamaktadır."
+    }
+  ],
+  "questions": [
+    {
+      "q": "What materials transformed building construction during the Industrial Revolution?",
+      "options": [
+        "Clay bricks and straw",
+        "Mass-produced steel and glass",
+        "Hand-carved marble and granite",
+        "Plastic sheets and bamboo"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What environmental advantage do living green rooftops provide?",
+      "options": [
+        "They generate loud sound waves",
+        "They reduce the urban heat island effect",
+        "They eliminate all urban shadows",
+        "They increase air conditioning electricity costs"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What is modern green architecture attempting to achieve?",
+      "options": [
+        "Replacing all public parks with highways",
+        "Harmonizing human structures with ecological systems",
+        "Constructing only windowless concrete bunkers",
+        "Banning all pedestrian plazas"
+      ],
+      "answer": 1
+    }
+  ]
+},
+{
+  "id": 82,
+  "level": "B2",
+  "title": "The Ethics and Governance of Artificial Intelligence",
+  "bgImage": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80",
+  "sentences": [
+    {
+      "id": 1,
+      "eng": "The unprecedented acceleration of generative artificial intelligence presents profound socioeconomic dilemmas.",
+      "tr": "Üretken yapay zekanın benzeri görülmemiş ivmesi derin sosyoekonomik ikilemler doğurmaktadır."
+    },
+    {
+      "id": 2,
+      "eng": "Machine learning architectures now demonstrate remarkable capabilities across creative and analytical domains.",
+      "tr": "Makine öğrenimi mimarileri artık yaratıcı ve analitik alanlarda kayda değer yetenekler sergiliyor."
+    },
+    {
+      "id": 3,
+      "eng": "Algorithms compose intricate prose, synthesize photorealistic visual media, and write sophisticated computer code.",
+      "tr": "Algoritmalar incelikli metinler yazıyor, fotogerçekçi görsel medyayı sentezliyor ve karmaşık bilgisayar kodları üretiyor."
+    },
+    {
+      "id": 4,
+      "eng": "However, these mathematical models frequently perpetuate historical biases embedded within training datasets.",
+      "tr": "Bununla birlikte bu matematiksel modeller eğitim veri setlerinde bulunan tarihsel önyargıları sıklıkla sürdürmektedir."
+    },
+    {
+      "id": 5,
+      "eng": "Algorithmic opacity and the 'black box' phenomenon impede accountability in high-stakes decisions.",
+      "tr": "Algoritmik şeffaflık eksikliği ve 'kara kutu' fenomeni yüksek riskli kararlarda hesap verebilirliği engellemektedir."
+    },
+    {
+      "id": 6,
+      "eng": "Automated systems are increasingly deployed in criminal sentencing, medical diagnoses, and credit appraisals.",
+      "tr": "Otomatik sistemler adli ceza tayininde, tıbbi teşhislerde ve kredi değerlendirmelerinde giderek daha fazla kullanılmaktadır."
+    },
+    {
+      "id": 7,
+      "eng": "Without robust regulatory oversight, systemic inequities risk becoming permanently institutionalized.",
+      "tr": "Güçlü bir yasal denetim olmaksızın yapısal adaletsizliklerin kalıcı biçimde kurumsallaşması riski doğar."
+    },
+    {
+      "id": 8,
+      "eng": "Furthermore, the proliferation of deepfakes and automated disinformation undermines democratic deliberation.",
+      "tr": "Dahası, sahte içeriklerin ve otomatik dezenformasyonun yaygınlaşması demokratik müzakere ortamını baltalar."
+    },
+    {
+      "id": 9,
+      "eng": "International consortiums advocate for ethical frameworks emphasizing transparency, fairness, and human oversight.",
+      "tr": "Uluslararası konsorsiyumlar şeffaflık, adalet ve insan denetimini vurgulayan etik çerçeveleri savunmaktadır."
+    },
+    {
+      "id": 10,
+      "eng": "Interdisciplinary collaboration among technologists, ethicists, and policymakers is urgently required.",
+      "tr": "Teknoloji uzmanları, ahlak felsefecileri ve yasa yapıcılar arasında disiplinlerarası iş birliği acilen gereklidir."
+    },
+    {
+      "id": 11,
+      "eng": "Technological innovation must never be pursued at the expense of fundamental human rights.",
+      "tr": "Teknolojik yenilik temel insan hakları pahasına asla ilerletilmemelidir."
+    },
+    {
+      "id": 12,
+      "eng": "Guiding artificial intelligence toward collective human flourishing remains the definitive challenge of our century.",
+      "tr": "Yapay zekayı kolektif insan refahına yönlendirmek yüzyılımızın belirleyici sınavı olmaya devam etmektedir."
+    }
+  ],
+  "questions": [
+    {
+      "q": "What causes AI systems to replicate discrimination and stereotypes?",
+      "options": [
+        "Physical hardware defects",
+        "Biases embedded within training datasets",
+        "Excessive internet bandwidth",
+        "Manual programming typos"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What term describes the difficulty in understanding how complex algorithms reach conclusions?",
+      "options": [
+        "The silver ceiling",
+        "The 'black box' phenomenon",
+        "The quantum bridge",
+        "The analog barrier"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What ethical values are prioritized by international governance frameworks for AI?",
+      "options": [
+        "Maximum speed and corporate secrecy",
+        "Transparency, fairness, and human oversight",
+        "Total automation without human input",
+        "Disregard for historical precedents"
+      ],
+      "answer": 1
+    }
+  ]
+},
+{
+  "id": 83,
+  "level": "B2",
+  "title": "Neuroplasticity and Lifelong Learning",
+  "bgImage": "https://images.unsplash.com/photo-1507413245164-6160d8298b31?auto=format&fit=crop&w=1200&q=80",
+  "sentences": [
+    {
+      "id": 1,
+      "eng": "For decades, classical neurobiology maintained that the adult human brain was structurally immutable.",
+      "tr": "Onlarca yıl boyunca klasik nörobiyoloji yetişkin insan beyninin yapısal olarak değişmez olduğunu savundu."
+    },
+    {
+      "id": 2,
+      "eng": "Contemporary neuroscience has thoroughly dismantled this fatalistic view through the discovery of neuroplasticity.",
+      "tr": "Çağdaş sinirbilim nöroplastisitenin keşfiyle bu kaderci görüşü tamamen çürütmüştür."
+    },
+    {
+      "id": 3,
+      "eng": "Neuroplasticity refers to the central nervous system's capacity to modify its neural wiring in response to experience.",
+      "tr": "Nöroplastisite merkezi sinir sisteminin deneyimlere yanıt olarak sinirsel ağlarını yeniden şekillendirme kapasitesini ifade eder."
+    },
+    {
+      "id": 4,
+      "eng": "Whenever we acquire a foreign language or master a musical instrument, synaptogenesis occurs.",
+      "tr": "Yeni bir yabancı dil öğrendiğimizde veya bir enstrümanda ustalaştığımızda sinaptogenez gerçekleşir."
+    },
+    {
+      "id": 5,
+      "eng": "Repeated deliberate practice strengthens synaptic connections, optimizing cognitive speed and transmission fidelity.",
+      "tr": "Tekrarlanan bilinçli pratik sinaptik bağlantıları güçlendirerek bilişsel hızı ve iletim kalitesini optimize eder."
+    },
+    {
+      "id": 6,
+      "eng": "Conversely, unused neural pathways undergo targeted pruning to conserve biological metabolic energy.",
+      "tr": "Tersine, kullanılmayan sinir yolları biyolojik metabolik enerjiyi korumak amacıyla hedefli bir budamaya uğrar."
+    },
+    {
+      "id": 7,
+      "eng": "This dynamic adaptability persists well into late adulthood, disproving the myth of cognitive stagnation.",
+      "tr": "Bu dinamik uyum yeteneği ileri yetişkinlik dönemine kadar sürerek bilişsel durgunluk efsanesini boşa çıkarır."
+    },
+    {
+      "id": 8,
+      "eng": "Engaging with intellectually stimulating tasks builds what cognitive scientists describe as cognitive reserve.",
+      "tr": "Zihinsel olarak uyarıcı görevlerle meşgul olmak bilim insanlarının bilişsel rezerv olarak adlandırdığı yapıyı inşa eder."
+    },
+    {
+      "id": 9,
+      "eng": "A substantial cognitive reserve significantly mitigates the symptomatic onset of neurodegenerative disorders.",
+      "tr": "Kayda değer bir bilişsel rezerv nörodejeneratif hastalıkların semptomatik başlangıcını belirgin şekilde hafifletir."
+    },
+    {
+      "id": 10,
+      "eng": "Furthermore, cardiovascular exercise stimulates brain-derived neurotrophic factor, fostering hippocampal neurogenesis.",
+      "tr": "Dahası, kardiyovasküler egzersiz hipokampal nörojenezi teşvik eden beyin kökenli nörotrofik faktörü uyarır."
+    },
+    {
+      "id": 11,
+      "eng": "Our mental capabilities are not fixed biological destinies; they are evolving landscapes.",
+      "tr": "Zihinsel yeteneklerimiz sabit biyolojik kaderler değil, sürekli evrilen coğrafyalardır."
+    },
+    {
+      "id": 12,
+      "eng": "Lifelong curiosity and disciplined study physically reshape the biological architecture of our minds.",
+      "tr": "Yaşam boyu merak ve disiplinli çalışma zihnimizin biyolojik mimarisini fiziksel olarak yeniden şekillendirir."
+    }
+  ],
+  "questions": [
+    {
+      "q": "What obsolete scientific dogma was overthrown by the discovery of neuroplasticity?",
+      "options": [
+        "That the human brain was structurally immutable in adulthood",
+        "That neurons utilize electrical impulses",
+        "That memory is stored in the brain",
+        "That sleep is essential for survival"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What biological process occurs when we repeatedly practice a complex new skill?",
+      "options": [
+        "Synaptic pruning of active pathways",
+        "Synaptogenesis and synaptic strengthening",
+        "The complete shutdown of the hippocampus",
+        "Severe neuron degeneration"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "How does cognitive reserve benefit aging individuals?",
+      "options": [
+        "It eliminates the need for physical exercise",
+        "It mitigates the symptomatic onset of neurodegenerative disorders",
+        "It prevents all physical aging processes",
+        "It replaces the biological need for sleep"
+      ],
+      "answer": 1
+    }
+  ]
+},
+{
+  "id": 84,
+  "level": "B2",
+  "title": "Circular Economy and Zero-Waste Supply Chains",
+  "bgImage": "https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=1200&q=80",
+  "sentences": [
+    {
+      "id": 1,
+      "eng": "The prevailing linear economic paradigm—extract, manufacture, consume, discard—is ecologically unsustainable.",
+      "tr": "Hüküm süren çizgisel ekonomik model—çıkar, üret, tüket, at—ekolojik açıdan sürdürülemez niteliktedir."
+    },
+    {
+      "id": 2,
+      "eng": "Industrial societies generate staggering volumes of non-biodegradable waste while depleting finite natural deposits.",
+      "tr": "Sanayi toplumları sınırlı doğal rezervleri tüketirken akıl almaz miktarlarda biyolojik olarak parçalanamayan atık üretmektedir."
+    },
+    {
+      "id": 3,
+      "eng": "In response to environmental degradation, forward-thinking institutions advocate for a circular economy.",
+      "tr": "Çevresel tahribata yanıt olarak ileri görüşlü kurumlar döngüsel ekonomiyi hararetle savunmaktadır."
+    },
+    {
+      "id": 4,
+      "eng": "A circular model decouples economic prosperity from the consumption of virgin natural resources.",
+      "tr": "Döngüsel model ekonomik refahı işlenmemiş bakir doğal kaynakların tüketiminden bağımsız hale getirir."
+    },
+    {
+      "id": 5,
+      "eng": "Core principles include designing out waste, circulating materials at highest utility, and regenerating natural capital.",
+      "tr": "Temel ilkeler arasında atığı tasarımla ortadan kaldırmak, malzemeleri en yüksek verimle döngüde tutmak ve doğal sermayeyi yenilemek yer alır."
+    },
+    {
+      "id": 6,
+      "eng": "Pioneering manufacturing corporations now implement cradle-to-cradle product lifecycle methodologies.",
+      "tr": "Öncü imalat şirketleri artık beşikten beşiğe ürün yaşam döngüsü metodolojilerini uygulamaktadır."
+    },
+    {
+      "id": 7,
+      "eng": "Consumer electronics are purposefully modularized to facilitate component replacement, upgrade, and remanufacture.",
+      "tr": "Tüketici elektroniği parça değişimini, yükseltmeyi ve yeniden üretimi kolaylaştırmak için kasıtlı olarak modüler hale getirilir."
+    },
+    {
+      "id": 8,
+      "eng": "Extended producer responsibility legislation obligates conglomerates to finance post-consumer recycling logistics.",
+      "tr": "Genişletilmiş üretici sorumluluğu mevzuatı holdingleri tüketim sonrası geri dönüşüm lojistiğini finanse etmekle yükümlü kılar."
+    },
+    {
+      "id": 9,
+      "eng": "Industrial symbiosis allows one facility's byproduct waste to serve as another facility's raw input.",
+      "tr": "Endüstriyel simbiyoz bir tesisin atık yan ürününün başka bir tesisin ham girdisi olarak hizmet etmesini sağlar."
+    },
+    {
+      "id": 10,
+      "eng": "Shifting toward circular supply chains significantly lowers carbon emissions and preserves fragile habitats.",
+      "tr": "Döngüsel tedarik zincirlerine geçiş karbon salımlarını belirgin biçimde düşürür ve hassas habitatları korur."
+    },
+    {
+      "id": 11,
+      "eng": "Consumers catalyze this systemic transition by demanding sustainable, durable, and repairable products.",
+      "tr": "Tüketiciler sürdürülebilir, dayanıklı ve tamir edilebilir ürünler talep ederek bu sistemsel dönüşümü tetikler."
+    },
+    {
+      "id": 12,
+      "eng": "True ecological resilience requires viewing all material waste as valuable technical nutrients.",
+      "tr": "Gerçek ekolojik direnç tüm maddi atıkları değerli teknik besin maddeleri olarak görmeyi gerektirir."
+    }
+  ],
+  "questions": [
+    {
+      "q": "What defines the traditional linear economic paradigm?",
+      "options": [
+        "Preserve, regenerate, reuse, and compost",
+        "Extract, manufacture, consume, and discard",
+        "Borrow, lease, share, and repair",
+        "Synthesize, digitize, simulate, and archive"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "How does modular design in consumer electronics support circularity?",
+      "options": [
+        "It forces users to buy a new device every year",
+        "It facilitates component replacement, upgrades, and remanufacturing",
+        "It completely eliminates the need for software",
+        "It increases raw plastic content"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What occurs in an industrial symbiosis ecosystem?",
+      "options": [
+        "All factories shut down simultaneously",
+        "One facility's waste byproduct serves as raw input for another",
+        "Companies compete destructively for fresh water",
+        "Products are dumped in landfills without sorting"
+      ],
+      "answer": 1
+    }
+  ]
+},
+{
+  "id": 85,
+  "level": "B2",
+  "title": "Biomimicry: Engineering Solutions Inspired by Nature",
+  "bgImage": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=80",
+  "sentences": [
+    {
+      "id": 1,
+      "eng": "Biological organisms have undergone three point eight billion years of rigorous evolutionary optimization.",
+      "tr": "Biyolojik organizmalar üç nokta sekiz milyar yıllık amansız bir evrimsel optimizasyondan geçmiştir."
+    },
+    {
+      "id": 2,
+      "eng": "Natural selection has solved complex aerodynamic, structural, and energetic dilemmas with supreme efficiency.",
+      "tr": "Doğal seçilim karmaşık aerodinamik, yapısal ve enerjetik ikilemleri üstün bir verimlilikle çözmüştür."
+    },
+    {
+      "id": 3,
+      "eng": "Biomimicry is the multidisciplinary practice of emulating biological blueprints to solve human challenges.",
+      "tr": "Biyomimikri insanlığın sorunlarını çözmek için biyolojik tasarım şablonlarını taklit etmeye dayanan disiplinlerarası bir uygulamadır."
+    },
+    {
+      "id": 4,
+      "eng": "A classic exemplar is the aerodynamic redesign of Japan's legendary Shinkansen high-speed bullet train.",
+      "tr": "Klasik bir örnek Japonya'nın efsanevi Şinkansen hızlı treninin aerodinamik olarak yeniden tasarlanmasıdır."
+    },
+    {
+      "id": 5,
+      "eng": "Engineers modeled the train's elongated nose after the kingfisher bird's beak to eliminate tunnel sonic booms.",
+      "tr": "Mühendisler tünel çıkışındaki sonik patlamaları ortadan kaldırmak için trenin burnunu yalıçapkını kuşunun gagasına göre modelledi."
+    },
+    {
+      "id": 6,
+      "eng": "Similarly, microscopic shark skin textures have inspired antibacterial surfaces in clinical operating theaters.",
+      "tr": "Benzer şekilde mikroskobik köpekbalığı derisi dokuları klinik ameliyathanelerde antibakteriyel yüzeylere ilham kaynağı olmuştur."
+    },
+    {
+      "id": 7,
+      "eng": "The diamond-shaped denticles prevent harmful pathogenic bacterial colonies from adhering to hospital walls.",
+      "tr": "Elmas şeklindeki dentiküller zararlı patojenik bakteri kolonilerinin hastane duvarlarına tutunmasını engeller."
+    },
+    {
+      "id": 8,
+      "eng": "Architects studying African termite mounds engineered passive ventilation systems for massive commercial complexes.",
+      "tr": "Afrika termit yuvalarını inceleyen mimarlar devasa ticari yapılar için pasif havalandırma sistemleri geliştirdi."
+    },
+    {
+      "id": 9,
+      "eng": "These structures maintain consistent comfortable indoor temperatures without relying on conventional air conditioning.",
+      "tr": "Bu binalar geleneksel klimaya bel bağlamadan bina içinde istikrarlı ve konforlu sıcaklıklar sağlar."
+    },
+    {
+      "id": 10,
+      "eng": "Self-healing concrete incorporates dormant bacterial spores that precipitate limestone when microscopic fractures develop.",
+      "tr": "Kendi kendini onaran beton, mikroskobik çatlaklar oluştuğunda kireç taşı çökeltisi oluşturan uyuyan bakteri sporları içerir."
+    },
+    {
+      "id": 11,
+      "eng": "Nature operates without toxic landfills, utilizing cyclical closed loops and renewable solar radiation.",
+      "tr": "Doğa döngüsel kapalı devreler ve yenilenebilir güneş radyasyonu kullanarak zehirli çöplükler olmadan işler."
+    },
+    {
+      "id": 12,
+      "eng": "Consulting biological wisdom equips engineers to pioneer sustainable and resilient technologies.",
+      "tr": "Biyolojik bilgeliğe danışmak mühendislere sürdürülebilir ve dirençli teknolojilere öncülük etme gücü kazandırır."
+    }
+  ],
+  "questions": [
+    {
+      "q": "What biological creature inspired the aerodynamic nose of the Shinkansen bullet train?",
+      "options": [
+        "A deep-sea dolphin",
+        "A kingfisher bird's beak",
+        "A soaring desert falcon",
+        "A flying beetle"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "How does shark skin texture benefit clinical medical facilities?",
+      "options": [
+        "It softens physical blows",
+        "It prevents pathogenic bacterial adhesion without chemicals",
+        "It reflects bright surgical lights",
+        "It releases medicinal odors"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What natural structure inspired passive architectural ventilation systems without conventional air conditioning?",
+      "options": [
+        "Spider webs",
+        "African termite mounds",
+        "Beehive wax cells",
+        "Bird nests in trees"
+      ],
+      "answer": 1
+    }
+  ]
+}
 ];

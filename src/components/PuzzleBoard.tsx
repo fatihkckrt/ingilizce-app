@@ -849,11 +849,13 @@ export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
         {/* CROSSWORD BOARD GRID */}
         <div className="flex items-center justify-center my-auto py-1">
           <div 
-            className="grid gap-1 sm:gap-1.5 p-2.5 bg-slate-200 dark:bg-slate-800/90 rounded-2xl shadow-inner border border-slate-300 dark:border-slate-700"
+            className={`grid ${
+              size >= 9 ? 'gap-0.5 sm:gap-1 p-1.5 sm:p-2' : size >= 7 ? 'gap-1 sm:gap-1.5 p-2 sm:p-2.5' : 'gap-1 sm:gap-1.5 p-2.5'
+            } bg-slate-200 dark:bg-slate-800/90 rounded-2xl shadow-inner border border-slate-300 dark:border-slate-700`}
             style={{
               gridTemplateColumns: `repeat(${size}, minmax(0, 1fr))`,
               width: '100%',
-              maxWidth: size === 5 ? '320px' : size === 6 ? '360px' : '400px',
+              maxWidth: size === 5 ? '320px' : size === 6 ? '350px' : size === 7 ? '380px' : size === 8 ? '410px' : size === 9 ? '440px' : '460px',
               aspectRatio: '1 / 1'
             }}
           >
@@ -871,7 +873,9 @@ export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
                   return (
                     <div
                       key={cellKey}
-                      className="w-full h-full rounded-xl bg-slate-300/80 dark:bg-slate-900/90 shadow-2xs"
+                      className={`w-full h-full ${
+                        size >= 9 ? 'rounded-md sm:rounded-lg' : size >= 7 ? 'rounded-lg sm:rounded-xl' : 'rounded-xl'
+                      } bg-slate-300/80 dark:bg-slate-900/90 shadow-2xs`}
                     />
                   );
                 }
@@ -880,7 +884,11 @@ export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
                   <button
                     key={cellKey}
                     onClick={() => handleCellClick(r, c)}
-                    className={`relative w-full h-full rounded-xl flex items-center justify-center font-black transition text-lg sm:text-2xl active:scale-95 select-none ${
+                    className={`relative w-full h-full ${
+                      size >= 9 ? 'rounded-md sm:rounded-lg' : size >= 7 ? 'rounded-lg sm:rounded-xl' : 'rounded-xl'
+                    } flex items-center justify-center font-black transition ${
+                      size >= 9 ? 'text-xs sm:text-base' : size >= 7 ? 'text-sm sm:text-xl' : 'text-lg sm:text-2xl'
+                    } active:scale-95 select-none ${
                       isWrong
                         ? 'cell-shake bg-rose-500 text-white ring-4 ring-rose-400 z-20 shadow-lg'
                         : isSelectedCell
@@ -892,7 +900,9 @@ export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
                   >
                     {/* Clue Number Badge */}
                     {clueNum && (
-                      <span className="absolute top-0.5 left-1 text-[9px] sm:text-[10px] font-black text-slate-600 dark:text-slate-300 leading-none">
+                      <span className={`absolute ${
+                        size >= 8 ? 'top-0.5 left-0.5 text-[7px] sm:text-[8px]' : 'top-0.5 left-1 text-[9px] sm:text-[10px]'
+                      } font-black text-slate-600 dark:text-slate-300 leading-none`}>
                         {clueNum}
                       </span>
                     )}

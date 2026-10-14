@@ -438,7 +438,7 @@ export function getExampleSentenceForWord(word: string, fallbackClue?: string): 
     return res;
   }
 
-  // 2. Search in defaultTexts (70 full-length stories with 2000+ paired sentences)
+  // 2. Search in defaultTexts (85 full-length stories with 2300+ paired sentences)
   const fromStory = findInStoryTexts(lower);
   if (fromStory) {
     const res: ExampleSentenceResult = {
