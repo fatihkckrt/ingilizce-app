@@ -49,6 +49,18 @@ export const PuzzleView: React.FC<PuzzleViewProps> = ({
   const [selectedSize, setSelectedSize] = useState<number | 'ALL'>('ALL');
   const [activePuzzle, setActivePuzzle] = useState<PuzzleDefinition | null>(null);
   const [previewCluesPuzzle, setPreviewCluesPuzzle] = useState<PuzzleDefinition | null>(null);
+  const [expandedPreviewSentences, setExpandedPreviewSentences] = useState<Record<string, boolean>>({});
+
+  useEffect(() => {
+    setExpandedPreviewSentences({});
+  }, [previewCluesPuzzle?.id]);
+
+  const togglePreviewSentence = (clueId: string) => {
+    setExpandedPreviewSentences(prev => ({
+      ...prev,
+      [clueId]: !prev[clueId]
+    }));
+  };
 
   // Completed records map: puzzleId -> record
   const [completedRecords, setCompletedRecords] = useState<Record<string, CompletedPuzzleRecord>>(() => {
@@ -171,15 +183,6 @@ export const PuzzleView: React.FC<PuzzleViewProps> = ({
             <span className="text-[11px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full bg-indigo-600 text-white shadow-xs">
               🧩 Kare & Çengel Bulmaca
             </span>
-            {onOpenSettings && (
-              <button
-                onClick={onOpenSettings}
-                className="p-2 text-slate-700 dark:text-slate-300 hover:bg-black/5 dark:hover:bg-white/10 rounded-2xl transition flex items-center justify-center cursor-pointer active:scale-95 border border-slate-200 dark:border-slate-700"
-                title="Ayarlar (Tema, Ses, Yazı)"
-              >
-                <Settings className="w-4 h-4" />
-              </button>
-            )}
           </div>
         </div>
 
@@ -487,28 +490,50 @@ export const PuzzleView: React.FC<PuzzleViewProps> = ({
                           </div>
                         </div>
 
-                        {/* Örnek Cümle Kutusu */}
-                        <div className="mt-1 pt-2 border-t border-slate-200/60 dark:border-slate-700/60 bg-white/70 dark:bg-slate-900/60 p-2.5 rounded-xl border border-indigo-100 dark:border-indigo-900/40">
-                          <div className="flex items-center justify-between gap-1 mb-1">
-                            <span className="text-[10px] font-black uppercase tracking-wider text-indigo-600 dark:text-indigo-400 flex items-center gap-1">
-                              <Sparkles className="w-3 h-3" />
-                              <span>Örnek Cümle & Çeviri</span>
-                            </span>
+                        {/* Örnek Cümle Kutusu (Butonla Açılır) */}
+                        <div className="mt-1 pt-1.5 border-t border-slate-200/60 dark:border-slate-700/60">
+                          {!expandedPreviewSentences[c.id] ? (
                             <button
                               type="button"
-                              onClick={() => speak(sentence.eng)}
-                              className="p-1 rounded-md text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 hover:bg-indigo-100 dark:hover:bg-indigo-950 transition cursor-pointer active:scale-95"
-                              title="Cümleyi Dinle (TTS)"
+                              onClick={() => togglePreviewSentence(c.id)}
+                              className="text-[11px] font-bold text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 flex items-center gap-1 cursor-pointer py-0.5"
                             >
-                              <Volume2 className="w-3.5 h-3.5" />
+                              <Sparkles className="w-3 h-3" />
+                              <span>Örnek Cümleyi Göster</span>
                             </button>
-                          </div>
-                          <p className="text-xs font-bold text-slate-900 dark:text-slate-100 leading-snug">
-                            {sentence.eng}
-                          </p>
-                          <p className="text-[11px] font-medium text-slate-600 dark:text-slate-400 mt-0.5 italic">
-                            {sentence.tr}
-                          </p>
+                          ) : (
+                            <div className="bg-white/70 dark:bg-slate-900/60 p-2.5 rounded-xl border border-indigo-100 dark:border-indigo-900/40">
+                              <div className="flex items-center justify-between gap-1 mb-1">
+                                <span className="text-[10px] font-black uppercase tracking-wider text-indigo-600 dark:text-indigo-400 flex items-center gap-1">
+                                  <Sparkles className="w-3 h-3" />
+                                  <span>Örnek Cümle & Çeviri</span>
+                                </span>
+                                <div className="flex items-center gap-1">
+                                  <button
+                                    type="button"
+                                    onClick={() => speak(sentence.eng)}
+                                    className="p-1 rounded-md text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 hover:bg-indigo-100 dark:hover:bg-indigo-950 transition cursor-pointer active:scale-95"
+                                    title="Cümleyi Dinle (TTS)"
+                                  >
+                                    <Volume2 className="w-3.5 h-3.5" />
+                                  </button>
+                                  <button
+                                    type="button"
+                                    onClick={() => togglePreviewSentence(c.id)}
+                                    className="text-[10px] text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 px-1 py-0.5"
+                                  >
+                                    Gizle
+                                  </button>
+                                </div>
+                              </div>
+                              <p className="text-xs font-bold text-slate-900 dark:text-slate-100 leading-snug">
+                                {sentence.eng}
+                              </p>
+                              <p className="text-[11px] font-medium text-slate-600 dark:text-slate-400 mt-0.5 italic">
+                                {sentence.tr}
+                              </p>
+                            </div>
+                          )}
                         </div>
                       </div>
                     );
@@ -584,28 +609,50 @@ export const PuzzleView: React.FC<PuzzleViewProps> = ({
                           </div>
                         </div>
 
-                        {/* Örnek Cümle Kutusu */}
-                        <div className="mt-1 pt-2 border-t border-slate-200/60 dark:border-slate-700/60 bg-white/70 dark:bg-slate-900/60 p-2.5 rounded-xl border border-indigo-100 dark:border-indigo-900/40">
-                          <div className="flex items-center justify-between gap-1 mb-1">
-                            <span className="text-[10px] font-black uppercase tracking-wider text-indigo-600 dark:text-indigo-400 flex items-center gap-1">
-                              <Sparkles className="w-3 h-3" />
-                              <span>Örnek Cümle & Çeviri</span>
-                            </span>
+                        {/* Örnek Cümle Kutusu (Butonla Açılır) */}
+                        <div className="mt-1 pt-1.5 border-t border-slate-200/60 dark:border-slate-700/60">
+                          {!expandedPreviewSentences[c.id] ? (
                             <button
                               type="button"
-                              onClick={() => speak(sentence.eng)}
-                              className="p-1 rounded-md text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 hover:bg-indigo-100 dark:hover:bg-indigo-950 transition cursor-pointer active:scale-95"
-                              title="Cümleyi Dinle (TTS)"
+                              onClick={() => togglePreviewSentence(c.id)}
+                              className="text-[11px] font-bold text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 flex items-center gap-1 cursor-pointer py-0.5"
                             >
-                              <Volume2 className="w-3.5 h-3.5" />
+                              <Sparkles className="w-3 h-3" />
+                              <span>Örnek Cümleyi Göster</span>
                             </button>
-                          </div>
-                          <p className="text-xs font-bold text-slate-900 dark:text-slate-100 leading-snug">
-                            {sentence.eng}
-                          </p>
-                          <p className="text-[11px] font-medium text-slate-600 dark:text-slate-400 mt-0.5 italic">
-                            {sentence.tr}
-                          </p>
+                          ) : (
+                            <div className="bg-white/70 dark:bg-slate-900/60 p-2.5 rounded-xl border border-indigo-100 dark:border-indigo-900/40">
+                              <div className="flex items-center justify-between gap-1 mb-1">
+                                <span className="text-[10px] font-black uppercase tracking-wider text-indigo-600 dark:text-indigo-400 flex items-center gap-1">
+                                  <Sparkles className="w-3 h-3" />
+                                  <span>Örnek Cümle & Çeviri</span>
+                                </span>
+                                <div className="flex items-center gap-1">
+                                  <button
+                                    type="button"
+                                    onClick={() => speak(sentence.eng)}
+                                    className="p-1 rounded-md text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 hover:bg-indigo-100 dark:hover:bg-indigo-950 transition cursor-pointer active:scale-95"
+                                    title="Cümleyi Dinle (TTS)"
+                                  >
+                                    <Volume2 className="w-3.5 h-3.5" />
+                                  </button>
+                                  <button
+                                    type="button"
+                                    onClick={() => togglePreviewSentence(c.id)}
+                                    className="text-[10px] text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 px-1 py-0.5"
+                                  >
+                                    Gizle
+                                  </button>
+                                </div>
+                              </div>
+                              <p className="text-xs font-bold text-slate-900 dark:text-slate-100 leading-snug">
+                                {sentence.eng}
+                              </p>
+                              <p className="text-[11px] font-medium text-slate-600 dark:text-slate-400 mt-0.5 italic">
+                                {sentence.tr}
+                              </p>
+                            </div>
+                          )}
                         </div>
                       </div>
                     );

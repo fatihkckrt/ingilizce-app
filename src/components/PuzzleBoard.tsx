@@ -228,6 +228,22 @@ export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
     return getExampleSentenceForWord(activeClue.word, activeClue.clue);
   }, [activeClue]);
 
+  // Example sentence visibility controls (MUST BE CLOSED BY DEFAULT)
+  const [showActiveSentence, setShowActiveSentence] = useState(false);
+  const [expandedClueSentences, setExpandedClueSentences] = useState<Record<string, boolean>>({});
+
+  // Reset active sentence hint when clue changes to avoid spoiling answers
+  useEffect(() => {
+    setShowActiveSentence(false);
+  }, [activeClue?.id]);
+
+  const toggleClueSentence = (clueId: string) => {
+    setExpandedClueSentences(prev => ({
+      ...prev,
+      [clueId]: !prev[clueId]
+    }));
+  };
+
   // Timer Effect
   useEffect(() => {
     if (isCompleted) return;
@@ -671,15 +687,6 @@ export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
             <Clock className="w-3.5 h-3.5 text-indigo-200" />
             <span>{formatTime(seconds)}</span>
           </div>
-          {onOpenSettings && (
-            <button
-              onClick={onOpenSettings}
-              className="p-1.5 bg-white/15 hover:bg-white/25 text-white rounded-lg transition flex items-center justify-center cursor-pointer active:scale-95"
-              title="Ayarlar (Tema, Ses, Yazı)"
-            >
-              <Settings className="w-4 h-4" />
-            </button>
-          )}
         </div>
       </div>
 
@@ -785,32 +792,56 @@ export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
             )}
           </div>
 
-          {/* ACTIVE CLUE EXAMPLE SENTENCE & TRANSLATION */}
+          {/* ACTIVE CLUE EXAMPLE SENTENCE & TRANSLATION (BUTTON TRIGGERED - DEFAULT KAPALI) */}
           {activeSentence && (
-            <div className="mt-2 pt-2 border-t border-slate-200/60 dark:border-slate-800/60 flex items-start justify-between gap-2 bg-indigo-50/70 dark:bg-indigo-950/40 p-2.5 rounded-xl border border-indigo-200/50 dark:border-indigo-900/50">
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-1.5 text-[10px] font-black uppercase tracking-wider text-indigo-700 dark:text-indigo-400 mb-0.5">
-                  <Sparkles className="w-3 h-3 text-indigo-500" />
-                  <span>Örnek Cümle & Çeviri</span>
+            <div className="mt-2 pt-2 border-t border-slate-200/60 dark:border-slate-800/60">
+              {!showActiveSentence ? (
+                <button
+                  type="button"
+                  onClick={() => setShowActiveSentence(true)}
+                  className="w-full py-1.5 px-3 rounded-xl bg-indigo-50/90 hover:bg-indigo-100 dark:bg-indigo-950/60 dark:hover:bg-indigo-900/60 text-indigo-700 dark:text-indigo-300 border border-dashed border-indigo-300 dark:border-indigo-800 text-xs font-black flex items-center justify-center gap-1.5 transition active:scale-98 cursor-pointer shadow-2xs"
+                  title="Örnek Cümle ve Çeviri İpucu Al"
+                >
+                  <Sparkles className="w-3.5 h-3.5 text-indigo-500" />
+                  <span>💡 Örnek Cümle & Çeviri İpucu</span>
+                </button>
+              ) : (
+                <div className="flex items-start justify-between gap-2 bg-indigo-50/80 dark:bg-indigo-950/50 p-2.5 rounded-xl border border-indigo-200/70 dark:border-indigo-900/70 animate-fadeIn">
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between gap-2 mb-1">
+                      <div className="flex items-center gap-1.5 text-[10px] font-black uppercase tracking-wider text-indigo-700 dark:text-indigo-400">
+                        <Sparkles className="w-3 h-3 text-indigo-500" />
+                        <span>Örnek Cümle & Çeviri İpucu</span>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => setShowActiveSentence(false)}
+                        className="text-[10px] font-bold text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 px-1.5 py-0.5 rounded-md hover:bg-black/5 dark:hover:bg-white/10 transition cursor-pointer"
+                        title="İpucunu Gizle"
+                      >
+                        Gizle ✕
+                      </button>
+                    </div>
+                    <p className="text-xs font-bold text-slate-900 dark:text-slate-100 leading-snug">
+                      {activeSentence.eng}
+                    </p>
+                    <p className="text-[11px] font-semibold text-slate-600 dark:text-slate-300 mt-0.5 italic">
+                      {activeSentence.tr}
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      speak(activeSentence.eng);
+                    }}
+                    className="p-1.5 rounded-lg bg-indigo-100 hover:bg-indigo-200 dark:bg-indigo-900/60 dark:hover:bg-indigo-800 text-indigo-700 dark:text-indigo-300 transition shrink-0 cursor-pointer active:scale-95"
+                    title="Örnek Cümleyi Dinle (TTS)"
+                  >
+                    <Volume2 className="w-4 h-4" />
+                  </button>
                 </div>
-                <p className="text-xs font-bold text-slate-900 dark:text-slate-100 leading-snug">
-                  {activeSentence.eng}
-                </p>
-                <p className="text-[11px] font-semibold text-slate-600 dark:text-slate-300 mt-0.5 italic">
-                  {activeSentence.tr}
-                </p>
-              </div>
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  speak(activeSentence.eng);
-                }}
-                className="p-1.5 rounded-lg bg-indigo-100 hover:bg-indigo-200 dark:bg-indigo-900/60 dark:hover:bg-indigo-800 text-indigo-700 dark:text-indigo-300 transition shrink-0 cursor-pointer active:scale-95"
-                title="Örnek Cümleyi Dinle (TTS)"
-              >
-                <Volume2 className="w-4 h-4" />
-              </button>
+              )}
             </div>
           )}
         </div>
@@ -1224,34 +1255,64 @@ export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
                               )}
                             </div>
 
-                            {/* ÖRNEK CÜMLE & ÇEVİRİ */}
+                            {/* ÖRNEK CÜMLE & ÇEVİRİ (DEFAULT KAPALI - BUTONLA GÖZÜKÜR) */}
                             {(() => {
                               const sentence = getExampleSentenceForWord(c.word, c.clue);
+                              const isExpanded = !!expandedClueSentences[c.id];
+
                               return (
-                                <div className="mt-2 pt-2 border-t border-slate-200/60 dark:border-slate-700/60 bg-white/70 dark:bg-slate-900/60 p-2 rounded-xl border border-indigo-100 dark:border-indigo-900/40">
-                                  <div className="flex items-center justify-between gap-1 mb-0.5">
-                                    <span className="text-[10px] font-black uppercase tracking-wider text-indigo-600 dark:text-indigo-400 flex items-center gap-1">
-                                      <Sparkles className="w-2.5 h-2.5" />
-                                      <span>Örnek Cümle:</span>
-                                    </span>
+                                <div className="mt-2 pt-1.5 border-t border-slate-200/60 dark:border-slate-700/60">
+                                  {!isExpanded ? (
                                     <button
                                       type="button"
                                       onClick={(e) => {
                                         e.stopPropagation();
-                                        speak(sentence.eng);
+                                        toggleClueSentence(c.id);
                                       }}
-                                      className="p-1 rounded-md text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 hover:bg-indigo-100 dark:hover:bg-indigo-950 transition cursor-pointer active:scale-95"
-                                      title="Cümleyi Dinle (TTS)"
+                                      className="text-[11px] font-bold text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 hover:underline flex items-center gap-1 cursor-pointer py-0.5"
                                     >
-                                      <Volume2 className="w-3.5 h-3.5" />
+                                      <Sparkles className="w-3 h-3" />
+                                      <span>Örnek Cümleyi Göster</span>
                                     </button>
-                                  </div>
-                                  <p className="text-xs font-bold text-slate-900 dark:text-slate-100 leading-snug">
-                                    {sentence.eng}
-                                  </p>
-                                  <p className="text-[11px] font-medium text-slate-600 dark:text-slate-400 mt-0.5 italic">
-                                    {sentence.tr}
-                                  </p>
+                                  ) : (
+                                    <div className="bg-white/70 dark:bg-slate-900/60 p-2 rounded-xl border border-indigo-100 dark:border-indigo-900/40">
+                                      <div className="flex items-center justify-between gap-1 mb-0.5">
+                                        <span className="text-[10px] font-black uppercase tracking-wider text-indigo-600 dark:text-indigo-400 flex items-center gap-1">
+                                          <Sparkles className="w-2.5 h-2.5" />
+                                          <span>Örnek Cümle:</span>
+                                        </span>
+                                        <div className="flex items-center gap-1">
+                                          <button
+                                            type="button"
+                                            onClick={(e) => {
+                                              e.stopPropagation();
+                                              speak(sentence.eng);
+                                            }}
+                                            className="p-1 rounded-md text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 hover:bg-indigo-100 dark:hover:bg-indigo-950 transition cursor-pointer active:scale-95"
+                                            title="Cümleyi Dinle (TTS)"
+                                          >
+                                            <Volume2 className="w-3.5 h-3.5" />
+                                          </button>
+                                          <button
+                                            type="button"
+                                            onClick={(e) => {
+                                              e.stopPropagation();
+                                              toggleClueSentence(c.id);
+                                            }}
+                                            className="text-[10px] text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 px-1 py-0.5"
+                                          >
+                                            Gizle
+                                          </button>
+                                        </div>
+                                      </div>
+                                      <p className="text-xs font-bold text-slate-900 dark:text-slate-100 leading-snug">
+                                        {sentence.eng}
+                                      </p>
+                                      <p className="text-[11px] font-medium text-slate-600 dark:text-slate-400 mt-0.5 italic">
+                                        {sentence.tr}
+                                      </p>
+                                    </div>
+                                  )}
                                 </div>
                               );
                             })()}
@@ -1329,34 +1390,64 @@ export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
                               )}
                             </div>
 
-                            {/* ÖRNEK CÜMLE & ÇEVİRİ */}
+                            {/* ÖRNEK CÜMLE & ÇEVİRİ (DEFAULT KAPALI - BUTONLA GÖZÜKÜR) */}
                             {(() => {
                               const sentence = getExampleSentenceForWord(c.word, c.clue);
+                              const isExpanded = !!expandedClueSentences[c.id];
+
                               return (
-                                <div className="mt-2 pt-2 border-t border-slate-200/60 dark:border-slate-700/60 bg-white/70 dark:bg-slate-900/60 p-2 rounded-xl border border-indigo-100 dark:border-indigo-900/40">
-                                  <div className="flex items-center justify-between gap-1 mb-0.5">
-                                    <span className="text-[10px] font-black uppercase tracking-wider text-indigo-600 dark:text-indigo-400 flex items-center gap-1">
-                                      <Sparkles className="w-2.5 h-2.5" />
-                                      <span>Örnek Cümle:</span>
-                                    </span>
+                                <div className="mt-2 pt-1.5 border-t border-slate-200/60 dark:border-slate-700/60">
+                                  {!isExpanded ? (
                                     <button
                                       type="button"
                                       onClick={(e) => {
                                         e.stopPropagation();
-                                        speak(sentence.eng);
+                                        toggleClueSentence(c.id);
                                       }}
-                                      className="p-1 rounded-md text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 hover:bg-indigo-100 dark:hover:bg-indigo-950 transition cursor-pointer active:scale-95"
-                                      title="Cümleyi Dinle (TTS)"
+                                      className="text-[11px] font-bold text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 hover:underline flex items-center gap-1 cursor-pointer py-0.5"
                                     >
-                                      <Volume2 className="w-3.5 h-3.5" />
+                                      <Sparkles className="w-3 h-3" />
+                                      <span>Örnek Cümleyi Göster</span>
                                     </button>
-                                  </div>
-                                  <p className="text-xs font-bold text-slate-900 dark:text-slate-100 leading-snug">
-                                    {sentence.eng}
-                                  </p>
-                                  <p className="text-[11px] font-medium text-slate-600 dark:text-slate-400 mt-0.5 italic">
-                                    {sentence.tr}
-                                  </p>
+                                  ) : (
+                                    <div className="bg-white/70 dark:bg-slate-900/60 p-2 rounded-xl border border-indigo-100 dark:border-indigo-900/40">
+                                      <div className="flex items-center justify-between gap-1 mb-0.5">
+                                        <span className="text-[10px] font-black uppercase tracking-wider text-indigo-600 dark:text-indigo-400 flex items-center gap-1">
+                                          <Sparkles className="w-2.5 h-2.5" />
+                                          <span>Örnek Cümle:</span>
+                                        </span>
+                                        <div className="flex items-center gap-1">
+                                          <button
+                                            type="button"
+                                            onClick={(e) => {
+                                              e.stopPropagation();
+                                              speak(sentence.eng);
+                                            }}
+                                            className="p-1 rounded-md text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 hover:bg-indigo-100 dark:hover:bg-indigo-950 transition cursor-pointer active:scale-95"
+                                            title="Cümleyi Dinle (TTS)"
+                                          >
+                                            <Volume2 className="w-3.5 h-3.5" />
+                                          </button>
+                                          <button
+                                            type="button"
+                                            onClick={(e) => {
+                                              e.stopPropagation();
+                                              toggleClueSentence(c.id);
+                                            }}
+                                            className="text-[10px] text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 px-1 py-0.5"
+                                          >
+                                            Gizle
+                                          </button>
+                                        </div>
+                                      </div>
+                                      <p className="text-xs font-bold text-slate-900 dark:text-slate-100 leading-snug">
+                                        {sentence.eng}
+                                      </p>
+                                      <p className="text-[11px] font-medium text-slate-600 dark:text-slate-400 mt-0.5 italic">
+                                        {sentence.tr}
+                                      </p>
+                                    </div>
+                                  )}
                                 </div>
                               );
                             })()}
