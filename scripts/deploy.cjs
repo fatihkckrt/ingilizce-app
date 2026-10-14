@@ -92,7 +92,10 @@ const gitDir = path.join(__dirname, '..', '.git');
 if (!fs.existsSync(gitDir) && process.env.GITHUB_TOKEN && process.env.GITHUB_REPO) {
   console.log('\n▶ [DEPLOY] Initializing Git repository from saved credentials...');
   try {
-    const rawRepo = process.env.GITHUB_REPO.replace(/^https?:\/\//, '').replace(/\.git$/, '');
+    let rawRepo = process.env.GITHUB_REPO.replace(/^https?:\/\//, '').replace(/\.git$/, '');
+    if (!rawRepo.startsWith('github.com/')) {
+      rawRepo = 'github.com/' + rawRepo;
+    }
     const user = process.env.GITHUB_USERNAME || 'fatihkckrt';
     const email = process.env.GITHUB_EMAIL || 'fatihkckrt@gmail.com';
     const authedUrl = `https://${user}:${process.env.GITHUB_TOKEN}@${rawRepo}.git`;
@@ -119,7 +122,10 @@ if (!fs.existsSync(gitDir)) {
   // Ensure remote has token if available
   if (process.env.GITHUB_TOKEN && process.env.GITHUB_REPO) {
     try {
-      const rawRepo = process.env.GITHUB_REPO.replace(/^https?:\/\//, '').replace(/\.git$/, '');
+      let rawRepo = process.env.GITHUB_REPO.replace(/^https?:\/\//, '').replace(/\.git$/, '');
+      if (!rawRepo.startsWith('github.com/')) {
+        rawRepo = 'github.com/' + rawRepo;
+      }
       const user = process.env.GITHUB_USERNAME || 'fatihkckrt';
       const authedUrl = `https://${user}:${process.env.GITHUB_TOKEN}@${rawRepo}.git`;
       execSync(`git remote set-url origin ${authedUrl}`, { stdio: 'ignore' });

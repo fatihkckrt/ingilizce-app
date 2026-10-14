@@ -917,3 +917,5 @@ export {
   getTodayDateKey,
   getTextBgImage
 };
+
+export { getExampleSentenceForWord } from './utils/puzzleSentenceService';

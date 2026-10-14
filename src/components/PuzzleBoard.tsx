@@ -6,6 +6,7 @@ import {
   getPosBadgeClasses
 } from '../puzzleData';
 import { ThemeClasses } from '../utils/themeUtils';
+import { getExampleSentenceForWord } from '../data';
 import { 
   ArrowLeft, 
   Volume2, 
@@ -220,6 +221,12 @@ export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
     if (activeDirection === 'down' && cellClues.down) return cellClues.down;
     return cellClues.across || cellClues.down || puzzle.clues[0] || null;
   }, [activeRow, activeCol, activeDirection, clueLookup, puzzle.clues]);
+
+  // Active example sentence for current clue
+  const activeSentence = useMemo(() => {
+    if (!activeClue) return null;
+    return getExampleSentenceForWord(activeClue.word, activeClue.clue);
+  }, [activeClue]);
 
   // Timer Effect
   useEffect(() => {
@@ -777,6 +784,35 @@ export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
               </p>
             )}
           </div>
+
+          {/* ACTIVE CLUE EXAMPLE SENTENCE & TRANSLATION */}
+          {activeSentence && (
+            <div className="mt-2 pt-2 border-t border-slate-200/60 dark:border-slate-800/60 flex items-start justify-between gap-2 bg-indigo-50/70 dark:bg-indigo-950/40 p-2.5 rounded-xl border border-indigo-200/50 dark:border-indigo-900/50">
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-1.5 text-[10px] font-black uppercase tracking-wider text-indigo-700 dark:text-indigo-400 mb-0.5">
+                  <Sparkles className="w-3 h-3 text-indigo-500" />
+                  <span>Örnek Cümle & Çeviri</span>
+                </div>
+                <p className="text-xs font-bold text-slate-900 dark:text-slate-100 leading-snug">
+                  {activeSentence.eng}
+                </p>
+                <p className="text-[11px] font-semibold text-slate-600 dark:text-slate-300 mt-0.5 italic">
+                  {activeSentence.tr}
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  speak(activeSentence.eng);
+                }}
+                className="p-1.5 rounded-lg bg-indigo-100 hover:bg-indigo-200 dark:bg-indigo-900/60 dark:hover:bg-indigo-800 text-indigo-700 dark:text-indigo-300 transition shrink-0 cursor-pointer active:scale-95"
+                title="Örnek Cümleyi Dinle (TTS)"
+              >
+                <Volume2 className="w-4 h-4" />
+              </button>
+            </div>
+          )}
         </div>
 
         {/* CROSSWORD BOARD GRID */}
@@ -1037,9 +1073,18 @@ export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
                             </span>
                           )}
                         </div>
-                        <span className="text-xs text-slate-700 dark:text-slate-300 font-bold truncate max-w-[210px] inline-block align-bottom">
+                        <span className="text-xs text-slate-700 dark:text-slate-300 font-bold block">
                           {c.clue}
                         </span>
+                        {(() => {
+                          const sent = getExampleSentenceForWord(c.word, c.clue);
+                          return (
+                            <div className="mt-1 text-[11px] text-indigo-700 dark:text-indigo-300 font-medium">
+                              <span>&ldquo;{sent.eng}&rdquo;</span>
+                              <span className="text-slate-500 dark:text-slate-400 block italic text-[10px]">{sent.tr}</span>
+                            </div>
+                          );
+                        })()}
                       </div>
                     </div>
 
@@ -1178,6 +1223,38 @@ export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
                                 </p>
                               )}
                             </div>
+
+                            {/* ÖRNEK CÜMLE & ÇEVİRİ */}
+                            {(() => {
+                              const sentence = getExampleSentenceForWord(c.word, c.clue);
+                              return (
+                                <div className="mt-2 pt-2 border-t border-slate-200/60 dark:border-slate-700/60 bg-white/70 dark:bg-slate-900/60 p-2 rounded-xl border border-indigo-100 dark:border-indigo-900/40">
+                                  <div className="flex items-center justify-between gap-1 mb-0.5">
+                                    <span className="text-[10px] font-black uppercase tracking-wider text-indigo-600 dark:text-indigo-400 flex items-center gap-1">
+                                      <Sparkles className="w-2.5 h-2.5" />
+                                      <span>Örnek Cümle:</span>
+                                    </span>
+                                    <button
+                                      type="button"
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        speak(sentence.eng);
+                                      }}
+                                      className="p-1 rounded-md text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 hover:bg-indigo-100 dark:hover:bg-indigo-950 transition cursor-pointer active:scale-95"
+                                      title="Cümleyi Dinle (TTS)"
+                                    >
+                                      <Volume2 className="w-3.5 h-3.5" />
+                                    </button>
+                                  </div>
+                                  <p className="text-xs font-bold text-slate-900 dark:text-slate-100 leading-snug">
+                                    {sentence.eng}
+                                  </p>
+                                  <p className="text-[11px] font-medium text-slate-600 dark:text-slate-400 mt-0.5 italic">
+                                    {sentence.tr}
+                                  </p>
+                                </div>
+                              );
+                            })()}
                           </div>
                         </div>
                       </button>
@@ -1251,6 +1328,38 @@ export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
                                 </p>
                               )}
                             </div>
+
+                            {/* ÖRNEK CÜMLE & ÇEVİRİ */}
+                            {(() => {
+                              const sentence = getExampleSentenceForWord(c.word, c.clue);
+                              return (
+                                <div className="mt-2 pt-2 border-t border-slate-200/60 dark:border-slate-700/60 bg-white/70 dark:bg-slate-900/60 p-2 rounded-xl border border-indigo-100 dark:border-indigo-900/40">
+                                  <div className="flex items-center justify-between gap-1 mb-0.5">
+                                    <span className="text-[10px] font-black uppercase tracking-wider text-indigo-600 dark:text-indigo-400 flex items-center gap-1">
+                                      <Sparkles className="w-2.5 h-2.5" />
+                                      <span>Örnek Cümle:</span>
+                                    </span>
+                                    <button
+                                      type="button"
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        speak(sentence.eng);
+                                      }}
+                                      className="p-1 rounded-md text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 hover:bg-indigo-100 dark:hover:bg-indigo-950 transition cursor-pointer active:scale-95"
+                                      title="Cümleyi Dinle (TTS)"
+                                    >
+                                      <Volume2 className="w-3.5 h-3.5" />
+                                    </button>
+                                  </div>
+                                  <p className="text-xs font-bold text-slate-900 dark:text-slate-100 leading-snug">
+                                    {sentence.eng}
+                                  </p>
+                                  <p className="text-[11px] font-medium text-slate-600 dark:text-slate-400 mt-0.5 italic">
+                                    {sentence.tr}
+                                  </p>
+                                </div>
+                              );
+                            })()}
                           </div>
                         </div>
                       </button>

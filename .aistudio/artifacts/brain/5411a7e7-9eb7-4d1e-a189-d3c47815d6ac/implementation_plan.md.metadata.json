@@ -1,6 +1,6 @@
 {
-  "summary": "İngilizce Öğren uygulaması için kullanıcı tercihlerine (Kare/Çengel Bulmaca, serbest seviye ve boyut seçimi, Türkçe ipucu ve harf sayısı) tam uyumlu, özgün ve modern 'Bulmaca' modülü uygulama planı. Plan; mimari yapı, veri modelleri, seviyeler (A1, A2, B1, B2), boyutlar (5x5, 6x6, 7x7), Web Audio API ses efektleri, TTS entegrasyonu, kelime defteri (Leitner SRS) senkronizasyonu ve GitHub Pages güvenli deploy adımlarını kapsar.",
-  "updatedAt": "2026-10-12T15:00:22.899611720Z",
+  "summary": "İngilizce Öğren uygulaması için kullanıcının seçtiği Akıllı Hata Defteri (En Çok Yanlış Yapılan Kelimeler & Hedefli Tekrar Modu) ve Bulmaca İpuçlarında Örnek Cümle Gösterimi özelliklerinin mimarisini, veri yapılarını ve adım adım geliştirme planını içeren kapsamlı uygulama planı.",
+  "updatedAt": "2026-10-14T16:19:13.805232747Z",
   "requestFeedback": true,
   "userFacing": true
 }
