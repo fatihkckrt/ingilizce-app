@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { 
   PUZZLES, 
   PUZZLE_LEVELS, 
   PuzzleDefinition, 
   CompletedPuzzleRecord, 
   getPuzzlesByLevelAndSize,
-  getPosBadgeClasses
+  getPosBadgeClasses,
+  getPuzzleFrequencyInfo,
+  PuzzleFrequencyLevel
 } from '../puzzleData';
 import { PuzzleBoard } from './PuzzleBoard';
 import { ThemeClasses } from '../utils/themeUtils';
@@ -47,6 +49,7 @@ export const PuzzleView: React.FC<PuzzleViewProps> = ({
 }) => {
   const [selectedLevel, setSelectedLevel] = useState<'A1' | 'A2' | 'B1' | 'B2'>('A1');
   const [selectedSize, setSelectedSize] = useState<number | 'ALL'>('ALL');
+  const [selectedFrequency, setSelectedFrequency] = useState<'ALL' | 'high' | 'medium' | 'advanced'>('ALL');
   const [activePuzzle, setActivePuzzle] = useState<PuzzleDefinition | null>(null);
   const [previewCluesPuzzle, setPreviewCluesPuzzle] = useState<PuzzleDefinition | null>(null);
   const [expandedPreviewSentences, setExpandedPreviewSentences] = useState<Record<string, boolean>>({});
@@ -94,11 +97,18 @@ export const PuzzleView: React.FC<PuzzleViewProps> = ({
     } catch (e) {}
   };
 
-  // Filtered puzzle list
-  const filteredPuzzles = getPuzzlesByLevelAndSize(
-    selectedLevel, 
-    selectedSize === 'ALL' ? undefined : (selectedSize as 5 | 6 | 7 | 8 | 9 | 10)
-  );
+  // Filtered puzzle list by Level, Size, and Frequency
+  const filteredPuzzles = useMemo(() => {
+    return PUZZLES.filter(p => {
+      if (p.level !== selectedLevel) return false;
+      if (selectedSize !== 'ALL' && p.size !== selectedSize) return false;
+      if (selectedFrequency !== 'ALL') {
+        const freq = getPuzzleFrequencyInfo(p);
+        if (freq.level !== selectedFrequency) return false;
+      }
+      return true;
+    });
+  }, [selectedLevel, selectedSize, selectedFrequency]);
 
   // Handle Next Puzzle
   const handleNextPuzzle = () => {
@@ -260,14 +270,71 @@ export const PuzzleView: React.FC<PuzzleViewProps> = ({
         </div>
       </div>
 
+      {/* FREQUENCY / DIFFICULTY TABS (Kelimelerin Kullanım Sıklığı) */}
+      <div className="space-y-1.5">
+        <div className="flex items-center justify-between px-1">
+          <label className="text-xs font-black uppercase tracking-wider text-slate-600 dark:text-slate-300">
+            Kelime Sıklığı & Zorluk
+          </label>
+          <span className="text-[10px] text-slate-500 dark:text-slate-400 font-medium">
+            Kullanım sıklığına göre
+          </span>
+        </div>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5">
+          <button
+            onClick={() => setSelectedFrequency('ALL')}
+            className={`py-2 px-2.5 rounded-xl text-xs font-black transition active:scale-95 border cursor-pointer text-center ${
+              selectedFrequency === 'ALL'
+                ? 'bg-indigo-600 text-white border-indigo-700 shadow-sm'
+                : `${themeStyle.card} border-slate-200 dark:border-slate-700 hover:border-indigo-300 text-slate-700 dark:text-slate-200`
+            }`}
+          >
+            Tüm Sıklıklar
+          </button>
+          <button
+            onClick={() => setSelectedFrequency('high')}
+            className={`py-2 px-2.5 rounded-xl text-xs font-black transition active:scale-95 border cursor-pointer text-center flex items-center justify-center gap-1 ${
+              selectedFrequency === 'high'
+                ? 'bg-rose-600 text-white border-rose-700 shadow-sm'
+                : `${themeStyle.card} border-slate-200 dark:border-slate-700 hover:border-rose-300 text-slate-700 dark:text-slate-200`
+            }`}
+          >
+            <span>🔥</span>
+            <span>En Sık Kullanılan</span>
+          </button>
+          <button
+            onClick={() => setSelectedFrequency('medium')}
+            className={`py-2 px-2.5 rounded-xl text-xs font-black transition active:scale-95 border cursor-pointer text-center flex items-center justify-center gap-1 ${
+              selectedFrequency === 'medium'
+                ? 'bg-amber-600 text-white border-amber-700 shadow-sm'
+                : `${themeStyle.card} border-slate-200 dark:border-slate-700 hover:border-amber-300 text-slate-700 dark:text-slate-200`
+            }`}
+          >
+            <span>⭐</span>
+            <span>Günlük Pratik</span>
+          </button>
+          <button
+            onClick={() => setSelectedFrequency('advanced')}
+            className={`py-2 px-2.5 rounded-xl text-xs font-black transition active:scale-95 border cursor-pointer text-center flex items-center justify-center gap-1 ${
+              selectedFrequency === 'advanced'
+                ? 'bg-purple-600 text-white border-purple-700 shadow-sm'
+                : `${themeStyle.card} border-slate-200 dark:border-slate-700 hover:border-purple-300 text-slate-700 dark:text-slate-200`
+            }`}
+          >
+            <span>💎</span>
+            <span>Zengin Kelimeler</span>
+          </button>
+        </div>
+      </div>
+
       {/* SIZE FILTER TABS (5x5, 6x6, 7x7, 8x8, 9x9, 10x10) */}
       <div className="space-y-1.5">
         <div className="flex items-center justify-between px-1">
           <label className="text-xs font-black uppercase tracking-wider text-slate-600 dark:text-slate-300">
             Izgara Boyutu
           </label>
-          <span className="text-[10px] text-slate-600 dark:text-slate-300 font-bold">
-            Kolaydan zora (5x5 ➔ 10x10)
+          <span className="text-[10px] text-slate-500 dark:text-slate-400 font-bold">
+            5x5'ten 10x10'a kare bulmaca alanları
           </span>
         </div>
         <div className="flex gap-1.5 overflow-x-auto pb-1 scrollbar-none">
@@ -311,6 +378,7 @@ export const PuzzleView: React.FC<PuzzleViewProps> = ({
         {filteredPuzzles.map((p, index) => {
           const record = completedRecords[p.id];
           const isDone = !!record;
+          const freq = getPuzzleFrequencyInfo(p);
 
           return (
             <div
@@ -322,7 +390,7 @@ export const PuzzleView: React.FC<PuzzleViewProps> = ({
                   : `${themeStyle.card} border-slate-200 dark:border-slate-700 hover:border-indigo-400`
               }`}
             >
-              <div className="flex items-center gap-3.5">
+              <div className="flex items-center gap-3.5 flex-1 min-w-0">
                 <div className={`w-12 h-12 rounded-2xl flex items-center justify-center font-black text-sm shrink-0 border ${
                   isDone
                     ? 'bg-emerald-100 text-emerald-800 border-emerald-300 dark:bg-emerald-950 dark:text-emerald-300'
@@ -335,22 +403,30 @@ export const PuzzleView: React.FC<PuzzleViewProps> = ({
                   )}
                 </div>
 
-                <div className="text-left">
-                  <div className="flex items-center gap-2 mb-0.5">
-                    <span className="font-extrabold text-sm sm:text-base text-slate-950 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition">
+                <div className="text-left flex-1 min-w-0">
+                  <div className="flex items-center gap-2 mb-1 flex-wrap">
+                    <span className="font-extrabold text-sm sm:text-base text-slate-950 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition truncate">
                       {p.title}
                     </span>
+                    <span className={`text-[10px] font-black px-1.5 py-0.5 rounded-md border ${freq.tagClass}`}>
+                      {freq.badge}
+                    </span>
+                    <span className="text-[10px] font-black px-1.5 py-0.5 rounded-md bg-indigo-50 dark:bg-indigo-950/70 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800">
+                      🎯 {p.clues.length} Kelime
+                    </span>
                     <span className="text-[10px] font-black px-1.5 py-0.5 rounded-md bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600">
-                      {p.size}x{p.size}
+                      📐 {p.size}x{p.size}
                     </span>
                   </div>
                   <p className="text-xs text-slate-600 dark:text-slate-300 font-medium line-clamp-1">
                     {p.description}
                   </p>
                   <div className="flex items-center gap-1.5 mt-1.5 flex-wrap">
-                    <span className="text-[11px] font-bold text-slate-600 dark:text-slate-400">{p.clues.length} Kelime</span>
+                    <span className="text-[11px] font-bold text-slate-500 dark:text-slate-400">
+                      {freq.label}
+                    </span>
                     <span className="text-slate-300 dark:text-slate-600">•</span>
-                    {Array.from(new Set(p.clues.map(c => c.partOfSpeech))).slice(0, 3).map(pos => {
+                    {(Array.from(new Set(p.clues.map(c => c.partOfSpeech))) as string[]).slice(0, 3).map(pos => {
                       const b = getPosBadgeClasses(pos);
                       return (
                         <span key={pos} className={`text-[10px] font-black px-1.5 py-0.2 rounded border ${b.bg} ${b.text} ${b.border}`}>

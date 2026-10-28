@@ -1,3 +1,4 @@
+import http from 'http';
 import express from 'express';
 import path from 'path';
 import { createServer as createViteServer } from 'vite';
@@ -28,7 +29,15 @@ function getAIClient(): GoogleGenAI | null {
 
 async function startServer() {
   const app = express();
-  const PORT = 3000;
+  const server = http.createServer(app);
+
+  const portArgIndex = process.argv.indexOf('--port');
+  const portFromArg = portArgIndex !== -1 ? Number(process.argv[portArgIndex + 1]) : null;
+  const PORT = portFromArg || Number(process.env.PORT) || 3000;
+
+  const hostArgIndex = process.argv.indexOf('--host');
+  const hostFromArg = hostArgIndex !== -1 ? process.argv[hostArgIndex + 1] : null;
+  const HOST = hostFromArg || process.env.HOST || '0.0.0.0';
 
   app.use(express.json());
 
@@ -153,8 +162,12 @@ Yanıtı SADECE ve YALNIZCA geçerli bir JSON formatında döndür:
 
   // Vite middleware in development
   if (process.env.NODE_ENV !== 'production') {
+    const isHmrDisabled = process.env.DISABLE_HMR === 'true';
     const vite = await createViteServer({
-      server: { middlewareMode: true },
+      server: { 
+        middlewareMode: true,
+        hmr: isHmrDisabled ? false : { server }
+      },
       appType: 'spa',
     });
     app.use(vite.middlewares);
@@ -166,8 +179,8 @@ Yanıtı SADECE ve YALNIZCA geçerli bir JSON formatında döndür:
     });
   }
 
-  app.listen(PORT, '0.0.0.0', () => {
-    console.log(`Server running on http://0.0.0.0:${PORT}`);
+  server.listen(PORT, HOST, () => {
+    console.log(`Server running on http://${HOST}:${PORT}`);
   });
 }
 

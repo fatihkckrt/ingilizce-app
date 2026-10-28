@@ -3,7 +3,8 @@ import {
   PuzzleDefinition, 
   PuzzleClue, 
   CompletedPuzzleRecord,
-  getPosBadgeClasses
+  getPosBadgeClasses,
+  getPuzzleFrequencyInfo
 } from '../puzzleData';
 import { ThemeClasses } from '../utils/themeUtils';
 import { getExampleSentenceForWord } from '../data';
@@ -145,6 +146,7 @@ export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
   onOpenSettings
 }) => {
   const size = puzzle.size;
+  const freqInfo = useMemo(() => getPuzzleFrequencyInfo(puzzle), [puzzle]);
 
   // Grid Solution Map and Start Numbers
   const { targetGrid, startNumbers, clueLookup } = useMemo(() => {
@@ -669,14 +671,17 @@ export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
         </button>
 
         <div className="text-center">
-          <div className="flex items-center justify-center gap-1.5">
+          <div className="flex items-center justify-center gap-1.5 flex-wrap">
             <span className="text-xs font-black px-2 py-0.5 rounded-md bg-indigo-500/20 text-white border border-indigo-400/30">
               {puzzle.level}
             </span>
-            <span className="text-xs font-bold px-1.5 py-0.5 rounded-md bg-white/15 text-white">
-              {puzzle.size}x{puzzle.size}
+            <span className="text-[10px] font-black px-1.5 py-0.5 rounded-md bg-white/20 text-white">
+              {freqInfo.badge}
             </span>
-            <h2 className="text-sm font-extrabold truncate max-w-[150px] sm:max-w-[220px]">
+            <span className="text-xs font-bold px-1.5 py-0.5 rounded-md bg-white/15 text-white">
+              {puzzle.size}x{puzzle.size} ({puzzle.clues.length} Kelime)
+            </span>
+            <h2 className="text-sm font-extrabold truncate max-w-[140px] sm:max-w-[200px]">
               {puzzle.title}
             </h2>
           </div>
@@ -850,8 +855,8 @@ export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
         <div className="flex items-center justify-center my-auto py-1">
           <div 
             className={`grid ${
-              size >= 9 ? 'gap-0.5 sm:gap-1 p-1.5 sm:p-2' : size >= 7 ? 'gap-1 sm:gap-1.5 p-2 sm:p-2.5' : 'gap-1 sm:gap-1.5 p-2.5'
-            } bg-slate-200 dark:bg-slate-800/90 rounded-2xl shadow-inner border border-slate-300 dark:border-slate-700`}
+              size >= 9 ? 'gap-1 p-2' : size >= 7 ? 'gap-1 sm:gap-1.5 p-2 sm:p-2.5' : 'gap-1.5 p-2.5 sm:p-3'
+            } bg-slate-100/70 dark:bg-slate-900/40 rounded-2xl border border-slate-200/90 dark:border-slate-800 shadow-inner`}
             style={{
               gridTemplateColumns: `repeat(${size}, minmax(0, 1fr))`,
               width: '100%',
@@ -873,9 +878,8 @@ export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
                   return (
                     <div
                       key={cellKey}
-                      className={`w-full h-full ${
-                        size >= 9 ? 'rounded-md sm:rounded-lg' : size >= 7 ? 'rounded-lg sm:rounded-xl' : 'rounded-xl'
-                      } bg-slate-300/80 dark:bg-slate-900/90 shadow-2xs`}
+                      className="w-full h-full invisible pointer-events-none select-none"
+                      aria-hidden="true"
                     />
                   );
                 }
@@ -888,21 +892,21 @@ export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
                       size >= 9 ? 'rounded-md sm:rounded-lg' : size >= 7 ? 'rounded-lg sm:rounded-xl' : 'rounded-xl'
                     } flex items-center justify-center font-black transition ${
                       size >= 9 ? 'text-xs sm:text-base' : size >= 7 ? 'text-sm sm:text-xl' : 'text-lg sm:text-2xl'
-                    } active:scale-95 select-none ${
+                    } active:scale-95 select-none cursor-pointer ${
                       isWrong
                         ? 'cell-shake bg-rose-500 text-white ring-4 ring-rose-400 z-20 shadow-lg'
                         : isSelectedCell
                         ? 'bg-amber-300 dark:bg-amber-400 text-slate-950 ring-4 ring-indigo-500 shadow-lg z-10 scale-105 border-2 border-amber-500'
                         : inActiveClue
                         ? 'bg-indigo-100 dark:bg-indigo-950/80 text-indigo-950 dark:text-indigo-100 border-2 border-indigo-400 dark:border-indigo-600 shadow-xs'
-                        : 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white border-2 border-slate-300 dark:border-slate-700 hover:border-indigo-400 shadow-2xs'
+                        : 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white border-2 border-slate-300 dark:border-slate-600 hover:border-indigo-400 shadow-xs'
                     }`}
                   >
                     {/* Clue Number Badge */}
                     {clueNum && (
                       <span className={`absolute ${
                         size >= 8 ? 'top-0.5 left-0.5 text-[7px] sm:text-[8px]' : 'top-0.5 left-1 text-[9px] sm:text-[10px]'
-                      } font-black text-slate-600 dark:text-slate-300 leading-none`}>
+                      } font-black text-slate-500 dark:text-slate-400 leading-none`}>
                         {clueNum}
                       </span>
                     )}
