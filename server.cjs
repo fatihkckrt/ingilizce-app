@@ -22,6 +22,7 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
 ));
 
 // server.ts
+var import_http = __toESM(require("http"), 1);
 var import_express = __toESM(require("express"), 1);
 var import_path = __toESM(require("path"), 1);
 var import_vite = require("vite");
@@ -48,7 +49,13 @@ function getAIClient() {
 }
 async function startServer() {
   const app = (0, import_express.default)();
-  const PORT = 3e3;
+  const server = import_http.default.createServer(app);
+  const portArgIndex = process.argv.indexOf("--port");
+  const portFromArg = portArgIndex !== -1 ? Number(process.argv[portArgIndex + 1]) : null;
+  const PORT = portFromArg || Number(process.env.PORT) || 3e3;
+  const hostArgIndex = process.argv.indexOf("--host");
+  const hostFromArg = hostArgIndex !== -1 ? process.argv[hostArgIndex + 1] : null;
+  const HOST = hostFromArg || process.env.HOST || "0.0.0.0";
   app.use(import_express.default.json());
   app.get("/api/health", (req, res) => {
     res.json({ status: "ok", hasGeminiKey: !!process.env.GEMINI_API_KEY });
@@ -151,8 +158,12 @@ Yan\u0131t\u0131 SADECE ve YALNIZCA ge\xE7erli bir JSON format\u0131nda d\xF6nd\
     }
   });
   if (process.env.NODE_ENV !== "production") {
+    const isHmrDisabled = process.env.DISABLE_HMR === "true";
     const vite = await (0, import_vite.createServer)({
-      server: { middlewareMode: true },
+      server: {
+        middlewareMode: true,
+        hmr: isHmrDisabled ? false : { server }
+      },
       appType: "spa"
     });
     app.use(vite.middlewares);
@@ -163,8 +174,8 @@ Yan\u0131t\u0131 SADECE ve YALNIZCA ge\xE7erli bir JSON format\u0131nda d\xF6nd\
       res.sendFile(import_path.default.join(distPath, "index.html"));
     });
   }
-  app.listen(PORT, "0.0.0.0", () => {
-    console.log(`Server running on http://0.0.0.0:${PORT}`);
+  server.listen(PORT, HOST, () => {
+    console.log(`Server running on http://${HOST}:${PORT}`);
   });
 }
 startServer();
