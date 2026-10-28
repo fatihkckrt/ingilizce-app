@@ -855,8 +855,8 @@ export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
         <div className="flex items-center justify-center my-auto py-1">
           <div 
             className={`grid ${
-              size >= 9 ? 'gap-1 p-2' : size >= 7 ? 'gap-1 sm:gap-1.5 p-2 sm:p-2.5' : 'gap-1.5 p-2.5 sm:p-3'
-            } bg-slate-100/70 dark:bg-slate-900/40 rounded-2xl border border-slate-200/90 dark:border-slate-800 shadow-inner`}
+              size >= 9 ? 'gap-1 p-1' : size >= 7 ? 'gap-1 sm:gap-1.5 p-1 sm:p-1.5' : 'gap-1.5 p-1.5 sm:p-2'
+            } bg-transparent border-none shadow-none`}
             style={{
               gridTemplateColumns: `repeat(${size}, minmax(0, 1fr))`,
               width: '100%',
