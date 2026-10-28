@@ -557,27 +557,39 @@ export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
         handleBackspace();
       } else if (e.key === 'ArrowRight') {
         e.preventDefault();
-        if (activeCol < size - 1 && targetGrid[activeRow][activeCol + 1] !== null) {
-          setActiveCol(activeCol + 1);
-          setActiveDirection('across');
+        for (let c = activeCol + 1; c < size; c++) {
+          if (targetGrid[activeRow][c] !== null) {
+            setActiveCol(c);
+            setActiveDirection('across');
+            break;
+          }
         }
       } else if (e.key === 'ArrowLeft') {
         e.preventDefault();
-        if (activeCol > 0 && targetGrid[activeRow][activeCol - 1] !== null) {
-          setActiveCol(activeCol - 1);
-          setActiveDirection('across');
+        for (let c = activeCol - 1; c >= 0; c--) {
+          if (targetGrid[activeRow][c] !== null) {
+            setActiveCol(c);
+            setActiveDirection('across');
+            break;
+          }
         }
       } else if (e.key === 'ArrowDown') {
         e.preventDefault();
-        if (activeRow < size - 1 && targetGrid[activeRow + 1][activeCol] !== null) {
-          setActiveRow(activeRow + 1);
-          setActiveDirection('down');
+        for (let r = activeRow + 1; r < size; r++) {
+          if (targetGrid[r][activeCol] !== null) {
+            setActiveRow(r);
+            setActiveDirection('down');
+            break;
+          }
         }
       } else if (e.key === 'ArrowUp') {
         e.preventDefault();
-        if (activeRow > 0 && targetGrid[activeRow - 1][activeCol] !== null) {
-          setActiveRow(activeRow - 1);
-          setActiveDirection('down');
+        for (let r = activeRow - 1; r >= 0; r--) {
+          if (targetGrid[r][activeCol] !== null) {
+            setActiveRow(r);
+            setActiveDirection('down');
+            break;
+          }
         }
       } else if (e.key === 'Tab' || e.key === 'Enter') {
         e.preventDefault();
@@ -855,8 +867,16 @@ export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
         <div className="flex items-center justify-center my-auto py-1">
           <div 
             className={`grid ${
-              size >= 9 ? 'gap-1 p-1' : size >= 7 ? 'gap-1 sm:gap-1.5 p-1 sm:p-1.5' : 'gap-1.5 p-1.5 sm:p-2'
-            } bg-transparent border-none shadow-none`}
+              size >= 9 ? 'gap-1 p-2' : size >= 7 ? 'gap-1 sm:gap-1.5 p-2 sm:p-2.5' : 'gap-1.5 p-2.5 sm:p-3'
+            } ${
+              themeStyle.container.includes('#f7f0e1')
+                ? 'bg-[#ede2cb] border-2 border-[#dfd0b4] shadow-md'
+                : themeStyle.container.includes('#07170e')
+                ? 'bg-[#0e2719] border-2 border-[#18422b] shadow-md'
+                : themeStyle.container.includes('#000000')
+                ? 'bg-[#121212] border-2 border-[#262626] shadow-md'
+                : 'bg-slate-200/90 dark:bg-slate-900 border-2 border-slate-300 dark:border-slate-800 shadow-md'
+            } rounded-2xl`}
             style={{
               gridTemplateColumns: `repeat(${size}, minmax(0, 1fr))`,
               width: '100%',
@@ -878,7 +898,17 @@ export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
                   return (
                     <div
                       key={cellKey}
-                      className="w-full h-full invisible pointer-events-none select-none"
+                      className={`w-full h-full ${
+                        size >= 9 ? 'rounded-md sm:rounded-lg' : size >= 7 ? 'rounded-lg sm:rounded-xl' : 'rounded-xl'
+                      } ${
+                        themeStyle.container.includes('#f7f0e1')
+                          ? 'bg-[#3d2e1e] border border-[#2b2014]/60 shadow-inner'
+                          : themeStyle.container.includes('#07170e')
+                          ? 'bg-[#06180e] border border-[#0d331e] shadow-inner'
+                          : themeStyle.container.includes('#000000')
+                          ? 'bg-[#18181b] border border-[#27272a] shadow-inner'
+                          : 'bg-slate-800 dark:bg-slate-950 border border-slate-700/80 dark:border-slate-800 shadow-inner'
+                      } pointer-events-none select-none`}
                       aria-hidden="true"
                     />
                   );
@@ -899,6 +929,8 @@ export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
                         ? 'bg-amber-300 dark:bg-amber-400 text-slate-950 ring-4 ring-indigo-500 shadow-lg z-10 scale-105 border-2 border-amber-500'
                         : inActiveClue
                         ? 'bg-indigo-100 dark:bg-indigo-950/80 text-indigo-950 dark:text-indigo-100 border-2 border-indigo-400 dark:border-indigo-600 shadow-xs'
+                        : themeStyle.container.includes('#f7f0e1')
+                        ? 'bg-[#fffdfa] text-[#3d2e1e] border-2 border-[#d5c7ad] hover:border-amber-600 shadow-xs'
                         : 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white border-2 border-slate-300 dark:border-slate-600 hover:border-indigo-400 shadow-xs'
                     }`}
                   >
