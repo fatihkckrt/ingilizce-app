@@ -18,7 +18,7 @@ import { AITextGenerator } from "./components/AITextGenerator";
 import { InstallPromptBanner } from "./components/InstallPromptBanner";
 import { PhraseCardsModal } from "./components/PhraseCardsModal";
 import { WordRelationsModal } from "./components/WordRelationsModal";
-import { VocabMemoryHubModal } from "./components/VocabMemoryHubModal";
+import { VocabMemoryHubView } from "./components/VocabMemoryHubView";
 import { SettingsDrawer } from "./components/SettingsDrawer";
 import { HomeView } from "./components/HomeView";
 import { SentenceTranslateHubView } from "./components/SentenceTranslateHubView";
@@ -1031,7 +1031,13 @@ function MainApp() {
       return;
     }
 
-    // sentenceTranslate, savedWords, vocabTest, puzzle -> Ana Ekran'a dön
+    // savedWords, vocabTest -> Kelime & Hafıza Merkezine dön
+    if (cv === 'savedWords' || cv === 'vocabTest') {
+      navigateTo('vocabHub');
+      return;
+    }
+
+    // sentenceTranslate, vocabHub, puzzle -> Ana Ekran'a dön
     navigateTo('home');
   };
 
@@ -1364,7 +1370,7 @@ function MainApp() {
 
         {/* Header */}
         <div className={`p-3.5 sm:p-4 flex items-center shadow-md shrink-0 sticky top-0 z-40 border-b transition-colors duration-300 ${themeStyle.header}`}>
-          {currentView !== 'home' ? (
+          {currentView !== 'home' && (
             <div className="flex items-center gap-1 mr-1">
               <button 
                 onClick={handleHeaderBack} 
@@ -1381,14 +1387,6 @@ function MainApp() {
                 🏠
               </button>
             </div>
-          ) : (
-            <button 
-              onClick={openStatsModal} 
-              className="p-2 mr-1 hover:bg-white/20 rounded-xl transition text-base flex items-center justify-center active:scale-95"
-              title="Gelişim ve İstatistikler"
-            >
-              📊
-            </button>
           )}
 
           <h1 
@@ -1398,6 +1396,7 @@ function MainApp() {
           >
             {currentView === 'home' && "İngilizce Öğren"}
             {currentView === 'sentenceTranslate' && "Cümle Çeviri"}
+            {currentView === 'vocabHub' && "Kelime & Hafıza Merkezi"}
             {currentView === 'levels' && `${selectedLevel} Seviye Metinleri`}
             {currentView === 'reading' && (activeText ? activeText.title : 'Okuma')}
             {currentView === 'textQuiz' && "Okuma Sınavı"}
@@ -1473,7 +1472,7 @@ function MainApp() {
             savedWordsCount={savedWords.length}
             dueCount={dueCount}
             onOpenSentenceTranslate={() => navigateTo('sentenceTranslate')}
-            onOpenVocabMemoryHub={() => setShowVocabMemoryHub(true)}
+            onOpenVocabMemoryHub={() => navigateTo('vocabHub')}
             onOpenPuzzle={() => navigateTo('puzzle')}
             handleOpenSettingsFromBottom={handleOpenSettingsFromBottom}
             showTypeSettings={showTypeSettings}
@@ -1481,6 +1480,19 @@ function MainApp() {
             speechRate={speechRate}
             fontSize={fontSize}
             fontFamily={fontFamily}
+          />
+        )}
+
+        {/* KELİME & HAFIZA MERKEZİ (LEITNER SRS, KALIP & DEYİMLER, EŞ & ZIT ANLAMLAR) */}
+        {currentView === "vocabHub" && (
+          <VocabMemoryHubView
+            themeStyle={themeStyle}
+            savedWordsCount={savedWords.length}
+            dueCount={dueCount}
+            onOpenSavedWords={() => navigateTo('savedWords')}
+            onOpenPhraseCards={() => setShowPhraseCardsModal(true)}
+            onOpenWordRelations={() => setShowWordRelationsModal(true)}
+            onBackToHome={() => navigateTo('home')}
           />
         )}
 
@@ -1765,17 +1777,6 @@ function MainApp() {
         isWordSaved={isWordSaved}
       />
 
-      {/* KELİME & HAFIZA MERKEZİ MODALI */}
-      <VocabMemoryHubModal
-        isOpen={showVocabMemoryHub}
-        onClose={() => setShowVocabMemoryHub(false)}
-        savedWordsCount={savedWords.length}
-        dueCount={dueCount}
-        onOpenSavedWords={() => navigateTo('savedWords')}
-        onOpenPhraseCards={() => setShowPhraseCardsModal(true)}
-        onOpenWordRelations={() => setShowWordRelationsModal(true)}
-        themeStyle={themeStyle}
-      />
 
     </div>
   );
