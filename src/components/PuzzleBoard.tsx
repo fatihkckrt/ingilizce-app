@@ -8,6 +8,7 @@ import {
 } from '../puzzleData';
 import { ThemeClasses } from '../utils/themeUtils';
 import { getExampleSentenceForWord } from '../data';
+import { getWordRelations } from '../wordRelations';
 import { 
   ArrowLeft, 
   Volume2, 
@@ -234,9 +235,17 @@ export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
   const [showActiveSentence, setShowActiveSentence] = useState(false);
   const [expandedClueSentences, setExpandedClueSentences] = useState<Record<string, boolean>>({});
 
-  // Reset active sentence hint when clue changes to avoid spoiling answers
+  // Active word relations (Synonyms & Antonyms)
+  const activeWordRelations = useMemo(() => {
+    if (!activeClue) return null;
+    return getWordRelations(activeClue.word);
+  }, [activeClue]);
+  const [showActiveRelations, setShowActiveRelations] = useState(false);
+
+  // Reset hints when clue changes to avoid spoiling answers
   useEffect(() => {
     setShowActiveSentence(false);
+    setShowActiveRelations(false);
   }, [activeClue?.id]);
 
   const toggleClueSentence = (clueId: string) => {
@@ -857,6 +866,104 @@ export const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
                   >
                     <Volume2 className="w-4 h-4" />
                   </button>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* ACTIVE CLUE SYNONYMS & ANTONYMS HINT (BUTTON TRIGGERED) */}
+          {activeWordRelations && (activeWordRelations.synonyms.length > 0 || activeWordRelations.antonyms.length > 0) && (
+            <div className="mt-2 pt-2 border-t border-slate-200/60 dark:border-slate-800/60">
+              {!showActiveRelations ? (
+                <button
+                  type="button"
+                  onClick={() => setShowActiveRelations(true)}
+                  className="w-full py-1.5 px-3 rounded-xl bg-teal-50/90 hover:bg-teal-100 dark:bg-teal-950/60 dark:hover:bg-teal-900/60 text-teal-800 dark:text-teal-300 border border-dashed border-teal-300 dark:border-teal-800 text-xs font-black flex items-center justify-center gap-1.5 transition active:scale-98 cursor-pointer shadow-2xs"
+                  title="Eş & Zıt Anlam İpucu Al"
+                >
+                  <span>🔄 Eş & ⚡ Zıt Anlam İpuçları</span>
+                  <span className="text-[10px] font-black px-1.5 py-0.2 rounded-full bg-teal-200/70 dark:bg-teal-900/80 text-teal-900 dark:text-teal-200">
+                    {activeWordRelations.synonyms.length + activeWordRelations.antonyms.length}
+                  </span>
+                </button>
+              ) : (
+                <div className="bg-teal-50/80 dark:bg-teal-950/50 p-2.5 rounded-xl border border-teal-200/70 dark:border-teal-900/70 animate-fadeIn space-y-2">
+                  <div className="flex items-center justify-between gap-2">
+                    <div className="flex items-center gap-1.5 text-[10px] font-black uppercase tracking-wider text-teal-700 dark:text-teal-400">
+                      <span>🔄 Eş & ⚡ Zıt Anlamlar</span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setShowActiveRelations(false)}
+                      className="text-[10px] font-bold text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 px-1.5 py-0.5 rounded-md hover:bg-black/5 dark:hover:bg-white/10 transition cursor-pointer"
+                    >
+                      Gizle ✕
+                    </button>
+                  </div>
+
+                  {activeWordRelations.synonyms.length > 0 && (
+                    <div className="space-y-1">
+                      <span className="text-[10px] font-black text-emerald-700 dark:text-emerald-400 uppercase tracking-wider block">
+                        🔄 Eş Anlamlılar:
+                      </span>
+                      <div className="flex flex-wrap gap-1">
+                        {activeWordRelations.synonyms.map((syn, idx) => (
+                          <div key={idx} className="flex items-center gap-1 bg-emerald-100/90 dark:bg-emerald-900/50 text-emerald-950 dark:text-emerald-200 px-2 py-0.5 rounded-lg text-xs font-bold border border-emerald-300/60 dark:border-emerald-800/60">
+                            <span>{syn.word}</span>
+                            <span className="text-[10px] opacity-75 font-normal">({syn.tr})</span>
+                            <button 
+                              type="button"
+                              onClick={(e) => { e.stopPropagation(); speak(syn.word); }} 
+                              className="p-0.5 text-emerald-700 dark:text-emerald-300 hover:text-emerald-950 cursor-pointer"
+                              title="Telaffuz Dinle"
+                            >
+                              <Volume2 className="w-3 h-3" />
+                            </button>
+                            <button 
+                              type="button"
+                              onClick={(e) => { e.stopPropagation(); onSaveWord(syn.word, syn.tr, syn.level || puzzle.level); }} 
+                              className="p-0.5 text-emerald-700 dark:text-emerald-300 hover:text-emerald-950 cursor-pointer" 
+                              title="Deftere Kaydet"
+                            >
+                              {isWordSaved(syn.word) ? <BookmarkCheck className="w-3 h-3 text-emerald-600 dark:text-emerald-400" /> : <Bookmark className="w-3 h-3" />}
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {activeWordRelations.antonyms.length > 0 && (
+                    <div className="space-y-1">
+                      <span className="text-[10px] font-black text-amber-700 dark:text-amber-400 uppercase tracking-wider block">
+                        ⚡ Zıt Anlamlılar:
+                      </span>
+                      <div className="flex flex-wrap gap-1">
+                        {activeWordRelations.antonyms.map((ant, idx) => (
+                          <div key={idx} className="flex items-center gap-1 bg-amber-100/90 dark:bg-amber-900/50 text-amber-950 dark:text-amber-200 px-2 py-0.5 rounded-lg text-xs font-bold border border-amber-300/60 dark:border-amber-800/60">
+                            <span>{ant.word}</span>
+                            <span className="text-[10px] opacity-75 font-normal">({ant.tr})</span>
+                            <button 
+                              type="button"
+                              onClick={(e) => { e.stopPropagation(); speak(ant.word); }} 
+                              className="p-0.5 text-amber-700 dark:text-amber-300 hover:text-amber-950 cursor-pointer"
+                              title="Telaffuz Dinle"
+                            >
+                              <Volume2 className="w-3 h-3" />
+                            </button>
+                            <button 
+                              type="button"
+                              onClick={(e) => { e.stopPropagation(); onSaveWord(ant.word, ant.tr, ant.level || puzzle.level); }} 
+                              className="p-0.5 text-amber-700 dark:text-amber-300 hover:text-amber-950 cursor-pointer" 
+                              title="Deftere Kaydet"
+                            >
+                              {isWordSaved(ant.word) ? <BookmarkCheck className="w-3 h-3 text-amber-600 dark:text-amber-400" /> : <Bookmark className="w-3 h-3" />}
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
             </div>

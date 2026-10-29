@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useMemo } from 'react';
+import { getWordRelations } from '../wordRelations';
 
 interface WordTranslationModalProps {
   selectedTranslation: {
@@ -34,6 +35,10 @@ export const WordTranslationModal: React.FC<WordTranslationModalProps> = ({
   onSaveCustomWord,
 }) => {
   if (!selectedTranslation) return null;
+
+  const relations = useMemo(() => {
+    return getWordRelations(selectedTranslation?.word?.original);
+  }, [selectedTranslation?.word?.original]);
 
   return (
     <div 
@@ -108,6 +113,86 @@ export const WordTranslationModal: React.FC<WordTranslationModalProps> = ({
                   ? `⭐ [Kutu ${getSavedWordInfo(selectedTranslation.word.original)?.box || 1}] Defterde Kayıtlı` 
                   : `🔖 ${selectedLevelTag} Olarak Deftere Ekle`}
               </button>
+
+              {/* SYNONYMS & ANTONYMS SECTION */}
+              {relations && (relations.synonyms.length > 0 || relations.antonyms.length > 0) && (
+                <div className="mt-3.5 pt-3 border-t border-slate-800 space-y-2.5">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] text-indigo-400 font-extrabold uppercase tracking-wider flex items-center gap-1">
+                      <span>🔄 Eş & ⚡ Zıt Anlamlar</span>
+                    </span>
+                    <span className="text-[10px] text-slate-400 font-semibold bg-slate-800 px-2 py-0.5 rounded">
+                      {relations.category}
+                    </span>
+                  </div>
+
+                  {relations.synonyms.length > 0 && (
+                    <div className="space-y-1">
+                      <span className="text-[10px] text-emerald-400 font-black tracking-wide block">
+                        🔄 Eş Anlamlılar (Synonyms):
+                      </span>
+                      <div className="flex flex-wrap gap-1.5">
+                        {relations.synonyms.map((syn, idx) => (
+                          <div 
+                            key={idx} 
+                            className="flex items-center gap-1.5 bg-emerald-950/60 border border-emerald-800/60 px-2.5 py-1 rounded-xl text-xs"
+                          >
+                            <span className="font-bold text-emerald-200">{syn.word}</span>
+                            <span className="text-[10px] text-emerald-400/80">({syn.tr})</span>
+                            <button 
+                              onClick={() => speak(syn.word)} 
+                              className="text-emerald-300 hover:text-white p-0.5" 
+                              title="Dinle"
+                            >
+                              🔊
+                            </button>
+                            <button 
+                              onClick={() => toggleSaveWord({ original: syn.word, translated: syn.tr }, syn.level || selectedLevelTag)}
+                              className="text-emerald-300 hover:text-white p-0.5"
+                              title={isWordSaved(syn.word) ? "Defterde Kayıtlı" : "Deftere Ekle"}
+                            >
+                              {isWordSaved(syn.word) ? "⭐" : "🔖"}
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {relations.antonyms.length > 0 && (
+                    <div className="space-y-1">
+                      <span className="text-[10px] text-amber-400 font-black tracking-wide block">
+                        ⚡ Zıt Anlamlılar (Antonyms):
+                      </span>
+                      <div className="flex flex-wrap gap-1.5">
+                        {relations.antonyms.map((ant, idx) => (
+                          <div 
+                            key={idx} 
+                            className="flex items-center gap-1.5 bg-amber-950/60 border border-amber-800/60 px-2.5 py-1 rounded-xl text-xs"
+                          >
+                            <span className="font-bold text-amber-200">{ant.word}</span>
+                            <span className="text-[10px] text-amber-400/80">({ant.tr})</span>
+                            <button 
+                              onClick={() => speak(ant.word)} 
+                              className="text-amber-300 hover:text-white p-0.5" 
+                              title="Dinle"
+                            >
+                              🔊
+                            </button>
+                            <button 
+                              onClick={() => toggleSaveWord({ original: ant.word, translated: ant.tr }, ant.level || selectedLevelTag)}
+                              className="text-amber-300 hover:text-white p-0.5"
+                              title={isWordSaved(ant.word) ? "Defterde Kayıtlı" : "Deftere Ekle"}
+                            >
+                              {isWordSaved(ant.word) ? "⭐" : "🔖"}
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
             </>
           ) : isSearchingOnline ? (
             <div className="mt-3 flex items-center gap-2.5 py-2 px-3 rounded-xl bg-indigo-950/60 border border-indigo-500/30 text-indigo-300 text-xs font-semibold">

@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { ThemeClasses } from '../utils/themeUtils';
+import { getWordRelations } from '../wordRelations';
 
 interface VocabTestViewProps {
   vocabQuestions: any[];
@@ -35,6 +36,11 @@ export const VocabTestView: React.FC<VocabTestViewProps> = ({
   themeStyle,
 }) => {
   if (!vocabQuestions || vocabQuestions.length === 0) return null;
+
+  const activeRelations = useMemo(() => {
+    const qWord = vocabQuestions[currentVocabIdx]?.word;
+    return qWord ? getWordRelations(qWord) : null;
+  }, [vocabQuestions, currentVocabIdx]);
 
   return (
     <div className="flex-1 flex flex-col p-6">
@@ -145,6 +151,36 @@ export const VocabTestView: React.FC<VocabTestViewProps> = ({
               );
             })}
           </div>
+
+          {/* ACTIVE RELATIONS CALLOUT (EŞ & ZIT ANLAMLILAR) */}
+          {selectedVocabOption !== null && activeRelations && (activeRelations.synonyms.length > 0 || activeRelations.antonyms.length > 0) && (
+            <div className="p-3 rounded-2xl bg-indigo-50/90 dark:bg-indigo-950/50 border border-indigo-200/80 dark:border-indigo-800/80 text-left space-y-2 animate-fadeIn mb-4">
+              <div className="flex items-center justify-between text-[11px] font-black uppercase tracking-wider text-indigo-700 dark:text-indigo-400">
+                <span>🔄 Eş & ⚡ Zıt Anlam Bağlantıları</span>
+                <span className="text-[10px] text-slate-500 font-semibold">{activeRelations.category}</span>
+              </div>
+              {activeRelations.synonyms.length > 0 && (
+                <div className="flex items-center gap-1.5 flex-wrap text-xs">
+                  <span className="text-emerald-700 dark:text-emerald-400 font-black text-[11px]">Eş:</span>
+                  {activeRelations.synonyms.map((s, idx) => (
+                    <span key={idx} className="bg-emerald-100 dark:bg-emerald-900/40 text-emerald-950 dark:text-emerald-200 px-2 py-0.5 rounded-md font-bold text-[11px] border border-emerald-300/60 dark:border-emerald-800/60">
+                      {s.word} <span className="opacity-75 font-normal">({s.tr})</span>
+                    </span>
+                  ))}
+                </div>
+              )}
+              {activeRelations.antonyms.length > 0 && (
+                <div className="flex items-center gap-1.5 flex-wrap text-xs">
+                  <span className="text-amber-700 dark:text-amber-400 font-black text-[11px]">Zıt:</span>
+                  {activeRelations.antonyms.map((a, idx) => (
+                    <span key={idx} className="bg-amber-100 dark:bg-amber-900/40 text-amber-950 dark:text-amber-200 px-2 py-0.5 rounded-md font-bold text-[11px] border border-amber-300/60 dark:border-amber-800/60">
+                      {a.word} <span className="opacity-75 font-normal">({a.tr})</span>
+                    </span>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
         </div>
       ) : (
         <div className="flex-1 flex flex-col p-2 space-y-4 overflow-y-auto">

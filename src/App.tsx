@@ -17,6 +17,7 @@ import { StatsModal } from "./components/StatsModal";
 import { AITextGenerator } from "./components/AITextGenerator";
 import { InstallPromptBanner } from "./components/InstallPromptBanner";
 import { PhraseCardsModal } from "./components/PhraseCardsModal";
+import { WordRelationsModal } from "./components/WordRelationsModal";
 import { SettingsDrawer } from "./components/SettingsDrawer";
 import { HomeView } from "./components/HomeView";
 import { LevelsView } from "./components/LevelsView";
@@ -187,6 +188,7 @@ function MainApp() {
     return localStorage.getItem('app_phrase_hunter') === 'true';
   });
   const [showPhraseCardsModal, setShowPhraseCardsModal] = useState(false);
+  const [showWordRelationsModal, setShowWordRelationsModal] = useState(false);
   const [showTypeSettings, setShowTypeSettings] = useState(false);
   const [showBackupModal, setShowBackupModal] = useState(false);
   const [showStatsModal, setShowStatsModal] = useState(false);
@@ -1469,6 +1471,7 @@ function MainApp() {
             dueCount={dueCount}
             openStatsModal={openStatsModal}
             setShowPhraseCardsModal={setShowPhraseCardsModal}
+            setShowWordRelationsModal={setShowWordRelationsModal}
             handleOpenSettingsFromBottom={handleOpenSettingsFromBottom}
             showTypeSettings={showTypeSettings}
             readerTheme={readerTheme}
@@ -1730,6 +1733,17 @@ function MainApp() {
             window.speechSynthesis.speak(utt);
           }
         }}
+      />
+
+      {/* EŞ & ZIT ANLAMLILAR MODALI */}
+      <WordRelationsModal
+        isOpen={showWordRelationsModal}
+        onClose={() => setShowWordRelationsModal(false)}
+        speak={speak}
+        toggleSaveWord={(wordObj, chosenLevel) => {
+          toggleSaveWord(wordObj, chosenLevel || 'A1');
+        }}
+        isWordSaved={isWordSaved}
       />
 
     </div>

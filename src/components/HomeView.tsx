@@ -14,6 +14,7 @@ interface HomeViewProps {
   dueCount: number;
   openStatsModal: () => void;
   setShowPhraseCardsModal: (val: boolean) => void;
+  setShowWordRelationsModal?: (val: boolean) => void;
   handleOpenSettingsFromBottom: () => void;
   showTypeSettings: boolean;
   readerTheme: string;
@@ -35,6 +36,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
   dueCount,
   openStatsModal,
   setShowPhraseCardsModal,
+  setShowWordRelationsModal,
   handleOpenSettingsFromBottom,
   showTypeSettings,
   readerTheme,
@@ -166,6 +168,24 @@ export const HomeView: React.FC<HomeViewProps> = ({
           </div>
         </div>
         <span className="bg-amber-500 text-slate-950 font-black text-xs px-2.5 py-1 rounded-full shadow-xs">Kartlar ➔</span>
+      </button>
+
+      {/* Eş & Zıt Anlamlar (Synonyms & Antonyms) */}
+      <button
+        onClick={() => setShowWordRelationsModal && setShowWordRelationsModal(true)}
+        className={`w-full ${themeStyle.card} border-2 border-teal-500 dark:border-teal-700 p-4 rounded-2xl flex items-center justify-between hover:border-teal-400 shadow-md transition active:scale-[0.98]`}
+      >
+        <div className="flex items-center gap-3">
+          <span className="text-2xl p-1 bg-teal-500/20 rounded-xl">🔄</span>
+          <div className="text-left">
+            <div className="flex items-center gap-1.5">
+              <span className="font-extrabold text-base block">Eş & Zıt Anlamlar</span>
+              <span className="bg-teal-600 text-white text-[10px] font-black px-1.5 py-0.5 rounded uppercase">Synonyms & Antonyms</span>
+            </div>
+            <span className="text-xs opacity-80 font-medium">Zıt ve Eş Anlamlı Çiftlerle Kelime Dağarcığını Pekiştir</span>
+          </div>
+        </div>
+        <span className="bg-teal-600 text-white font-black text-xs px-2.5 py-1 rounded-full shadow-xs">Keşfet ➔</span>
       </button>
 
       {/* İngilizce Kare & Çengel Bulmaca */}
