@@ -22,7 +22,8 @@ console.log('🚀 Starting Safe Automated GitHub Pages Deployment');
 console.log('====================================================');
 
 // 1. Clean and Build
-run('npm run build', 'Building production bundle');
+const buildCmd = (typeof process !== 'undefined' && process.versions && process.versions.bun) ? 'bun run build' : 'npm run build';
+run(buildCmd, 'Building production bundle');
 
 // 2. Validate dist/index.html
 const distIndexPath = path.join(__dirname, '..', 'dist', 'index.html');

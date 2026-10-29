@@ -89,9 +89,41 @@ export interface VoicePreset {
 
 export const VOICE_PRESETS: VoicePreset[] = [
   {
+    id: 'hd_us',
+    name: 'Amerikan Doğal (Stüdyo)',
+    desc: 'İnsan Doğallığında • Kristal Netliğinde HD Telaffuz',
+    category: 'hd',
+    flag: '🇺🇸',
+    badge: '🌟 Stüdyo HD'
+  },
+  {
+    id: 'hd_uk',
+    name: 'İngiliz Doğal (Stüdyo)',
+    desc: 'İngiliz Aksanı • Doğal Akıcı Telaffuz',
+    category: 'hd',
+    flag: '🇬🇧',
+    badge: '🌟 Stüdyo HD'
+  },
+  {
+    id: 'device_us_natural',
+    name: 'Amerikan Natural (Sistem)',
+    desc: 'Google / Edge Online Natural Ses',
+    category: 'female',
+    flag: '🇺🇸',
+    badge: '✨ Doğal'
+  },
+  {
+    id: 'device_uk_natural',
+    name: 'İngiliz Natural (Sistem)',
+    desc: 'Modern British Online Natural Ses',
+    category: 'female',
+    flag: '🇬🇧',
+    badge: '✨ Doğal'
+  },
+  {
     id: 'device_us_male',
     name: 'Amerikan Erkek',
-    desc: 'David / Alex / Sistem Erkek Sesi',
+    desc: 'Doğal Sistem Erkek Sesi',
     category: 'male',
     flag: '🇺🇸',
     badge: '👨 Erkek'
@@ -99,39 +131,23 @@ export const VOICE_PRESETS: VoicePreset[] = [
   {
     id: 'device_uk_male',
     name: 'İngiliz Erkek',
-    desc: 'Daniel / George / British Erkek',
+    desc: 'British Sistem Erkek Sesi',
     category: 'male',
     flag: '🇬🇧',
     badge: '👨 Erkek'
   },
   {
-    id: 'hd_us',
-    name: 'Amerikan Kadın (Stüdyo)',
-    desc: 'Doğal Stüdyo Kaydı • İnsan Telaffuzu',
-    category: 'hd',
-    flag: '🇺🇸',
-    badge: '🌟 Stüdyo HD'
-  },
-  {
-    id: 'hd_uk',
-    name: 'İngiliz Kadın (Stüdyo)',
-    desc: 'Doğal British Aksanı • Kadın Sesi',
-    category: 'hd',
-    flag: '🇬🇧',
-    badge: '🌟 Stüdyo HD'
-  },
-  {
     id: 'device_us_female',
-    name: 'Amerikan Kadın (Cihaz)',
-    desc: 'Zira / Samantha / Canlı Sentez',
+    name: 'Amerikan Kadın',
+    desc: 'Standart Sistem Kadın Sesi',
     category: 'female',
     flag: '🇺🇸',
     badge: '👩 Kadın'
   },
   {
     id: 'device_uk_female',
-    name: 'İngiliz Kadın (Cihaz)',
-    desc: 'Hazel / Serena / British Sentez',
+    name: 'İngiliz Kadın',
+    desc: 'Standart British Kadın Sesi',
     category: 'female',
     flag: '🇬🇧',
     badge: '👩 Kadın'
@@ -139,11 +155,12 @@ export const VOICE_PRESETS: VoicePreset[] = [
 ];
 
 export const getHdAudioUrl = (text: string, voiceId: string): string => {
-  let lang = 'en';
-  if (voiceId === 'hd_uk') lang = 'en-gb';
-  else if (voiceId === 'hd_au') lang = 'en-au';
-  else lang = 'en';
+  let lang = 'en-US';
+  if (voiceId === 'hd_uk') lang = 'en-GB';
+  else if (voiceId === 'hd_au') lang = 'en-AU';
+  else lang = 'en-US';
 
-  const clean = encodeURIComponent(text.trim().slice(0, 180));
+  const clean = encodeURIComponent(text.trim().slice(0, 200));
   return `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=${lang}&q=${clean}`;
 };
+
