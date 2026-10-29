@@ -18,8 +18,10 @@ import { AITextGenerator } from "./components/AITextGenerator";
 import { InstallPromptBanner } from "./components/InstallPromptBanner";
 import { PhraseCardsModal } from "./components/PhraseCardsModal";
 import { WordRelationsModal } from "./components/WordRelationsModal";
+import { VocabMemoryHubModal } from "./components/VocabMemoryHubModal";
 import { SettingsDrawer } from "./components/SettingsDrawer";
 import { HomeView } from "./components/HomeView";
+import { SentenceTranslateHubView } from "./components/SentenceTranslateHubView";
 import { LevelsView } from "./components/LevelsView";
 import { CustomListView } from "./components/CustomListView";
 import { AddTextView } from "./components/AddTextView";
@@ -189,6 +191,7 @@ function MainApp() {
   });
   const [showPhraseCardsModal, setShowPhraseCardsModal] = useState(false);
   const [showWordRelationsModal, setShowWordRelationsModal] = useState(false);
+  const [showVocabMemoryHub, setShowVocabMemoryHub] = useState(false);
   const [showTypeSettings, setShowTypeSettings] = useState(false);
   const [showBackupModal, setShowBackupModal] = useState(false);
   const [showStatsModal, setShowStatsModal] = useState(false);
@@ -1022,7 +1025,13 @@ function MainApp() {
       return;
     }
 
-    // levels, savedWords, vocabTest, addText, customList, aiGenerate -> Kesinlikle Ana Ekran'a dön
+    // levels, addText, customList, aiGenerate -> Cümle Çeviri merkezine dön
+    if (cv === 'levels' || cv === 'addText' || cv === 'customList' || cv === 'aiGenerate') {
+      navigateTo('sentenceTranslate');
+      return;
+    }
+
+    // sentenceTranslate, savedWords, vocabTest, puzzle -> Ana Ekran'a dön
     navigateTo('home');
   };
 
@@ -1388,6 +1397,7 @@ function MainApp() {
             title={currentView !== 'home' ? "Ana Ekrana Dönmek İçin Dokunun" : undefined}
           >
             {currentView === 'home' && "İngilizce Öğren"}
+            {currentView === 'sentenceTranslate' && "Cümle Çeviri"}
             {currentView === 'levels' && `${selectedLevel} Seviye Metinleri`}
             {currentView === 'reading' && (activeText ? activeText.title : 'Okuma')}
             {currentView === 'textQuiz' && "Okuma Sınavı"}
@@ -1396,7 +1406,7 @@ function MainApp() {
             {currentView === 'addText' && "Kendi Metnini Ekle"}
             {currentView === 'customList' && "Özel Metinlerim"}
             {currentView === 'aiGenerate' && "AI Metin Stüdyosu"}
-            {currentView === 'puzzle' && "İngilizce Bulmaca"}
+            {currentView === 'puzzle' && "Kare Bulmaca"}
           </h1>
 
           <div className="flex items-center gap-1.5 ml-1">
@@ -1459,6 +1469,25 @@ function MainApp() {
           <HomeView
             homeScrollRef={homeScrollRef}
             themeStyle={themeStyle}
+            allAvailableTextsCount={allAvailableTexts.length}
+            savedWordsCount={savedWords.length}
+            dueCount={dueCount}
+            onOpenSentenceTranslate={() => navigateTo('sentenceTranslate')}
+            onOpenVocabMemoryHub={() => setShowVocabMemoryHub(true)}
+            onOpenPuzzle={() => navigateTo('puzzle')}
+            handleOpenSettingsFromBottom={handleOpenSettingsFromBottom}
+            showTypeSettings={showTypeSettings}
+            readerTheme={readerTheme}
+            speechRate={speechRate}
+            fontSize={fontSize}
+            fontFamily={fontFamily}
+          />
+        )}
+
+        {/* CÜMLE ÇEVİRİ MERKEZİ (A1, A2, B1, B2, AI STÜDYOSU & ÖZEL METİN EKLE) */}
+        {currentView === "sentenceTranslate" && (
+          <SentenceTranslateHubView
+            themeStyle={themeStyle}
             levels={levels}
             allAvailableTexts={allAvailableTexts}
             onSelectLevel={(level) => {
@@ -1467,18 +1496,8 @@ function MainApp() {
             }}
             navigateTo={navigateTo}
             customTextsCount={customTexts.length}
-            savedWordsCount={savedWords.length}
-            dueCount={dueCount}
-            openStatsModal={openStatsModal}
-            setShowPhraseCardsModal={setShowPhraseCardsModal}
-            setShowWordRelationsModal={setShowWordRelationsModal}
-            handleOpenSettingsFromBottom={handleOpenSettingsFromBottom}
-            showTypeSettings={showTypeSettings}
-            readerTheme={readerTheme}
-            speechRate={speechRate}
-            fontSize={fontSize}
-            fontFamily={fontFamily}
             getBadgeStyle={getBadgeStyle}
+            onBackToHome={() => navigateTo('home')}
           />
         )}
 
@@ -1744,6 +1763,18 @@ function MainApp() {
           toggleSaveWord(wordObj, chosenLevel || 'A1');
         }}
         isWordSaved={isWordSaved}
+      />
+
+      {/* KELİME & HAFIZA MERKEZİ MODALI */}
+      <VocabMemoryHubModal
+        isOpen={showVocabMemoryHub}
+        onClose={() => setShowVocabMemoryHub(false)}
+        savedWordsCount={savedWords.length}
+        dueCount={dueCount}
+        onOpenSavedWords={() => navigateTo('savedWords')}
+        onOpenPhraseCards={() => setShowPhraseCardsModal(true)}
+        onOpenWordRelations={() => setShowWordRelationsModal(true)}
+        themeStyle={themeStyle}
       />
 
     </div>

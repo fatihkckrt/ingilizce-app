@@ -1,247 +1,172 @@
 import React from 'react';
 import { InstallPromptBanner } from './InstallPromptBanner';
 import { ThemeClasses } from '../utils/themeUtils';
+import { BookOpen, Brain, Puzzle, Settings, Sparkles, ArrowRight } from 'lucide-react';
 
 interface HomeViewProps {
   homeScrollRef: React.RefObject<HTMLDivElement>;
   themeStyle: ThemeClasses;
-  levels: string[];
-  allAvailableTexts: any[];
-  onSelectLevel: (level: string) => void;
-  navigateTo: (view: string, options?: any) => void;
-  customTextsCount: number;
+  allAvailableTextsCount: number;
   savedWordsCount: number;
   dueCount: number;
-  openStatsModal: () => void;
-  setShowPhraseCardsModal: (val: boolean) => void;
-  setShowWordRelationsModal?: (val: boolean) => void;
+  onOpenSentenceTranslate: () => void;
+  onOpenVocabMemoryHub: () => void;
+  onOpenPuzzle: () => void;
   handleOpenSettingsFromBottom: () => void;
   showTypeSettings: boolean;
   readerTheme: string;
   speechRate: number;
   fontSize: string;
   fontFamily: string;
-  getBadgeStyle: (lvl: string) => string;
 }
 
 export const HomeView: React.FC<HomeViewProps> = ({
   homeScrollRef,
   themeStyle,
-  levels,
-  allAvailableTexts,
-  onSelectLevel,
-  navigateTo,
-  customTextsCount,
+  allAvailableTextsCount,
   savedWordsCount,
   dueCount,
-  openStatsModal,
-  setShowPhraseCardsModal,
-  setShowWordRelationsModal,
+  onOpenSentenceTranslate,
+  onOpenVocabMemoryHub,
+  onOpenPuzzle,
   handleOpenSettingsFromBottom,
   showTypeSettings,
   readerTheme,
   speechRate,
   fontSize,
   fontFamily,
-  getBadgeStyle,
 }) => {
   return (
-    <div ref={homeScrollRef} className="flex-1 p-5 flex flex-col space-y-4 overflow-y-auto">
+    <div ref={homeScrollRef} className="flex-1 p-5 flex flex-col justify-between overflow-y-auto space-y-4">
       {/* PWA Kurulum Butonu */}
       <InstallPromptBanner />
 
-      <div className="text-center my-2">
-        <div className="bg-indigo-600/10 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-3 border border-indigo-500/20 shadow-inner">
+      {/* KARŞILAMA ALANI */}
+      <div className="text-center my-3">
+        <div className="bg-indigo-600/10 w-20 h-20 rounded-3xl flex items-center justify-center mx-auto mb-3 border border-indigo-500/20 shadow-inner">
           <span className="text-4xl">🌲</span>
         </div>
-        <h2 className="text-2xl font-black">Seviyeni Seç</h2>
-        <p className="text-xs opacity-70 mt-1 font-medium">Huzurlu ve kalıcı dil öğrenme alanı</p>
+        <h2 className="text-2xl sm:text-3xl font-black tracking-tight">İngilizce Öğren</h2>
+        <p className="text-xs sm:text-sm opacity-70 mt-1 font-medium">Huzurlu ve kalıcı dil öğrenme alanı</p>
       </div>
 
-      <div className="space-y-2.5">
-        {levels.map(level => {
-          const count = allAvailableTexts.filter(t => t.level === level).length;
-          return (
-            <button
-              key={level}
-              onClick={() => onSelectLevel(level)}
-              className={`w-full ${themeStyle.card} border p-4 rounded-2xl flex items-center justify-between hover:shadow-md transition active:scale-[0.99] group`}
-            >
-              <div className="flex items-center gap-3">
-                <span className={`w-9 h-9 rounded-xl font-bold flex items-center justify-center text-sm border shadow-sm ${getBadgeStyle(level)}`}>
-                  {level}
+      {/* 3 ANA ÖZELLİK MERKEZİ */}
+      <div className="space-y-3.5 my-auto">
+        {/* 1. CÜMLE ÇEVİRİ MERKEZİ */}
+        <button
+          onClick={onOpenSentenceTranslate}
+          className={`w-full ${themeStyle.card} border-2 border-indigo-500/70 dark:border-indigo-600 p-4 sm:p-5 rounded-3xl flex items-center justify-between hover:border-indigo-400 shadow-md hover:shadow-lg transition active:scale-[0.98] group cursor-pointer text-left`}
+        >
+          <div className="flex items-center gap-3.5">
+            <span className="text-3xl p-2.5 bg-indigo-500/15 dark:bg-indigo-500/25 rounded-2xl border border-indigo-500/30 shrink-0">
+              📘
+            </span>
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="font-black text-lg block group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition">
+                  Cümle Çeviri
                 </span>
-                <div className="text-left">
-                  <span className="font-bold text-base block">{level} Seviyesi</span>
-                  <span className="text-xs opacity-60 font-medium">{count} Metin Mevcut</span>
-                </div>
-              </div>
-              <span className="text-lg opacity-40 group-hover:translate-x-1 transition">➔</span>
-            </button>
-          );
-        })}
-      </div>
-
-      {/* AI Metin Stüdyosu */}
-      <div className="pt-2">
-        <button
-          onClick={() => navigateTo('aiGenerate')}
-          className="w-full bg-gradient-to-r from-purple-700 via-indigo-700 to-sky-700 text-white p-4 rounded-2xl flex items-center justify-between shadow-lg hover:from-purple-800 hover:to-sky-800 transition active:scale-[0.98]"
-        >
-          <div className="flex items-center gap-3">
-            <span className="text-2xl bg-white/20 p-2 rounded-xl">✨</span>
-            <div className="text-left">
-              <div className="flex items-center gap-1.5">
-                <span className="font-bold text-base block">AI Metin Stüdyosu</span>
-                <span className="bg-amber-300 text-amber-950 text-[10px] font-black px-1.5 py-0.5 rounded uppercase">Yeni</span>
-              </div>
-              <span className="text-xs text-indigo-100">İlgi alanına & seviyene özel metin üret</span>
-            </div>
-          </div>
-          <span className="text-xl">🚀</span>
-        </button>
-      </div>
-
-      <div>
-        <button
-          onClick={() => navigateTo('addText')}
-          className="w-full bg-gradient-to-r from-indigo-700 to-purple-800 text-white p-4 rounded-2xl flex items-center justify-between shadow-lg hover:from-indigo-800 hover:to-purple-900 transition active:scale-[0.98]"
-        >
-          <div className="flex items-center gap-3">
-            <span className="text-2xl bg-white/20 p-2 rounded-xl">✏️</span>
-            <div className="text-left">
-              <span className="font-bold text-base block">Kendi Metnini Ekle</span>
-              <span className="text-xs text-indigo-100">İnternetten metin veya haber yapıştır</span>
-            </div>
-          </div>
-          <span className="text-xl">➕</span>
-        </button>
-      </div>
-
-      {customTextsCount > 0 && (
-        <button
-          onClick={() => navigateTo('customList')}
-          className={`w-full ${themeStyle.card} border border-purple-300 dark:border-purple-800 p-4 rounded-2xl flex items-center justify-between hover:border-purple-500 shadow-sm transition active:scale-[0.99]`}
-        >
-          <div className="flex items-center gap-3">
-            <span className="text-2xl">📑</span>
-            <div className="text-left">
-              <span className="font-extrabold text-base block">Eklediğim Metinler</span>
-              <span className="text-xs opacity-75 font-medium">{customTextsCount} özel metin</span>
-            </div>
-          </div>
-          <span className="bg-purple-600 text-white text-xs font-bold px-2.5 py-1 rounded-full shadow">{customTextsCount}</span>
-        </button>
-      )}
-
-      <button
-        onClick={() => navigateTo('savedWords')}
-        className={`w-full ${themeStyle.card} border-2 border-orange-400 dark:border-orange-800 p-4 rounded-2xl flex items-center justify-between hover:border-orange-500 shadow-md transition active:scale-[0.99]`}
-      >
-        <div className="flex items-center gap-3">
-          <span className="text-2xl">🧠</span>
-          <div className="text-left">
-            <div className="flex items-center gap-1.5">
-              <span className="font-extrabold text-base block">Kelime Defterim</span>
-              {dueCount > 0 && (
-                <span className="bg-rose-600 text-white text-[10px] font-black px-2 py-0.5 rounded-full animate-pulse">
-                  {dueCount} TEKRAR!
+                <span className="bg-indigo-600 text-white text-[10px] font-black px-2 py-0.5 rounded-full uppercase">
+                  A1 - B2
                 </span>
-              )}
+              </div>
+              <p className="text-xs opacity-75 font-medium mt-0.5 leading-snug">
+                Seviyeli çift dilli okumalar, AI Metin Stüdyosu & Kendi Metnini Ekle
+              </p>
             </div>
-            <span className="text-xs opacity-80 font-medium">5 Aşamalı Leitner Aralıklı Tekrar</span>
           </div>
-        </div>
-        <div className="bg-orange-600 text-white text-xs font-bold px-3 py-1.5 rounded-xl shadow">{savedWordsCount}</div>
-      </button>
+          <span className="bg-indigo-600 text-white text-xs font-black px-3 py-1.5 rounded-xl shadow shrink-0 group-hover:translate-x-1 transition ml-2">
+            Metinler ➔
+          </span>
+        </button>
 
-      {/* Kalıp & Deyim Kartları Stüdyosu */}
-      <button
-        onClick={() => setShowPhraseCardsModal(true)}
-        className={`w-full ${themeStyle.card} border-2 border-amber-400 dark:border-amber-800 p-4 rounded-2xl flex items-center justify-between hover:border-amber-500 shadow-md transition active:scale-[0.98]`}
-      >
-        <div className="flex items-center gap-3">
-          <span className="text-2xl p-1 bg-amber-400/20 rounded-xl">🎯</span>
-          <div className="text-left">
-            <span className="font-extrabold text-base block">Kalıp & Deyim Kartları</span>
-            <span className="text-xs opacity-80 font-medium">Phrasal Verb'ler, Deyimler & Akademik Kalıplar</span>
-          </div>
-        </div>
-        <span className="bg-amber-500 text-slate-950 font-black text-xs px-2.5 py-1 rounded-full shadow-xs">Kartlar ➔</span>
-      </button>
-
-      {/* Eş & Zıt Anlamlar (Synonyms & Antonyms) */}
-      <button
-        onClick={() => setShowWordRelationsModal && setShowWordRelationsModal(true)}
-        className={`w-full ${themeStyle.card} border-2 border-teal-500 dark:border-teal-700 p-4 rounded-2xl flex items-center justify-between hover:border-teal-400 shadow-md transition active:scale-[0.98]`}
-      >
-        <div className="flex items-center gap-3">
-          <span className="text-2xl p-1 bg-teal-500/20 rounded-xl">🔄</span>
-          <div className="text-left">
-            <div className="flex items-center gap-1.5">
-              <span className="font-extrabold text-base block">Eş & Zıt Anlamlar</span>
-              <span className="bg-teal-600 text-white text-[10px] font-black px-1.5 py-0.5 rounded uppercase">Synonyms & Antonyms</span>
+        {/* 2. KELİME & HAFIZA MERKEZİ */}
+        <button
+          onClick={onOpenVocabMemoryHub}
+          className={`w-full ${themeStyle.card} border-2 border-orange-500/70 dark:border-orange-600 p-4 sm:p-5 rounded-3xl flex items-center justify-between hover:border-orange-400 shadow-md hover:shadow-lg transition active:scale-[0.98] group cursor-pointer text-left`}
+        >
+          <div className="flex items-center gap-3.5">
+            <span className="text-3xl p-2.5 bg-orange-500/15 dark:bg-orange-500/25 rounded-2xl border border-orange-500/30 shrink-0">
+              🧠
+            </span>
+            <div>
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="font-black text-lg block group-hover:text-orange-600 dark:group-hover:text-orange-400 transition">
+                  Kelime & Hafıza Merkezi
+                </span>
+                {dueCount > 0 ? (
+                  <span className="bg-rose-600 text-white text-[10px] font-black px-2 py-0.5 rounded-full animate-pulse">
+                    {dueCount} TEKRAR!
+                  </span>
+                ) : (
+                  <span className="bg-orange-500/20 text-orange-700 dark:text-orange-300 text-[10px] font-black px-2 py-0.5 rounded-full">
+                    {savedWordsCount} Kelime
+                  </span>
+                )}
+              </div>
+              <p className="text-xs opacity-75 font-medium mt-0.5 leading-snug">
+                Leitner SRS Defterim, Kalıp & Deyimler ve Eş / Zıt Anlamlar
+              </p>
             </div>
-            <span className="text-xs opacity-80 font-medium">Zıt ve Eş Anlamlı Çiftlerle Kelime Dağarcığını Pekiştir</span>
           </div>
-        </div>
-        <span className="bg-teal-600 text-white font-black text-xs px-2.5 py-1 rounded-full shadow-xs">Keşfet ➔</span>
-      </button>
+          <span className="bg-orange-600 text-white text-xs font-black px-3 py-1.5 rounded-xl shadow shrink-0 group-hover:translate-x-1 transition ml-2">
+            Aç ➔
+          </span>
+        </button>
 
-      {/* İngilizce Kare & Çengel Bulmaca */}
-      <button
-        onClick={() => navigateTo('puzzle')}
-        className={`w-full ${themeStyle.card} border-2 border-indigo-400 dark:border-indigo-800 p-4 rounded-2xl flex items-center justify-between hover:border-indigo-500 shadow-md transition active:scale-[0.98]`}
-      >
-        <div className="flex items-center gap-3">
-          <span className="text-2xl p-1 bg-indigo-500/20 rounded-xl">🧩</span>
-          <div className="text-left">
-            <span className="font-extrabold text-base block">İngilizce Kare Bulmaca</span>
-            <span className="text-xs opacity-80 font-medium">A1-B2 Seviyeli 5x5, 6x6, 7x7 Çengel Bulmacalar</span>
+        {/* 3. KARE BULMACA (Eski adıyla İngilizce Kare Bulmaca) */}
+        <button
+          onClick={onOpenPuzzle}
+          className={`w-full ${themeStyle.card} border-2 border-emerald-500/70 dark:border-emerald-600 p-4 sm:p-5 rounded-3xl flex items-center justify-between hover:border-emerald-400 shadow-md hover:shadow-lg transition active:scale-[0.98] group cursor-pointer text-left`}
+        >
+          <div className="flex items-center gap-3.5">
+            <span className="text-3xl p-2.5 bg-emerald-500/15 dark:bg-emerald-500/25 rounded-2xl border border-emerald-500/30 shrink-0">
+              🧩
+            </span>
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="font-black text-lg block group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition">
+                  Kare Bulmaca
+                </span>
+                <span className="bg-emerald-600 text-white text-[10px] font-black px-2 py-0.5 rounded-full uppercase">
+                  180 Bulmaca
+                </span>
+              </div>
+              <p className="text-xs opacity-75 font-medium mt-0.5 leading-snug">
+                A1-B2 Seviyeli 5x5, 6x6, 7x7, 8x8, 9x9, 10x10 çengel & kare bulmacalar
+              </p>
+            </div>
           </div>
-        </div>
-        <span className="bg-indigo-600 text-white text-xs font-black px-3 py-1.5 rounded-full shadow-xs">Çöz ➔</span>
-      </button>
+          <span className="bg-emerald-600 text-white text-xs font-black px-3 py-1.5 rounded-xl shadow shrink-0 group-hover:translate-x-1 transition ml-2">
+            Çöz ➔
+          </span>
+        </button>
+      </div>
 
-      {/* Gelişim ve İstatistikler */}
-      <button
-        onClick={openStatsModal}
-        className={`w-full ${themeStyle.card} border-2 border-emerald-400 dark:border-emerald-800 p-4 rounded-2xl flex items-center justify-between hover:border-emerald-500 shadow-md transition active:scale-[0.98]`}
-      >
-        <div className="flex items-center gap-3">
-          <span className="text-2xl">📊</span>
-          <div className="text-left">
-            <span className="font-extrabold text-base block">Gelişim & İstatistiklerim</span>
-            <span className="text-xs opacity-80 font-medium">Günlük Seri, Okuma Hacmi ve Leitner Dağılımı</span>
-          </div>
-        </div>
-        <span className="text-lg opacity-60">➔</span>
-      </button>
-
-      {/* Uygulama & Okuma Ayarları Hızlı Kartı */}
+      {/* UYGULAMA & OKUMA AYARLARI KARTI */}
       <button
         onClick={handleOpenSettingsFromBottom}
-        className={`w-full ${themeStyle.card} border p-4 rounded-2xl flex items-center justify-between hover:shadow-md transition active:scale-[0.98] ${
+        className={`w-full ${themeStyle.card} border p-3.5 sm:p-4 rounded-2xl flex items-center justify-between hover:shadow-md transition active:scale-[0.98] cursor-pointer ${
           showTypeSettings ? 'ring-2 ring-indigo-500 border-indigo-400' : ''
         }`}
       >
         <div className="flex items-center gap-3">
-          <span className="text-2xl p-1 bg-black/5 rounded-xl">⚙️</span>
+          <span className="text-2xl p-1 bg-black/5 dark:bg-white/5 rounded-xl">⚙️</span>
           <div className="text-left">
             <div className="flex items-center gap-2">
-              <span className="font-bold text-base block">Okuma & Uygulama Ayarları</span>
+              <span className="font-bold text-sm sm:text-base block">Okuma & Ses Ayarları</span>
               {showTypeSettings && (
                 <span className="bg-indigo-600 text-white text-[10px] font-extrabold px-2 py-0.5 rounded-full animate-pulse">
-                  YUKARIDA AÇIK ↑
+                  AÇIK ↑
                 </span>
               )}
             </div>
-            <span className="text-xs opacity-60 font-medium">
-              Tema ({readerTheme === 'sepia' ? 'Kitap' : readerTheme === 'oled' ? 'OLED' : readerTheme === 'forest' ? 'Orman' : 'Ferah'}), Hız ({speechRate}x), Yazı ({fontSize.toUpperCase()} / {fontFamily})
+            <span className="text-[11px] opacity-65 font-medium">
+              Tema ({readerTheme === 'sepia' ? 'Kitap' : readerTheme === 'oled' ? 'OLED' : readerTheme === 'forest' ? 'Orman' : 'Ferah'}), Hız ({speechRate}x), Yazı ({fontSize.toUpperCase()})
             </span>
           </div>
         </div>
-        <span className="text-lg opacity-60 font-bold">{showTypeSettings ? '▲' : '➔'}</span>
+        <span className="text-base opacity-60 font-bold">{showTypeSettings ? '▲' : '➔'}</span>
       </button>
     </div>
   );
