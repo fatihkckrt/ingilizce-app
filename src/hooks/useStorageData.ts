@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { idbGet, idbSet, LEITNER_INTERVALS, logStudyActivity } from '../data';
 import { VocabWord, ReadingText } from '../types';
 

@@ -11,6 +11,7 @@ interface HomeViewProps {
   dueCount: number;
   onOpenSentenceTranslate: () => void;
   onOpenVocabMemoryHub: () => void;
+  onOpenGrammar: () => void;
   onOpenPuzzle: () => void;
   handleOpenSettingsFromBottom: () => void;
   showTypeSettings: boolean;
@@ -28,6 +29,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
   dueCount,
   onOpenSentenceTranslate,
   onOpenVocabMemoryHub,
+  onOpenGrammar,
   onOpenPuzzle,
   handleOpenSettingsFromBottom,
   showTypeSettings,
@@ -110,7 +112,35 @@ export const HomeView: React.FC<HomeViewProps> = ({
           </div>
         </button>
 
-        {/* 3. KARE BULMACA */}
+        {/* 3. GRAMER & CÜMLE KURMA MERKEZİ */}
+        <button
+          onClick={onOpenGrammar}
+          className={`w-full ${themeStyle.card} border-2 border-teal-500/60 dark:border-teal-600/80 p-4 sm:p-5 rounded-3xl flex items-center justify-between hover:border-teal-400 shadow-md hover:shadow-lg transition active:scale-[0.98] group cursor-pointer text-left`}
+        >
+          <div className="flex items-center gap-3.5 min-w-0 flex-1">
+            <span className="text-3xl p-3 bg-teal-500/15 dark:bg-teal-500/25 rounded-2xl border border-teal-500/30 shrink-0">
+              📐
+            </span>
+            <div className="min-w-0 flex-1 pr-2">
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="font-black text-base sm:text-lg block group-hover:text-teal-600 dark:group-hover:text-teal-400 transition truncate">
+                  Gramer & Cümle Kurma
+                </span>
+                <span className="bg-teal-600 text-white text-[10px] font-black px-2 py-0.5 rounded-full uppercase whitespace-nowrap shadow-xs">
+                  A1 - B2
+                </span>
+              </div>
+              <p className="text-xs opacity-75 font-medium mt-1 leading-snug">
+                Seviyeli detaylı gramer rehberi, kurallar & sözcük sıralama atölyesi
+              </p>
+            </div>
+          </div>
+          <div className="w-10 h-10 rounded-2xl bg-teal-600/15 text-teal-600 dark:text-teal-400 flex items-center justify-center shrink-0 group-hover:bg-teal-600 group-hover:text-white transition shadow-sm">
+            <ArrowRight className="w-5 h-5" />
+          </div>
+        </button>
+
+        {/* 4. KARE BULMACA */}
         <button
           onClick={onOpenPuzzle}
           className={`w-full ${themeStyle.card} border-2 border-emerald-500/60 dark:border-emerald-600/80 p-4 sm:p-5 rounded-3xl flex items-center justify-between hover:border-emerald-400 shadow-md hover:shadow-lg transition active:scale-[0.98] group cursor-pointer text-left`}

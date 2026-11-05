@@ -19,6 +19,7 @@ import { InstallPromptBanner } from "./components/InstallPromptBanner";
 import { PhraseCardsModal } from "./components/PhraseCardsModal";
 import { WordRelationsModal } from "./components/WordRelationsModal";
 import { VocabMemoryHubView } from "./components/VocabMemoryHubView";
+import { GrammarHubView } from "./components/GrammarHubView";
 import { SettingsDrawer } from "./components/SettingsDrawer";
 import { HomeView } from "./components/HomeView";
 import { SentenceTranslateHubView } from "./components/SentenceTranslateHubView";
@@ -1397,6 +1398,7 @@ function MainApp() {
             {currentView === 'home' && "İngilizce Öğren"}
             {currentView === 'sentenceTranslate' && "Cümle Çeviri"}
             {currentView === 'vocabHub' && "Kelime & Hafıza Merkezi"}
+            {currentView === 'grammar' && "Gramer & Cümle Kurma"}
             {currentView === 'levels' && `${selectedLevel} Seviye Metinleri`}
             {currentView === 'reading' && (activeText ? activeText.title : 'Okuma')}
             {currentView === 'textQuiz' && "Okuma Sınavı"}
@@ -1409,8 +1411,8 @@ function MainApp() {
           </h1>
 
           <div className="flex items-center gap-1.5 ml-1">
-            {/* Ayarlar Butonu (Giriş ekranında, okuma ekranında ve bulmacalarda gözükür) */}
-            {(currentView === 'home' || currentView === 'reading' || currentView === 'puzzle') && (
+            {/* Ayarlar Butonu (Giriş ekranında, okuma ekranında, gramerde ve bulmacalarda gözükür) */}
+            {(currentView === 'home' || currentView === 'reading' || currentView === 'grammar' || currentView === 'puzzle') && (
               <button 
                 onClick={toggleTypeSettings} 
                 className={`p-2 rounded-xl transition flex items-center justify-center shadow-xs active:scale-95 ${
@@ -1473,6 +1475,7 @@ function MainApp() {
             dueCount={dueCount}
             onOpenSentenceTranslate={() => navigateTo('sentenceTranslate')}
             onOpenVocabMemoryHub={() => navigateTo('vocabHub')}
+            onOpenGrammar={() => navigateTo('grammar')}
             onOpenPuzzle={() => navigateTo('puzzle')}
             handleOpenSettingsFromBottom={handleOpenSettingsFromBottom}
             showTypeSettings={showTypeSettings}
@@ -1480,6 +1483,15 @@ function MainApp() {
             speechRate={speechRate}
             fontSize={fontSize}
             fontFamily={fontFamily}
+          />
+        )}
+
+        {/* GRAMER & CÜMLE KURMA MERKEZİ (A1, A2, B1, B2 REHBER & SÖZCÜK SIRALAMA) */}
+        {currentView === "grammar" && (
+          <GrammarHubView
+            themeStyle={themeStyle}
+            onBackToHome={() => navigateTo('home')}
+            speak={speak}
           />
         )}
 

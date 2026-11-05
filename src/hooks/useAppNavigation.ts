@@ -257,6 +257,7 @@ export function useAppNavigation(
       return;
     }
 
+    // sentenceTranslate, vocabHub, grammar, puzzle -> Ana Ekran'a dön
     navigateTo('home');
   }, [stopKaraoke, closeTranslationModal, closeTypeSettings, closeBackupModal, closeStatsModal, navigateTo]);
 
