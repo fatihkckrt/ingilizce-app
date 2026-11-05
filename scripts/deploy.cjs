@@ -128,14 +128,17 @@ if (!fs.existsSync(gitDir)) {
         rawRepo = 'github.com/' + rawRepo;
       }
       const user = process.env.GITHUB_USERNAME || 'fatihkckrt';
+      const authedUrl = `https://${user}:${process.env.GITHUB_TOKEN}@${rawRepo}.git`;
       let remotes = '';
       try { remotes = execSync('git remote', { encoding: 'utf8' }); } catch (_) {}
       if (remotes.includes('origin')) {
-        execSync(`git remote set-url origin ${authedUrl}`, { stdio: 'ignore' });
+        run(`git remote set-url origin ${authedUrl}`, 'Updating remote origin URL');
       } else {
-        execSync(`git remote add origin ${authedUrl}`, { stdio: 'ignore' });
+        run(`git remote add origin ${authedUrl}`, 'Adding remote origin');
       }
-    } catch (_) {}
+    } catch (e) {
+      console.error('Remote config error:', e);
+    }
   }
 
   // 5. Git Commit on main
