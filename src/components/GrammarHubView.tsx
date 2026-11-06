@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { ThemeClasses } from '../utils/themeUtils';
-import { GRAMMAR_TOPICS, SENTENCE_SCRAMBLE_DATA, GrammarTopic, SentenceScrambleItem } from '../grammarData';
+import { GRAMMAR_TOPICS, SENTENCE_SCRAMBLE_DATA, GrammarTopic, SentenceScrambleItem, GrammarExample } from '../grammarData';
 import { 
   ArrowLeft, 
   BookOpen, 
@@ -11,12 +11,13 @@ import {
   RotateCcw, 
   ChevronRight, 
   AlertCircle, 
-  Check,
-  X,
-  Clock,
-  Table,
-  Lightbulb,
-  Award
+  Check, 
+  X, 
+  Clock, 
+  Table, 
+  Lightbulb, 
+  Award,
+  Filter
 } from 'lucide-react';
 
 interface GrammarHubViewProps {
@@ -37,6 +38,9 @@ export const GrammarHubView: React.FC<GrammarHubViewProps> = ({
 
   // Rehberde seçili detay konusu
   const [selectedTopic, setSelectedTopic] = useState<GrammarTopic | null>(null);
+
+  // Örnek cümlelerde zamir filtresi: 'all' | 'I' | '3rd' | 'plurals' | 'question'
+  const [pronounFilter, setPronounFilter] = useState<'all' | 'I' | '3rd' | 'plurals' | 'question'>('all');
 
   // Cümle kurma durumu
   const levelScrambles = useMemo(() => {
@@ -70,6 +74,7 @@ export const GrammarHubView: React.FC<GrammarHubViewProps> = ({
   const handleSelectLevel = (lvl: 'A1' | 'A2' | 'B1' | 'B2') => {
     setSelectedLevel(lvl);
     setSelectedTopic(null);
+    setPronounFilter('all');
     setCurrentScrambleIdx(0);
     const newItems = SENTENCE_SCRAMBLE_DATA.filter(item => item.level === lvl);
     if (newItems.length > 0) {
@@ -131,6 +136,51 @@ export const GrammarHubView: React.FC<GrammarHubViewProps> = ({
     return GRAMMAR_TOPICS.filter(t => t.level === selectedLevel);
   }, [selectedLevel]);
 
+  // Zamir rozet stilleri
+  const getPronounBadge = (pronoun: string) => {
+    switch (pronoun) {
+      case 'I':
+        return { label: '👤 I', bg: 'bg-emerald-500/15 text-emerald-800 dark:text-emerald-300 border-emerald-400/40' };
+      case 'He':
+        return { label: '👨 He', bg: 'bg-sky-500/15 text-sky-800 dark:text-sky-300 border-sky-400/40' };
+      case 'She':
+        return { label: '👩 She', bg: 'bg-purple-500/15 text-purple-800 dark:text-purple-300 border-purple-400/40' };
+      case 'It':
+        return { label: '📦 It', bg: 'bg-amber-500/15 text-amber-800 dark:text-amber-300 border-amber-400/40' };
+      case 'You':
+        return { label: '🫵 You', bg: 'bg-indigo-500/15 text-indigo-800 dark:text-indigo-300 border-indigo-400/40' };
+      case 'We':
+        return { label: '👥 We', bg: 'bg-teal-500/15 text-teal-800 dark:text-teal-300 border-teal-400/40' };
+      case 'They':
+        return { label: '👥 They', bg: 'bg-blue-500/15 text-blue-800 dark:text-blue-300 border-blue-400/40' };
+      case 'Wh- / Soru':
+        return { label: '❓ Soru', bg: 'bg-rose-500/15 text-rose-800 dark:text-rose-300 border-rose-400/40' };
+      default:
+        return { label: '📌 Cümle', bg: 'bg-slate-500/15 text-slate-800 dark:text-slate-300 border-slate-400/40' };
+    }
+  };
+
+  const getTypeBadge = (type: 'positive' | 'negative' | 'question') => {
+    switch (type) {
+      case 'positive':
+        return { label: '+ Olumlu', bg: 'bg-emerald-100/80 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300 border-emerald-300 dark:border-emerald-800' };
+      case 'negative':
+        return { label: '- Olumsuz', bg: 'bg-rose-100/80 text-rose-800 dark:bg-rose-950/60 dark:text-rose-300 border-rose-300 dark:border-rose-800' };
+      case 'question':
+        return { label: '? Soru', bg: 'bg-sky-100/80 text-sky-800 dark:bg-sky-950/60 dark:text-sky-300 border-sky-300 dark:border-sky-800' };
+    }
+  };
+
+  // Örnek cümle filtresi
+  const filterExamples = (examples: GrammarExample[]) => {
+    if (pronounFilter === 'all') return examples;
+    if (pronounFilter === 'I') return examples.filter(e => e.pronoun === 'I');
+    if (pronounFilter === '3rd') return examples.filter(e => e.pronoun === 'He' || e.pronoun === 'She' || e.pronoun === 'It');
+    if (pronounFilter === 'plurals') return examples.filter(e => e.pronoun === 'You' || e.pronoun === 'We' || e.pronoun === 'They');
+    if (pronounFilter === 'question') return examples.filter(e => e.sentenceType === 'question' || e.pronoun === 'Wh- / Soru');
+    return examples;
+  };
+
   return (
     <div className="flex-1 p-3.5 sm:p-5 flex flex-col space-y-4 overflow-y-auto">
       {/* ÜST BAŞLIK & GERİ DÖNÜŞ */}
@@ -160,7 +210,7 @@ export const GrammarHubView: React.FC<GrammarHubViewProps> = ({
         </div>
         <h2 className="text-xl sm:text-2xl font-black">Gramer & Cümle Kurma</h2>
         <p className="text-xs opacity-75 mt-0.5 font-medium max-w-sm mx-auto">
-          Şematik tablolar, detaylı konu anlatımları ve etkileşimli sözcük sıralama atölyesi
+          Şematik zamir kutucukları, bol örnekler ve etkileşimli sözcük sıralama atölyesi
         </p>
 
         {/* 2 ANA SEKME: GRAMER REHBERİ VS. CÜMLE KURMA */}
@@ -214,6 +264,8 @@ export const GrammarHubView: React.FC<GrammarHubViewProps> = ({
         <div className="space-y-3.5">
           {filteredTopics.map((topic) => {
             const isExpanded = selectedTopic?.id === topic.id;
+            const displayedExamples = filterExamples(topic.examples || []);
+
             return (
               <div
                 key={topic.id}
@@ -237,6 +289,9 @@ export const GrammarHubView: React.FC<GrammarHubViewProps> = ({
                         </span>
                         <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-teal-500/15 text-teal-700 dark:text-teal-300 uppercase whitespace-nowrap">
                           {topic.badge}
+                        </span>
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300">
+                          {topic.examples?.length || 0} Örnek
                         </span>
                       </div>
                       <p className="text-xs opacity-75 font-medium mt-0.5 line-clamp-1">
@@ -262,16 +317,16 @@ export const GrammarHubView: React.FC<GrammarHubViewProps> = ({
                       </p>
                     </div>
 
-                    {/* 2. ŞEMATİK ALT ALTA ÖZNE VE ÇEKİM TABLOSU (Kullanıcının İstediği Özel Görsel Tasarım) */}
+                    {/* 2. ŞEMATİK ALT ALTA ÖZNE VE ÇEKİM TABLOSU */}
                     {topic.subjectSchema && topic.subjectSchema.length > 0 && (
                       <div className="space-y-2">
                         <div className="flex items-center justify-between">
                           <h4 className="text-xs font-black text-slate-800 dark:text-slate-200 uppercase tracking-wider flex items-center gap-1.5">
                             <Table className="w-3.5 h-3.5 text-teal-600" />
-                            <span>Şematik Özne & Çekim Tablosu (Alt Alta)</span>
+                            <span>Şematik Özne & Çekim Tablosu</span>
                           </h4>
                           <span className="text-[10px] font-bold text-teal-600 dark:text-teal-400 bg-teal-500/10 px-2 py-0.5 rounded-md">
-                            Şematik Görünüm
+                            Alt Alta Dizilim
                           </span>
                         </div>
 
@@ -283,17 +338,16 @@ export const GrammarHubView: React.FC<GrammarHubViewProps> = ({
                             >
                               {/* Özne Başlığı */}
                               <div className="flex items-center justify-between pb-1 border-b border-black/5 dark:border-white/5">
-                                <div className="flex items-center gap-1.5">
-                                  <span className="w-2 h-2 rounded-full bg-teal-500"></span>
-                                  <span className="font-black text-xs sm:text-sm text-slate-900 dark:text-white">
+                                <div className="flex items-center gap-2">
+                                  <span className="px-2.5 py-0.5 rounded-lg bg-teal-600 text-white font-mono font-black text-xs">
                                     {row.subject}
                                   </span>
+                                  {row.subjectLabel && (
+                                    <span className="text-[11px] font-bold text-slate-600 dark:text-slate-300">
+                                      {row.subjectLabel}
+                                    </span>
+                                  )}
                                 </div>
-                                {row.subjectLabel && (
-                                  <span className="text-[10px] font-extrabold text-slate-500 dark:text-slate-400 bg-black/5 dark:bg-white/10 px-2 py-0.5 rounded-md">
-                                    {row.subjectLabel}
-                                  </span>
-                                )}
                               </div>
 
                               {/* (+) Olumlu / (-) Olumsuz / (?) Soru Alt Alta Grid */}
@@ -378,16 +432,21 @@ export const GrammarHubView: React.FC<GrammarHubViewProps> = ({
                         <span>📐 Formül & Yapı Düzeni</span>
                       </h4>
                       {topic.formulas.map((form, fIdx) => (
-                        <div key={fIdx} className="p-3 bg-black/5 dark:bg-white/5 rounded-2xl border border-black/5 dark:border-white/5">
-                          <span className="text-xs font-bold text-teal-700 dark:text-teal-400 block mb-1">
+                        <div key={fIdx} className="p-3 bg-black/5 dark:bg-white/5 rounded-2xl border border-black/5 dark:border-white/5 space-y-1.5">
+                          <span className="text-xs font-bold text-teal-700 dark:text-teal-400 block">
                             {form.title}
                           </span>
                           <div className="bg-white/80 dark:bg-slate-900/80 p-2.5 rounded-xl font-mono text-xs text-indigo-700 dark:text-indigo-300 border border-indigo-100 dark:border-indigo-900 font-bold whitespace-pre-line leading-relaxed">
                             {form.pattern}
                           </div>
-                          <p className="text-[11px] opacity-75 mt-1 font-medium">
+                          <p className="text-[11px] opacity-75 font-medium">
                             {form.explanation}
                           </p>
+                          {form.sample && (
+                            <div className="p-1.5 rounded-lg bg-teal-500/10 border border-teal-500/20 text-[11px] font-semibold text-teal-900 dark:text-teal-200">
+                              💡 <span className="font-bold">Örnek:</span> {form.sample}
+                            </div>
+                          )}
                         </div>
                       ))}
                     </div>
@@ -426,7 +485,7 @@ export const GrammarHubView: React.FC<GrammarHubViewProps> = ({
                       </h4>
                       <ul className="space-y-1.5 text-xs text-slate-600 dark:text-slate-300">
                         {topic.keyRules.map((rule, rIdx) => (
-                          <li key={rIdx} className="flex items-start gap-2 bg-black/5 dark:bg-white/5 p-2 rounded-xl">
+                          <li key={rIdx} className="flex items-start gap-2 bg-black/5 dark:bg-white/5 p-2.5 rounded-xl">
                             <span className="text-teal-500 font-extrabold mt-0.5">•</span>
                             <span className="leading-snug font-medium whitespace-pre-line">{rule}</span>
                           </li>
@@ -457,32 +516,126 @@ export const GrammarHubView: React.FC<GrammarHubViewProps> = ({
                       </div>
                     )}
 
-                    {/* 8. Örnek Cümleler & Sesli Dinleme */}
-                    <div className="space-y-2">
-                      <h4 className="text-xs font-black text-slate-800 dark:text-slate-200 uppercase tracking-wider flex items-center gap-1.5">
-                        <Volume2 className="w-3.5 h-3.5 text-teal-600" />
-                        <span>Örnek Cümleler (Sesli Telaffuz Destekli)</span>
-                      </h4>
+                    {/* 8. ÖRNEK CÜMLELER (ZAMİR KUTUCUKLU ŞEMATİK LİSTE - BOL ÖRNEK) */}
+                    <div className="space-y-3 pt-1">
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                        <div>
+                          <h4 className="text-xs font-black text-slate-800 dark:text-slate-200 uppercase tracking-wider flex items-center gap-1.5">
+                            <Volume2 className="w-3.5 h-3.5 text-teal-600" />
+                            <span>Örnek Cümleler & Zamir Dağılımı ({topic.examples.length} Örnek)</span>
+                          </h4>
+                          <p className="text-[11px] text-slate-400 font-medium">
+                            Zamirleri satır başlarında kutucuklar halinde inceleyin ve sesli dinleyin
+                          </p>
+                        </div>
+
+                        {/* Zamir Hızlı Filtresi */}
+                        <div className="flex items-center gap-1 overflow-x-auto pb-1 sm:pb-0">
+                          <button
+                            onClick={() => setPronounFilter('all')}
+                            className={`px-2 py-1 rounded-lg text-[10px] font-extrabold transition cursor-pointer shrink-0 ${
+                              pronounFilter === 'all'
+                                ? 'bg-teal-600 text-white shadow-xs'
+                                : 'bg-black/5 dark:bg-white/10 text-slate-600 dark:text-slate-300'
+                            }`}
+                          >
+                            Tümü ({topic.examples.length})
+                          </button>
+                          <button
+                            onClick={() => setPronounFilter('I')}
+                            className={`px-2 py-1 rounded-lg text-[10px] font-extrabold transition cursor-pointer shrink-0 ${
+                              pronounFilter === 'I'
+                                ? 'bg-teal-600 text-white shadow-xs'
+                                : 'bg-black/5 dark:bg-white/10 text-slate-600 dark:text-slate-300'
+                            }`}
+                          >
+                            👤 I
+                          </button>
+                          <button
+                            onClick={() => setPronounFilter('3rd')}
+                            className={`px-2 py-1 rounded-lg text-[10px] font-extrabold transition cursor-pointer shrink-0 ${
+                              pronounFilter === '3rd'
+                                ? 'bg-teal-600 text-white shadow-xs'
+                                : 'bg-black/5 dark:bg-white/10 text-slate-600 dark:text-slate-300'
+                            }`}
+                          >
+                            👨 He / 👩 She / 📦 It
+                          </button>
+                          <button
+                            onClick={() => setPronounFilter('plurals')}
+                            className={`px-2 py-1 rounded-lg text-[10px] font-extrabold transition cursor-pointer shrink-0 ${
+                              pronounFilter === 'plurals'
+                                ? 'bg-teal-600 text-white shadow-xs'
+                                : 'bg-black/5 dark:bg-white/10 text-slate-600 dark:text-slate-300'
+                            }`}
+                          >
+                            👥 We / They / You
+                          </button>
+                          <button
+                            onClick={() => setPronounFilter('question')}
+                            className={`px-2 py-1 rounded-lg text-[10px] font-extrabold transition cursor-pointer shrink-0 ${
+                              pronounFilter === 'question'
+                                ? 'bg-teal-600 text-white shadow-xs'
+                                : 'bg-black/5 dark:bg-white/10 text-slate-600 dark:text-slate-300'
+                            }`}
+                          >
+                            ❓ Soru
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* Örnek Cümle Kartları */}
                       <div className="space-y-2">
-                        {topic.examples.map((ex, eIdx) => (
-                          <div key={eIdx} className="p-3 bg-white/80 dark:bg-slate-900/70 rounded-2xl border border-slate-200 dark:border-slate-800 flex items-start justify-between gap-3 shadow-2xs">
-                            <div className="min-w-0 flex-1">
-                              <p className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white">
-                                {ex.eng}
-                              </p>
-                              <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-                                {ex.tr}
-                              </p>
-                            </div>
-                            <button
-                              onClick={() => speak(ex.eng)}
-                              className="p-2 rounded-xl bg-teal-500/15 text-teal-700 dark:text-teal-300 hover:bg-teal-500/25 active:scale-95 transition cursor-pointer shrink-0"
-                              title="Cümleyi Dinle (TTS)"
+                        {displayedExamples.map((ex, eIdx) => {
+                          const pBadge = getPronounBadge(ex.pronoun);
+                          const tBadge = getTypeBadge(ex.sentenceType);
+
+                          return (
+                            <div 
+                              key={eIdx} 
+                              className="p-3 bg-white/80 dark:bg-slate-900/70 rounded-2xl border border-slate-200/90 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 shadow-2xs hover:border-teal-500/40 transition"
                             >
-                              <Volume2 className="w-4 h-4" />
-                            </button>
-                          </div>
-                        ))}
+                              <div className="flex items-start gap-2.5 min-w-0 flex-1">
+                                {/* Satır Başı Şematik Zamir Kutucuğu */}
+                                <div className="flex flex-col items-center gap-1 shrink-0 pt-0.5">
+                                  <span className={`px-2.5 py-1 rounded-xl text-xs font-black border shadow-2xs whitespace-nowrap ${pBadge.bg}`}>
+                                    {pBadge.label}
+                                  </span>
+                                  <span className={`px-1.5 py-0.5 rounded-md text-[9px] font-bold border ${tBadge.bg}`}>
+                                    {tBadge.label}
+                                  </span>
+                                </div>
+
+                                {/* Cümle Metni ve Çeviri */}
+                                <div className="min-w-0 flex-1 pl-1">
+                                  <p className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white leading-snug">
+                                    {ex.eng}
+                                  </p>
+                                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                                    {ex.tr}
+                                  </p>
+                                  {ex.note && (
+                                    <span className="inline-block mt-1 text-[10px] font-bold px-2 py-0.5 rounded-md bg-teal-500/10 text-teal-700 dark:text-teal-300 border border-teal-500/20">
+                                      💡 {ex.note}
+                                    </span>
+                                  )}
+                                </div>
+                              </div>
+
+                              {/* Sesli Okuma Butonu */}
+                              <div className="flex justify-end sm:justify-center shrink-0">
+                                <button
+                                  onClick={() => speak(ex.eng)}
+                                  className="p-2 rounded-xl bg-teal-500/15 text-teal-700 dark:text-teal-300 hover:bg-teal-500/25 active:scale-95 transition cursor-pointer flex items-center gap-1 text-xs font-bold"
+                                  title="Cümleyi Dinle (TTS)"
+                                >
+                                  <Volume2 className="w-4 h-4" />
+                                  <span className="sm:hidden text-[11px]">Dinle</span>
+                                </button>
+                              </div>
+                            </div>
+                          );
+                        })}
                       </div>
                     </div>
 
