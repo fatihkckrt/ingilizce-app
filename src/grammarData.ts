@@ -14,14 +14,18 @@ export interface GrammarFormula {
   pattern: string;
   explanation: string;
   sample?: string;
+  sampleTr?: string; // Türkçe Çeviri
 }
 
 export interface SubjectSchemaRow {
   subject: string; // Özne: "I", "He / She / It", "You / We / They"
   subjectLabel?: string; // "1. Tekil Şahıs", "3. Tekil Şahıslar", "Çoğul & 2. Şahıs"
   positive: string; // Olumlu çekim / örnek
+  positiveTr?: string; // Türkçe Çeviri
   negative: string; // Olumsuz çekim / örnek
+  negativeTr?: string; // Türkçe Çeviri
   question: string; // Soru biçimi
+  questionTr?: string; // Türkçe Çeviri
   highlight?: string; // Kritik not / püf nokta
 }
 
@@ -49,7 +53,7 @@ export interface GrammarTopic {
   keyRules: string[];
   comparisonTable?: GrammarComparisonTable; // Kural / Karşılaştırma Tablosu
   timeMarkers?: TimeMarkerItem[]; // Sık kullanılan zaman ve sıklık zarfları
-  commonMistakes: { wrong: string; correct: string; reason: string }[];
+  commonMistakes: { wrong: string; correct: string; correctTr?: string; reason: string }[];
   examples: GrammarExample[];
   proTip: string;
 }
@@ -81,7 +85,10 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "positive": "am ('m) ➔ I am a teacher.",
         "negative": "am not ('m not) ➔ I am not late.",
         "question": "Am I ...? ➔ Am I right?",
-        "highlight": "Yalnızca 'I' öznesi ile 'am' eşleşir."
+        "highlight": "Yalnızca 'I' öznesi ile 'am' eşleşir.",
+        "positiveTr": "Ben bir öğretmenim.",
+        "negativeTr": "Geç kalmadım.",
+        "questionTr": "Haklı mıyım?"
       },
       {
         "subject": "He / She / It (O)",
@@ -89,7 +96,10 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "positive": "is ('s) ➔ She is happy. / It is cold.",
         "negative": "is not (isn't) ➔ He isn't at work.",
         "question": "Is he / she / it ...? ➔ Is she ready?",
-        "highlight": "Tüm tekil isimler (John, the cat) 'is' alır."
+        "highlight": "Tüm tekil isimler (John, the cat) 'is' alır.",
+        "positiveTr": "O mutludur. / Hava soğuktur.",
+        "negativeTr": "O işte değil.",
+        "questionTr": "O hazır mı?"
       },
       {
         "subject": "You / We / They (Sen/Siz, Biz, Onlar)",
@@ -97,7 +107,10 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "positive": "are ('re) ➔ We are students.",
         "negative": "are not (aren't) ➔ They aren't here.",
         "question": "Are you / we / they ...? ➔ Are they doctors?",
-        "highlight": "Tüm çoğul özneler ve daima 'you' ile 'are' kullanılır."
+        "highlight": "Tüm çoğul özneler ve daima 'you' ile 'are' kullanılır.",
+        "positiveTr": "Biz öğrenciyiz.",
+        "negativeTr": "Onlar burada değiller.",
+        "questionTr": "Onlar doktor mu?"
       }
     ],
     "formulas": [
@@ -105,19 +118,22 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "title": "Olumlu Yapı (+)",
         "pattern": "Özne (Subject) + am / is / are + Sıfat / İsim / Yer Belirteci",
         "explanation": "Kişinin durumunu, mesleğini veya konumunu belirtir.",
-        "sample": "She is an architect. / We are in the city library."
+        "sample": "She is an architect. / We are in the city library.",
+        "sampleTr": "O bir mimardır. / Biz şehir kütüphanesindeyiz."
       },
       {
         "title": "Olumsuz Yapı (-)",
         "pattern": "Özne (Subject) + am not / isn't / aren't + Tümleç",
         "explanation": "Olumsuzluk eki 'not' doğrudan to be fiiline eklenir.",
-        "sample": "I am not tired. / He isn't at the meeting."
+        "sample": "I am not tired. / He isn't at the meeting.",
+        "sampleTr": "Yorgun değilim. / O toplantıda değil."
       },
       {
         "title": "Soru Yapısı (?)",
         "pattern": "Am / Is / Are + Özne + Tümleç + ?",
         "explanation": "Yardımcı fiil öznenin önüne geçer.",
-        "sample": "Are you ready? (Kısa cevap: Yes, I am. / No, I'm not.)"
+        "sample": "Are you ready? (Kısa cevap: Yes, I am. / No, I'm not.)",
+        "sampleTr": "Hazır mısın? (Evet, hazırım. / Hayır, değilim.)"
       }
     ],
     "keyRules": [
@@ -171,17 +187,20 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
       {
         "wrong": "I have 22 years old.",
         "correct": "I am 22 years old.",
-        "reason": "İngilizcede yaş bir sahiplik değil, varoluş durumudur; 'to be' kullanılır."
+        "reason": "İngilizcede yaş bir sahiplik değil, varoluş durumudur; 'to be' kullanılır.",
+        "correctTr": "22 yaşındayım."
       },
       {
         "wrong": "He is work in a hospital.",
         "correct": "He works in a hospital.",
-        "reason": "Eğer 'work' gibi ana bir hareket fiili varsa, geniş zamanda ayrıca 'is' eklenmez."
+        "reason": "Eğer 'work' gibi ana bir hareket fiili varsa, geniş zamanda ayrıca 'is' eklenmez.",
+        "correctTr": "O bir hastanede çalışır."
       },
       {
         "wrong": "Are you agree with me?",
         "correct": "Do you agree with me?",
-        "reason": "'Agree' bir sıfat değil fiildir (katılmak); soru 'Do you' ile sorulur."
+        "reason": "'Agree' bir sıfat değil fiildir (katılmak); soru 'Do you' ile sorulur.",
+        "correctTr": "Bana katılıyor musun?"
       }
     ],
     "examples": [
@@ -286,7 +305,10 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "positive": "V1 (Fiil Yalın) ➔ I play tennis. / They live in London.",
         "negative": "don't + V1 ➔ We don't eat meat.",
         "question": "Do + Özne + V1? ➔ Do you speak English?",
-        "highlight": "Fiil hiçbir takı almaz, orijinal yalın halindedir."
+        "highlight": "Fiil hiçbir takı almaz, orijinal yalın halindedir.",
+        "positiveTr": "Tenis oynarım. / Londra'da yaşarlar.",
+        "negativeTr": "Biz et yemeyiz.",
+        "questionTr": "İngilizce konuşur musun?"
       },
       {
         "subject": "He / She / It",
@@ -294,7 +316,10 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "positive": "V1 + (-s / -es / -ies) ➔ He works hard. / She watches TV.",
         "negative": "doesn't + V1 (Fiil YALIN) ➔ He doesn't smoke.",
         "question": "Does + Özne + V1? ➔ Does she live alone?",
-        "highlight": "Olumsuzda ve soruda 'doesn't/does' geldiğinde fiildeki -s takısı DÜŞER!"
+        "highlight": "Olumsuzda ve soruda 'doesn't/does' geldiğinde fiildeki -s takısı DÜŞER!",
+        "positiveTr": "O çok çalışır. / O televizyon izler.",
+        "negativeTr": "O sigara içmez.",
+        "questionTr": "O yalnız mı yaşıyor?"
       }
     ],
     "formulas": [
@@ -302,19 +327,22 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "title": "Olumlu Cümle Formülü (+)",
         "pattern": "Özne + V1 (veya He/She/It için V1 + -s/-es/-ies) + Nesne + Zaman",
         "explanation": "Üçüncü tekil şahıslarda fiile mutlaka -s takısı eklenir.",
-        "sample": "I wake up at 7 AM. / She wakes up at 7 AM."
+        "sample": "I wake up at 7 AM. / She wakes up at 7 AM.",
+        "sampleTr": "Sabah 7'de uyanırım. / O sabah 7'de uyanır."
       },
       {
         "title": "Olumsuz Cümle Formülü (-)",
         "pattern": "Özne + don't / doesn't + V1 (Fiil Daima YALIN)",
         "explanation": "Doesn't kullanıldığında fiildeki -s kalkar.",
-        "sample": "We don't work on Sundays. / He doesn't eat fish."
+        "sample": "We don't work on Sundays. / He doesn't eat fish.",
+        "sampleTr": "Pazar günleri çalışmayız. / O balık yemez."
       },
       {
         "title": "Soru Cümlesi Formülü (?)",
         "pattern": "Do / Does + Özne + V1 (Fiil YALIN) + ?",
         "explanation": "Do veya Does başa gelir, fiil yalın kalır.",
-        "sample": "Do you play chess? / Does he speak Turkish?"
+        "sample": "Do you play chess? / Does he speak Turkish?",
+        "sampleTr": "Satranç oynar mısın? / O Türkçe konuşur mu?"
       }
     ],
     "keyRules": [
@@ -372,17 +400,20 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
       {
         "wrong": "She doesn't likes apples.",
         "correct": "She doesn't like apples.",
-        "reason": "'Doesn't' yardımcı fiili -s takısını üzerine almıştır; ana fiil yalın kalmalıdır."
+        "reason": "'Doesn't' yardımcı fiili -s takısını üzerine almıştır; ana fiil yalın kalmalıdır.",
+        "correctTr": "O elma sevmez."
       },
       {
         "wrong": "I am live in Izmir.",
         "correct": "I live in Izmir.",
-        "reason": "Geniş zamanda ana fiil (live) varken 'am/is/are' asla eklenmez."
+        "reason": "Geniş zamanda ana fiil (live) varken 'am/is/are' asla eklenmez.",
+        "correctTr": "İzmir'de yaşıyorum."
       },
       {
         "wrong": "He play football on Sundays.",
         "correct": "He plays football on Sundays.",
-        "reason": "3. tekil şahıs 'he' olumlu cümlede fiile -s takısı getirilmesini zorunlu kılar."
+        "reason": "3. tekil şahıs 'he' olumlu cümlede fiile -s takısı getirilmesini zorunlu kılar.",
+        "correctTr": "Pazar günleri futbol oynar."
       }
     ],
     "examples": [
@@ -487,7 +518,10 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "positive": "am + V-ing ➔ I am studying English right now.",
         "negative": "am not + V-ing ➔ I am not sleeping.",
         "question": "Am I + V-ing? ➔ Am I speaking too fast?",
-        "highlight": "I am reading ➔ I'm reading"
+        "highlight": "I am reading ➔ I'm reading",
+        "positiveTr": "Şu anda İngilizce çalışıyorum.",
+        "negativeTr": "Uyumuyorum.",
+        "questionTr": "Çok mu hızlı konuşuyorum?"
       },
       {
         "subject": "He / She / It (O)",
@@ -495,7 +529,10 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "positive": "is + V-ing ➔ He is driving. / It is raining.",
         "negative": "isn't + V-ing ➔ She isn't listening to music.",
         "question": "Is he/she/it + V-ing? ➔ Is the baby sleeping?",
-        "highlight": "Tekillerle daima 'is + V-ing' eşleşir."
+        "highlight": "Tekillerle daima 'is + V-ing' eşleşir.",
+        "positiveTr": "O araba sürüyor. / Yağmur yağıyor.",
+        "negativeTr": "O müzik dinlemiyor.",
+        "questionTr": "Bebek uyuyor mu?"
       },
       {
         "subject": "You / We / They (Sen/Siz, Biz, Onlar)",
@@ -503,7 +540,10 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "positive": "are + V-ing ➔ We are preparing dinner.",
         "negative": "aren't + V-ing ➔ They aren't working today.",
         "question": "Are you/we/they + V-ing? ➔ Are you watching TV?",
-        "highlight": "Çoğullarla daima 'are + V-ing' kullanılır."
+        "highlight": "Çoğullarla daima 'are + V-ing' kullanılır.",
+        "positiveTr": "Akşam yemeği hazırlıyoruz.",
+        "negativeTr": "Bugün çalışmıyorlar.",
+        "questionTr": "Televizyon mu izliyorsunuz?"
       }
     ],
     "formulas": [
@@ -511,19 +551,22 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "title": "Olumlu Cümle (+)",
         "pattern": "Özne + am / is / are + Fiil-ing (V-ing) + Nesne",
         "explanation": "Şu an yapılmakta olan eylemi bildirir.",
-        "sample": "I am writing an email. / They are playing tennis."
+        "sample": "I am writing an email. / They are playing tennis.",
+        "sampleTr": "Bir e-posta yazıyorum. / Tenis oynuyorlar."
       },
       {
         "title": "Olumsuz Cümle (-)",
         "pattern": "Özne + am not / isn't / aren't + Fiil-ing",
         "explanation": "Şu an yapılmayan eylemleri anlatır.",
-        "sample": "He isn't sleeping. / We aren't watching TV."
+        "sample": "He isn't sleeping. / We aren't watching TV.",
+        "sampleTr": "O uyumuyor. / Televizyon izlemiyoruz."
       },
       {
         "title": "Soru Cümlesi (?)",
         "pattern": "Am / Is / Are + Özne + Fiil-ing + ?",
         "explanation": "Şu an yapılan bir eylemi sorar.",
-        "sample": "Are you listening to me? / Is it raining?"
+        "sample": "Are you listening to me? / Is it raining?",
+        "sampleTr": "Beni dinliyor musun? / Yağmur yağıyor mu?"
       }
     ],
     "keyRules": [
@@ -556,12 +599,14 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
       {
         "wrong": "I am wanting a cup of coffee.",
         "correct": "I want a cup of coffee.",
-        "reason": "'Want' durum fiilidir (stative verb), istemek hissi -ing eki alamaz."
+        "reason": "'Want' durum fiilidir (stative verb), istemek hissi -ing eki alamaz.",
+        "correctTr": "Bir fincan kahve istiyorum."
       },
       {
         "wrong": "She watching television now.",
         "correct": "She is watching television now.",
-        "reason": "'To be' (is) yardımcı fiili unutulmamalıdır; sadece -ing tek başına yüklem oluşturmaz."
+        "reason": "'To be' (is) yardımcı fiili unutulmamalıdır; sadece -ing tek başına yüklem oluşturmaz.",
+        "correctTr": "O şu an televizyon izliyor."
       }
     ],
     "examples": [
@@ -666,7 +711,10 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "positive": "have got ('ve got) ➔ I've got a laptop.",
         "negative": "haven't got ➔ We haven't got enough time.",
         "question": "Have + Özne + got? ➔ Have you got a pen?",
-        "highlight": "Kısaltma: 've got (I've got, they've got)"
+        "highlight": "Kısaltma: 've got (I've got, they've got)",
+        "positiveTr": "Bir dizüstü bilgisayarım var.",
+        "negativeTr": "Yeterli vaktimiz yok.",
+        "questionTr": "Kalemin var mı?"
       },
       {
         "subject": "He / She / It",
@@ -674,7 +722,10 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "positive": "has got ('s got) ➔ She's got blue eyes.",
         "negative": "hasn't got ➔ He hasn't got a car.",
         "question": "Has + Özne + got? ➔ Has she got a sister?",
-        "highlight": "Kısaltma: 's got (He's got, she's got)"
+        "highlight": "Kısaltma: 's got (He's got, she's got)",
+        "positiveTr": "Onun mavi gözleri var.",
+        "negativeTr": "Onun arabası yok.",
+        "questionTr": "Onun kız kardeşi var mı?"
       }
     ],
     "formulas": [
@@ -682,19 +733,22 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "title": "Olumlu Cümle (+)",
         "pattern": "Özne + have got / has got + Nesne / Nitelik",
         "explanation": "Sahiplik, aile fertleri ve fiziksel özellikleri bildirir.",
-        "sample": "I have got a bicycle. / She has got curly hair."
+        "sample": "I have got a bicycle. / She has got curly hair.",
+        "sampleTr": "Bir bisikletim var. / Onun kıvırcık saçları var."
       },
       {
         "title": "Olumsuz Cümle (-)",
         "pattern": "Özne + haven't got / hasn't got + Nesne",
         "explanation": "Sahip olunmayan durumları anlatır.",
-        "sample": "He hasn't got any money. / We haven't got time."
+        "sample": "He hasn't got any money. / We haven't got time.",
+        "sampleTr": "Onun hiç parası yok. / Vaktimiz yok."
       },
       {
         "title": "Soru Cümlesi (?)",
         "pattern": "Have / Has + Özne + got + Nesne + ?",
         "explanation": "Sahiplik sorgular.",
-        "sample": "Have you got a car? / Has he got a sister?"
+        "sample": "Have you got a car? / Has he got a sister?",
+        "sampleTr": "Araban var mı? / Onun kız kardeşi var mı?"
       }
     ],
     "keyRules": [
@@ -706,12 +760,14 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
       {
         "wrong": "He haven't got a passport.",
         "correct": "He hasn't got a passport.",
-        "reason": "'He' öznesiyle daima 'hasn't got' kullanılır."
+        "reason": "'He' öznesiyle daima 'hasn't got' kullanılır.",
+        "correctTr": "Onun pasaportu yok."
       },
       {
         "wrong": "Do you have got a pencil?",
         "correct": "Have you got a pencil? / Do you have a pencil?",
-        "reason": "'Do' ile 'got' aynı soru kalıbında karıştırılmamalıdır."
+        "reason": "'Do' ile 'got' aynı soru kalıbında karıştırılmamalıdır.",
+        "correctTr": "Kalemin var mı?"
       }
     ],
     "examples": [
@@ -816,7 +872,10 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "positive": "There is (There's) ➔ There is a book on the desk. / There is milk.",
         "negative": "There isn't ➔ There isn't any milk in the fridge.",
         "question": "Is there ...? ➔ Is there a bank near here?",
-        "highlight": "Sayılamayan sıvılar, para, zaman ile tekil muamelesi yapılır."
+        "highlight": "Sayılamayan sıvılar, para, zaman ile tekil muamelesi yapılır.",
+        "positiveTr": "Masanın üzerinde bir kitap var. / Süt var.",
+        "negativeTr": "Buzdolabında hiç süt yok.",
+        "questionTr": "Buralarda yakın bir banka var mı?"
       },
       {
         "subject": "Çoğul İsimler",
@@ -824,7 +883,10 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "positive": "There are ➔ There are three apples in the basket.",
         "negative": "There aren't ➔ There aren't any chairs in the room.",
         "question": "Are there ...? ➔ Are there any tickets left?",
-        "highlight": "Çoğul sayılabilen nesnelerle daima 'There are' kullanılır."
+        "highlight": "Çoğul sayılabilen nesnelerle daima 'There are' kullanılır.",
+        "positiveTr": "Sepette üç elma var.",
+        "negativeTr": "Odada hiç sandalye yok.",
+        "questionTr": "Hiç bilet kaldı mı?"
       }
     ],
     "formulas": [
@@ -832,7 +894,8 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "title": "Some & Any Altın Kuralı",
         "pattern": "Olumlu Cümlelerde: SOME (Biraz / Birkaç)\nOlumsuz ve Sorularda: ANY (Hiç)",
         "explanation": "Some olumlu cümlelerde; Any ise olumsuz ve soru cümlelerinde yer alır.",
-        "sample": "There is some cheese. / There isn't any water. / Are there any apples?"
+        "sample": "There is some cheese. / There isn't any water. / Are there any apples?",
+        "sampleTr": "Biraz peynir var. / Hiç su yok. / Hiç elma var mı?"
       }
     ],
     "keyRules": [
@@ -843,12 +906,14 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
       {
         "wrong": "There are many waters in the bottle.",
         "correct": "There is a lot of water in the bottle.",
-        "reason": "Su sayılamaz, çoğul yapılamaz ve 'There are' ile kullanılmaz."
+        "reason": "Su sayılamaz, çoğul yapılamaz ve 'There are' ile kullanılmaz.",
+        "correctTr": "Şişede çok su var."
       },
       {
         "wrong": "Is there some chairs in the kitchen?",
         "correct": "Are there any chairs in the kitchen?",
-        "reason": "Sandalyeler çoğul olduğu için 'Are there' ve sorularda 'any' gereklidir."
+        "reason": "Sandalyeler çoğul olduğu için 'Are there' ve sorularda 'any' gereklidir.",
+        "correctTr": "Mutfakta hiç sandalye var mı?"
       }
     ],
     "examples": [
@@ -925,7 +990,10 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "positive": "can + V1 (Yalın) ➔ He can swim. / I can speak Italian.",
         "negative": "cannot / can't + V1 ➔ She can't drive.",
         "question": "Can + Özne + V1? ➔ Can you help me, please?",
-        "highlight": "Özneye göre -s, -ed veya başka hiçbir takı almaz!"
+        "highlight": "Özneye göre -s, -ed veya başka hiçbir takı almaz!",
+        "positiveTr": "O yüzebilir. / İtalyanca konuşabilirim.",
+        "negativeTr": "O araba süremez.",
+        "questionTr": "Bana yardım edebilir misiniz, lütfen?"
       }
     ],
     "formulas": [
@@ -933,7 +1001,8 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "title": "Genel Formül",
         "pattern": "Özne + can / can't + V1 (Fiilin EN YALIN HALİ)",
         "explanation": "Fiil asla 'to' almaz. 'I can to run' denmez, 'I can run' denir.",
-        "sample": "I can swim. / She can't cook."
+        "sample": "I can swim. / She can't cook.",
+        "sampleTr": "Yüzebilirim. / O yemek pişiremez."
       }
     ],
     "keyRules": [
@@ -945,12 +1014,14 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
       {
         "wrong": "She cans speak three languages.",
         "correct": "She can speak three languages.",
-        "reason": "'Can' modal fiili 3. tekil şahıslarda bile asla -s takısı almaz."
+        "reason": "'Can' modal fiili 3. tekil şahıslarda bile asla -s takısı almaz.",
+        "correctTr": "O üç dil konuşabilir."
       },
       {
         "wrong": "I can to swim very well.",
         "correct": "I can swim very well.",
-        "reason": "Can'den sonra fiil 'to' almadan doğrudan yalın haliyle kullanılır."
+        "reason": "Can'den sonra fiil 'to' almadan doğrudan yalın haliyle kullanılır.",
+        "correctTr": "Çok iyi yüzebilirim."
       }
     ],
     "examples": [
@@ -1055,7 +1126,10 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "positive": "V2 (Fiilin 2. Hali) ➔ I visited my uncle. / She bought a car.",
         "negative": "didn't + V1 (Fiil YALIN) ➔ We didn't go out.",
         "question": "Did + Özne + V1 (YALIN)? ➔ Did you see that movie?",
-        "highlight": "Olumsuzda (didn't) ve soruda (did) fiil YALIN (V1) haline döner!"
+        "highlight": "Olumsuzda (didn't) ve soruda (did) fiil YALIN (V1) haline döner!",
+        "positiveTr": "Amcamı ziyaret ettim. / O bir araba aldı.",
+        "negativeTr": "Dışarı çıkmadık.",
+        "questionTr": "O filmi gördün mü?"
       },
       {
         "subject": "To Be Fiilinin Geçmiş Hali (Was / Were)",
@@ -1063,7 +1137,10 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "positive": "I / He / She / It ➔ was | You / We / They ➔ were",
         "negative": "wasn't | weren't ➔ He wasn't at home.",
         "question": "Was / Were + Özne? ➔ Were you tired yesterday?",
-        "highlight": "Cümlede was/were varsa asla 'did' yardımcı fiili kullanılmaz!"
+        "highlight": "Cümlede was/were varsa asla 'did' yardımcı fiili kullanılmaz!",
+        "positiveTr": "Evdeydim. / Yorgundular.",
+        "negativeTr": "O evde değildi.",
+        "questionTr": "Dün yorgun muydun?"
       }
     ],
     "formulas": [
@@ -1071,7 +1148,8 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "title": "Düzenli Fiillerde -ed Ekleme Kuralları",
         "pattern": "• Genel: walk ➔ walked, clean ➔ cleaned\n• 'e' ile biten: live ➔ lived, arrive ➔ arrived\n• Sessiz + y: study ➔ studied, cry ➔ cried\n• Tek sesli + sessiz: stop ➔ stopped, plan ➔ planned",
         "explanation": "Telaffuz kuralı: -ed takısı ses durumuna göre /t/, /d/ ya da /ɪd/ şeklinde sesletilir.",
-        "sample": "I played football. / She studied hard."
+        "sample": "I played football. / She studied hard.",
+        "sampleTr": "Futbol oynadım. / O çok çalıştı."
       }
     ],
     "keyRules": [
@@ -1165,17 +1243,20 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
       {
         "wrong": "I didn't went to work yesterday.",
         "correct": "I didn't go to work yesterday.",
-        "reason": "'Didn't' zaten geçmişi yüklendiği için fiil V2 (went) değil, yalın (go) olmalıdır."
+        "reason": "'Didn't' zaten geçmişi yüklendiği için fiil V2 (went) değil, yalın (go) olmalıdır.",
+        "correctTr": "Dün işe gitmedim."
       },
       {
         "wrong": "Did you saw that car crash?",
         "correct": "Did you see that car crash?",
-        "reason": "'Did' ile başlayan sorularda fiil mutlaka yalın (see) kalmalıdır."
+        "reason": "'Did' ile başlayan sorularda fiil mutlaka yalın (see) kalmalıdır.",
+        "correctTr": "O araba kazasını gördün mü?"
       },
       {
         "wrong": "Were you play football yesterday?",
         "correct": "Did you play football yesterday?",
-        "reason": "Ana fiil (play) varken soru 'were' ile değil 'Did' ile kurulur."
+        "reason": "Ana fiil (play) varken soru 'were' ile değil 'Did' ile kurulur.",
+        "correctTr": "Dün futbol oynadın mı?"
       }
     ],
     "examples": [
@@ -1280,7 +1361,10 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "positive": "was + V-ing ➔ I was cooking dinner. / She was studying.",
         "negative": "wasn't + V-ing ➔ He wasn't sleeping when I called.",
         "question": "Was + Özne + V-ing? ➔ Was it raining when you left?",
-        "highlight": "Tekillerle 'was + V-ing' kullanılır."
+        "highlight": "Tekillerle 'was + V-ing' kullanılır.",
+        "positiveTr": "Akşam yemeği yapıyordum. / O ders çalışıyordu.",
+        "negativeTr": "Aradığımda o uyumuyordu.",
+        "questionTr": "Çıktığında yağmur yağıyor muydu?"
       },
       {
         "subject": "You / We / They",
@@ -1288,7 +1372,10 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "positive": "were + V-ing ➔ We were walking in the park.",
         "negative": "weren't + V-ing ➔ They weren't listening to the teacher.",
         "question": "Were + Özne + V-ing? ➔ Were you waiting for me?",
-        "highlight": "Çoğullarla 'were + V-ing' kullanılır."
+        "highlight": "Çoğullarla 'were + V-ing' kullanılır.",
+        "positiveTr": "Parkta yürüyorduk.",
+        "negativeTr": "Öğretmeni dinlemiyorlardı.",
+        "questionTr": "Beni mi bekliyordun?"
       }
     ],
     "formulas": [
@@ -1296,7 +1383,8 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "title": "When & While Altın Formülü",
         "pattern": "• While + Past Continuous (Uzun Eylem), ... Past Simple (Kısa Eylem)\n  Örnek: While I was driving, my phone rang.\n• When + Past Simple (Kısa Eylem), ... Past Continuous (Uzun Eylem)\n  Örnek: When the lights went out, we were watching a movie.",
         "explanation": "While '-iken' anlamında devam eden uzun eylemi, When '-dığında' anlamında kesintiye uğratan ani olayı bağlar.",
-        "sample": "While he was reading, the door bell rang."
+        "sample": "While he was reading, the door bell rang.",
+        "sampleTr": "O kitap okurken kapı zili çaldı."
       }
     ],
     "keyRules": [
@@ -1307,7 +1395,8 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
       {
         "wrong": "When I was walking home, it was starting to rain.",
         "correct": "When I was walking home, it started to rain.",
-        "reason": "Yağmurun başlaması ani bir eylemdir; Past Simple (started) gerektirir."
+        "reason": "Yağmurun başlaması ani bir eylemdir; Past Simple (started) gerektirir.",
+        "correctTr": "Eve doğru yürürken yağmur yağmaya başladı."
       }
     ],
     "examples": [
@@ -1412,7 +1501,10 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "positive": "am/is/are + going to + V1 ➔ I am going to buy a new laptop.",
         "negative": "am not / isn't / aren't + going to + V1 ➔ We aren't going to travel.",
         "question": "Am/Is/Are + Özne + going to + V1? ➔ Are you going to invite him?",
-        "highlight": "Karar geçmişte verilmiş, plan hazır."
+        "highlight": "Karar geçmişte verilmiş, plan hazır.",
+        "positiveTr": "Yeni bir dizüstü bilgisayar satın alacağım.",
+        "negativeTr": "Seyahat etmeyeceğiz.",
+        "questionTr": "Onu davet edecek misin?"
       },
       {
         "subject": "Will (Anlık Karar, Söz & Tahmin)",
@@ -1420,7 +1512,10 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "positive": "will ('ll) + V1 ➔ The phone is ringing. I'll answer it!",
         "negative": "will not (won't) + V1 ➔ I won't tell your secret.",
         "question": "Will + Özne + V1? ➔ Will you come with us tomorrow?",
-        "highlight": "Tüm öznelerde 'will' aynıdır, asla değişmez."
+        "highlight": "Tüm öznelerde 'will' aynıdır, asla değişmez.",
+        "positiveTr": "Telefon çalıyor. Ben bakarım!",
+        "negativeTr": "Sırrını kimseye söylemeyeceğim.",
+        "questionTr": "Yarın bizimle gelir misin?"
       }
     ],
     "formulas": [
@@ -1428,7 +1523,8 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "title": "Karşılaştırma Mantığı",
         "pattern": "• BE GOING TO: Önceden plan + Gözle görülür fiziksel kanıt (Look at those black clouds! It is going to rain).\n• WILL: Konuşma anında anlık karar + Tahmin (I think / I hope / I believe) + Söz verme.",
         "explanation": "Restoranda garsona sipariş verirken 'I will have a soup, please' (anlık karar).",
-        "sample": "I am going to visit Paris next summer. / I will answer the phone."
+        "sample": "I am going to visit Paris next summer. / I will answer the phone.",
+        "sampleTr": "Gelecek yaz Paris'i ziyaret edeceğim. / Telefona ben bakarım."
       }
     ],
     "keyRules": [
@@ -1439,12 +1535,14 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
       {
         "wrong": "I am going to will help you.",
         "correct": "I will help you. / I am going to help you.",
-        "reason": "İki gelecek zaman yapısı asla aynı cümlede yan yana getirilemez."
+        "reason": "İki gelecek zaman yapısı asla aynı cümlede yan yana getirilemez.",
+        "correctTr": "Sana yardım edeceğim."
       },
       {
         "wrong": "Look at the time! We will be late.",
         "correct": "Look at the time! We are going to be late.",
-        "reason": "Saate bakıp kanıt gördüğümüz için 'going to' daha uygundur."
+        "reason": "Saate bakıp kanıt gördüğümüz için 'going to' daha uygundur.",
+        "correctTr": "Saate bak! Geç kalacağız."
       }
     ],
     "examples": [
@@ -1549,7 +1647,10 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "positive": "Comparative: Sıfat + -er + than ➔ faster than, taller than",
         "negative": "Superlative: the + Sıfat + -est ➔ the fastest, the tallest",
         "question": "Eşitlik (As ... As): as + Sıfat + as ➔ as tall as me",
-        "highlight": "'y' ile biten 2 heceliler de bu kurala uyar: easy ➔ easier than"
+        "highlight": "'y' ile biten 2 heceliler de bu kurala uyar: easy ➔ easier than",
+        "positiveTr": "Daha hızlı, daha uzun",
+        "negativeTr": "En hızlı, en uzun",
+        "questionTr": "Benim kadar uzun"
       },
       {
         "subject": "Uzun Sıfatlar (2+ Hece)",
@@ -1557,7 +1658,10 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "positive": "Comparative: more + Sıfat + than ➔ more expensive than",
         "negative": "Superlative: the most + Sıfat ➔ the most expensive",
         "question": "Daha az: less + Sıfat + than ➔ less expensive than",
-        "highlight": "Uzun sıfatların sonuna asla -er veya -est eklenmez!"
+        "highlight": "Uzun sıfatların sonuna asla -er veya -est eklenmez!",
+        "positiveTr": "Daha pahalı",
+        "negativeTr": "En pahalı",
+        "questionTr": "Daha az pahalı"
       }
     ],
     "formulas": [
@@ -1565,7 +1669,8 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "title": "Özel Düzensiz Sıfatlar (Ezberlenmeli)",
         "pattern": "• good ➔ better than ➔ the best (iyi - daha iyi - en iyi)\n• bad ➔ worse than ➔ the worst (kötü - daha kötü - en kötü)\n• far ➔ further/farther than ➔ the furthest (uzak - daha uzak - en uzak)\n• little ➔ less than ➔ the least (az - daha az - en az)\n• much/many ➔ more than ➔ the most (çok - daha çok - en çok)",
         "explanation": "Bu sıfatlar kural dışıdır ve tamamen şekil değiştirir.",
-        "sample": "This car is better than that one. / It is the best hotel."
+        "sample": "This car is better than that one. / It is the best hotel.",
+        "sampleTr": "Bu araba diğerinden daha iyidir. / Burası en iyi oteldir."
       }
     ],
     "keyRules": [
@@ -1577,12 +1682,14 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
       {
         "wrong": "This phone is more cheaper than mine.",
         "correct": "This phone is cheaper than mine.",
-        "reason": "'Cheap' tek hecelidir; hem 'more' hem '-er' takısı aynı anda kullanılamaz."
+        "reason": "'Cheap' tek hecelidir; hem 'more' hem '-er' takısı aynı anda kullanılamaz.",
+        "correctTr": "Bu telefon benimkinden daha ucuz."
       },
       {
         "wrong": "He is the most good player in the team.",
         "correct": "He is the best player in the team.",
-        "reason": "'Good' düzensiz bir sıfattır; 'the best' olmalıdır."
+        "reason": "'Good' düzensiz bir sıfattır; 'the best' olmalıdır.",
+        "correctTr": "O takımdaki en iyi oyuncudur."
       }
     ],
     "examples": [
@@ -1659,7 +1766,10 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "positive": "must + V1 ➔ I must study harder. (Kişisel karar)",
         "negative": "mustn't + V1 ➔ You mustn't smoke here! (Kesin YASAK)",
         "question": "Must I ...? ➔ Must we leave now?",
-        "highlight": "Mustn't kesin yasak bildirir (Yasaklanmıştır)."
+        "highlight": "Mustn't kesin yasak bildirir (Yasaklanmıştır).",
+        "positiveTr": "Daha sıkı çalışmalıyım (Kişisel karar).",
+        "negativeTr": "Burada sigara içemezsiniz! (Yasak)",
+        "questionTr": "Şimdi çıkmak zorunda mıyız?"
       },
       {
         "subject": "Have to / Don't have to",
@@ -1667,7 +1777,10 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "positive": "have to / has to + V1 ➔ Doctors have to wear uniforms.",
         "negative": "don't have to + V1 ➔ You don't have to wake up early tomorrow.",
         "question": "Do you have to ...? ➔ Do I have to pay now?",
-        "highlight": "'Don't have to' = Zorunda değilsin, serbestsin (Yasak değildir!)."
+        "highlight": "'Don't have to' = Zorunda değilsin, serbestsin (Yasak değildir!).",
+        "positiveTr": "Doktorlar üniforma giymek zorundadır.",
+        "negativeTr": "Yarın erken uyanmak zorunda değilsin.",
+        "questionTr": "Şimdi ödemek zorunda mıyım?"
       },
       {
         "subject": "Should & Shouldn't",
@@ -1675,7 +1788,10 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "positive": "should + V1 ➔ You should drink more water.",
         "negative": "shouldn't + V1 ➔ You shouldn't stay up so late.",
         "question": "Should I ...? ➔ Should I accept this job offer?",
-        "highlight": "Nezaket ve tavsiye: 'Bunu yapman iyi olur.'"
+        "highlight": "Nezaket ve tavsiye: 'Bunu yapman iyi olur.'",
+        "positiveTr": "Daha çok su içmelisin (Tavsiye).",
+        "negativeTr": "Bu kadar geç saate kadar ayakta kalmamalısın.",
+        "questionTr": "Bu iş teklifini kabul etmeli miyim?"
       }
     ],
     "formulas": [
@@ -1683,7 +1799,8 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "title": "Büyük Fark: Mustn't vs. Don't have to",
         "pattern": "• You MUSTN'T park here = Burada park etmek KESİNLİKLE YASAKTIR (Ceza yersin).\n• You DON'T HAVE TO pay = Ödemek zorunda değilsin, istersen ödersin (Gerek yok).",
         "explanation": "En çok karıştırılan iki anlam ayrımıdır.",
-        "sample": "You mustn't touch it. / You don't have to come."
+        "sample": "You mustn't touch it. / You don't have to come.",
+        "sampleTr": "Ona dokunmamalısın (Yasak). / Gelmek zorunda değilsin (Serbest)."
       }
     ],
     "keyRules": [
@@ -1694,12 +1811,14 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
       {
         "wrong": "You must to wear a seatbelt.",
         "correct": "You must wear a seatbelt.",
-        "reason": "Must'tan sonra asla 'to' gelmez; doğrudan yalın fiil kullanılır."
+        "reason": "Must'tan sonra asla 'to' gelmez; doğrudan yalın fiil kullanılır.",
+        "correctTr": "Emniyet kemeri takmalısın."
       },
       {
         "wrong": "Tomorrow is Sunday, so I mustn't go to school.",
         "correct": "Tomorrow is Sunday, so I don't have to go to school.",
-        "reason": "Pazar günü okula gitmek 'yasak' değil, 'gerek yoktur'; don't have to denmelidir."
+        "reason": "Pazar günü okula gitmek 'yasak' değil, 'gerek yoktur'; don't have to denmelidir.",
+        "correctTr": "Yarın pazar, bu yüzden okula gitmek zorunda değilim."
       }
     ],
     "examples": [
@@ -1804,7 +1923,10 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "positive": "have ('ve) + V3 ➔ I have lived here for 5 years.",
         "negative": "haven't + V3 ➔ They haven't finished the project yet.",
         "question": "Have + Özne + V3? ➔ Have you ever seen a shooting star?",
-        "highlight": "Düzenli fiiller -ed alır; düzensizlerin 3. hali (V3) kullanılır."
+        "highlight": "Düzenli fiiller -ed alır; düzensizlerin 3. hali (V3) kullanılır.",
+        "positiveTr": "5 yıldır burada yaşıyorum.",
+        "negativeTr": "Projeyi henüz bitirmediler.",
+        "questionTr": "Daha önce hiç kayan bir yıldız gördün mü?"
       },
       {
         "subject": "He / She / It",
@@ -1812,7 +1934,10 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "positive": "has ('s) + V3 ➔ She has visited ten different countries.",
         "negative": "hasn't + V3 ➔ He hasn't replied to my email yet.",
         "question": "Has + Özne + V3? ➔ Has the movie started?",
-        "highlight": "Tekillerde 'has + V3' eşleşir."
+        "highlight": "Tekillerde 'has + V3' eşleşir.",
+        "positiveTr": "O on farklı ülkeyi ziyaret etti.",
+        "negativeTr": "E-postama henüz yanıt vermedi.",
+        "questionTr": "Film başladı mı?"
       }
     ],
     "formulas": [
@@ -1820,7 +1945,8 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "title": "Önemli Zaman Belirteçleri (Key Words)",
         "pattern": "• Ever: Hayatında hiç mi? (Sorularda: Have you ever been to Rome?)\n• Never: Asla / Hayatımda hiç (I have never tasted sushi).\n• Just: Az önce / Henüz (I have just sent the message).\n• Already: Çoktan / Zaten beklenenden önce (She has already left).\n• Yet: Henüz değil (Cümle sonunda: I haven't seen it yet).\n• Since: -den beri (Başlangıç noktası: since 2015, since Monday).\n• For: -dır/-dir (Süreç: for 10 years, for two hours).",
         "explanation": "Bu zarflar cümlenin neresinde yer aldıklarına göre anlamı şekillendirir.",
-        "sample": "I have just eaten. / She hasn't finished yet."
+        "sample": "I have just eaten. / She hasn't finished yet.",
+        "sampleTr": "Az önce yedim. / O henüz bitirmedi."
       }
     ],
     "keyRules": [
@@ -1854,12 +1980,14 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
       {
         "wrong": "I have seen him yesterday.",
         "correct": "I saw him yesterday.",
-        "reason": "'Yesterday' geçmişte tamamlanmış net bir zamandır; Present Perfect ile ASLA birleşmez."
+        "reason": "'Yesterday' geçmişte tamamlanmış net bir zamandır; Present Perfect ile ASLA birleşmez.",
+        "correctTr": "Onu dün gördüm."
       },
       {
         "wrong": "I live in this city since 2018.",
         "correct": "I have lived in this city since 2018.",
-        "reason": "Eğer geçmişten bugüne gelen bir süreç varsa Present Simple değil, Present Perfect kullanılır."
+        "reason": "Eğer geçmişten bugüne gelen bir süreç varsa Present Simple değil, Present Perfect kullanılır.",
+        "correctTr": "2018'den beri bu şehirde yaşıyorum."
       }
     ],
     "examples": [
@@ -1964,7 +2092,10 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "positive": "I lost my keys yesterday. ➔ Dün kaybettim (belki sonra buldum).",
         "negative": "Did you see John this morning? ➔ (Öğleden sonra konuşuluyorsa).",
         "question": "When did you arrive? ➔ Zamanı sorarken daima Past Simple.",
-        "highlight": "Zaman tamamen bitti ve kapandı."
+        "highlight": "Zaman tamamen bitti ve kapandı.",
+        "positiveTr": "Anahtarlarımı dün kaybettim (Geçmişte bitti).",
+        "negativeTr": "John'u bu sabah gördün mü? (Öğleden sonra konuşuluyor).",
+        "questionTr": "Ne zaman geldin?"
       },
       {
         "subject": "Present Perfect (Bugünle Bağlantılı Kapı)",
@@ -1972,7 +2103,10 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "positive": "I have lost my keys! ➔ Anahtarımı kaybettim (Şu an kapıda kaldım).",
         "negative": "Have you seen John this morning? ➔ (Sabah vakti hala sürüyorsa).",
         "question": "How long have you lived here? ➔ Ne zamandır buradasın (hala buradayım).",
-        "highlight": "Eylemin sonucu şimdiye yansıyor."
+        "highlight": "Eylemin sonucu şimdiye yansıyor.",
+        "positiveTr": "Anahtarlarımı kaybettim! (Şu an kapıda kaldım).",
+        "negativeTr": "John'u bu sabah gördün mü? (Sabah hala sürüyor).",
+        "questionTr": "Ne zamandır burada yaşıyorsun? (Hala buradayım)."
       }
     ],
     "formulas": [
@@ -1980,7 +2114,8 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "title": "Dedektif Kuralı: 'When' Sorusu",
         "pattern": "'When' ile soru soruyorsanız istisnasız PAST SIMPLE kullanmalısınız!\n• When did you buy this car? (DOĞRU)\n• When have you bought this car? (YANLIŞ)",
         "explanation": "Çünkü 'when' spesifik bir geçmiş anı hedefler.",
-        "sample": "When did you graduate? / I have graduated."
+        "sample": "When did you graduate? / I have graduated.",
+        "sampleTr": "Ne zaman mezun oldun? / Mezun oldum."
       }
     ],
     "keyRules": [
@@ -1991,7 +2126,8 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
       {
         "wrong": "When have you graduated from university?",
         "correct": "When did you graduate from university?",
-        "reason": "'When' sorusu belirli bir geçmiş tarihi sorduğu için daima Past Simple ister."
+        "reason": "'When' sorusu belirli bir geçmiş tarihi sorduğu için daima Past Simple ister.",
+        "correctTr": "Üniversiteden ne zaman mezun oldun?"
       }
     ],
     "examples": [
@@ -2068,7 +2204,10 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "positive": "English is spoken all over the world.",
         "negative": "These rooms aren't cleaned every day.",
         "question": "Is the mail delivered on Saturdays?",
-        "highlight": "Genel gerçekler ve rutin pasif eylemler."
+        "highlight": "Genel gerçekler ve rutin pasif eylemler.",
+        "positiveTr": "İngilizce tüm dünyada konuşulur.",
+        "negativeTr": "Bu odalar her gün temizlenmez.",
+        "questionTr": "Posta cumartesi günleri teslim edilir mi?"
       },
       {
         "subject": "Geçmiş Zaman Pasif (Past Simple)",
@@ -2076,7 +2215,10 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "positive": "The telephone was invented by Alexander Graham Bell.",
         "negative": "The stolen car wasn't found.",
         "question": "Were all the documents signed yesterday?",
-        "highlight": "Geçmişte tamamlanmış pasif olaylar."
+        "highlight": "Geçmişte tamamlanmış pasif olaylar.",
+        "positiveTr": "Telefon Alexander Graham Bell tarafından icat edildi.",
+        "negativeTr": "Çalınan araba bulunamadı.",
+        "questionTr": "Bütün evraklar dün imzalandı mı?"
       },
       {
         "subject": "Gelecek & Modals Pasif",
@@ -2084,7 +2226,10 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "positive": "The new hospital will be opened next month.",
         "negative": "Seat belts must be worn at all times.",
         "question": "Can this problem be solved quickly?",
-        "highlight": "Modal fiillerde 'modal + be + V3' gelir."
+        "highlight": "Modal fiillerde 'modal + be + V3' gelir.",
+        "positiveTr": "Yeni hastane gelecek ay açılacak.",
+        "negativeTr": "Emniyet kemerleri her zaman takılmalıdır.",
+        "questionTr": "Bu sorun hızlıca çözülebilir mi?"
       }
     ],
     "formulas": [
@@ -2092,7 +2237,8 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "title": "Evrensel Pasif Formülü",
         "pattern": "Nesne (Yeni Özne) + TO BE (İlgili Zamana Göre) + V3 (Past Participle)",
         "explanation": "Eğer işi yapanı özellikle eklemek istiyorsak cümlenin sonuna 'by + kişi' ekleriz: '...written by Shakespeare.'",
-        "sample": "The letter was sent yesterday by courier."
+        "sample": "The letter was sent yesterday by courier.",
+        "sampleTr": "Mektup dün kurye tarafından gönderildi."
       }
     ],
     "keyRules": [
@@ -2103,7 +2249,8 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
       {
         "wrong": "The bridge built in 1973.",
         "correct": "The bridge was built in 1973.",
-        "reason": "Köprü kendi kendini inşa edemez! 'To be (was)' yardımcı fiili olmadan pasif kurulamaz."
+        "reason": "Köprü kendi kendini inşa edemez! 'To be (was)' yardımcı fiili olmadan pasif kurulamaz.",
+        "correctTr": "Köprü 1973 yılında inşa edildi."
       }
     ],
     "examples": [
@@ -2180,7 +2327,10 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "positive": "If + Present Simple, ... will + V1 ➔ If it rains, I will stay at home.",
         "negative": "If you don't study, you won't pass the exam.",
         "question": "What will you do if you miss the train?",
-        "highlight": "Şart gerçekleşirse sonuç kesinlikle mümkün."
+        "highlight": "Şart gerçekleşirse sonuç kesinlikle mümkün.",
+        "positiveTr": "Yağmur yağarsa evde kalacağım.",
+        "negativeTr": "Çalışmazsan sınavı geçemezsin.",
+        "questionTr": "Treni kaçırırsan ne yapacaksın?"
       },
       {
         "subject": "Type 2 (Şimdiki Hayali / Varsayımsal Koşul)",
@@ -2188,7 +2338,10 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "positive": "If + Past Simple, ... would + V1 ➔ If I had money, I would buy a boat.",
         "negative": "If he weren't so busy, he would join us.",
         "question": "If you won the lottery, where would you travel?",
-        "highlight": "Geçmiş zaman kullanılır ama anlam ŞİMDİKİ zamandır!"
+        "highlight": "Geçmiş zaman kullanılır ama anlam ŞİMDİKİ zamandır!",
+        "positiveTr": "Param olsaydı bir tekne satın alırdım.",
+        "negativeTr": "O bu kadar meşgul olmasaydı bize katılırdı.",
+        "questionTr": "Piyangoyu kazansaydın nereye seyahat ederdin?"
       }
     ],
     "formulas": [
@@ -2196,7 +2349,8 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "title": "Altın Kural: If Tarafına Asla Will Gelmez!",
         "pattern": "• If I will see him, I will tell him. ➔ YANLIŞ\n• If I see him, I will tell him. ➔ DOĞRU",
         "explanation": "'If' cümlesinin bulunduğu şart kısmına asla 'will' ya da 'would' konmaz.",
-        "sample": "If it snows, we will build a snowman."
+        "sample": "If it snows, we will build a snowman.",
+        "sampleTr": "Kar yağarsa kardan adam yapacağız."
       }
     ],
     "keyRules": [
@@ -2207,12 +2361,14 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
       {
         "wrong": "If I will have time tomorrow, I will call you.",
         "correct": "If I have time tomorrow, I will call you.",
-        "reason": "Şart yan cümleciğinde 'will' kullanılmaz, geniş zaman çekimi gerekir."
+        "reason": "Şart yan cümleciğinde 'will' kullanılmaz, geniş zaman çekimi gerekir.",
+        "correctTr": "Yarın vaktim olursa seni arayacağım."
       },
       {
         "wrong": "If I was you, I wouldn't buy that car.",
         "correct": "If I were you, I wouldn't buy that car.",
-        "reason": "Tavsiye ve hayali şart kalıbında 'were' tercih edilir."
+        "reason": "Tavsiye ve hayali şart kalıbında 'were' tercih edilir.",
+        "correctTr": "Senin yerinde olsaydım o arabayı almazdım."
       }
     ],
     "examples": [
@@ -2310,7 +2466,10 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "positive": "If + had + V3, ... would have + V3 ➔ If I had studied, I would have passed.",
         "negative": "If we hadn't missed the bus, we wouldn't have been late.",
         "question": "Would you have accepted the job if they had offered more?",
-        "highlight": "Olay geçmişte bitti, artık değiştirilmesi imkansız."
+        "highlight": "Olay geçmişte bitti, artık değiştirilmesi imkansız.",
+        "positiveTr": "Çalışmış olsaydım geçmiş olurdum.",
+        "negativeTr": "Otobüsü kaçırmamış olsaydık geç kalmazdık.",
+        "questionTr": "Daha fazla teklif etselerdi işi kabul eder miydin?"
       },
       {
         "subject": "Mixed Conditional (Karma Koşul)",
@@ -2318,7 +2477,10 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "positive": "If + had + V3, ... would + V1 (NOW) ➔ If I had taken the map, we wouldn't be lost now.",
         "negative": "If you hadn't spent all your salary, you would have money today.",
         "question": "If you hadn't moved to England, would you be happy now?",
-        "highlight": "Geçmişteki karar şimdiki durumu etkiliyor."
+        "highlight": "Geçmişteki karar şimdiki durumu etkiliyor.",
+        "positiveTr": "Haritayı almış olsaydım şimdi kaybolmuş olmazdık.",
+        "negativeTr": "Tüm maaşını harcamamış olsaydın bugün paran olurdu.",
+        "questionTr": "İngiltere'ye taşınmamış olsaydın şimdi mutlu olur muydun?"
       }
     ],
     "formulas": [
@@ -2326,7 +2488,8 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "title": "Devrik Yapı (Inversion - İleri Düzey)",
         "pattern": "'If' kaldırılarak cümle doğrudan 'Had' ile başlatılabilir:\n• Normal: If I had known the truth, I would have warned you.\n• Devrik (Inverted): Had I known the truth, I would have warned you.",
         "explanation": "Akademik sınavlarda (TOEFL, IELTS, YDS) yüksek puan getiren prestijli bir yapıdır.",
-        "sample": "Had we left earlier, we wouldn't have missed the flight."
+        "sample": "Had we left earlier, we wouldn't have missed the flight.",
+        "sampleTr": "Daha erken çıkmış olsaydık uçağı kaçırmamış olurduk."
       }
     ],
     "keyRules": [
@@ -2337,7 +2500,8 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
       {
         "wrong": "If I would have known your phone number, I would have called you.",
         "correct": "If I had known your phone number, I would have called you.",
-        "reason": "'If' yan cümlesine 'would have' getirilmez; kural gereği 'had + V3' kullanılır."
+        "reason": "'If' yan cümlesine 'would have' getirilmez; kural gereği 'had + V3' kullanılır.",
+        "correctTr": "Telefon numaranı bilmiş olsaydım seni arardım."
       }
     ],
     "examples": [
@@ -2414,7 +2578,10 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "positive": "He SAID THAT he was tired. (Kime söylendiği belirtilmez)",
         "negative": "He TOLD ME THAT he was tired. (Kime söylendiği ZORUNLUDUR: told me/him/us)",
         "question": "He ASKED ME if I was ready. (Soru aktarırken asked kullanılır)",
-        "highlight": "'He said me' ASLA denemez! Daima 'He told me' veya 'He said that'."
+        "highlight": "'He said me' ASLA denemez! Daima 'He told me' veya 'He said that'.",
+        "positiveTr": "Yorgun olduğunu söyledi.",
+        "negativeTr": "Bana yorgun olduğunu söyledi.",
+        "questionTr": "Bana hazır olup olmadığımı sordu."
       }
     ],
     "formulas": [
@@ -2422,7 +2589,8 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "title": "Zaman Kaydırma (Backshift) Kuralı",
         "pattern": "Doğrudan Söz (Direct) ➔ Aktarılan Söz (Reported)\n• Present Simple (I work) ➔ Past Simple (He worked)\n• Present Continuous (I am working) ➔ Past Continuous (He was working)\n• Past Simple (I worked) ➔ Past Perfect (He had worked)\n• Present Perfect (I have worked) ➔ Past Perfect (He had worked)\n• Will (I will work) ➔ Would (He would work)\n• Can (I can work) ➔ Could (He could work)",
         "explanation": "Söylenen an geçmişte kaldığı için her zaman bir derece eskiye gider.",
-        "sample": "\"I am tired\" ➔ She said she was tired."
+        "sample": "\"I am tired\" ➔ She said she was tired.",
+        "sampleTr": "'Yorgunum' ➔ Yorgun olduğunu söyledi."
       }
     ],
     "comparisonTable": {
@@ -2472,12 +2640,14 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
       {
         "wrong": "He said me that he was sick.",
         "correct": "He told me that he was sick. / He said that he was sick.",
-        "reason": "'Say' fiilinden sonra doğrudan şahıs zamiri (me) gelmez; nesne varsa 'tell' kullanılır."
+        "reason": "'Say' fiilinden sonra doğrudan şahıs zamiri (me) gelmez; nesne varsa 'tell' kullanılır.",
+        "correctTr": "Bana hasta olduğunu söyledi."
       },
       {
         "wrong": "She asked me where did I live.",
         "correct": "She asked me where I lived.",
-        "reason": "Aktarılan sorularda soru dizilimi kalkar, düz cümle dizilimine (Özne + Fiil) geçilir."
+        "reason": "Aktarılan sorularda soru dizilimi kalkar, düz cümle dizilimine (Özne + Fiil) geçilir.",
+        "correctTr": "Bana nerede yaşadığımı sordu."
       }
     ],
     "examples": [
@@ -2554,7 +2724,10 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "positive": "The woman who lives next door is an architect.",
         "negative": "The car that I bought last year is very reliable.",
         "question": "Virgül KULLANILMAZ. 'That' serbestçe kullanılabilir.",
-        "highlight": "Bu cümlecik çıkarılırsa hangi kadından bahsedildiği anlaşılmaz."
+        "highlight": "Bu cümlecik çıkarılırsa hangi kadından bahsedildiği anlaşılmaz.",
+        "positiveTr": "Yan dairede yaşayan kadın bir mimardır.",
+        "negativeTr": "Geçen yıl satın aldığım araba çok güvenilirdir.",
+        "questionTr": "Virgül kullanılmaz. 'That' serbesttir."
       },
       {
         "subject": "Non-Defining Relative Clause (Ekstra Bilgi)",
@@ -2562,7 +2735,10 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "positive": "My father, who is 62 years old, retired yesterday.",
         "negative": "Paris, which is the capital of France, is lovely.",
         "question": "MUTLAKA VİRGÜLLE AYRILIR. Asla 'THAT' KULLANILAMAZ!",
-        "highlight": "Bu cümlecik atılsa bile ana cümlenin anlamı bozulmaz."
+        "highlight": "Bu cümlecik atılsa bile ana cümlenin anlamı bozulmaz.",
+        "positiveTr": "62 yaşında olan babam dün emekli oldu.",
+        "negativeTr": "Fransa'nın başkenti olan Paris sevimlidir.",
+        "questionTr": "Virgülle ayrılır. 'That' kullanılamaz!"
       }
     ],
     "formulas": [
@@ -2570,7 +2746,8 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "title": "Bağlaç Rehberi (Relative Pronouns)",
         "pattern": "• WHO: İnsanlar için (The man who called you)\n• WHICH: Nesne ve hayvanlar için (The watch which was broken)\n• THAT: Hem insan hem nesne için (Yalnızca Defining cümlelerde!)\n• WHOSE: Sahiplik bildirir (The boy whose father is a pilot)\n• WHERE: Yer bildirir (The town where I was born)",
         "explanation": "Doğru bağlaç seçimi nitelenen kelimenin türüne bağlıdır.",
-        "sample": "The person who helped me was very kind."
+        "sample": "The person who helped me was very kind.",
+        "sampleTr": "Bana yardım eden kişi çok nazikti."
       }
     ],
     "keyRules": [
@@ -2581,7 +2758,8 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
       {
         "wrong": "My uncle, that lives in Canada, sent me a gift.",
         "correct": "My uncle, who lives in Canada, sent me a gift.",
-        "reason": "Virgülle ayrılan ekstra bilgi cümlelerinde 'that' asla kullanılmaz, 'who' zorunludur."
+        "reason": "Virgülle ayrılan ekstra bilgi cümlelerinde 'that' asla kullanılmaz, 'who' zorunludur.",
+        "correctTr": "Kanada'da yaşayan amcam bana bir hediye gönderdi."
       }
     ],
     "examples": [
@@ -2658,7 +2836,10 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "positive": "Wish + Past Simple ➔ I wish I lived in a warm country. (Şu an soğuktayım)",
         "negative": "I wish I had more free time to travel.",
         "question": "To be için 'were' tercih edilir: I wish I were taller.",
-        "highlight": "Geçmiş zaman kullanılır ama dilek ŞU ANA aittir."
+        "highlight": "Geçmiş zaman kullanılır ama dilek ŞU ANA aittir.",
+        "positiveTr": "Keşke sıcak bir ülkede yaşasaydım.",
+        "negativeTr": "Keşke seyahat edecek daha çok boş vaktim olsaydı.",
+        "questionTr": "Keşke daha uzun boylu olsaydım."
       },
       {
         "subject": "Geçmiş Zaman Pişmanlığı (Past Regret)",
@@ -2666,7 +2847,10 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "positive": "Wish + Past Perfect (had + V3) ➔ I wish I had studied harder. (Çalışmadım)",
         "negative": "If only we hadn't sold our old house!",
         "question": "Geçmişte yaşanmış bitmiş olayın pişmanlığıdır.",
-        "highlight": "had + V3 kalıbı kullanılır."
+        "highlight": "had + V3 kalıbı kullanılır.",
+        "positiveTr": "Keşke daha sıkı çalışmış olsaydım.",
+        "negativeTr": "Keşke eski evimizi satmamış olsaydık!",
+        "questionTr": "Geçmişe ait pişmanlık."
       },
       {
         "subject": "Şikayet & Değişim İsteği (Complaint)",
@@ -2674,7 +2858,10 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "positive": "Wish + would + V1 ➔ I wish you would stop interrupting me.",
         "negative": "I wish it would stop raining!",
         "question": "Kişi kendisi için 'I wish I would' KULLANAMAZ! Başkasına şikayettir.",
-        "highlight": "Birisinin rahatsız edici bir eylemi bırakmasını istemek."
+        "highlight": "Birisinin rahatsız edici bir eylemi bırakmasını istemek.",
+        "positiveTr": "Keşke sözümü kesmeyi bıraksan.",
+        "negativeTr": "Keşke yağmur dursa!",
+        "questionTr": "Başkasına yönelik şikayet."
       }
     ],
     "formulas": [
@@ -2682,7 +2869,8 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "title": "Özet Tablo",
         "pattern": "• Şu An İçin: I wish + Past Simple (I wish I knew the answer)\n• Geçmiş İçin: I wish + had + V3 (I wish I had accepted the offer)\n• Şikayet İçin: I wish + someone + would + V1 (I wish he would listen)",
         "explanation": "'If only' de aynı kurallarla çalışır, yalnızca duygusal şiddeti ve vurgusu daha yüksektir.",
-        "sample": "I wish I had more time. / If only I had known!"
+        "sample": "I wish I had more time. / If only I had known!",
+        "sampleTr": "Keşke daha çok vaktim olsaydı. / Keşke bilmiş olsaydım!"
       }
     ],
     "keyRules": [
@@ -2693,7 +2881,8 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
       {
         "wrong": "I wish I will see you tomorrow.",
         "correct": "I hope I will see you tomorrow. / I wish I could see you tomorrow.",
-        "reason": "Gelecekte olası bir temenni için 'wish + will' değil, 'hope' kullanılır."
+        "reason": "Gelecekte olası bir temenni için 'wish + will' değil, 'hope' kullanılır.",
+        "correctTr": "Umarım yarın seni görürüm."
       }
     ],
     "examples": [

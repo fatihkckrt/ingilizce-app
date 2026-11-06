@@ -353,30 +353,45 @@ export const GrammarHubView: React.FC<GrammarHubViewProps> = ({
                               {/* (+) Olumlu / (-) Olumsuz / (?) Soru Alt Alta Grid */}
                               <div className="grid grid-cols-1 sm:grid-cols-3 gap-1.5 text-xs">
                                 {/* Olumlu */}
-                                <div className="p-2 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-900 dark:text-emerald-200">
-                                  <div className="flex items-center gap-1 font-black text-[10px] uppercase text-emerald-700 dark:text-emerald-400 mb-0.5">
+                                <div className="p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-900 dark:text-emerald-200 space-y-1">
+                                  <div className="flex items-center gap-1 font-black text-[10px] uppercase text-emerald-700 dark:text-emerald-400">
                                     <span className="w-3.5 h-3.5 rounded-full bg-emerald-500 text-white flex items-center justify-center text-[9px] font-black">+</span>
                                     <span>Olumlu</span>
                                   </div>
-                                  <span className="font-semibold">{row.positive}</span>
+                                  <div className="font-bold">{row.positive}</div>
+                                  {row.positiveTr && (
+                                    <div className="text-[11px] text-emerald-700 dark:text-emerald-300 font-medium italic border-t border-emerald-500/15 pt-0.5">
+                                      🇹🇷 {row.positiveTr}
+                                    </div>
+                                  )}
                                 </div>
 
                                 {/* Olumsuz */}
-                                <div className="p-2 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-900 dark:text-rose-200">
-                                  <div className="flex items-center gap-1 font-black text-[10px] uppercase text-rose-700 dark:text-rose-400 mb-0.5">
+                                <div className="p-2.5 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-900 dark:text-rose-200 space-y-1">
+                                  <div className="flex items-center gap-1 font-black text-[10px] uppercase text-rose-700 dark:text-rose-400">
                                     <span className="w-3.5 h-3.5 rounded-full bg-rose-500 text-white flex items-center justify-center text-[9px] font-black">-</span>
                                     <span>Olumsuz</span>
                                   </div>
-                                  <span className="font-semibold">{row.negative}</span>
+                                  <div className="font-bold">{row.negative}</div>
+                                  {row.negativeTr && (
+                                    <div className="text-[11px] text-rose-700 dark:text-rose-300 font-medium italic border-t border-rose-500/15 pt-0.5">
+                                      🇹🇷 {row.negativeTr}
+                                    </div>
+                                  )}
                                 </div>
 
                                 {/* Soru */}
-                                <div className="p-2 rounded-xl bg-sky-500/10 border border-sky-500/20 text-sky-900 dark:text-sky-200">
-                                  <div className="flex items-center gap-1 font-black text-[10px] uppercase text-sky-700 dark:text-sky-400 mb-0.5">
+                                <div className="p-2.5 rounded-xl bg-sky-500/10 border border-sky-500/20 text-sky-900 dark:text-sky-200 space-y-1">
+                                  <div className="flex items-center gap-1 font-black text-[10px] uppercase text-sky-700 dark:text-sky-400">
                                     <span className="w-3.5 h-3.5 rounded-full bg-sky-500 text-white flex items-center justify-center text-[9px] font-black">?</span>
                                     <span>Soru</span>
                                   </div>
-                                  <span className="font-semibold">{row.question}</span>
+                                  <div className="font-bold">{row.question}</div>
+                                  {row.questionTr && (
+                                    <div className="text-[11px] text-sky-700 dark:text-sky-300 font-medium italic border-t border-sky-500/15 pt-0.5">
+                                      🇹🇷 {row.questionTr}
+                                    </div>
+                                  )}
                                 </div>
                               </div>
 
@@ -443,8 +458,16 @@ export const GrammarHubView: React.FC<GrammarHubViewProps> = ({
                             {form.explanation}
                           </p>
                           {form.sample && (
-                            <div className="p-1.5 rounded-lg bg-teal-500/10 border border-teal-500/20 text-[11px] font-semibold text-teal-900 dark:text-teal-200">
-                              💡 <span className="font-bold">Örnek:</span> {form.sample}
+                            <div className="p-2 rounded-xl bg-teal-500/10 border border-teal-500/20 text-xs space-y-0.5">
+                              <div className="font-bold text-teal-900 dark:text-teal-200 flex items-start gap-1">
+                                <span className="text-teal-600">💡 Örnek:</span>
+                                <span>{form.sample}</span>
+                              </div>
+                              {form.sampleTr && (
+                                <div className="text-[11px] text-teal-800/80 dark:text-teal-300/90 font-medium pl-5 italic">
+                                  🇹🇷 Çeviri: {form.sampleTr}
+                                </div>
+                              )}
                             </div>
                           )}
                         </div>
@@ -508,6 +531,11 @@ export const GrammarHubView: React.FC<GrammarHubViewProps> = ({
                             <div className="flex items-center gap-1.5 text-emerald-700 dark:text-emerald-300 font-mono font-bold">
                               <span>✅ {mis.correct}</span>
                             </div>
+                            {mis.correctTr && (
+                              <div className="text-[11px] text-emerald-800 dark:text-emerald-300 font-medium italic">
+                                🇹🇷 Doğru Anlam: "{mis.correctTr}"
+                              </div>
+                            )}
                             <p className="text-[11px] text-slate-600 dark:text-slate-300 italic pt-0.5">
                               Sebep: {mis.reason}
                             </p>
