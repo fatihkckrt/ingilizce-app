@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { ThemeClasses } from '../utils/themeUtils';
-import { GRAMMAR_TOPICS, SENTENCE_SCRAMBLE_DATA, GrammarTopic, SentenceScrambleItem, GrammarExample } from '../grammarData';
+import { GRAMMAR_TOPICS, SENTENCE_SCRAMBLE_DATA, GrammarTopic, SentenceScrambleItem, GrammarExample, GrammarPracticeItem } from '../grammarData';
 import { 
   ArrowLeft, 
   BookOpen, 
@@ -17,7 +17,11 @@ import {
   Table, 
   Lightbulb, 
   Award,
-  Filter
+  Filter,
+  Eye,
+  EyeOff,
+  Edit3,
+  CheckCircle
 } from 'lucide-react';
 
 interface GrammarHubViewProps {
@@ -41,6 +45,99 @@ export const GrammarHubView: React.FC<GrammarHubViewProps> = ({
 
   // Örnek cümlelerde zamir filtresi: 'all' | 'I' | '3rd' | 'plurals' | 'question'
   const [pronounFilter, setPronounFilter] = useState<'all' | 'I' | '3rd' | 'plurals' | 'question'>('all');
+
+  // Örnek cümle çevirileri: varsayılan gizli. Dokununca açılır.
+  const [revealedTranslations, setRevealedTranslations] = useState<Record<string, boolean>>({});
+
+  const toggleTranslation = (key: string) => {
+    setRevealedTranslations(prev => ({
+      ...prev,
+      [key]: !prev[key]
+    }));
+  };
+
+  const setAllTranslationsForTopic = (topic: GrammarTopic, show: boolean) => {
+    setRevealedTranslations(prev => {
+      const updated = { ...prev };
+      topic.examples.forEach((_, idx) => {
+        updated[`${topic.id}-${idx}`] = show;
+      });
+      return updated;
+    });
+  };
+
+  // Boşluk doldurma pratiği durumu (her konu için aktif soru ve çözümler)
+  interface PracticeState {
+    activeIdx: number;
+    userSelection: string;
+    isSubmitted: boolean;
+    solved: Record<number, boolean>;
+  }
+
+  const [practiceStates, setPracticeStates] = useState<Record<string, PracticeState>>({});
+  const [showPracticeHint, setShowPracticeHint] = useState<Record<string, boolean>>({});
+
+  const getPracticeState = (topicId: string): PracticeState => {
+    return practiceStates[topicId] || {
+      activeIdx: 0,
+      userSelection: '',
+      isSubmitted: false,
+      solved: {}
+    };
+  };
+
+  const updatePracticeState = (topicId: string, partial: Partial<PracticeState>) => {
+    setPracticeStates(prev => {
+      const current = prev[topicId] || {
+        activeIdx: 0,
+        userSelection: '',
+        isSubmitted: false,
+        solved: {}
+      };
+      return {
+        ...prev,
+        [topicId]: { ...current, ...partial }
+      };
+    });
+  };
+
+  const handleCheckPractice = (topicId: string, practice: GrammarPracticeItem, activeIdx: number) => {
+    const currentState = getPracticeState(topicId);
+    const isCorrect = currentState.userSelection.trim().toLowerCase() === practice.blankAnswer.trim().toLowerCase();
+    
+    updatePracticeState(topicId, {
+      isSubmitted: true,
+      solved: isCorrect ? { ...currentState.solved, [activeIdx]: true } : currentState.solved
+    });
+  };
+
+  const renderSentenceWithBlank = (sentence: string, userValue: string) => {
+    // Matches "___ (verb)" or "___"
+    const parts = sentence.split(/___(?:\s*\([^)]*\))?/);
+    if (parts.length < 2) return <span>{sentence}</span>;
+
+    const match = sentence.match(/___\s*(\([^)]*\))/);
+    const verbHint = match ? match[1] : '';
+
+    return (
+      <span className="inline leading-relaxed">
+        {parts[0]}
+        <span className={`inline-flex items-center px-2.5 py-0.5 mx-1 rounded-lg border-b-2 font-black transition ${
+          userValue 
+            ? 'bg-teal-500/20 text-teal-800 dark:text-teal-200 border-teal-600' 
+            : 'bg-amber-500/15 text-amber-700 dark:text-amber-300 border-amber-500 animate-pulse'
+        }`}>
+          {userValue || '_______'}
+        </span>
+        {verbHint && !userValue && (
+          <span className="text-slate-400 dark:text-slate-500 font-medium text-xs mr-1">
+            {verbHint}
+          </span>
+        )}
+        {parts[1]}
+      </span>
+    );
+  };
 
   // Cümle kurma durumu
   const levelScrambles = useMemo(() => {
@@ -293,6 +390,12 @@ export const GrammarHubView: React.FC<GrammarHubViewProps> = ({
                         <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300">
                           {topic.examples?.length || 0} Örnek
                         </span>
+                        {topic.practices && topic.practices.length > 0 && (
+                          <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30 flex items-center gap-1">
+                            <Edit3 className="w-2.5 h-2.5" />
+                            <span>{topic.practices.length} Boşluk Doldurma</span>
+                          </span>
+                        )}
                       </div>
                       <p className="text-xs opacity-75 font-medium mt-0.5 line-clamp-1">
                         {topic.summary}
@@ -306,6 +409,24 @@ export const GrammarHubView: React.FC<GrammarHubViewProps> = ({
                 {isExpanded && (
                   <div className="px-3.5 sm:px-5 pb-5 pt-1 space-y-4 border-t border-black/5 dark:border-white/5 animate-fadeIn">
                     
+                    {/* Hızlı Atlama: Konu Sonu Boşluk Doldurma Pratiğine Git */}
+                    {topic.practices && topic.practices.length > 0 && (
+                      <div className="pt-2 pb-1 flex flex-wrap items-center gap-2">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const el = document.getElementById(`practice-${topic.id}`);
+                            if (el) el.scrollIntoView({ behavior: 'smooth' });
+                          }}
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-black text-xs shadow-xs transition active:scale-95 cursor-pointer"
+                        >
+                          <Edit3 className="w-3.5 h-3.5" />
+                          <span>🎯 Konu Sonu Boşluk Doldurma Pratiğine Git ({topic.practices.length} Soru)</span>
+                          <ChevronRight className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+                    )}
+
                     {/* 1. Giriş & Temel Mantık */}
                     <div className="p-3.5 bg-teal-50/80 dark:bg-teal-950/40 border border-teal-200 dark:border-teal-800 rounded-2xl">
                       <h4 className="text-xs font-black text-teal-800 dark:text-teal-300 uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
@@ -544,84 +665,332 @@ export const GrammarHubView: React.FC<GrammarHubViewProps> = ({
                       </div>
                     )}
 
-                    {/* 8. ÖRNEK CÜMLELER (ZAMİR KUTUCUKLU ŞEMATİK LİSTE - BOL ÖRNEK) */}
-                    <div className="space-y-3 pt-1">
-                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    {/* 8. KONU SONU BOŞLUK DOLDURMA PRATİĞİ (FILL-IN-THE-BLANKS INTERACTIVE PRACTICE) */}
+                    {topic.practices && topic.practices.length > 0 && (() => {
+                      const pState = getPracticeState(topic.id);
+                      const currentPractice = topic.practices[pState.activeIdx] || topic.practices[0];
+                      const isCorrect = pState.userSelection.trim().toLowerCase() === currentPractice.blankAnswer.trim().toLowerCase();
+                      const completedCount = Object.keys(pState.solved).length;
+
+                      return (
+                        <div id={`practice-${topic.id}`} className="scroll-mt-4 p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-teal-500/15 via-emerald-500/10 to-transparent border-2 border-teal-500/40 space-y-4 shadow-sm">
+                          {/* Pratik Başlığı & Sayaç */}
+                          <div className="flex flex-wrap items-center justify-between gap-2 border-b border-teal-500/20 pb-3">
+                            <div className="flex items-center gap-2.5">
+                              <div className="w-9 h-9 rounded-xl bg-teal-600 text-white flex items-center justify-center shrink-0 shadow-xs">
+                                <Edit3 className="w-4 h-4" />
+                              </div>
+                              <div>
+                                <div className="flex items-center gap-2 flex-wrap">
+                                  <h4 className="text-xs sm:text-sm font-black text-slate-900 dark:text-slate-50 flex items-center gap-1.5">
+                                    <span>✍️ Konu Sonu Boşluk Doldurma Pratiği</span>
+                                  </h4>
+                                  <span className="px-2 py-0.5 rounded-full text-[10px] font-black bg-teal-600 text-white uppercase">
+                                    {topic.level} Seviye
+                                  </span>
+                                </div>
+                                <p className="text-[11px] text-slate-500 dark:text-slate-400 font-medium">
+                                  Konu anlatımını tamamladınız! Şimdi öğrendiklerinizi boşlukları doldurarak hemen pekiştirin
+                                </p>
+                              </div>
+                            </div>
+
+                            {/* Çözülen Soru Sayacı */}
+                            <div className="flex items-center gap-1.5">
+                              <span className="text-[11px] font-black px-3 py-1 rounded-xl bg-white dark:bg-slate-800 text-teal-700 dark:text-teal-300 border border-teal-500/30 shadow-2xs">
+                                {completedCount === topic.practices.length ? '🎉 Hepsi Tamamlandı!' : `İlerleme: ${completedCount} / ${topic.practices.length}`}
+                              </span>
+                            </div>
+                          </div>
+
+                          {/* Soru Seçici Tab Butonları */}
+                          <div className="flex items-center gap-2 overflow-x-auto pb-1">
+                            {topic.practices.map((p, pIdx) => {
+                              const isCurrent = pState.activeIdx === pIdx;
+                              const isSolved = !!pState.solved[pIdx];
+                              return (
+                                <button
+                                  key={p.id}
+                                  onClick={() => {
+                                    updatePracticeState(topic.id, {
+                                      activeIdx: pIdx,
+                                      userSelection: '',
+                                      isSubmitted: false
+                                    });
+                                  }}
+                                  className={`px-3.5 py-1.5 rounded-xl text-xs font-black transition flex items-center gap-1.5 cursor-pointer shrink-0 ${
+                                    isCurrent
+                                      ? 'bg-teal-600 text-white shadow-xs ring-2 ring-teal-500/40'
+                                      : isSolved
+                                      ? 'bg-emerald-500/20 text-emerald-800 dark:text-emerald-300 border border-emerald-500/40'
+                                      : 'bg-white/90 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700 hover:border-teal-400'
+                                  }`}
+                                >
+                                  {isSolved && <CheckCircle className="w-3.5 h-3.5 text-emerald-500" />}
+                                  <span>Alıştırma {pIdx + 1}</span>
+                                </button>
+                              );
+                            })}
+                          </div>
+
+                          {/* Aktif Soru Kartı */}
+                          <div className="p-4 sm:p-5 rounded-2xl bg-white dark:bg-slate-900 border border-teal-500/30 shadow-2xs space-y-4">
+                            {/* Cümle ve Boşluk Görünümü */}
+                            <div className="py-3 px-4 rounded-xl bg-teal-50/80 dark:bg-slate-800/80 border border-teal-500/20">
+                              <p className="text-sm sm:text-base font-extrabold text-slate-900 dark:text-white leading-relaxed">
+                                {renderSentenceWithBlank(currentPractice.sentence, pState.userSelection)}
+                              </p>
+                            </div>
+
+                            {/* Seçenek Butonları */}
+                            <div>
+                              <div className="text-[11px] font-bold text-slate-500 dark:text-slate-400 mb-2">
+                                Doğru seçeneğe tıklayarak boşluğu doldurun:
+                              </div>
+                              <div className="flex flex-wrap gap-2">
+                                {currentPractice.options.map((opt) => {
+                                  const isSelected = pState.userSelection === opt;
+                                  return (
+                                    <button
+                                      key={opt}
+                                      onClick={() => {
+                                        updatePracticeState(topic.id, {
+                                          userSelection: opt,
+                                          isSubmitted: false
+                                        });
+                                      }}
+                                      className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm font-black border transition cursor-pointer active:scale-95 ${
+                                        isSelected
+                                          ? 'bg-teal-600 text-white border-teal-600 shadow-md ring-2 ring-teal-500/40'
+                                          : 'bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-700 hover:border-teal-400'
+                                      }`}
+                                    >
+                                      {opt}
+                                    </button>
+                                  );
+                                })}
+                              </div>
+                            </div>
+
+                            {/* Kontrol & İpucu Butonları */}
+                            <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-100 dark:border-slate-800">
+                              <div className="flex items-center gap-2">
+                                <button
+                                  onClick={() => handleCheckPractice(topic.id, currentPractice, pState.activeIdx)}
+                                  disabled={!pState.userSelection}
+                                  className={`px-4 py-2 rounded-xl text-xs font-black transition flex items-center gap-1.5 cursor-pointer shadow-xs ${
+                                    pState.userSelection
+                                      ? 'bg-teal-600 hover:bg-teal-700 text-white active:scale-95'
+                                      : 'bg-slate-200 dark:bg-slate-800 text-slate-400 cursor-not-allowed'
+                                  }`}
+                                >
+                                  <Check className="w-3.5 h-3.5" />
+                                  <span>Kontrol Et</span>
+                                </button>
+
+                                {currentPractice.hint && !pState.isSubmitted && (
+                                  <button
+                                    onClick={() => setShowPracticeHint(prev => ({ ...prev, [currentPractice.id]: !prev[currentPractice.id] }))}
+                                    className="px-3 py-2 rounded-xl text-xs font-bold text-amber-700 dark:text-amber-400 bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 transition flex items-center gap-1 cursor-pointer"
+                                  >
+                                    <Lightbulb className="w-3.5 h-3.5" />
+                                    <span>İpucu</span>
+                                  </button>
+                                )}
+                              </div>
+
+                              {pState.userSelection && (
+                                <button
+                                  onClick={() => {
+                                    updatePracticeState(topic.id, {
+                                      userSelection: '',
+                                      isSubmitted: false
+                                    });
+                                  }}
+                                  className="text-xs text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 flex items-center gap-1 cursor-pointer"
+                                >
+                                  <RotateCcw className="w-3 h-3" />
+                                  <span>Temizle</span>
+                                </button>
+                              )}
+                            </div>
+
+                            {/* İpucu Kutusu */}
+                            {showPracticeHint[currentPractice.id] && !pState.isSubmitted && (
+                              <div className="p-3 rounded-xl bg-amber-500/15 border border-amber-400/40 text-xs text-amber-900 dark:text-amber-200 flex items-start gap-2 animate-fadeIn">
+                                <Lightbulb className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+                                <div>
+                                  <span className="font-black">İpucu:</span> {currentPractice.hint}
+                                </div>
+                              </div>
+                            )}
+
+                            {/* Kontrol Sonucu Bildirimi */}
+                            {pState.isSubmitted && (
+                              <div className={`p-4 rounded-xl border text-xs sm:text-sm space-y-2.5 animate-fadeIn ${
+                                isCorrect
+                                  ? 'bg-emerald-500/15 border-emerald-500/50 text-emerald-950 dark:text-emerald-100'
+                                  : 'bg-rose-500/15 border-rose-500/50 text-rose-950 dark:text-rose-100'
+                              }`}>
+                                <div className="flex items-center justify-between gap-2 font-black">
+                                  <span className="flex items-center gap-1.5">
+                                    {isCorrect ? (
+                                      <>
+                                        <CheckCircle className="w-4 h-4 text-emerald-600 shrink-0" />
+                                        <span>🎉 Harika! Doğru Cevap: "{currentPractice.blankAnswer}"</span>
+                                      </>
+                                    ) : (
+                                      <>
+                                        <AlertCircle className="w-4 h-4 text-rose-600 shrink-0" />
+                                        <span>❌ Henüz doğru değil, tekrar deneyin!</span>
+                                      </>
+                                    )}
+                                  </span>
+                                  {isCorrect && (
+                                    <button
+                                      onClick={() => speak(currentPractice.sentence.replace(/___\s*(?:\([^)]*\))?/, currentPractice.blankAnswer))}
+                                      className="p-1.5 rounded-lg bg-emerald-600 text-white hover:bg-emerald-700 transition flex items-center gap-1 text-[11px] cursor-pointer"
+                                      title="Sesli Dinle"
+                                    >
+                                      <Volume2 className="w-3.5 h-3.5" />
+                                      <span className="hidden sm:inline">Dinle</span>
+                                    </button>
+                                  )}
+                                </div>
+
+                                {/* Açıklama & Çeviri */}
+                                <div className="pt-1 text-xs space-y-1.5 leading-relaxed">
+                                  <p><span className="font-black">💡 Dilbilgisi Açıklaması:</span> {currentPractice.explanation}</p>
+                                  <p><span className="font-black">🇹🇷 Türkçe Çeviri:</span> {currentPractice.tr}</p>
+                                </div>
+
+                                {/* Sonraki Soru Butonu */}
+                                {isCorrect && pState.activeIdx < topic.practices.length - 1 && (
+                                  <div className="pt-1">
+                                    <button
+                                      onClick={() => {
+                                        updatePracticeState(topic.id, {
+                                          activeIdx: pState.activeIdx + 1,
+                                          userSelection: '',
+                                          isSubmitted: false
+                                        });
+                                      }}
+                                      className="px-4 py-2 rounded-xl bg-teal-600 hover:bg-teal-700 text-white text-xs font-black transition flex items-center gap-1.5 cursor-pointer shadow-xs active:scale-95"
+                                    >
+                                      <span>Sonraki Soruya Geç ({pState.activeIdx + 2} / {topic.practices.length})</span>
+                                      <ChevronRight className="w-3.5 h-3.5" />
+                                    </button>
+                                  </div>
+                                )}
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      );
+                    })()}
+
+                    {/* 9. ÖRNEK CÜMLELER & ZAMİR DAĞILIMI (GÖSTER / GİZLE TUŞLARI İLE) */}
+                    <div className="space-y-3 pt-2">
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
                         <div>
                           <h4 className="text-xs font-black text-slate-800 dark:text-slate-200 uppercase tracking-wider flex items-center gap-1.5">
                             <Volume2 className="w-3.5 h-3.5 text-teal-600" />
                             <span>Örnek Cümleler & Zamir Dağılımı ({topic.examples.length} Örnek)</span>
                           </h4>
                           <p className="text-[11px] text-slate-400 font-medium">
-                            Zamirleri satır başlarında kutucuklar halinde inceleyin ve sesli dinleyin
+                            Cümlelerin altındaki <strong className="text-teal-600 dark:text-teal-400">"Çeviriyi Göster"</strong> tuşuyla çevirileri tek tek açabilir veya yukarıdaki butonlarla tümünü kontrol edebilirsiniz
                           </p>
                         </div>
 
-                        {/* Zamir Hızlı Filtresi */}
-                        <div className="flex items-center gap-1 overflow-x-auto pb-1 sm:pb-0">
+                        {/* TÜMÜNÜ GÖSTER / GİZLE TUŞLARI */}
+                        <div className="flex items-center gap-1.5 shrink-0">
                           <button
-                            onClick={() => setPronounFilter('all')}
-                            className={`px-2 py-1 rounded-lg text-[10px] font-extrabold transition cursor-pointer shrink-0 ${
-                              pronounFilter === 'all'
-                                ? 'bg-teal-600 text-white shadow-xs'
-                                : 'bg-black/5 dark:bg-white/10 text-slate-600 dark:text-slate-300'
-                            }`}
+                            type="button"
+                            onClick={() => setAllTranslationsForTopic(topic, true)}
+                            className="px-3 py-1.5 rounded-xl text-xs font-black bg-teal-600 hover:bg-teal-700 text-white shadow-xs transition flex items-center gap-1.5 cursor-pointer active:scale-95"
+                            title="Bu konudaki tüm Türkçe çevirileri göster"
                           >
-                            Tümü ({topic.examples.length})
+                            <Eye className="w-3.5 h-3.5" />
+                            <span>Tümünü Göster</span>
                           </button>
                           <button
-                            onClick={() => setPronounFilter('I')}
-                            className={`px-2 py-1 rounded-lg text-[10px] font-extrabold transition cursor-pointer shrink-0 ${
-                              pronounFilter === 'I'
-                                ? 'bg-teal-600 text-white shadow-xs'
-                                : 'bg-black/5 dark:bg-white/10 text-slate-600 dark:text-slate-300'
-                            }`}
+                            type="button"
+                            onClick={() => setAllTranslationsForTopic(topic, false)}
+                            className="px-3 py-1.5 rounded-xl text-xs font-black bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 border border-slate-300 dark:border-slate-700 transition flex items-center gap-1.5 cursor-pointer active:scale-95"
+                            title="Bu konudaki tüm Türkçe çevirileri gizle"
                           >
-                            👤 I
-                          </button>
-                          <button
-                            onClick={() => setPronounFilter('3rd')}
-                            className={`px-2 py-1 rounded-lg text-[10px] font-extrabold transition cursor-pointer shrink-0 ${
-                              pronounFilter === '3rd'
-                                ? 'bg-teal-600 text-white shadow-xs'
-                                : 'bg-black/5 dark:bg-white/10 text-slate-600 dark:text-slate-300'
-                            }`}
-                          >
-                            👨 He / 👩 She / 📦 It
-                          </button>
-                          <button
-                            onClick={() => setPronounFilter('plurals')}
-                            className={`px-2 py-1 rounded-lg text-[10px] font-extrabold transition cursor-pointer shrink-0 ${
-                              pronounFilter === 'plurals'
-                                ? 'bg-teal-600 text-white shadow-xs'
-                                : 'bg-black/5 dark:bg-white/10 text-slate-600 dark:text-slate-300'
-                            }`}
-                          >
-                            👥 We / They / You
-                          </button>
-                          <button
-                            onClick={() => setPronounFilter('question')}
-                            className={`px-2 py-1 rounded-lg text-[10px] font-extrabold transition cursor-pointer shrink-0 ${
-                              pronounFilter === 'question'
-                                ? 'bg-teal-600 text-white shadow-xs'
-                                : 'bg-black/5 dark:bg-white/10 text-slate-600 dark:text-slate-300'
-                            }`}
-                          >
-                            ❓ Soru
+                            <EyeOff className="w-3.5 h-3.5 text-slate-500" />
+                            <span>Tümünü Gizle</span>
                           </button>
                         </div>
                       </div>
 
+                      {/* Zamir Hızlı Filtresi */}
+                      <div className="flex items-center gap-1 overflow-x-auto pb-1 sm:pb-0">
+                        <button
+                          onClick={() => setPronounFilter('all')}
+                          className={`px-2 py-1 rounded-lg text-[10px] font-extrabold transition cursor-pointer shrink-0 ${
+                            pronounFilter === 'all'
+                              ? 'bg-teal-600 text-white shadow-xs'
+                              : 'bg-black/5 dark:bg-white/10 text-slate-600 dark:text-slate-300'
+                          }`}
+                        >
+                          Tümü ({topic.examples.length})
+                        </button>
+                        <button
+                          onClick={() => setPronounFilter('I')}
+                          className={`px-2 py-1 rounded-lg text-[10px] font-extrabold transition cursor-pointer shrink-0 ${
+                            pronounFilter === 'I'
+                              ? 'bg-teal-600 text-white shadow-xs'
+                              : 'bg-black/5 dark:bg-white/10 text-slate-600 dark:text-slate-300'
+                          }`}
+                        >
+                          👤 I
+                        </button>
+                        <button
+                          onClick={() => setPronounFilter('3rd')}
+                          className={`px-2 py-1 rounded-lg text-[10px] font-extrabold transition cursor-pointer shrink-0 ${
+                            pronounFilter === '3rd'
+                              ? 'bg-teal-600 text-white shadow-xs'
+                              : 'bg-black/5 dark:bg-white/10 text-slate-600 dark:text-slate-300'
+                          }`}
+                        >
+                          👨 He / 👩 She / 📦 It
+                        </button>
+                        <button
+                          onClick={() => setPronounFilter('plurals')}
+                          className={`px-2 py-1 rounded-lg text-[10px] font-extrabold transition cursor-pointer shrink-0 ${
+                            pronounFilter === 'plurals'
+                              ? 'bg-teal-600 text-white shadow-xs'
+                              : 'bg-black/5 dark:bg-white/10 text-slate-600 dark:text-slate-300'
+                          }`}
+                        >
+                          👥 We / They / You
+                        </button>
+                        <button
+                          onClick={() => setPronounFilter('question')}
+                          className={`px-2 py-1 rounded-lg text-[10px] font-extrabold transition cursor-pointer shrink-0 ${
+                            pronounFilter === 'question'
+                              ? 'bg-teal-600 text-white shadow-xs'
+                              : 'bg-black/5 dark:bg-white/10 text-slate-600 dark:text-slate-300'
+                          }`}
+                        >
+                          ❓ Soru
+                        </button>
+                      </div>
+
                       {/* Örnek Cümle Kartları */}
-                      <div className="space-y-2">
+                      <div className="space-y-2.5">
                         {displayedExamples.map((ex, eIdx) => {
                           const pBadge = getPronounBadge(ex.pronoun);
                           const tBadge = getTypeBadge(ex.sentenceType);
+                          const itemKey = `${topic.id}-${eIdx}`;
+                          const isRevealed = !!revealedTranslations[itemKey];
 
                           return (
                             <div 
                               key={eIdx} 
-                              className="p-3 bg-white/80 dark:bg-slate-900/70 rounded-2xl border border-slate-200/90 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 shadow-2xs hover:border-teal-500/40 transition"
+                              className="p-3.5 bg-white/90 dark:bg-slate-900/80 rounded-2xl border border-slate-200/90 dark:border-slate-800 flex flex-col sm:flex-row sm:items-start justify-between gap-3 shadow-2xs hover:border-teal-500/40 transition"
                             >
                               <div className="flex items-start gap-2.5 min-w-0 flex-1">
                                 {/* Satır Başı Şematik Zamir Kutucuğu */}
@@ -634,24 +1003,55 @@ export const GrammarHubView: React.FC<GrammarHubViewProps> = ({
                                   </span>
                                 </div>
 
-                                {/* Cümle Metni ve Çeviri */}
+                                {/* Cümle Metni ve Butonlu Çeviri */}
                                 <div className="min-w-0 flex-1 pl-1">
-                                  <p className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white leading-snug">
+                                  <p className="text-xs sm:text-sm font-black text-slate-900 dark:text-white leading-snug">
                                     {ex.eng}
                                   </p>
-                                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-                                    {ex.tr}
-                                  </p>
+
                                   {ex.note && (
                                     <span className="inline-block mt-1 text-[10px] font-bold px-2 py-0.5 rounded-md bg-teal-500/10 text-teal-700 dark:text-teal-300 border border-teal-500/20">
                                       💡 {ex.note}
                                     </span>
                                   )}
+
+                                  {/* Çeviriyi Göster / Gizle Tuşu */}
+                                  <div className="mt-2.5">
+                                    <button
+                                      type="button"
+                                      onClick={() => toggleTranslation(itemKey)}
+                                      className={`px-3 py-1.5 rounded-xl text-xs font-black transition flex items-center gap-1.5 cursor-pointer shadow-2xs active:scale-95 ${
+                                        isRevealed
+                                          ? 'bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-300 dark:border-slate-700'
+                                          : 'bg-teal-500/15 hover:bg-teal-500/25 text-teal-700 dark:text-teal-300 border border-teal-500/30'
+                                      }`}
+                                    >
+                                      {isRevealed ? (
+                                        <>
+                                          <EyeOff className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
+                                          <span>Çeviriyi Gizle</span>
+                                        </>
+                                      ) : (
+                                        <>
+                                          <Eye className="w-3.5 h-3.5 text-teal-600 dark:text-teal-400" />
+                                          <span>Çeviriyi Göster</span>
+                                        </>
+                                      )}
+                                    </button>
+
+                                    {/* Çeviri Açıldığında Görünen Alan */}
+                                    {isRevealed && (
+                                      <div className="mt-2 p-2.5 rounded-xl bg-teal-50/90 dark:bg-teal-950/40 border border-teal-300/80 dark:border-teal-800 text-xs sm:text-sm text-slate-800 dark:text-slate-100 flex items-start gap-2 animate-fadeIn shadow-2xs">
+                                        <span className="font-black text-teal-600 dark:text-teal-400 shrink-0">🇹🇷 Türkçe:</span>
+                                        <span className="font-semibold leading-relaxed">{ex.tr}</span>
+                                      </div>
+                                    )}
+                                  </div>
                                 </div>
                               </div>
 
                               {/* Sesli Okuma Butonu */}
-                              <div className="flex justify-end sm:justify-center shrink-0">
+                              <div className="flex justify-end sm:justify-center shrink-0 pt-0.5">
                                 <button
                                   onClick={() => speak(ex.eng)}
                                   className="p-2 rounded-xl bg-teal-500/15 text-teal-700 dark:text-teal-300 hover:bg-teal-500/25 active:scale-95 transition cursor-pointer flex items-center gap-1 text-xs font-bold"
@@ -667,7 +1067,7 @@ export const GrammarHubView: React.FC<GrammarHubViewProps> = ({
                       </div>
                     </div>
 
-                    {/* 9. Pro Tip */}
+                    {/* 10. Pro Tip */}
                     <div className="p-3 rounded-2xl bg-amber-500/15 border border-amber-400/40 text-xs text-amber-900 dark:text-amber-200 flex items-center gap-2.5">
                       <Award className="w-5 h-5 text-amber-600 shrink-0" />
                       <span className="font-bold">{topic.proTip}</span>

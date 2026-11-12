@@ -41,6 +41,16 @@ export interface TimeMarkerItem {
   usage: string;
 }
 
+export interface GrammarPracticeItem {
+  id: string;
+  sentence: string; // e.g., "She ___ (drink) coffee every morning."
+  blankAnswer: string; // "drinks"
+  options: string[]; // ["drink", "drinks", "drinking"]
+  tr: string; // Türkçe çeviri
+  hint?: string; // İpucu
+  explanation: string; // Dilbilgisi kural açıklaması
+}
+
 export interface GrammarTopic {
   id: string;
   level: 'A1' | 'A2' | 'B1' | 'B2';
@@ -56,6 +66,7 @@ export interface GrammarTopic {
   commonMistakes: { wrong: string; correct: string; correctTr?: string; reason: string }[];
   examples: GrammarExample[];
   proTip: string;
+  practices?: GrammarPracticeItem[];
 }
 
 export interface SentenceScrambleItem {
@@ -289,7 +300,48 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "note": "They + are"
       }
     ],
-    "proTip": "Kimlik, meslek, milliyet, konum ve hisleri belirtirken ilk başvuracağınız temel kural to be çekimidir."
+    "proTip": "Kimlik, meslek, milliyet, konum ve hisleri belirtirken ilk başvuracağınız temel kural to be çekimidir.",
+    "practices": [
+      {
+            "id": "a1-to-be-p1",
+            "sentence": "My brother ___ (be) ten years old.",
+            "blankAnswer": "is",
+            "options": [
+                  "am",
+                  "is",
+                  "are"
+            ],
+            "tr": "Erkek kardeşim on yaşındadır.",
+            "hint": "Erkek kardeşim (He) tekil bir öznedir.",
+            "explanation": "3. tekil şahıs özneleri (He, She, It, My brother) için 'is' kullanılır."
+      },
+      {
+            "id": "a1-to-be-p2",
+            "sentence": "We ___ (not / be) at home today.",
+            "blankAnswer": "aren't",
+            "options": [
+                  "isn't",
+                  "aren't",
+                  "am not"
+            ],
+            "tr": "Biz bugün evde değiliz.",
+            "hint": "'We' çoğul bir öznedir.",
+            "explanation": "'We' öznesi için olumsuz çekim 'are not' yani kısaca 'aren't' olur."
+      },
+      {
+            "id": "a1-to-be-p3",
+            "sentence": "___ (be) you ready for breakfast?",
+            "blankAnswer": "Are",
+            "options": [
+                  "Am",
+                  "Is",
+                  "Are"
+            ],
+            "tr": "Kahvaltı için hazır mısın?",
+            "hint": "'You' öznesi ile soru yapısını düşünün.",
+            "explanation": "'You' öznesiyle soru sorulurken cümlenin başına 'Are' getirilir."
+      }
+]
   },
   {
     "id": "a1-present-simple",
@@ -502,7 +554,48 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "note": "They + don't own"
       }
     ],
-    "proTip": "Soru sorarken 'Do / Does' yardımcılarını cümle bekçisi olarak kodlayın; geldikleri an fiilin üzerindeki bütün ekleri silerler."
+    "proTip": "Soru sorarken 'Do / Does' yardımcılarını cümle bekçisi olarak kodlayın; geldikleri an fiilin üzerindeki bütün ekleri silerler.",
+    "practices": [
+      {
+            "id": "a1-present-simple-p1",
+            "sentence": "She ___ (watch) TV in the evening.",
+            "blankAnswer": "watches",
+            "options": [
+                  "watch",
+                  "watches",
+                  "watching"
+            ],
+            "tr": "O akşamları televizyon izler.",
+            "hint": "-ch ile biten fiillere dikkat edin.",
+            "explanation": "Geniş zamanda 3. tekil şahıslarda (He/She/It) -ch, -sh, -ss, -x ile biten fiiller '-es' takısı alır."
+      },
+      {
+            "id": "a1-present-simple-p2",
+            "sentence": "My parents ___ (not / drink) coffee.",
+            "blankAnswer": "don't drink",
+            "options": [
+                  "doesn't drink",
+                  "don't drink",
+                  "not drink"
+            ],
+            "tr": "Annem ve babam kahve içmezler.",
+            "hint": "'My parents' çoğuldur (They).",
+            "explanation": "Çoğul öznelerde geniş zaman olumsuzluk eki 'don't' + yalın fiildir."
+      },
+      {
+            "id": "a1-present-simple-p3",
+            "sentence": "Where ___ your brother work?",
+            "blankAnswer": "does",
+            "options": [
+                  "do",
+                  "does",
+                  "is"
+            ],
+            "tr": "Kardeşin nerede çalışır?",
+            "hint": "'Your brother' tekil 3. şahıstır (He).",
+            "explanation": "Geniş zamanda He/She/It öznelerinin soru cümlelerinde yardımcı fiil olarak 'does' kullanılır."
+      }
+]
   },
   {
     "id": "a1-present-continuous",
@@ -695,7 +788,48 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "note": "aren't + playing"
       }
     ],
-    "proTip": "Gözünüzün önünde cereyan eden bir eylemi aktarırken 'am/is/are + ing' refleksiniz olsun."
+    "proTip": "Gözünüzün önünde cereyan eden bir eylemi aktarırken 'am/is/are + ing' refleksiniz olsun.",
+    "practices": [
+      {
+            "id": "a1-present-continuous-p1",
+            "sentence": "Look! The baby ___ (sleep) in the bed.",
+            "blankAnswer": "is sleeping",
+            "options": [
+                  "sleeps",
+                  "is sleeping",
+                  "are sleeping"
+            ],
+            "tr": "Bak! Bebek yatakta uyuyor.",
+            "hint": "'Look!' şu anda gerçekleşen bir eyleme işaret eder.",
+            "explanation": "Şu anda devam eden eylemler için am/is/are + V-ing kalıbı kullanılır (The baby = is sleeping)."
+      },
+      {
+            "id": "a1-present-continuous-p2",
+            "sentence": "I ___ (not / do) my homework right now.",
+            "blankAnswer": "am not doing",
+            "options": [
+                  "am not doing",
+                  "isn't doing",
+                  "don't doing"
+            ],
+            "tr": "Şu anda ödevimi yapmıyorum.",
+            "hint": "'I' öznesi için doğru yardımcı fiili seçin.",
+            "explanation": "'I' öznesi için şimdiki zaman olumsuzu 'am not doing' şeklindedir."
+      },
+      {
+            "id": "a1-present-continuous-p3",
+            "sentence": "Why ___ they wearing warm coats?",
+            "blankAnswer": "are",
+            "options": [
+                  "is",
+                  "are",
+                  "do"
+            ],
+            "tr": "Neden kalın kabanlar giyiyorlar?",
+            "hint": "'They' çoğul bir öznedir.",
+            "explanation": "Şimdiki zamanda 'they' öznesi ile soru sorulurken yardımcı fiil 'are' kullanılır."
+      }
+]
   },
   {
     "id": "a1-have-got-has-got",
@@ -856,7 +990,48 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "note": "They haven't got"
       }
     ],
-    "proTip": "Kısa cevaplarda 'got' kelimesi tekrarlanmaz: 'Have you got a car?' ➔ 'Yes, I have.' (Yes, I have got denmez)."
+    "proTip": "Kısa cevaplarda 'got' kelimesi tekrarlanmaz: 'Have you got a car?' ➔ 'Yes, I have.' (Yes, I have got denmez).",
+    "practices": [
+      {
+            "id": "a1-have-got-has-got-p1",
+            "sentence": "He ___ (have got) a new bicycle.",
+            "blankAnswer": "has got",
+            "options": [
+                  "have got",
+                  "has got",
+                  "is got"
+            ],
+            "tr": "Onun yeni bir bisikleti var.",
+            "hint": "'He' öznesi tekildir.",
+            "explanation": "He, She, It özneleriyle sahiplik bildirirken 'has got' kullanılır."
+      },
+      {
+            "id": "a1-have-got-has-got-p2",
+            "sentence": "We ___ (not / have got) any milk in the fridge.",
+            "blankAnswer": "haven't got",
+            "options": [
+                  "hasn't got",
+                  "haven't got",
+                  "don't got"
+            ],
+            "tr": "Buzdolabında hiç sütümüz yok.",
+            "hint": "'We' çoğul öznedir.",
+            "explanation": "'We' öznesi için olumsuz sahiplik 'haven't got' kalıbıdır."
+      },
+      {
+            "id": "a1-have-got-has-got-p3",
+            "sentence": "___ you got a blue pencil in your bag?",
+            "blankAnswer": "Have",
+            "options": [
+                  "Has",
+                  "Have",
+                  "Do"
+            ],
+            "tr": "Çantanda mavi bir kurşun kalem var mı?",
+            "hint": "'You' öznesi ile soru kalıbı.",
+            "explanation": "'You' öznesi için sahiplik sorusu 'Have you got...?' ile başlar."
+      }
+]
   },
   {
     "id": "a1-there-is-are",
@@ -974,7 +1149,48 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "note": "There are several..."
       }
     ],
-    "proTip": "Birisinden bir şey ikram veya rica ederken (soru olsa bile) nezaketen 'some' kullanılır: 'Would you like some coffee?'"
+    "proTip": "Birisinden bir şey ikram veya rica ederken (soru olsa bile) nezaketen 'some' kullanılır: 'Would you like some coffee?'",
+    "practices": [
+      {
+            "id": "a1-there-is-are-p1",
+            "sentence": "There ___ a big red apple on the table.",
+            "blankAnswer": "is",
+            "options": [
+                  "is",
+                  "are",
+                  "be"
+            ],
+            "tr": "Masanın üzerinde büyük kırmızı bir elma var.",
+            "hint": "'a big red apple' tekil bir nesnedir.",
+            "explanation": "Tekil nesneler için varlık bildiriminde 'There is' kullanılır."
+      },
+      {
+            "id": "a1-there-is-are-p2",
+            "sentence": "There ___ (not) any cars in the park.",
+            "blankAnswer": "aren't",
+            "options": [
+                  "isn't",
+                  "aren't",
+                  "are"
+            ],
+            "tr": "Parkta hiç araba yok.",
+            "hint": "'cars' çoğuldur.",
+            "explanation": "Çoğul nesnelerde olumsuz varlık bildirmek için 'There aren't' kullanılır."
+      },
+      {
+            "id": "a1-there-is-are-p3",
+            "sentence": "How many students ___ there in the classroom?",
+            "blankAnswer": "are",
+            "options": [
+                  "is",
+                  "are",
+                  "do"
+            ],
+            "tr": "Sınıfta kaç tane öğrenci var?",
+            "hint": "'students' çoğuldur.",
+            "explanation": "Çoğul isimlerin soru yapısında 'How many ... are there' kullanılır."
+      }
+]
   },
   {
     "id": "a1-can-cant",
@@ -1110,7 +1326,48 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "note": "They can't"
       }
     ],
-    "proTip": "Daha resmi ve kibar bir rica için 'Can' yerine 'Could' tercih edebilirsiniz: 'Could you help me?'"
+    "proTip": "Daha resmi ve kibar bir rica için 'Can' yerine 'Could' tercih edebilirsiniz: 'Could you help me?'",
+    "practices": [
+      {
+            "id": "a1-can-cant-p1",
+            "sentence": "My sister ___ speak two languages very well.",
+            "blankAnswer": "can",
+            "options": [
+                  "can",
+                  "cans",
+                  "is can"
+            ],
+            "tr": "Kız kardeşim iki dili çok iyi konuşabilir.",
+            "hint": "Modal fiiller özneden etkilenmez.",
+            "explanation": "'Can' modali hiçbir özneye göre takı almaz ve doğrudan 'can' olarak kalır."
+      },
+      {
+            "id": "a1-can-cant-p2",
+            "sentence": "I am sorry, but I ___ come to your party tonight.",
+            "blankAnswer": "can't",
+            "options": [
+                  "can't",
+                  "don't can",
+                  "am not can"
+            ],
+            "tr": "Üzgünüm ama bu gece partine gelemem.",
+            "hint": "'Can' modalının olumsuz hali.",
+            "explanation": "'Can' modalının olumsuz biçimi 'cannot' veya kısaca 'can't'tir."
+      },
+      {
+            "id": "a1-can-cant-p3",
+            "sentence": "Can you ___ (swim) across this river?",
+            "blankAnswer": "swim",
+            "options": [
+                  "swim",
+                  "swimming",
+                  "swims"
+            ],
+            "tr": "Bu nehri yüzerek geçebilir misin?",
+            "hint": "Modalden sonraki fiil biçimi.",
+            "explanation": "'Can' modalından sonra gelen ana fiil daima eksiz ve yalın halde (V1) kullanılır."
+      }
+]
   },
   {
     "id": "a2-past-simple",
@@ -1345,7 +1602,48 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "note": "Did they accept...?"
       }
     ],
-    "proTip": "Düzensiz fiilleri ezberlerken gruplayarak (örneğin -ought ile bitenler: buy-bought, think-thought, bring-brought) çalışmak akılda kalıcılığı ikiye katlar."
+    "proTip": "Düzensiz fiilleri ezberlerken gruplayarak (örneğin -ought ile bitenler: buy-bought, think-thought, bring-brought) çalışmak akılda kalıcılığı ikiye katlar.",
+    "practices": [
+      {
+            "id": "a2-past-simple-p1",
+            "sentence": "Yesterday, we ___ (go) to the museum and saw old statues.",
+            "blankAnswer": "went",
+            "options": [
+                  "go",
+                  "went",
+                  "gone"
+            ],
+            "tr": "Dün müzeye gittik ve eski heykeller gördük.",
+            "hint": "'Go' düzensiz bir fiildir.",
+            "explanation": "'Go' fiilinin Past Simple (V2) geçmiş zaman hali 'went'tir."
+      },
+      {
+            "id": "a2-past-simple-p2",
+            "sentence": "She ___ (not / watch) the movie last night.",
+            "blankAnswer": "didn't watch",
+            "options": [
+                  "didn't watch",
+                  "didn't watched",
+                  "not watched"
+            ],
+            "tr": "Dün gece filmi izlemedi.",
+            "hint": "'didn't' sonrasındaki fiil kuralı.",
+            "explanation": "Past Simple olumsuz cümlesinde 'didn't' kullanılır ve ana fiil yalın kalır (didn't watch)."
+      },
+      {
+            "id": "a2-past-simple-p3",
+            "sentence": "What time ___ you arrive at the train station?",
+            "blankAnswer": "did",
+            "options": [
+                  "did",
+                  "do",
+                  "were"
+            ],
+            "tr": "Tren istasyonuna saat kaçta vardın?",
+            "hint": "Geçmiş zaman eylem sorularının yardımcı fiili.",
+            "explanation": "Geçmiş zaman soru cümlelerinde eylem bildiren fiillerle 'did' yardımcı fiili başa gelir."
+      }
+]
   },
   {
     "id": "a2-past-continuous",
@@ -1485,7 +1783,61 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "note": "They weren't watching"
       }
     ],
-    "proTip": "Hikaye ve roman anlatımlarında arka plan atmosferini kurmak için Past Continuous, olayları ilerletmek için Past Simple kullanılır."
+    "proTip": "Hikaye ve roman anlatımlarında arka plan atmosferini kurmak için Past Continuous, olayları ilerletmek için Past Simple kullanılır.",
+    "practices": [
+      {
+            "id": "a2-past-continuous-p1",
+            "sentence": "I ___ (read) a book when the telephone rang.",
+            "blankAnswer": "was reading",
+            "options": [
+                  "was reading",
+                  "were reading",
+                  "read"
+            ],
+            "tr": "Telefon çaldığında bir kitap okuyordum.",
+            "hint": "'I' öznesi için tekil geçmiş süreklilik.",
+            "explanation": "'I' öznesi için geçmişte devam eden eylem 'was + V-ing' (was reading) ile yapılır."
+      },
+      {
+            "id": "a2-past-continuous-p2",
+            "sentence": "They ___ (walk) in the garden while it was raining.",
+            "blankAnswer": "were walking",
+            "options": [
+                  "was walking",
+                  "were walking",
+                  "walked"
+            ],
+            "tr": "Yağmur yağarken bahçede yürüyorlardı.",
+            "hint": "'They' çoğul bir öznedir.",
+            "explanation": "Geçmişte süregelen zamanda çoğul öznelerle (They, We) 'were + V-ing' kullanılır."
+      },
+      {
+            "id": "a2-past-continuous-p3",
+            "sentence": "What were you ___ (do) at eight o'clock yesterday evening?",
+            "blankAnswer": "doing",
+            "options": [
+                  "do",
+                  "doing",
+                  "did"
+            ],
+            "tr": "Dün akşam saat sekizde ne yapıyordun?",
+            "hint": "'were you' ardından fiil takısı.",
+            "explanation": "Past Continuous soru kalıbında 'were you' ardından fiil '-ing' takısı alır."
+      },
+      {
+            "id": "a2-past-continuous-p4",
+            "sentence": "My mother was cooking dinner ___ the lights suddenly went out.",
+            "blankAnswer": "when",
+            "options": [
+                  "when",
+                  "while",
+                  "during"
+            ],
+            "tr": "Annem akşam yemeğini pişirirken aniden elektrikler kesildi.",
+            "hint": "Anlık kesinti bildiren Past Simple (went out) öncesinde 'when' kullanılır.",
+            "explanation": "Süregelen bir eylem yaşanırken (was cooking) araya giren anlık olayların (went out) başına 'when' bağlacı gelir."
+      }
+    ]
   },
   {
     "id": "a2-future-will-going-to",
@@ -1631,7 +1983,48 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "note": "What are they going to do...?"
       }
     ],
-    "proTip": "Bir kafede sipariş verirken daima 'I will have a cappuccino' deyin; çünkü bu kararı menüye bakarken konuşma anında vermiş olursunuz."
+    "proTip": "Bir kafede sipariş verirken daima 'I will have a cappuccino' deyin; çünkü bu kararı menüye bakarken konuşma anında vermiş olursunuz.",
+    "practices": [
+      {
+            "id": "a2-future-will-going-to-p1",
+            "sentence": "Look at those dark clouds! It ___ rain in a few minutes.",
+            "blankAnswer": "is going to",
+            "options": [
+                  "will",
+                  "is going to",
+                  "rains"
+            ],
+            "tr": "Şu kara bulutlara bak! Birkaç dakika içinde yağmur yağacak.",
+            "hint": "Gözle görülür açık bir kanıt var.",
+            "explanation": "Şu an gözle görülen fiziksel bir ipucu veya kanıt varsa 'be going to' kullanılır."
+      },
+      {
+            "id": "a2-future-will-going-to-p2",
+            "sentence": "I think our basketball team ___ win the match tomorrow.",
+            "blankAnswer": "will",
+            "options": [
+                  "will",
+                  "is going to",
+                  "wills"
+            ],
+            "tr": "Bence basketbol takımımız yarınki maçı kazanacak.",
+            "hint": "'I think' kişisel bir tahmindir.",
+            "explanation": "'I think / I believe / I hope' gibi kişisel tahmin ve kanaatlerde 'will' kullanılır."
+      },
+      {
+            "id": "a2-future-will-going-to-p3",
+            "sentence": "We ___ buy a new laptop next Saturday; we saved our money.",
+            "blankAnswer": "are going to",
+            "options": [
+                  "will",
+                  "are going to",
+                  "shall"
+            ],
+            "tr": "Gelecek cumartesi yeni bir dizüstü bilgisayar alacağız; paramızı biriktirdik.",
+            "hint": "Önceden planlanmış bir niyet.",
+            "explanation": "Önceden kararlaştırılmış ve planı yapılmış eylemlerde 'be going to' tercih edilir."
+      }
+]
   },
   {
     "id": "a2-comparatives-superlatives",
@@ -1750,7 +2143,48 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "note": "the most peaceful"
       }
     ],
-    "proTip": "Karşılaştırmayı güçlendirmek için önüne 'much' veya 'far' ekleyebilirsiniz: 'much better' (çok daha iyi)."
+    "proTip": "Karşılaştırmayı güçlendirmek için önüne 'much' veya 'far' ekleyebilirsiniz: 'much better' (çok daha iyi).",
+    "practices": [
+      {
+            "id": "a2-comparatives-superlatives-p1",
+            "sentence": "This warm jacket is ___ (cheap) than that leather coat.",
+            "blankAnswer": "cheaper",
+            "options": [
+                  "cheaper",
+                  "more cheap",
+                  "cheapest"
+            ],
+            "tr": "Bu sıcak ceket, şu deri kabandan daha ucuzdur.",
+            "hint": "Kısa (tek heceli) sıfat kuralı.",
+            "explanation": "Tek heceli kısa sıfatlarda comparative yaparken sona '-er' takısı eklenir (cheap -> cheaper than)."
+      },
+      {
+            "id": "a2-comparatives-superlatives-p2",
+            "sentence": "Mount Everest is the ___ (high) mountain in the world.",
+            "blankAnswer": "highest",
+            "options": [
+                  "higher",
+                  "highest",
+                  "most high"
+            ],
+            "tr": "Everest Dağı dünyadaki en yüksek dağdır.",
+            "hint": "'the' belirteci en üstünlüğü gösterir.",
+            "explanation": "Superlative yapısında tek heceli sıfatların başına 'the', sonuna '-est' takısı gelir."
+      },
+      {
+            "id": "a2-comparatives-superlatives-p3",
+            "sentence": "Health is ___ (important) than money.",
+            "blankAnswer": "more important",
+            "options": [
+                  "more important",
+                  "importanter",
+                  "most important"
+            ],
+            "tr": "Sağlık paradan daha önemlidir.",
+            "hint": "Çok heceli uzun sıfat kuralı.",
+            "explanation": "İki veya daha çok heceli uzun sıfatlar comparative yapılırken önlerine 'more' alır."
+      }
+]
   },
   {
     "id": "a2-modals-must-should",
@@ -1907,7 +2341,48 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "note": "Should they...?"
       }
     ],
-    "proTip": "Bir arkadaşınıza nazikçe öneride bulunurken 'I think you should...' kalıbı en sempatik yaklaşımdır."
+    "proTip": "Bir arkadaşınıza nazikçe öneride bulunurken 'I think you should...' kalıbı en sempatik yaklaşımdır.",
+    "practices": [
+      {
+            "id": "a2-modals-must-should-p1",
+            "sentence": "You ___ stop your car when the traffic light is red; it is the law.",
+            "blankAnswer": "must",
+            "options": [
+                  "must",
+                  "should",
+                  "might"
+            ],
+            "tr": "Trafik ışığı kırmızı olduğunda arabanızı durdurmalısınız; bu yasadır.",
+            "hint": "Yasal kesin bir zorunluluk.",
+            "explanation": "Kanun, kural ve kaçınılmaz zorunluluk bildiren durumlarda 'must' kullanılır."
+      },
+      {
+            "id": "a2-modals-must-should-p2",
+            "sentence": "You look exhausted. You ___ take a short break.",
+            "blankAnswer": "should",
+            "options": [
+                  "must",
+                  "should",
+                  "have"
+            ],
+            "tr": "Tükenmiş görünüyorsun. Kısa bir mola vermelisin.",
+            "hint": "Dostane bir tavsiye.",
+            "explanation": "Kişiye iyi geleceğini düşündüğümüz tavsiye ve önerilerde 'should' kullanılır."
+      },
+      {
+            "id": "a2-modals-must-should-p3",
+            "sentence": "Children ___ play with sharp kitchen knives; it is very dangerous.",
+            "blankAnswer": "mustn't",
+            "options": [
+                  "mustn't",
+                  "don't have to",
+                  "should"
+            ],
+            "tr": "Çocuklar keskin mutfak bıçaklarıyla oynamamalıdır; çok tehlikelidir.",
+            "hint": "Kesin bir yasaklama.",
+            "explanation": "Tehlike veya yasak belirten durumlarda olumsuz kesinlik için 'mustn't' kullanılır."
+      }
+]
   },
   {
     "id": "b1-present-perfect",
@@ -2076,7 +2551,48 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "note": "Have they completed...?"
       }
     ],
-    "proTip": "Biriyle tanışıp sohbet ederken hayat deneyimlerinizi 'Have you ever...' kalıbıyla sorup buzları anında eritebilirsiniz."
+    "proTip": "Biriyle tanışıp sohbet ederken hayat deneyimlerinizi 'Have you ever...' kalıbıyla sorup buzları anında eritebilirsiniz.",
+    "practices": [
+      {
+            "id": "b1-present-perfect-p1",
+            "sentence": "They have lived in this modern apartment ___ five years.",
+            "blankAnswer": "for",
+            "options": [
+                  "since",
+                  "for",
+                  "ago"
+            ],
+            "tr": "Beş yıldır bu modern dairede yaşıyorlar.",
+            "hint": "Zaman süresi (duration) belirtiliyor.",
+            "explanation": "Belirli bir zaman dilimi veya süresi belirtildiğinde 'for' (5 yıldır) kullanılır."
+      },
+      {
+            "id": "b1-present-perfect-p2",
+            "sentence": "She has ___ submitted her project, so she has free time now.",
+            "blankAnswer": "already",
+            "options": [
+                  "already",
+                  "yet",
+                  "still"
+            ],
+            "tr": "Projesini çoktan teslim etti, bu yüzden artık boş zamanı var.",
+            "hint": "Beklenenden önce tamamlanmış olumlu eylem.",
+            "explanation": "Bir eylemin önceden veya erkenden yapıldığını olumlu cümlede belirtmek için 'already' kullanılır."
+      },
+      {
+            "id": "b1-present-perfect-p3",
+            "sentence": "Have you ___ eaten traditional Japanese sushi?",
+            "blankAnswer": "ever",
+            "options": [
+                  "ever",
+                  "never",
+                  "yet"
+            ],
+            "tr": "Hiç geleneksel Japon suşisi yedin mi?",
+            "hint": "Hayat boyu deneyim sorusu.",
+            "explanation": "Present Perfect soru cümlelerinde 'hiç yaptın mı?' anlamında 'ever' kullanılır."
+      }
+]
   },
   {
     "id": "b1-perfect-vs-past",
@@ -2188,7 +2704,48 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "note": "Past Simple"
       }
     ],
-    "proTip": "Kayıp bir eşya ararken durum devam ediyorsa 'I have lost it', bulduysanız 'I found it' deyin."
+    "proTip": "Kayıp bir eşya ararken durum devam ediyorsa 'I have lost it', bulduysanız 'I found it' deyin.",
+    "practices": [
+      {
+            "id": "b1-perfect-vs-past-p1",
+            "sentence": "Leonardo da Vinci ___ (paint) the Mona Lisa in the early 16th century.",
+            "blankAnswer": "painted",
+            "options": [
+                  "has painted",
+                  "painted",
+                  "was painting"
+            ],
+            "tr": "Leonardo da Vinci 16. yüzyılın başlarında Mona Lisa'yı yaptı.",
+            "hint": "Geçmişte yaşamış tarihi bir kişi.",
+            "explanation": "Geçmişte yaşamış kişilerin bitmiş eylemleri için kesin olarak Past Simple (painted) kullanılır."
+      },
+      {
+            "id": "b1-perfect-vs-past-p2",
+            "sentence": "I ___ (lose) my key! I cannot get inside my office now.",
+            "blankAnswer": "have lost",
+            "options": [
+                  "lost",
+                  "have lost",
+                  "had lost"
+            ],
+            "tr": "Anahtarımı kaybettim! Şu anda ofisime giremiyorum.",
+            "hint": "Eylemin sonucu şu an devam ediyor.",
+            "explanation": "Geçmişte yapılmış fakat sonucu şu anı doğrudan etkileyen durumlar Present Perfect (have lost) ile anlatılır."
+      },
+      {
+            "id": "b1-perfect-vs-past-p3",
+            "sentence": "Our company ___ two new branches in Europe last year.",
+            "blankAnswer": "opened",
+            "options": [
+                  "opened",
+                  "has opened",
+                  "had opened"
+            ],
+            "tr": "Şirketimiz geçen yıl Avrupa'da iki yeni şube açtı.",
+            "hint": "'last year' kesin zaman belirtecidir.",
+            "explanation": "'Last year' kesin bir geçmiş zaman zarfıdır; bu yüzden mutlaka Past Simple (opened) kullanılır."
+      }
+]
   },
   {
     "id": "b1-passive-voice",
@@ -2311,7 +2868,48 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "note": "must be worn"
       }
     ],
-    "proTip": "Akademik veya iş e-postalarında resmi bir ton yakalamak istediğinizde pasif cümleler cümlenize ağırlık katar."
+    "proTip": "Akademik veya iş e-postalarında resmi bir ton yakalamak istediğinizde pasif cümleler cümlenize ağırlık katar.",
+    "practices": [
+      {
+            "id": "b1-passive-voice-p1",
+            "sentence": "The ancient castle ___ (visit) by thousands of tourists every summer.",
+            "blankAnswer": "is visited",
+            "options": [
+                  "visited",
+                  "is visited",
+                  "was visited"
+            ],
+            "tr": "Antik kale her yaz binlerce turist tarafından ziyaret edilir.",
+            "hint": "'every summer' geniş zaman edilgendir.",
+            "explanation": "Geniş zaman tekil edilgen çatı yapısı: is + V3 (is visited)."
+      },
+      {
+            "id": "b1-passive-voice-p2",
+            "sentence": "This historic bridge was ___ (construct) over two hundred years ago.",
+            "blankAnswer": "constructed",
+            "options": [
+                  "construct",
+                  "constructed",
+                  "constructing"
+            ],
+            "tr": "Bu tarihi köprü iki yüz yılı aşkın süre önce inşa edildi.",
+            "hint": "was + V3 kuralı.",
+            "explanation": "Geçmiş zaman edilgen yapıda 'was' ardından fiilin 3. hali (V3: constructed) gelir."
+      },
+      {
+            "id": "b1-passive-voice-p3",
+            "sentence": "The important documents will be ___ (send) to your office tomorrow.",
+            "blankAnswer": "sent",
+            "options": [
+                  "send",
+                  "sent",
+                  "sending"
+            ],
+            "tr": "Önemli belgeler yarın ofisinize gönderilecek.",
+            "hint": "Gelecek zaman edilgen yapısı.",
+            "explanation": "Gelecek zaman edilgen kalıbı 'will be + V3' (will be sent) şeklindedir."
+      }
+]
   },
   {
     "id": "b1-conditionals",
@@ -2450,7 +3048,48 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "note": "Type 2"
       }
     ],
-    "proTip": "Bir arkadaşınıza akıl verirken veya tavsiye sunarken 'If I were you, I would...' kalıbından daha etkilisi yoktur."
+    "proTip": "Bir arkadaşınıza akıl verirken veya tavsiye sunarken 'If I were you, I would...' kalıbından daha etkilisi yoktur.",
+    "practices": [
+      {
+            "id": "b1-conditionals-p1",
+            "sentence": "If we catch the 8 o'clock train, we ___ arrive in Paris on time.",
+            "blankAnswer": "will",
+            "options": [
+                  "will",
+                  "would",
+                  "are"
+            ],
+            "tr": "Saat 8 trenine yetişirsek Paris'e zamanında varacağız.",
+            "hint": "Type 1 gerçekçi gelecek olasılığı.",
+            "explanation": "Type 1 koşul cümlesi: If + Present Simple, will + V1."
+      },
+      {
+            "id": "b1-conditionals-p2",
+            "sentence": "If I ___ (have) enough free time, I would learn how to play the piano.",
+            "blankAnswer": "had",
+            "options": [
+                  "have",
+                  "had",
+                  "will have"
+            ],
+            "tr": "Yeterince boş vaktim olsaydı piyano çalmayı öğrenirdim.",
+            "hint": "Type 2 şimdiki hayali durum.",
+            "explanation": "Type 2 koşul cümlelerinde if cümleciği Past Simple (had) alır, ana cümlecik 'would + V1' olur."
+      },
+      {
+            "id": "b1-conditionals-p3",
+            "sentence": "If she practiced speaking every day, she ___ improve her English much faster.",
+            "blankAnswer": "would",
+            "options": [
+                  "will",
+                  "would",
+                  "can"
+            ],
+            "tr": "Her gün konuşma pratiği yapsaydı İngilizcesini çok daha hızlı geliştirirdi.",
+            "hint": "Type 2 ana cümleciği.",
+            "explanation": "Type 2 şart cümlelerinde temel cümlecikte 'would + fiil' kullanılır."
+      }
+]
   },
   {
     "id": "b2-third-mixed-conditionals",
@@ -2562,7 +3201,48 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "note": "Inversion (Had they...)"
       }
     ],
-    "proTip": "Geçmişte aldığınız kararları değerlendirirken 'Had I known...' diyerek anadili İngilizce olanların seviyesine çıkabilirsiniz."
+    "proTip": "Geçmişte aldığınız kararları değerlendirirken 'Had I known...' diyerek anadili İngilizce olanların seviyesine çıkabilirsiniz.",
+    "practices": [
+      {
+            "id": "b2-third-mixed-conditionals-p1",
+            "sentence": "If the pilot had noticed the storm warning, the plane ___ made an emergency landing.",
+            "blankAnswer": "wouldn't have",
+            "options": [
+                  "wouldn't have",
+                  "won't have",
+                  "hadn't"
+            ],
+            "tr": "Pilot fırtına uyarısını fark etmiş olsaydı uçak acil iniş yapmamış olurdu.",
+            "hint": "Geçmişte gerçekleşmemiş bir pişmanlık (Type 3).",
+            "explanation": "Third Conditional kuralı: If + had V3, would/wouldn't have + V3."
+      },
+      {
+            "id": "b2-third-mixed-conditionals-p2",
+            "sentence": "If they ___ (reserve) tickets in advance, they would have attended the gala dinner.",
+            "blankAnswer": "had reserved",
+            "options": [
+                  "reserved",
+                  "had reserved",
+                  "have reserved"
+            ],
+            "tr": "Biletleri önceden rezerve etmiş olsalardı gala yemeğine katılmış olurlardı.",
+            "hint": "Type 3 'If' cümleciği hali.",
+            "explanation": "Third Conditional 'If' cümleciğinde 'had + V3' (had reserved) kullanılır."
+      },
+      {
+            "id": "b2-third-mixed-conditionals-p3",
+            "sentence": "If she had accepted the prestigious job offer last year, she ___ be a manager today.",
+            "blankAnswer": "would",
+            "options": [
+                  "would",
+                  "would have",
+                  "will"
+            ],
+            "tr": "Geçen yıl o prestijli iş teklifini kabul etmiş olsaydı bugün bir müdür olurdu.",
+            "hint": "Geçmiş şart + şimdiki sonuç (Mixed Conditional).",
+            "explanation": "Mixed conditional: Geçmişteki karar (had accepted) şu anki durumu etkiliyorsa ana cümlecik 'would + V1' (today) olur."
+      }
+]
   },
   {
     "id": "b2-reported-speech",
@@ -2708,7 +3388,48 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "note": "where he had put"
       }
     ],
-    "proTip": "Aktardığınız bilgi evrensel ve değişmeyen bir gerçekse zaman kaydırması yapılmayabilir: 'The teacher said that water boils at 100 degrees.'"
+    "proTip": "Aktardığınız bilgi evrensel ve değişmeyen bir gerçekse zaman kaydırması yapılmayabilir: 'The teacher said that water boils at 100 degrees.'",
+    "practices": [
+      {
+            "id": "b2-reported-speech-p1",
+            "sentence": "The director said, 'I am reviewing the annual budget.' ➔ The director said that he ___ the annual budget.",
+            "blankAnswer": "was reviewing",
+            "options": [
+                  "is reviewing",
+                  "was reviewing",
+                  "had reviewed"
+            ],
+            "tr": "Direktör 'Yıllık bütçeyi inceliyorum' dedi. ➔ Direktör yıllık bütçeyi incelemekte olduğunu söyledi.",
+            "hint": "Aktarma fiili geçmişte (said).",
+            "explanation": "Aktarma fiili geçmişte olduğunda Present Continuous (am reviewing) ➔ Past Continuous'a (was reviewing) kayar."
+      },
+      {
+            "id": "b2-reported-speech-p2",
+            "sentence": "She explained, 'I have already submitted all required documents.' ➔ She explained that she ___ all required documents.",
+            "blankAnswer": "had already submitted",
+            "options": [
+                  "has already submitted",
+                  "had already submitted",
+                  "already submitted"
+            ],
+            "tr": "'Gerekli tüm belgeleri çoktan teslim ettim' diye açıkladı. ➔ Gerekli tüm belgeleri çoktan teslim ettiğini açıkladı.",
+            "hint": "Present Perfect dolaylı anlatımı.",
+            "explanation": "Reported speech kuralında Present Perfect (have submitted) ➔ Past Perfect'e (had submitted) dönüşür."
+      },
+      {
+            "id": "b2-reported-speech-p3",
+            "sentence": "The manager asked me, 'Can you complete this analysis by Friday?' ➔ The manager asked me if I ___ complete the analysis by Friday.",
+            "blankAnswer": "could",
+            "options": [
+                  "can",
+                  "could",
+                  "will"
+            ],
+            "tr": "Müdür bana 'Bu analizi cumaya kadar tamamlayabilir misin?' diye sordu. ➔ Müdür bana analizi cumaya kadar tamamlayıp tamamlayamayacağımı sordu.",
+            "hint": "'can' modalının geçmiş hali.",
+            "explanation": "Reported speech aktarımında 'can' yardımcı fiili 'could' biçimine dönüşür."
+      }
+]
   },
   {
     "id": "b2-relative-clauses",
@@ -2820,7 +3541,48 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "note": "Omitting (that/which atılmış)"
       }
     ],
-    "proTip": "Akıcı ve profesyonel İngilizce konuşurken nesne konumundaki who/which kelimelerini atarak daha doğal bir ritim yakalayabilirsiniz."
+    "proTip": "Akıcı ve profesyonel İngilizce konuşurken nesne konumundaki who/which kelimelerini atarak daha doğal bir ritim yakalayabilirsiniz.",
+    "practices": [
+      {
+            "id": "b2-relative-clauses-p1",
+            "sentence": "The scientist ___ developed the innovative vaccine received an international award.",
+            "blankAnswer": "who",
+            "options": [
+                  "who",
+                  "which",
+                  "whose"
+            ],
+            "tr": "Yenilikçi aşıyı geliştiren bilim insanı uluslararası bir ödül aldı.",
+            "hint": "İnsanları niteleyen özne zamiri.",
+            "explanation": "İnsanları niteleyen ve cümleciğin öznesi olan relative pronoun 'who'dur."
+      },
+      {
+            "id": "b2-relative-clauses-p2",
+            "sentence": "The company headquarters, ___ were designed by an award-winning architect, will open next month.",
+            "blankAnswer": "which",
+            "options": [
+                  "that",
+                  "which",
+                  "where"
+            ],
+            "tr": "Ödüllü bir mimar tarafından tasarlanan şirket genel merkezi gelecek ay açılacak.",
+            "hint": "Virgülle ayrılan (Non-defining) cümlecik.",
+            "explanation": "Virgüllü Non-defining Relative Clause yapılarında asla 'that' kullanılamaz; cansız varlıklar için 'which' zorunludur."
+      },
+      {
+            "id": "b2-relative-clauses-p3",
+            "sentence": "We interviewed a candidate ___ analytical skills impressed the entire board.",
+            "blankAnswer": "whose",
+            "options": [
+                  "who",
+                  "whom",
+                  "whose"
+            ],
+            "tr": "Analitik becerileri tüm yönetim kurulunu etkileyen bir adayla mülakat yaptık.",
+            "hint": "Aitlik/sahiplik bildiren ilgi zamiri.",
+            "explanation": "Aitlik bildiren durumlarda (adayın analitik becerileri) 'whose' kullanılır."
+      }
+]
   },
   {
     "id": "b2-wish-clauses",
@@ -2943,7 +3705,48 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         "note": "wish it would stop"
       }
     ],
-    "proTip": "Gerçekleşmesi muhtemel gelecek umutları için 'hope', imkansız hayaller ve keşkeler için 'wish' kullanın."
+    "proTip": "Gerçekleşmesi muhtemel gelecek umutları için 'hope', imkansız hayaller ve keşkeler için 'wish' kullanın.",
+    "practices": [
+      {
+            "id": "b2-wish-clauses-p1",
+            "sentence": "I do not understand statistical analysis. I wish I ___ (understand) advanced statistics.",
+            "blankAnswer": "understood",
+            "options": [
+                  "understand",
+                  "understood",
+                  "had understood"
+            ],
+            "tr": "İstatistiki analizi anlamıyorum. Keşke ileri düzey istatistiği anlayabilseydim.",
+            "hint": "Şu anki gerçekliğe zıt dilek.",
+            "explanation": "Şu an geçerli olan bir duruma yönelik dilek bildirmek için 'wish + Past Simple' (understood) kullanılır."
+      },
+      {
+            "id": "b2-wish-clauses-p2",
+            "sentence": "I did not attend yesterday's crucial strategy conference. I wish I ___ (attend) it.",
+            "blankAnswer": "had attended",
+            "options": [
+                  "attended",
+                  "had attended",
+                  "would attend"
+            ],
+            "tr": "Dünkü kritik strateji konferansına katılmadım. Keşke katılmış olsaydım.",
+            "hint": "Geçmişe yönelik geri döndürülemez pişmanlık.",
+            "explanation": "Geçmişte yaşanmış ve bitmiş bir duruma yönelik pişmanlıkta 'wish + Past Perfect' (had attended) kullanılır."
+      },
+      {
+            "id": "b2-wish-clauses-p3",
+            "sentence": "The noise outside is unbearable. If only they ___ stop drilling the road!",
+            "blankAnswer": "would",
+            "options": [
+                  "would",
+                  "will",
+                  "did"
+            ],
+            "tr": "Dışarıdaki gürültü dayanılmaz. Keşke yolu delmeyi bıraksalar!",
+            "hint": "Başkalarının rahatsız edici eylemleri için dilek.",
+            "explanation": "Başkalarının rahatsız edici bir eylemi sonlandırmasını istemek için 'wish / if only + would + V1' kullanılır."
+      }
+]
   }
 ];
 
