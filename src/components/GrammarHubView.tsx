@@ -1134,6 +1134,30 @@ export const GrammarHubView: React.FC<GrammarHubViewProps> = ({
               </div>
             );
           })}
+
+          {/* Kur Sonu Cümle Kurma Pratiği Çağrısı */}
+          <div className="p-4 rounded-3xl bg-gradient-to-r from-teal-500/15 via-emerald-500/15 to-teal-500/15 border-2 border-teal-500/40 text-center space-y-2 mt-4 shadow-sm">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-500/20 text-teal-800 dark:text-teal-200 text-xs font-black">
+              <Sparkles className="w-3.5 h-3.5 text-teal-600 dark:text-teal-400" />
+              <span>{selectedLevel} Kuru Pratik Atölyesi</span>
+            </div>
+            <h4 className="text-sm sm:text-base font-black text-slate-900 dark:text-white">
+              {selectedLevel} Seviyesi Gramer Konularını Pekiştir!
+            </h4>
+            <p className="text-xs text-slate-600 dark:text-slate-300 font-medium max-w-md mx-auto">
+              Öğrendiğiniz tüm kuralları test etmek için bu kur sonundaki {levelScrambles.length} cümlelik sözcük sıralama atölyesine geçebilirsiniz.
+            </p>
+            <button
+              onClick={() => {
+                setActiveTab('scramble');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              className="mt-1 w-full sm:w-auto px-6 py-2.5 rounded-2xl bg-teal-600 hover:bg-teal-500 text-white font-black text-xs sm:text-sm shadow-md transition active:scale-95 cursor-pointer inline-flex items-center justify-center gap-2"
+            >
+              <span>{selectedLevel} Cümle Kurma Kısmına Geç ({levelScrambles.length} Cümle)</span>
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
         </div>
       )}
 
@@ -1159,6 +1183,27 @@ export const GrammarHubView: React.FC<GrammarHubViewProps> = ({
                 <RotateCcw className="w-4 h-4" />
               </button>
             </div>
+          </div>
+
+          {/* Soru Seçim Çubuğu (1 - 15) */}
+          <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1 px-0.5">
+            {levelScrambles.map((item, idx) => (
+              <button
+                key={item.id}
+                onClick={() => {
+                  setCurrentScrambleIdx(idx);
+                  resetScrambleQuestion(item);
+                }}
+                className={`w-7 h-7 shrink-0 rounded-lg text-xs font-black transition cursor-pointer flex items-center justify-center ${
+                  currentScrambleIdx === idx
+                    ? 'bg-teal-600 text-white shadow-sm ring-2 ring-teal-400/40'
+                    : 'bg-black/5 dark:bg-white/10 text-slate-600 dark:text-slate-300 hover:bg-black/10'
+                }`}
+                title={`Soru ${idx + 1}: ${item.topicName}`}
+              >
+                {idx + 1}
+              </button>
+            ))}
           </div>
 
           {/* TÜRKÇE HEDEF CÜMLE KARTI */}

@@ -4514,8 +4514,8 @@ export const SENTENCE_SCRAMBLE_DATA: SentenceScrambleItem[] = [
       "happy",
       "today."
     ],
-    "hint": "Özne (I) + to be (am) + sıfat (very happy) + zaman zarfı (today).",
-    "ruleExplanation": "İngilizcede temel cümle yapısı Özne + Yüklem + Nesne / Belirteç sırasını takip eder."
+    "hint": "I öznesi için to be hali 'am'dir.",
+    "ruleExplanation": "İngilizcede durum cümlelerinde I öznesi daima 'am' yardımcı fiilini alır."
   },
   {
     "id": "scramble-a1-2",
@@ -4580,7 +4580,7 @@ export const SENTENCE_SCRAMBLE_DATA: SentenceScrambleItem[] = [
     "id": "scramble-a1-5",
     "level": "A1",
     "grammarTopicId": "a1-there-is-are",
-    "topicName": "There is / There are",
+    "topicName": "There Is / There Are",
     "tr": "Mutfak masasının üzerinde üç taze elma var.",
     "targetEng": "There are three fresh apples on the kitchen table.",
     "tokens": [
@@ -4595,14 +4595,14 @@ export const SENTENCE_SCRAMBLE_DATA: SentenceScrambleItem[] = [
       "table."
     ],
     "hint": "Çoğul nesnelerde 'There are' kullanılır.",
-    "ruleExplanation": "Elmalar çoğul sayılabilir olduğu için 'There are' ile başlanır."
+    "ruleExplanation": "Çoğul varlıkların mevcudiyetini belirtirken 'There are' yapısı kullanılır."
   },
   {
     "id": "scramble-a1-6",
     "level": "A1",
     "grammarTopicId": "a1-can-cant",
     "topicName": "Can / Can't",
-    "tr": "O akustik gitarı çok güzel çalabilir.",
+    "tr": "O çok iyi akustik gitar çalabilir.",
     "targetEng": "He can play the acoustic guitar very well.",
     "tokens": [
       "He",
@@ -4614,15 +4614,15 @@ export const SENTENCE_SCRAMBLE_DATA: SentenceScrambleItem[] = [
       "very",
       "well."
     ],
-    "hint": "Can yardımcı fiilinden sonra ana fiil yalın gelir.",
-    "ruleExplanation": "Can modal fiilinden sonra gelen eylem hiçbir takı almaz ve yalın kalır."
+    "hint": "'can' sonrası fiil ek almaz, yalın kalır.",
+    "ruleExplanation": "Modal verb 'can' sonrasında fiil daima yalın (bare infinitive) halde gelir."
   },
   {
     "id": "scramble-a1-7",
     "level": "A1",
     "grammarTopicId": "a1-to-be",
-    "topicName": "To Be Soru",
-    "tr": "Sen final sınavı için hazır mısın?",
+    "topicName": "To Be Soru Yapısı",
+    "tr": "Final sınavına hazır mısın?",
     "targetEng": "Are you ready for the final exam?",
     "tokens": [
       "Are",
@@ -4633,15 +4633,164 @@ export const SENTENCE_SCRAMBLE_DATA: SentenceScrambleItem[] = [
       "final",
       "exam?"
     ],
-    "hint": "To be sorularında yardımcı fiil cümlenin en başına gelir.",
-    "ruleExplanation": "Sorularda 'Are' başa geçer: Are + you + ready?"
+    "hint": "'you' öznesiyle to be sorusu cümlenin başına 'Are' alarak başlar.",
+    "ruleExplanation": "To be soru yapısında yardımcı fiil (Are) cümlenin başına taşınır."
+  },
+  {
+    "id": "scramble-a1-8",
+    "level": "A1",
+    "grammarTopicId": "a1-present-simple",
+    "topicName": "Present Simple (Olumsuz)",
+    "tr": "Babam pazar günleri çalışmaz.",
+    "targetEng": "My father does not work on Sundays.",
+    "tokens": [
+      "My",
+      "father",
+      "does",
+      "not",
+      "work",
+      "on",
+      "Sundays."
+    ],
+    "hint": "3. tekil şahısta olumsuz geniş zaman için 'does not' + V1.",
+    "ruleExplanation": "He/She/It öznelerinde geniş zaman olumsuzluk yapısı 'does not (doesn't)' ve yalın fiildir."
+  },
+  {
+    "id": "scramble-a1-9",
+    "level": "A1",
+    "grammarTopicId": "a1-present-simple",
+    "topicName": "Present Simple (Wh- Soru)",
+    "tr": "Büyükanne ve büyükbaban nerede yaşıyor?",
+    "targetEng": "Where do your grandparents live?",
+    "tokens": [
+      "Where",
+      "do",
+      "your",
+      "grandparents",
+      "live?"
+    ],
+    "hint": "Soru kelimesinden (Where) sonra 'do' yardımcı fiili gelir.",
+    "ruleExplanation": "Wh- soru kelimelerinde dizilim: Soru Kelimesi + Do/Does + Özne + Yalın Fiil şeklindedir."
+  },
+  {
+    "id": "scramble-a1-10",
+    "level": "A1",
+    "grammarTopicId": "a1-present-continuous",
+    "topicName": "Present Continuous (Soru)",
+    "tr": "Kız kardeşin şu anda televizyon mu izliyor?",
+    "targetEng": "Is your sister watching television right now?",
+    "tokens": [
+      "Is",
+      "your",
+      "sister",
+      "watching",
+      "television",
+      "right",
+      "now?"
+    ],
+    "hint": "Şimdiki zaman soru cümlesinde 'Is' başa gelir.",
+    "ruleExplanation": "Present Continuous soru yapısında 'Am/Is/Are + Özne + Fiil-ing' kuralı uygulanır."
+  },
+  {
+    "id": "scramble-a1-11",
+    "level": "A1",
+    "grammarTopicId": "a1-have-got-has-got",
+    "topicName": "Have Got / Has Got",
+    "tr": "Onun iki sevimli kedisi var.",
+    "targetEng": "He has got two cute cats.",
+    "tokens": [
+      "He",
+      "has",
+      "got",
+      "two",
+      "cute",
+      "cats."
+    ],
+    "hint": "He/She/It özneleri için 'has got' kullanılır.",
+    "ruleExplanation": "Üçüncü tekil şahıslarda sahiplik belirtirken 'have got' yerine 'has got' gelir."
+  },
+  {
+    "id": "scramble-a1-12",
+    "level": "A1",
+    "grammarTopicId": "a1-there-is-are",
+    "topicName": "There Is (Sayılamayan)",
+    "tr": "Fincanda biraz sıcak kahve var.",
+    "targetEng": "There is some hot coffee in the cup.",
+    "tokens": [
+      "There",
+      "is",
+      "some",
+      "hot",
+      "coffee",
+      "in",
+      "the",
+      "cup."
+    ],
+    "hint": "Sayılamayan isimler için 'There is' ve 'some' kullanılır.",
+    "ruleExplanation": "Kahve gibi sayılamayan isimlerin varlığından bahsederken tekil yardımcı fiil 'is' kullanılır."
+  },
+  {
+    "id": "scramble-a1-13",
+    "level": "A1",
+    "grammarTopicId": "a1-can-cant",
+    "topicName": "Can / Can't",
+    "tr": "O çok akıcı bir şekilde Fransızca konuşamaz.",
+    "targetEng": "She cannot speak French very fluently.",
+    "tokens": [
+      "She",
+      "cannot",
+      "speak",
+      "French",
+      "very",
+      "fluently."
+    ],
+    "hint": "Yetenek olumsuzluğu için 'cannot' + yalın fiil.",
+    "ruleExplanation": "'Can't' veya 'cannot' kip belirtecinden sonra gelen esas fiil hiçbir ek almaz."
+  },
+  {
+    "id": "scramble-a1-14",
+    "level": "A1",
+    "grammarTopicId": "a1-to-be",
+    "topicName": "To Be (Meslek & Sıfat)",
+    "tr": "En iyi arkadaşım yetenekli bir mimardır.",
+    "targetEng": "My best friend is a talented architect.",
+    "tokens": [
+      "My",
+      "best",
+      "friend",
+      "is",
+      "a",
+      "talented",
+      "architect."
+    ],
+    "hint": "Tekil meslek ismi önüne 'a/an' gelir.",
+    "ruleExplanation": "Meslek ve niteleme durumlarında 'is + sıfat + isim' sıralaması izlenir."
+  },
+  {
+    "id": "scramble-a1-15",
+    "level": "A1",
+    "grammarTopicId": "a1-present-simple",
+    "topicName": "Sıklık Zarfları",
+    "tr": "Biz genellikle saat on ikide öğle yemeği yeriz.",
+    "targetEng": "We usually have lunch at twelve o'clock.",
+    "tokens": [
+      "We",
+      "usually",
+      "have",
+      "lunch",
+      "at",
+      "twelve",
+      "o'clock."
+    ],
+    "hint": "Sıklık zarfı (usually) özneden hemen sonra, esas fiilden önce gelir.",
+    "ruleExplanation": "Geniş zamanda 'usually, always, often' gibi sıklık zarfları özne ile esas fiil arasına girer."
   },
   {
     "id": "scramble-a2-1",
     "level": "A2",
     "grammarTopicId": "a2-past-simple",
     "topicName": "Past Simple",
-    "tr": "Biz geçen hafta sonu sinemaya gittik.",
+    "tr": "Geçen hafta sonu sinemaya gittik.",
     "targetEng": "We went to the cinema last weekend.",
     "tokens": [
       "We",
@@ -4652,15 +4801,15 @@ export const SENTENCE_SCRAMBLE_DATA: SentenceScrambleItem[] = [
       "last",
       "weekend."
     ],
-    "hint": "Go fiilinin geçmiş hali 'went'tir.",
-    "ruleExplanation": "Geçmiş zamanda düzensiz fiillerin 2. hali kullanılır; zaman zarfı sona gelir."
+    "hint": "'go' fiilinin 2. hali düzensizdir (went).",
+    "ruleExplanation": "Geçmişte tamamlanmış eylemlerde düzensiz fiiller 2. halleriyle (V2) kullanılır."
   },
   {
     "id": "scramble-a2-2",
     "level": "A2",
     "grammarTopicId": "a2-past-continuous",
-    "topicName": "Past Continuous & When",
-    "tr": "Telefon çaldığında ben akşam yemeği hazırlıyordum.",
+    "topicName": "Past Continuous + When",
+    "tr": "Telefon çaldığında akşam yemeği pişiriyordum.",
     "targetEng": "I was cooking dinner when the phone rang.",
     "tokens": [
       "I",
@@ -4672,14 +4821,14 @@ export const SENTENCE_SCRAMBLE_DATA: SentenceScrambleItem[] = [
       "phone",
       "rang."
     ],
-    "hint": "Devam eden eylemde 'was + V-ing', araya giren ani eylemde Past Simple kullanılır.",
-    "ruleExplanation": "When ani olayı (rang), Past Continuous ise süregiden arka planı (was cooking) anlatır."
+    "hint": "'when' anlık kesintiyi (rang), ana cümle süreci (was cooking) anlatır.",
+    "ruleExplanation": "Geçmişte devam eden bir süreç başka bir olayla kesildiğinde 'was/were V-ing + when + V2' kalıbı kullanılır."
   },
   {
     "id": "scramble-a2-3",
     "level": "A2",
-    "grammarTopicId": "a2-future-will-going-to",
-    "topicName": "Future: Going To",
+    "grammarTopicId": "a2-future-will-goingto",
+    "topicName": "Be Going To (Kanıtlı Gelecek)",
     "tr": "Karanlık bulutlara bak, yağmur yağacak.",
     "targetEng": "Look at the dark clouds, it is going to rain.",
     "tokens": [
@@ -4694,8 +4843,8 @@ export const SENTENCE_SCRAMBLE_DATA: SentenceScrambleItem[] = [
       "to",
       "rain."
     ],
-    "hint": "Gözle görülür açık kanıt varsa 'be going to' kullanılır.",
-    "ruleExplanation": "Fiziksel kanıta dayalı tahminlerde be going to yapısı zorunludur."
+    "hint": "Görünür güçlü kanıtlarda 'be going to' tercih edilir.",
+    "ruleExplanation": "Konuşma anında gözle görülen açık bir kanıt varsa gelecek için 'is going to' kullanılır."
   },
   {
     "id": "scramble-a2-4",
@@ -4715,14 +4864,14 @@ export const SENTENCE_SCRAMBLE_DATA: SentenceScrambleItem[] = [
       "than",
       "mine."
     ],
-    "hint": "Uzun sıfatların önüne 'more', arkasına 'than' gelir.",
-    "ruleExplanation": "Çok heceli sıfatlarda karşılaştırma 'more + sıfat + than' ile yapılır."
+    "hint": "Uzun sıfatlarda 'more' ve pekiştirmek için 'much' kullanılır.",
+    "ruleExplanation": "Üç veya daha fazla heceli sıfatların kıyaslamasında 'more + sıfat + than' kullanılır."
   },
   {
     "id": "scramble-a2-5",
     "level": "A2",
     "grammarTopicId": "a2-modals-must-should",
-    "topicName": "Modals: Should",
+    "topicName": "Should (Tavsiye)",
     "tr": "Daha sağlıklı hissetmek için her gün bol su içmelisin.",
     "targetEng": "You should drink plenty of water every day to feel healthier.",
     "tokens": [
@@ -4738,15 +4887,234 @@ export const SENTENCE_SCRAMBLE_DATA: SentenceScrambleItem[] = [
       "feel",
       "healthier."
     ],
-    "hint": "Tavsiye verirken should + yalın fiil kullanılır.",
-    "ruleExplanation": "Should dostane tavsiyelerde kullanılır ve fiil yalın kalır."
+    "hint": "'should' tavsiye kipi sonrası fiil yalın gelir.",
+    "ruleExplanation": "Nasihat ve öneri bildirmek için 'should + V1' kullanılır."
+  },
+  {
+    "id": "scramble-a2-6",
+    "level": "A2",
+    "grammarTopicId": "a2-past-simple",
+    "topicName": "Past Simple (Olumsuz)",
+    "tr": "O dün öğleden sonra büyükanne ve büyükbabasını ziyaret etmedi.",
+    "targetEng": "She did not visit her grandparents yesterday afternoon.",
+    "tokens": [
+      "She",
+      "did",
+      "not",
+      "visit",
+      "her",
+      "grandparents",
+      "yesterday",
+      "afternoon."
+    ],
+    "hint": "Geçmiş zaman olumsuz cümlesinde 'did not' sonrası fiil yalın kalır.",
+    "ruleExplanation": "Past Simple olumsuz cümlelerde 'did not + V1' kuralı gereği fiil 2. halini almaz."
+  },
+  {
+    "id": "scramble-a2-7",
+    "level": "A2",
+    "grammarTopicId": "a2-past-continuous",
+    "topicName": "While + Past Continuous",
+    "tr": "Biz parkta yürürken yağmur yağmaya başladı.",
+    "targetEng": "While we were walking in the park, it started to rain.",
+    "tokens": [
+      "While",
+      "we",
+      "were",
+      "walking",
+      "in",
+      "the",
+      "park,",
+      "it",
+      "started",
+      "to",
+      "rain."
+    ],
+    "hint": "'While' devam eden süreci (were walking), ana cümle başlangıcı (started) anlatır.",
+    "ruleExplanation": "'While' bağlacından sonra süreç belirten Past Continuous (were walking) kullanılır."
+  },
+  {
+    "id": "scramble-a2-8",
+    "level": "A2",
+    "grammarTopicId": "a2-comparatives-superlatives",
+    "topicName": "Superlatives",
+    "tr": "Everest Dağı tüm dünyadaki en yüksek dağdır.",
+    "targetEng": "Mount Everest is the highest mountain in the whole world.",
+    "tokens": [
+      "Mount",
+      "Everest",
+      "is",
+      "the",
+      "highest",
+      "mountain",
+      "in",
+      "the",
+      "whole",
+      "world."
+    ],
+    "hint": "En üstünlük derecesinde 'the' + '-est' takısı kullanılır.",
+    "ruleExplanation": "Kısa sıfatlarda en üstünlük derecesi (Superlative) 'the + sıfat-est' şeklinde oluşturulur."
+  },
+  {
+    "id": "scramble-a2-9",
+    "level": "A2",
+    "grammarTopicId": "a2-modals-must-should",
+    "topicName": "Must Not (Yasak)",
+    "tr": "Öğrenciler sınav sırasında cep telefonlarını kullanmamalıdır.",
+    "targetEng": "Students must not use their mobile phones during the exam.",
+    "tokens": [
+      "Students",
+      "must",
+      "not",
+      "use",
+      "their",
+      "mobile",
+      "phones",
+      "during",
+      "the",
+      "exam."
+    ],
+    "hint": "Kesin yasak bildirmek için 'must not' kullanılır.",
+    "ruleExplanation": "Güçlü yasaklama ve kurallarda 'must not (mustn't) + V1' kalıbı kullanılır."
+  },
+  {
+    "id": "scramble-a2-10",
+    "level": "A2",
+    "grammarTopicId": "a2-future-will-goingto",
+    "topicName": "Future Will (Gelecek Tahmini)",
+    "tr": "Bence insanlar gelecekte Mars'ta yaşayacaklar.",
+    "targetEng": "I think people will live on Mars in the future.",
+    "tokens": [
+      "I",
+      "think",
+      "people",
+      "will",
+      "live",
+      "on",
+      "Mars",
+      "in",
+      "the",
+      "future."
+    ],
+    "hint": "Kişisel tahmin ve inançlarda 'will' kullanılır.",
+    "ruleExplanation": "'I think, I believe' gibi kişisel tahmin belirten ifadelerle 'will + V1' kullanılır."
+  },
+  {
+    "id": "scramble-a2-11",
+    "level": "A2",
+    "grammarTopicId": "a2-past-simple",
+    "topicName": "Past Simple (Soru)",
+    "tr": "Roma seyahatinden herhangi bir hediyelik eşya aldın mı?",
+    "targetEng": "Did you buy any souvenirs from your trip to Rome?",
+    "tokens": [
+      "Did",
+      "you",
+      "buy",
+      "any",
+      "souvenirs",
+      "from",
+      "your",
+      "trip",
+      "to",
+      "Rome?"
+    ],
+    "hint": "Geçmiş zaman soru cümlesinde 'Did' başa gelir ve fiil yalındır.",
+    "ruleExplanation": "Past Simple soru kalıbı: 'Did + Özne + V1' şeklinde oluşturulur."
+  },
+  {
+    "id": "scramble-a2-12",
+    "level": "A2",
+    "grammarTopicId": "a2-future-will-goingto",
+    "topicName": "Be Going To (Plan)",
+    "tr": "Gelecek ay yeni bir ev satın alacağız.",
+    "targetEng": "We are going to buy a new house next month.",
+    "tokens": [
+      "We",
+      "are",
+      "going",
+      "to",
+      "buy",
+      "a",
+      "new",
+      "house",
+      "next",
+      "month."
+    ],
+    "hint": "Önceden planlanmış gelecek niyetlerinde 'be going to' kullanılır.",
+    "ruleExplanation": "Önceden kararlaştırılmış plan ve niyetlerde 'am/is/are going to + V1' kullanılır."
+  },
+  {
+    "id": "scramble-a2-13",
+    "level": "A2",
+    "grammarTopicId": "a2-past-continuous",
+    "topicName": "Past Continuous (Wh- Soru)",
+    "tr": "Dün akşam saat sekizde ne yapıyordun?",
+    "targetEng": "What were you doing at eight o'clock yesterday evening?",
+    "tokens": [
+      "What",
+      "were",
+      "you",
+      "doing",
+      "at",
+      "eight",
+      "o'clock",
+      "yesterday",
+      "evening?"
+    ],
+    "hint": "Geçmişte belirli bir andaki süreç sorulurken 'were + you + V-ing'.",
+    "ruleExplanation": "Past Continuous soru dizilimi: Soru Kelimesi + was/were + Özne + V-ing."
+  },
+  {
+    "id": "scramble-a2-14",
+    "level": "A2",
+    "grammarTopicId": "a2-comparatives-superlatives",
+    "topicName": "Comparatives with Much",
+    "tr": "İngilizce öğrenmek Japonca öğrenmekten çok daha kolaydır.",
+    "targetEng": "Learning English is much easier than learning Japanese.",
+    "tokens": [
+      "Learning",
+      "English",
+      "is",
+      "much",
+      "easier",
+      "than",
+      "learning",
+      "Japanese."
+    ],
+    "hint": "Karşılaştırmayı pekiştirmek için sıfatın önüne 'much' gelir.",
+    "ruleExplanation": "Karşılaştırma sıfatlarının önüne 'much' getirilerek aradaki fark vurgulanır."
+  },
+  {
+    "id": "scramble-a2-15",
+    "level": "A2",
+    "grammarTopicId": "a2-modals-must-should",
+    "topicName": "Don't Have To (Zorunluluk Yokluğu)",
+    "tr": "Yarın pazar olduğu için erken uyanmak zorunda değilsin.",
+    "targetEng": "You do not have to wake up early tomorrow because it is Sunday.",
+    "tokens": [
+      "You",
+      "do",
+      "not",
+      "have",
+      "to",
+      "wake",
+      "up",
+      "early",
+      "tomorrow",
+      "because",
+      "it",
+      "is",
+      "Sunday."
+    ],
+    "hint": "Zorunluluk yokluğunu belirtmek için 'don't have to' kullanılır.",
+    "ruleExplanation": "Gerekliliğin ve zorunluluğun olmadığını bildirmek için 'don't/doesn't have to' kullanılır."
   },
   {
     "id": "scramble-b1-1",
     "level": "B1",
     "grammarTopicId": "b1-present-perfect",
     "topicName": "Present Perfect (For/Since)",
-    "tr": "Ben yedi yıldır bu uluslararası şirkette çalışıyorum.",
+    "tr": "Bu uluslararası şirkette yedi yıldır çalışıyorum.",
     "targetEng": "I have worked at this international company for seven years.",
     "tokens": [
       "I",
@@ -4760,14 +5128,14 @@ export const SENTENCE_SCRAMBLE_DATA: SentenceScrambleItem[] = [
       "seven",
       "years."
     ],
-    "hint": "Süreç belirtirken 'for' kullanılır.",
-    "ruleExplanation": "Geçmişte başlayıp hala devam eden eylemlerde have + V3 ve for/since kullanılır."
+    "hint": "Süreç bildirmek için 'for' ve Present Perfect (have + V3) kullanılır.",
+    "ruleExplanation": "Geçmişte başlayıp günümüzde de süren durumlar için 'have/has + V3' ve zaman süresi için 'for' kullanılır."
   },
   {
     "id": "scramble-b1-2",
     "level": "B1",
     "grammarTopicId": "b1-passive-voice",
-    "topicName": "Passive Voice (Geçmiş Pasif)",
+    "topicName": "Passive Voice (Geçmiş Zaman Edilgen)",
     "tr": "Bu tarihi katedral on dördüncü yüzyılda inşa edildi.",
     "targetEng": "This historic cathedral was built in the fourteenth century.",
     "tokens": [
@@ -4781,15 +5149,15 @@ export const SENTENCE_SCRAMBLE_DATA: SentenceScrambleItem[] = [
       "fourteenth",
       "century."
     ],
-    "hint": "Geçmiş pasif: was/were + V3 (built).",
-    "ruleExplanation": "İşi yapan değil yapılan nesne vurgulandığında Passive Voice kullanılır."
+    "hint": "Geçmiş zaman edilgen yapıda 'was/were + V3' kullanılır.",
+    "ruleExplanation": "Geçmişteki eylemi yapan kişi değil yapılan nesne vurgulandığında 'was/were + V3' kurulur."
   },
   {
     "id": "scramble-b1-3",
     "level": "B1",
     "grammarTopicId": "b1-conditionals",
-    "topicName": "Conditionals Type 2",
-    "tr": "Daha çok boş vaktim olsaydı piyano çalmayı öğrenirdim.",
+    "topicName": "Second Conditional (Hayali Durum)",
+    "tr": "Daha fazla boş vaktim olsaydı piyano çalmayı öğrenirdim.",
     "targetEng": "If I had more free time, I would learn to play the piano.",
     "tokens": [
       "If",
@@ -4806,15 +5174,15 @@ export const SENTENCE_SCRAMBLE_DATA: SentenceScrambleItem[] = [
       "the",
       "piano."
     ],
-    "hint": "Type 2: If + Past Simple, would + V1.",
-    "ruleExplanation": "Şu anki gerçek dışı hayali senaryolar Type 2 kalıbıyla aktarılır."
+    "hint": "Şu anki gerçek dışı durumlarda 'If + Past Simple, would + V1' kullanılır.",
+    "ruleExplanation": "Şimdiki zamana ait hayali durum ve dileklerde Second Conditional yapısı kullanılır."
   },
   {
     "id": "scramble-b1-4",
     "level": "B1",
     "grammarTopicId": "b1-perfect-vs-past",
-    "topicName": "Present Perfect vs. Past",
-    "tr": "Üniversiteden tam olarak ne zaman mezun oldun?",
+    "topicName": "Past Simple vs Present Perfect",
+    "tr": "Üniversiteden ne zaman mezun oldun?",
     "targetEng": "When did you graduate from the university?",
     "tokens": [
       "When",
@@ -4825,8 +5193,258 @@ export const SENTENCE_SCRAMBLE_DATA: SentenceScrambleItem[] = [
       "the",
       "university?"
     ],
-    "hint": "'When' sorusu daima Past Simple (did) gerektirir.",
-    "ruleExplanation": "Belirli bir zamanı sorgulayan 'When' ile Present Perfect değil Past Simple kullanılır."
+    "hint": "'When' soru kelimesiyle belirli geçmiş zaman sorulur (did + V1).",
+    "ruleExplanation": "'When' kesin zaman sorduğu için Present Perfect ile değil, Past Simple (did) ile kullanılır."
+  },
+  {
+    "id": "scramble-b1-5",
+    "level": "B1",
+    "grammarTopicId": "b1-present-perfect",
+    "topicName": "Present Perfect with Already",
+    "tr": "O yüksek lisans tezini çoktan bitirdi.",
+    "targetEng": "She has already finished her master thesis.",
+    "tokens": [
+      "She",
+      "has",
+      "already",
+      "finished",
+      "her",
+      "master",
+      "thesis."
+    ],
+    "hint": "'Already' yardımcı fiil ile esas fiil arasına gelir.",
+    "ruleExplanation": "Present Perfect'te eylemin beklenenden önce tamamlandığını belirtmek için 'already' kullanılır."
+  },
+  {
+    "id": "scramble-b1-6",
+    "level": "B1",
+    "grammarTopicId": "b1-present-perfect",
+    "topicName": "Present Perfect with Ever",
+    "tr": "Daha önce hiç bir Asya ülkesine seyahat ettin mi?",
+    "targetEng": "Have you ever traveled to an Asian country before?",
+    "tokens": [
+      "Have",
+      "you",
+      "ever",
+      "traveled",
+      "to",
+      "an",
+      "Asian",
+      "country",
+      "before?"
+    ],
+    "hint": "Hayat boyu deneyimleri sorarken 'Have you ever + V3' kullanılır.",
+    "ruleExplanation": "Deneyim sorgulamalarında soru cümlesi 'Have/Has + Özne + ever + V3' şeklindedir."
+  },
+  {
+    "id": "scramble-b1-7",
+    "level": "B1",
+    "grammarTopicId": "b1-perfect-vs-past",
+    "topicName": "Past Perfect (Geçmişin Geçmişi)",
+    "tr": "Ambulans vardığında hasta çoktan stabil hale gelmişti.",
+    "targetEng": "By the time the ambulance arrived, the patient had already stabilized.",
+    "tokens": [
+      "By",
+      "the",
+      "time",
+      "the",
+      "ambulance",
+      "arrived,",
+      "the",
+      "patient",
+      "had",
+      "already",
+      "stabilized."
+    ],
+    "hint": "'By the time' yan cümlesi Past Simple, ana cümle daha önceki Past Perfect olur.",
+    "ruleExplanation": "Geçmişteki bir andan önce tamamlanmış olaylar Past Perfect (had + V3) ile ifade edilir."
+  },
+  {
+    "id": "scramble-b1-8",
+    "level": "B1",
+    "grammarTopicId": "b1-passive-voice",
+    "topicName": "Passive Voice (Geniş Zaman Edilgen)",
+    "tr": "İngilizce tüm dünyada milyonlarca insan tarafından konuşulur.",
+    "targetEng": "English is spoken by millions of people all over the world.",
+    "tokens": [
+      "English",
+      "is",
+      "spoken",
+      "by",
+      "millions",
+      "of",
+      "people",
+      "all",
+      "over",
+      "the",
+      "world."
+    ],
+    "hint": "Geniş zaman edilgen yapı: 'is/are + V3'.",
+    "ruleExplanation": "Geniş zamanda edilgen yapı nesne odaklıdır: 'is/are + fiilin 3. hali (V3)'."
+  },
+  {
+    "id": "scramble-b1-9",
+    "level": "B1",
+    "grammarTopicId": "b1-conditionals",
+    "topicName": "First Conditional (Tip 1 Gerçek Şart)",
+    "tr": "Yarın yağmur yağarsa açık hava konserini iptal edeceğiz.",
+    "targetEng": "If it rains tomorrow, we will cancel the open-air concert.",
+    "tokens": [
+      "If",
+      "it",
+      "rains",
+      "tomorrow,",
+      "we",
+      "will",
+      "cancel",
+      "the",
+      "open-air",
+      "concert."
+    ],
+    "hint": "Tip 1 şart cümlesi: 'If + Present Simple, will + V1'.",
+    "ruleExplanation": "Geleceğe yönelik olası şart ve sonuçlar için First Conditional (If + V1, will + V1) kullanılır."
+  },
+  {
+    "id": "scramble-b1-10",
+    "level": "B1",
+    "grammarTopicId": "b1-conditionals",
+    "topicName": "Second Conditional (Piyango Hayali)",
+    "tr": "Milli piyangoyu kazansaydım dünyayı gezerdim.",
+    "targetEng": "If I won the national lottery, I would travel around the world.",
+    "tokens": [
+      "If",
+      "I",
+      "won",
+      "the",
+      "national",
+      "lottery,",
+      "I",
+      "would",
+      "travel",
+      "around",
+      "the",
+      "world."
+    ],
+    "hint": "Tip 2 hayali durum: 'If + Past Simple, would + V1'.",
+    "ruleExplanation": "Şimdiki zamanda gerçekleşmesi imkansız veya hayali durumlar için Second Conditional kullanılır."
+  },
+  {
+    "id": "scramble-b1-11",
+    "level": "B1",
+    "grammarTopicId": "b1-passive-voice",
+    "topicName": "Relative Clauses (Who)",
+    "tr": "Sınıfta yanımda oturan kız Norveçlidir.",
+    "targetEng": "The girl who sits next to me in class is from Norway.",
+    "tokens": [
+      "The",
+      "girl",
+      "who",
+      "sits",
+      "next",
+      "to",
+      "me",
+      "in",
+      "class",
+      "is",
+      "from",
+      "Norway."
+    ],
+    "hint": "İnsanları nitelemek için 'who' ilgi zamiri kullanılır.",
+    "ruleExplanation": "İnsan isimlerinden sonra gelen sıfat cümleciklerinde özne konumunda 'who' kullanılır."
+  },
+  {
+    "id": "scramble-b1-12",
+    "level": "B1",
+    "grammarTopicId": "b1-passive-voice",
+    "topicName": "Relative Clauses (Which)",
+    "tr": "Geçen hafta satın aldığım dizüstü bilgisayarın olağanüstü pil ömrü var.",
+    "targetEng": "The laptop which I purchased last week has exceptional battery life.",
+    "tokens": [
+      "The",
+      "laptop",
+      "which",
+      "I",
+      "purchased",
+      "last",
+      "week",
+      "has",
+      "exceptional",
+      "battery",
+      "life."
+    ],
+    "hint": "Cansız nesneleri nitelemek için 'which' kullanılır.",
+    "ruleExplanation": "Cansız varlıkları ve hayvanları tanımlayan sıfat cümleciklerinde 'which' ilgi zamiri kullanılır."
+  },
+  {
+    "id": "scramble-b1-13",
+    "level": "B1",
+    "grammarTopicId": "b1-present-perfect",
+    "topicName": "Modals of Deduction (Güçlü Çıkarım)",
+    "tr": "Tam bir maraton koştuktan sonra çok bitkin olmalı.",
+    "targetEng": "He must be very exhausted after running a full marathon.",
+    "tokens": [
+      "He",
+      "must",
+      "be",
+      "very",
+      "exhausted",
+      "after",
+      "running",
+      "a",
+      "full",
+      "marathon."
+    ],
+    "hint": "Güçlü mantıksal çıkarım için 'must + be' kullanılır.",
+    "ruleExplanation": "Eldeki güçlü bir kanıta dayanarak yüksek olasılıklı çıkarım yaparken 'must + V1' kullanılır."
+  },
+  {
+    "id": "scramble-b1-14",
+    "level": "B1",
+    "grammarTopicId": "b1-present-perfect",
+    "topicName": "Modals of Deduction (İmkansızlık)",
+    "tr": "Ofiste olması imkansız çünkü şu anda tatilde.",
+    "targetEng": "She cannot be at the office because she is currently on vacation.",
+    "tokens": [
+      "She",
+      "cannot",
+      "be",
+      "at",
+      "the",
+      "office",
+      "because",
+      "she",
+      "is",
+      "currently",
+      "on",
+      "vacation."
+    ],
+    "hint": "İmkansızlık çıkarımında 'cannot be' kullanılır.",
+    "ruleExplanation": "Mantıksal olarak imkansız bir durumu belirtmek için 'can't / cannot + V1' kullanılır."
+  },
+  {
+    "id": "scramble-b1-15",
+    "level": "B1",
+    "grammarTopicId": "b1-present-perfect",
+    "topicName": "Present Perfect with Since",
+    "tr": "Liseden mezun olduğumuzdan beri çocukluk arkadaşımı görmedim.",
+    "targetEng": "I have not seen my childhood friend since we graduated from high school.",
+    "tokens": [
+      "I",
+      "have",
+      "not",
+      "seen",
+      "my",
+      "childhood",
+      "friend",
+      "since",
+      "we",
+      "graduated",
+      "from",
+      "high",
+      "school."
+    ],
+    "hint": "'Since' geçmişteki belirli bir başlangıç noktasını belirtir.",
+    "ruleExplanation": "'Since' bağlacından sonra Past Simple bir olay, ana cümlede Present Perfect kullanılır."
   },
   {
     "id": "scramble-b2-1",
@@ -4849,15 +5467,15 @@ export const SENTENCE_SCRAMBLE_DATA: SentenceScrambleItem[] = [
       "the",
       "flight."
     ],
-    "hint": "Geçmiş pişmanlık: If + had + V3, would have + V3.",
-    "ruleExplanation": "Geçmişte yaşanmış bitmiş olayın hayali aksi durumunu Third Conditional ifade eder."
+    "hint": "Geçmişe yönelik gerçekleşmemiş şart: 'had + V3 ➔ would have + V3'.",
+    "ruleExplanation": "Third Conditional geçmişte yaşanmış bitmiş olayların tersini kurgularken kullanılır."
   },
   {
     "id": "scramble-b2-2",
     "level": "B2",
     "grammarTopicId": "b2-reported-speech",
     "topicName": "Reported Speech",
-    "tr": "Müdür bana ertesi gün yeni bir ofise taşınacağını söyledi.",
+    "tr": "Müdür ertesi gün yeni bir ofise taşınacağını bana söyledi.",
     "targetEng": "The manager told me that he would move to a new office the following day.",
     "tokens": [
       "The",
@@ -4876,14 +5494,14 @@ export const SENTENCE_SCRAMBLE_DATA: SentenceScrambleItem[] = [
       "following",
       "day."
     ],
-    "hint": "Told me + that; will ➔ would; tomorrow ➔ the following day.",
-    "ruleExplanation": "Dolaylı aktarımda zamanlar bir derece geçmişe kaydırılır (Backshift)."
+    "hint": "will ➔ would, tomorrow ➔ the following day dönüşür.",
+    "ruleExplanation": "Dolaylı anlatımda zamanlar ve zaman zarfları bir derece geçmişe aktarılır."
   },
   {
     "id": "scramble-b2-3",
     "level": "B2",
     "grammarTopicId": "b2-relative-clauses",
-    "topicName": "Relative Clauses",
+    "topicName": "Defining Relative Clauses",
     "tr": "Tedaviyi keşfeden bilim insanı prestijli bir ödül kazandı.",
     "targetEng": "The scientist who discovered the cure won a prestigious award.",
     "tokens": [
@@ -4898,15 +5516,15 @@ export const SENTENCE_SCRAMBLE_DATA: SentenceScrambleItem[] = [
       "prestigious",
       "award."
     ],
-    "hint": "İnsanları nitelerken 'who' bağlacı kullanılır.",
-    "ruleExplanation": "Defining Relative Clause cümlede özneyi niteleyen yan cümleciği kurar."
+    "hint": "İnsan özneyi niteleyen sıfat cümleciğinde 'who' kullanılır.",
+    "ruleExplanation": "Belirleyici sıfat cümleciklerinde insanları tanımlamak için virgül olmadan 'who' kullanılır."
   },
   {
     "id": "scramble-b2-4",
     "level": "B2",
     "grammarTopicId": "b2-wish-clauses",
-    "topicName": "Wish Clauses",
-    "tr": "Keşke kendi şirketimi kurmak için daha fazla cesaretim olsaydı.",
+    "topicName": "Wish Clauses (Şimdiki Zaman Dileği)",
+    "tr": "Keşke kendi şirketimi kuracak daha fazla cesaretim olsaydı.",
     "targetEng": "I wish I had more courage to start my own company.",
     "tokens": [
       "I",
@@ -4921,7 +5539,279 @@ export const SENTENCE_SCRAMBLE_DATA: SentenceScrambleItem[] = [
       "own",
       "company."
     ],
-    "hint": "Şimdiki zaman dileği: I wish + Past Simple (had).",
-    "ruleExplanation": "Şu an elimizde olmayan bir durumu dilerken I wish + Past Simple kullanılır."
+    "hint": "Şu anki durumun tersini dilerken 'wish + Past Simple' kullanılır.",
+    "ruleExplanation": "Wish clauses yapısında şu anki bir arzu için fiil Past Simple'a çekilir (have ➔ had)."
+  },
+  {
+    "id": "scramble-b2-5",
+    "level": "B2",
+    "grammarTopicId": "b2-third-mixed-conditionals",
+    "topicName": "Inversion (Devrik Şart)",
+    "tr": "Yoğun trafik sıkışıklığını bilseydim metroya binerdim.",
+    "targetEng": "Had I known about the severe traffic jam, I would have taken the subway.",
+    "tokens": [
+      "Had",
+      "I",
+      "known",
+      "about",
+      "the",
+      "severe",
+      "traffic",
+      "jam,",
+      "I",
+      "would",
+      "have",
+      "taken",
+      "the",
+      "subway."
+    ],
+    "hint": "Devrik şart yapısında 'If' kalkar ve 'Had' cümlenin başına gelir.",
+    "ruleExplanation": "Üçüncü tip şart cümlelerinde devriklik 'Had + Özne + V3' dizilimiyle kurulur."
+  },
+  {
+    "id": "scramble-b2-6",
+    "level": "B2",
+    "grammarTopicId": "b2-third-mixed-conditionals",
+    "topicName": "Inversion with Seldom",
+    "tr": "Böylesine olağanüstü bir müzik performansına nadiren şahit oldum.",
+    "targetEng": "Seldom have I witnessed such an extraordinary musical performance.",
+    "tokens": [
+      "Seldom",
+      "have",
+      "I",
+      "witnessed",
+      "such",
+      "an",
+      "extraordinary",
+      "musical",
+      "performance."
+    ],
+    "hint": "Olumsuz zarf (Seldom) başa geldiğinde yardımcı fiil özneden önce gelir.",
+    "ruleExplanation": "'Seldom, rarely, hardly' gibi zarflar cümlenin başına geldiğinde cümle soru formatında devrik olur."
+  },
+  {
+    "id": "scramble-b2-7",
+    "level": "B2",
+    "grammarTopicId": "b2-third-mixed-conditionals",
+    "topicName": "Mixed Conditionals",
+    "tr": "Londra'daki iş teklifini kabul etmiş olsaydı bugün yurtdışında yaşıyor olurdu.",
+    "targetEng": "If she had taken the job offer in London, she would be living abroad today.",
+    "tokens": [
+      "If",
+      "she",
+      "had",
+      "taken",
+      "the",
+      "job",
+      "offer",
+      "in",
+      "London,",
+      "she",
+      "would",
+      "be",
+      "living",
+      "abroad",
+      "today."
+    ],
+    "hint": "Geçmişteki şartın (had taken) bugünkü sonucu (would be living).",
+    "ruleExplanation": "Geçmişteki bir seçimin şimdiki sonucunu ifade etmek için Mixed Conditional (Past Perfect ➔ would + V1) kullanılır."
+  },
+  {
+    "id": "scramble-b2-8",
+    "level": "B2",
+    "grammarTopicId": "b2-third-mixed-conditionals",
+    "topicName": "Advanced Passive (Reporting Verb)",
+    "tr": "Yeni gökdelenin ünlü bir Japon mimar tarafından tasarlandığı bildiriliyor.",
+    "targetEng": "The new skyscraper is reported to have been designed by a famous Japanese architect.",
+    "tokens": [
+      "The",
+      "new",
+      "skyscraper",
+      "is",
+      "reported",
+      "to",
+      "have",
+      "been",
+      "designed",
+      "by",
+      "a",
+      "famous",
+      "Japanese",
+      "architect."
+    ],
+    "hint": "Geçmiş eylemi bildiren edilgen yapı: 'is reported to have been + V3'.",
+    "ruleExplanation": "Aktarma fiillerinde geçmişte tamamlanmış edilgen durum 'to have been + V3' kalıbıyla aktarılır."
+  },
+  {
+    "id": "scramble-b2-9",
+    "level": "B2",
+    "grammarTopicId": "b2-reported-speech",
+    "topicName": "Reported Speech (Whether / Soru)",
+    "tr": "Bana yıllık gala yemeğinde kendisine eşlik edip etmeyeceğimi sordu.",
+    "targetEng": "She asked me whether I would accompany her to the annual gala dinner.",
+    "tokens": [
+      "She",
+      "asked",
+      "me",
+      "whether",
+      "I",
+      "would",
+      "accompany",
+      "her",
+      "to",
+      "the",
+      "annual",
+      "gala",
+      "dinner."
+    ],
+    "hint": "Dolaylı sorularda 'if / whether' kullanılır ve fiil bir derece geçmişe kayar.",
+    "ruleExplanation": "Yes/No soruları Reported Speech aktarılırken 'asked + whether/if + düz cümle dizilimi' uygulanır."
+  },
+  {
+    "id": "scramble-b2-10",
+    "level": "B2",
+    "grammarTopicId": "b2-reported-speech",
+    "topicName": "Reported Speech (Backshift)",
+    "tr": "CEO şirketin rekor çeyrek kârı elde ettiğini duyurdu.",
+    "targetEng": "The CEO announced that the company had achieved record quarterly profits.",
+    "tokens": [
+      "The",
+      "CEO",
+      "announced",
+      "that",
+      "the",
+      "company",
+      "had",
+      "achieved",
+      "record",
+      "quarterly",
+      "profits."
+    ],
+    "hint": "Geçmişte söylenen söz aktarılırken Present Perfect 'had achieved'e dönüşür.",
+    "ruleExplanation": "Dolaylı aktarımda zamanlar bir derece geçmişe kaydırılır (Backshift): Present/Past ➔ Past Perfect."
+  },
+  {
+    "id": "scramble-b2-11",
+    "level": "B2",
+    "grammarTopicId": "b2-relative-clauses",
+    "topicName": "Non-defining Relative Clauses (Whose)",
+    "tr": "Çığır açan araştırması dün yayımlanan Dr. Smith bir konuşma yapacak.",
+    "targetEng": "Dr. Smith, whose groundbreaking research was published yesterday, will give a speech.",
+    "tokens": [
+      "Dr.",
+      "Smith,",
+      "whose",
+      "groundbreaking",
+      "research",
+      "was",
+      "published",
+      "yesterday,",
+      "will",
+      "give",
+      "a",
+      "speech."
+    ],
+    "hint": "Ek bilgi veren sıfat cümleciklerinde iki virgül arasında 'whose' kullanılır.",
+    "ruleExplanation": "Aitlik bildiren sıfat cümleciklerinde 'whose + isim' yapısı kullanılır ve ek bilgiyse virgülle ayrılır."
+  },
+  {
+    "id": "scramble-b2-12",
+    "level": "B2",
+    "grammarTopicId": "b2-wish-clauses",
+    "topicName": "Wish Clauses (Şikayet - Would)",
+    "tr": "Raporumu sunarken sözümü kesmeyi bıraksan ne iyi olur (Keşke kessen).",
+    "targetEng": "I wish you would stop interrupting me while I am presenting my report.",
+    "tokens": [
+      "I",
+      "wish",
+      "you",
+      "would",
+      "stop",
+      "interrupting",
+      "me",
+      "while",
+      "I",
+      "am",
+      "presenting",
+      "my",
+      "report."
+    ],
+    "hint": "Başkalarının rahatsız edici bir eylemi sonlandırmasını isterken 'wish + would' kullanılır.",
+    "ruleExplanation": "Karşı tarafın davranışına yönelik şikayet ve değişiklik dileklerinde 'wish + would + V1' kalıbı kullanılır."
+  },
+  {
+    "id": "scramble-b2-13",
+    "level": "B2",
+    "grammarTopicId": "b2-wish-clauses",
+    "topicName": "If Only (Geçmiş Pişmanlık)",
+    "tr": "Keşke on yıl önce sürdürülebilir yeşil teknolojilere yatırım yapmış olsaydım!",
+    "targetEng": "If only I had invested in sustainable green technologies a decade ago!",
+    "tokens": [
+      "If",
+      "only",
+      "I",
+      "had",
+      "invested",
+      "in",
+      "sustainable",
+      "green",
+      "technologies",
+      "a",
+      "decade",
+      "ago!"
+    ],
+    "hint": "Geçmişe yönelik derin pişmanlık bildirmek için 'If only + Past Perfect' kullanılır.",
+    "ruleExplanation": "Geçmişte değiştirilemeyen olaylara duyulan pişmanlıkta 'If only + had + V3' kalıbı kullanılır."
+  },
+  {
+    "id": "scramble-b2-14",
+    "level": "B2",
+    "grammarTopicId": "b2-third-mixed-conditionals",
+    "topicName": "Inversion (Not only... but also)",
+    "tr": "Projeyi planlanandan önce tamamlamakla kalmadı, aynı zamanda maliyetleri de düşürdü.",
+    "targetEng": "Not only did he complete the project ahead of schedule, but he also cut costs.",
+    "tokens": [
+      "Not",
+      "only",
+      "did",
+      "he",
+      "complete",
+      "the",
+      "project",
+      "ahead",
+      "of",
+      "schedule,",
+      "but",
+      "he",
+      "also",
+      "cut",
+      "costs."
+    ],
+    "hint": "'Not only' cümle başında devriklik yapar: 'did he complete'.",
+    "ruleExplanation": "'Not only' cümleye başladığında ilk cümle soru yapısında devrik (did + özne + V1) kurulur."
+  },
+  {
+    "id": "scramble-b2-15",
+    "level": "B2",
+    "grammarTopicId": "b2-third-mixed-conditionals",
+    "topicName": "Inversion (Under no circumstances)",
+    "tr": "Gizli müşteri verileri hiçbir koşulda üçüncü şahıslarla paylaşılmamalıdır.",
+    "targetEng": "Under no circumstances should confidential customer data be shared with third parties.",
+    "tokens": [
+      "Under",
+      "no",
+      "circumstances",
+      "should",
+      "confidential",
+      "customer",
+      "data",
+      "be",
+      "shared",
+      "with",
+      "third",
+      "parties."
+    ],
+    "hint": "'Under no circumstances' devrik yapı gerektirir: 'should data be shared'.",
+    "ruleExplanation": "Kısıtlayıcı olumsuz edat öbekleri cümle başında yardımcı fiili özneden önceye çeker."
   }
 ];
