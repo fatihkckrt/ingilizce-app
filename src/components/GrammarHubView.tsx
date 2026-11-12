@@ -21,7 +21,9 @@ import {
   Eye,
   EyeOff,
   Edit3,
-  CheckCircle
+  CheckCircle,
+  ChevronDown,
+  ChevronUp
 } from 'lucide-react';
 
 interface GrammarHubViewProps {
@@ -76,6 +78,15 @@ export const GrammarHubView: React.FC<GrammarHubViewProps> = ({
 
   const [practiceStates, setPracticeStates] = useState<Record<string, PracticeState>>({});
   const [showPracticeHint, setShowPracticeHint] = useState<Record<string, boolean>>({});
+  // Her konunun test bölümünün açık/kapalı durumu (varsayılan kapalı, butonla açılır)
+  const [openedPractices, setOpenedPractices] = useState<Record<string, boolean>>({});
+
+  const togglePracticeOpen = (topicId: string) => {
+    setOpenedPractices(prev => ({
+      ...prev,
+      [topicId]: !prev[topicId]
+    }));
+  };
 
   const getPracticeState = (topicId: string): PracticeState => {
     return practiceStates[topicId] || {
@@ -415,14 +426,17 @@ export const GrammarHubView: React.FC<GrammarHubViewProps> = ({
                         <button
                           type="button"
                           onClick={() => {
-                            const el = document.getElementById(`practice-${topic.id}`);
-                            if (el) el.scrollIntoView({ behavior: 'smooth' });
+                            setOpenedPractices(prev => ({ ...prev, [topic.id]: true }));
+                            setTimeout(() => {
+                              const el = document.getElementById(`practice-${topic.id}`);
+                              if (el) el.scrollIntoView({ behavior: 'smooth' });
+                            }, 50);
                           }}
                           className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-black text-xs shadow-xs transition active:scale-95 cursor-pointer"
                         >
                           <Edit3 className="w-3.5 h-3.5" />
-                          <span>🎯 Konu Sonu Boşluk Doldurma Pratiğine Git ({topic.practices.length} Soru)</span>
-                          <ChevronRight className="w-3.5 h-3.5" />
+                          <span>🎯 Boşluk Doldurma Testine Git ({topic.practices.length} Soru)</span>
+                          <ChevronDown className="w-3.5 h-3.5" />
                         </button>
                       </div>
                     )}
@@ -665,231 +679,7 @@ export const GrammarHubView: React.FC<GrammarHubViewProps> = ({
                       </div>
                     )}
 
-                    {/* 8. KONU SONU BOŞLUK DOLDURMA PRATİĞİ (FILL-IN-THE-BLANKS INTERACTIVE PRACTICE) */}
-                    {topic.practices && topic.practices.length > 0 && (() => {
-                      const pState = getPracticeState(topic.id);
-                      const currentPractice = topic.practices[pState.activeIdx] || topic.practices[0];
-                      const isCorrect = pState.userSelection.trim().toLowerCase() === currentPractice.blankAnswer.trim().toLowerCase();
-                      const completedCount = Object.keys(pState.solved).length;
-
-                      return (
-                        <div id={`practice-${topic.id}`} className="scroll-mt-4 p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-teal-500/15 via-emerald-500/10 to-transparent border-2 border-teal-500/40 space-y-4 shadow-sm">
-                          {/* Pratik Başlığı & Sayaç */}
-                          <div className="flex flex-wrap items-center justify-between gap-2 border-b border-teal-500/20 pb-3">
-                            <div className="flex items-center gap-2.5">
-                              <div className="w-9 h-9 rounded-xl bg-teal-600 text-white flex items-center justify-center shrink-0 shadow-xs">
-                                <Edit3 className="w-4 h-4" />
-                              </div>
-                              <div>
-                                <div className="flex items-center gap-2 flex-wrap">
-                                  <h4 className="text-xs sm:text-sm font-black text-slate-900 dark:text-slate-50 flex items-center gap-1.5">
-                                    <span>✍️ Konu Sonu Boşluk Doldurma Pratiği</span>
-                                  </h4>
-                                  <span className="px-2 py-0.5 rounded-full text-[10px] font-black bg-teal-600 text-white uppercase">
-                                    {topic.level} Seviye
-                                  </span>
-                                </div>
-                                <p className="text-[11px] text-slate-500 dark:text-slate-400 font-medium">
-                                  Konu anlatımını tamamladınız! Şimdi öğrendiklerinizi boşlukları doldurarak hemen pekiştirin
-                                </p>
-                              </div>
-                            </div>
-
-                            {/* Çözülen Soru Sayacı */}
-                            <div className="flex items-center gap-1.5">
-                              <span className="text-[11px] font-black px-3 py-1 rounded-xl bg-white dark:bg-slate-800 text-teal-700 dark:text-teal-300 border border-teal-500/30 shadow-2xs">
-                                {completedCount === topic.practices.length ? '🎉 Hepsi Tamamlandı!' : `İlerleme: ${completedCount} / ${topic.practices.length}`}
-                              </span>
-                            </div>
-                          </div>
-
-                          {/* Soru Seçici Tab Butonları */}
-                          <div className="flex items-center gap-2 overflow-x-auto pb-1">
-                            {topic.practices.map((p, pIdx) => {
-                              const isCurrent = pState.activeIdx === pIdx;
-                              const isSolved = !!pState.solved[pIdx];
-                              return (
-                                <button
-                                  key={p.id}
-                                  onClick={() => {
-                                    updatePracticeState(topic.id, {
-                                      activeIdx: pIdx,
-                                      userSelection: '',
-                                      isSubmitted: false
-                                    });
-                                  }}
-                                  className={`px-3.5 py-1.5 rounded-xl text-xs font-black transition flex items-center gap-1.5 cursor-pointer shrink-0 ${
-                                    isCurrent
-                                      ? 'bg-teal-600 text-white shadow-xs ring-2 ring-teal-500/40'
-                                      : isSolved
-                                      ? 'bg-emerald-500/20 text-emerald-800 dark:text-emerald-300 border border-emerald-500/40'
-                                      : 'bg-white/90 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700 hover:border-teal-400'
-                                  }`}
-                                >
-                                  {isSolved && <CheckCircle className="w-3.5 h-3.5 text-emerald-500" />}
-                                  <span>Alıştırma {pIdx + 1}</span>
-                                </button>
-                              );
-                            })}
-                          </div>
-
-                          {/* Aktif Soru Kartı */}
-                          <div className="p-4 sm:p-5 rounded-2xl bg-white dark:bg-slate-900 border border-teal-500/30 shadow-2xs space-y-4">
-                            {/* Cümle ve Boşluk Görünümü */}
-                            <div className="py-3 px-4 rounded-xl bg-teal-50/80 dark:bg-slate-800/80 border border-teal-500/20">
-                              <p className="text-sm sm:text-base font-extrabold text-slate-900 dark:text-white leading-relaxed">
-                                {renderSentenceWithBlank(currentPractice.sentence, pState.userSelection)}
-                              </p>
-                            </div>
-
-                            {/* Seçenek Butonları */}
-                            <div>
-                              <div className="text-[11px] font-bold text-slate-500 dark:text-slate-400 mb-2">
-                                Doğru seçeneğe tıklayarak boşluğu doldurun:
-                              </div>
-                              <div className="flex flex-wrap gap-2">
-                                {currentPractice.options.map((opt) => {
-                                  const isSelected = pState.userSelection === opt;
-                                  return (
-                                    <button
-                                      key={opt}
-                                      onClick={() => {
-                                        updatePracticeState(topic.id, {
-                                          userSelection: opt,
-                                          isSubmitted: false
-                                        });
-                                      }}
-                                      className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm font-black border transition cursor-pointer active:scale-95 ${
-                                        isSelected
-                                          ? 'bg-teal-600 text-white border-teal-600 shadow-md ring-2 ring-teal-500/40'
-                                          : 'bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-700 hover:border-teal-400'
-                                      }`}
-                                    >
-                                      {opt}
-                                    </button>
-                                  );
-                                })}
-                              </div>
-                            </div>
-
-                            {/* Kontrol & İpucu Butonları */}
-                            <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-100 dark:border-slate-800">
-                              <div className="flex items-center gap-2">
-                                <button
-                                  onClick={() => handleCheckPractice(topic.id, currentPractice, pState.activeIdx)}
-                                  disabled={!pState.userSelection}
-                                  className={`px-4 py-2 rounded-xl text-xs font-black transition flex items-center gap-1.5 cursor-pointer shadow-xs ${
-                                    pState.userSelection
-                                      ? 'bg-teal-600 hover:bg-teal-700 text-white active:scale-95'
-                                      : 'bg-slate-200 dark:bg-slate-800 text-slate-400 cursor-not-allowed'
-                                  }`}
-                                >
-                                  <Check className="w-3.5 h-3.5" />
-                                  <span>Kontrol Et</span>
-                                </button>
-
-                                {currentPractice.hint && !pState.isSubmitted && (
-                                  <button
-                                    onClick={() => setShowPracticeHint(prev => ({ ...prev, [currentPractice.id]: !prev[currentPractice.id] }))}
-                                    className="px-3 py-2 rounded-xl text-xs font-bold text-amber-700 dark:text-amber-400 bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 transition flex items-center gap-1 cursor-pointer"
-                                  >
-                                    <Lightbulb className="w-3.5 h-3.5" />
-                                    <span>İpucu</span>
-                                  </button>
-                                )}
-                              </div>
-
-                              {pState.userSelection && (
-                                <button
-                                  onClick={() => {
-                                    updatePracticeState(topic.id, {
-                                      userSelection: '',
-                                      isSubmitted: false
-                                    });
-                                  }}
-                                  className="text-xs text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 flex items-center gap-1 cursor-pointer"
-                                >
-                                  <RotateCcw className="w-3 h-3" />
-                                  <span>Temizle</span>
-                                </button>
-                              )}
-                            </div>
-
-                            {/* İpucu Kutusu */}
-                            {showPracticeHint[currentPractice.id] && !pState.isSubmitted && (
-                              <div className="p-3 rounded-xl bg-amber-500/15 border border-amber-400/40 text-xs text-amber-900 dark:text-amber-200 flex items-start gap-2 animate-fadeIn">
-                                <Lightbulb className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
-                                <div>
-                                  <span className="font-black">İpucu:</span> {currentPractice.hint}
-                                </div>
-                              </div>
-                            )}
-
-                            {/* Kontrol Sonucu Bildirimi */}
-                            {pState.isSubmitted && (
-                              <div className={`p-4 rounded-xl border text-xs sm:text-sm space-y-2.5 animate-fadeIn ${
-                                isCorrect
-                                  ? 'bg-emerald-500/15 border-emerald-500/50 text-emerald-950 dark:text-emerald-100'
-                                  : 'bg-rose-500/15 border-rose-500/50 text-rose-950 dark:text-rose-100'
-                              }`}>
-                                <div className="flex items-center justify-between gap-2 font-black">
-                                  <span className="flex items-center gap-1.5">
-                                    {isCorrect ? (
-                                      <>
-                                        <CheckCircle className="w-4 h-4 text-emerald-600 shrink-0" />
-                                        <span>🎉 Harika! Doğru Cevap: "{currentPractice.blankAnswer}"</span>
-                                      </>
-                                    ) : (
-                                      <>
-                                        <AlertCircle className="w-4 h-4 text-rose-600 shrink-0" />
-                                        <span>❌ Henüz doğru değil, tekrar deneyin!</span>
-                                      </>
-                                    )}
-                                  </span>
-                                  {isCorrect && (
-                                    <button
-                                      onClick={() => speak(currentPractice.sentence.replace(/___\s*(?:\([^)]*\))?/, currentPractice.blankAnswer))}
-                                      className="p-1.5 rounded-lg bg-emerald-600 text-white hover:bg-emerald-700 transition flex items-center gap-1 text-[11px] cursor-pointer"
-                                      title="Sesli Dinle"
-                                    >
-                                      <Volume2 className="w-3.5 h-3.5" />
-                                      <span className="hidden sm:inline">Dinle</span>
-                                    </button>
-                                  )}
-                                </div>
-
-                                {/* Açıklama & Çeviri */}
-                                <div className="pt-1 text-xs space-y-1.5 leading-relaxed">
-                                  <p><span className="font-black">💡 Dilbilgisi Açıklaması:</span> {currentPractice.explanation}</p>
-                                  <p><span className="font-black">🇹🇷 Türkçe Çeviri:</span> {currentPractice.tr}</p>
-                                </div>
-
-                                {/* Sonraki Soru Butonu */}
-                                {isCorrect && pState.activeIdx < topic.practices.length - 1 && (
-                                  <div className="pt-1">
-                                    <button
-                                      onClick={() => {
-                                        updatePracticeState(topic.id, {
-                                          activeIdx: pState.activeIdx + 1,
-                                          userSelection: '',
-                                          isSubmitted: false
-                                        });
-                                      }}
-                                      className="px-4 py-2 rounded-xl bg-teal-600 hover:bg-teal-700 text-white text-xs font-black transition flex items-center gap-1.5 cursor-pointer shadow-xs active:scale-95"
-                                    >
-                                      <span>Sonraki Soruya Geç ({pState.activeIdx + 2} / {topic.practices.length})</span>
-                                      <ChevronRight className="w-3.5 h-3.5" />
-                                    </button>
-                                  </div>
-                                )}
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      );
-                    })()}
-
-                    {/* 9. ÖRNEK CÜMLELER & ZAMİR DAĞILIMI (GÖSTER / GİZLE TUŞLARI İLE) */}
+                    {/* 8. ÖRNEK CÜMLELER & ZAMİR DAĞILIMI (GÖSTER / GİZLE TUŞLARI İLE) */}
                     <div className="space-y-3 pt-2">
                       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
                         <div>
@@ -1066,6 +856,273 @@ export const GrammarHubView: React.FC<GrammarHubViewProps> = ({
                         })}
                       </div>
                     </div>
+
+                    {/* 9. ÖRNEK CÜMLELERDEN SONRA: AÇILIR / KAPANIR BOŞLUK DOLDURMA TESTİ */}
+                    {topic.practices && topic.practices.length > 0 && (() => {
+                      const pState = getPracticeState(topic.id);
+                      const currentPractice = topic.practices[pState.activeIdx] || topic.practices[0];
+                      const isCorrect = pState.userSelection.trim().toLowerCase() === currentPractice.blankAnswer.trim().toLowerCase();
+                      const completedCount = Object.keys(pState.solved).length;
+                      const isOpen = !!openedPractices[topic.id];
+
+                      if (!isOpen) {
+                        return (
+                          <div id={`practice-${topic.id}`} className="scroll-mt-4 pt-1">
+                            <button
+                              type="button"
+                              onClick={() => togglePracticeOpen(topic.id)}
+                              className="w-full p-4 rounded-2xl bg-gradient-to-r from-teal-600 via-emerald-600 to-teal-700 hover:from-teal-700 hover:to-emerald-800 text-white font-black text-sm sm:text-base flex items-center justify-between shadow-md transition active:scale-[0.99] cursor-pointer"
+                            >
+                              <div className="flex items-center gap-3">
+                                <span className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center text-xl shadow-xs">
+                                  ✍️
+                                </span>
+                                <div className="text-left">
+                                  <div className="leading-tight flex items-center gap-2 flex-wrap">
+                                    <span>Boşluk Doldurma Testini Aç</span>
+                                    <span className="px-2 py-0.5 rounded-full text-[10px] bg-white/25 text-white font-black">
+                                      {topic.practices.length} Soru
+                                    </span>
+                                  </div>
+                                  <p className="text-[11px] text-teal-100 font-medium mt-0.5">
+                                    Örnek cümleleri incelediniz! Şimdi testi açarak bilginizi sınayın ({completedCount}/{topic.practices.length} Tamamlandı)
+                                  </p>
+                                </div>
+                              </div>
+                              <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/20 text-xs font-black shrink-0">
+                                <span>Testi Aç</span>
+                                <ChevronDown className="w-4 h-4" />
+                              </div>
+                            </button>
+                          </div>
+                        );
+                      }
+
+                      return (
+                        <div id={`practice-${topic.id}`} className="scroll-mt-4 p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-teal-500/15 via-emerald-500/10 to-transparent border-2 border-teal-500/40 space-y-4 shadow-sm animate-fadeIn">
+                          {/* Pratik Başlığı & Kapatma Butonu */}
+                          <div className="flex flex-wrap items-center justify-between gap-2 border-b border-teal-500/20 pb-3">
+                            <div className="flex items-center gap-2.5">
+                              <div className="w-9 h-9 rounded-xl bg-teal-600 text-white flex items-center justify-center shrink-0 shadow-xs">
+                                <Edit3 className="w-4 h-4" />
+                              </div>
+                              <div>
+                                <div className="flex items-center gap-2 flex-wrap">
+                                  <h4 className="text-xs sm:text-sm font-black text-slate-900 dark:text-slate-50 flex items-center gap-1.5">
+                                    <span>✍️ Konu Sonu Boşluk Doldurma Testi</span>
+                                  </h4>
+                                  <span className="px-2 py-0.5 rounded-full text-[10px] font-black bg-teal-600 text-white uppercase">
+                                    {topic.level} Seviye
+                                  </span>
+                                </div>
+                                <p className="text-[11px] text-slate-500 dark:text-slate-400 font-medium">
+                                  Örnek cümlelerden sonra bilginizi test edin • Boşlukları doğru seçeneklerle doldurun
+                                </p>
+                              </div>
+                            </div>
+
+                            {/* Çözülen Soru Sayacı & Testi Kapat Butonu */}
+                            <div className="flex items-center gap-2">
+                              <span className="text-[11px] font-black px-3 py-1 rounded-xl bg-white dark:bg-slate-800 text-teal-700 dark:text-teal-300 border border-teal-500/30 shadow-2xs">
+                                {completedCount === topic.practices.length ? '🎉 Hepsi Tamamlandı!' : `İlerleme: ${completedCount} / ${topic.practices.length}`}
+                              </span>
+                              <button
+                                type="button"
+                                onClick={() => togglePracticeOpen(topic.id)}
+                                className="px-3 py-1.5 rounded-xl bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-black text-xs flex items-center gap-1.5 transition cursor-pointer"
+                                title="Test bölümünü gizle"
+                              >
+                                <span>Testi Kapat</span>
+                                <ChevronUp className="w-4 h-4" />
+                              </button>
+                            </div>
+                          </div>
+
+                          {/* Soru Seçici Tab Butonları */}
+                          <div className="flex items-center gap-2 overflow-x-auto pb-1">
+                            {topic.practices.map((p, pIdx) => {
+                              const isCurrent = pState.activeIdx === pIdx;
+                              const isSolved = !!pState.solved[pIdx];
+                              return (
+                                <button
+                                  key={p.id}
+                                  onClick={() => {
+                                    updatePracticeState(topic.id, {
+                                      activeIdx: pIdx,
+                                      userSelection: '',
+                                      isSubmitted: false
+                                    });
+                                  }}
+                                  className={`px-3.5 py-1.5 rounded-xl text-xs font-black transition flex items-center gap-1.5 cursor-pointer shrink-0 ${
+                                    isCurrent
+                                      ? 'bg-teal-600 text-white shadow-xs ring-2 ring-teal-500/40'
+                                      : isSolved
+                                      ? 'bg-emerald-500/20 text-emerald-800 dark:text-emerald-300 border border-emerald-500/40'
+                                      : 'bg-white/90 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700 hover:border-teal-400'
+                                  }`}
+                                >
+                                  {isSolved && <CheckCircle className="w-3.5 h-3.5 text-emerald-500" />}
+                                  <span>Soru {pIdx + 1}</span>
+                                </button>
+                              );
+                            })}
+                          </div>
+
+                          {/* Aktif Soru Kartı */}
+                          <div className="p-4 sm:p-5 rounded-2xl bg-white dark:bg-slate-900 border border-teal-500/30 shadow-2xs space-y-4">
+                            {/* Cümle ve Boşluk Görünümü */}
+                            <div className="py-3 px-4 rounded-xl bg-teal-50/80 dark:bg-slate-800/80 border border-teal-500/20">
+                              <p className="text-sm sm:text-base font-extrabold text-slate-900 dark:text-white leading-relaxed">
+                                {renderSentenceWithBlank(currentPractice.sentence, pState.userSelection)}
+                              </p>
+                            </div>
+
+                            {/* Seçenek Butonları */}
+                            <div>
+                              <div className="text-[11px] font-bold text-slate-500 dark:text-slate-400 mb-2">
+                                Doğru seçeneğe tıklayarak boşluğu doldurun:
+                              </div>
+                              <div className="flex flex-wrap gap-2">
+                                {currentPractice.options.map((opt) => {
+                                  const isSelected = pState.userSelection === opt;
+                                  return (
+                                    <button
+                                      key={opt}
+                                      onClick={() => {
+                                        updatePracticeState(topic.id, {
+                                          userSelection: opt,
+                                          isSubmitted: false
+                                        });
+                                      }}
+                                      className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm font-black border transition cursor-pointer active:scale-95 ${
+                                        isSelected
+                                          ? 'bg-teal-600 text-white border-teal-600 shadow-md ring-2 ring-teal-500/40'
+                                          : 'bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-700 hover:border-teal-400'
+                                      }`}
+                                    >
+                                      {opt}
+                                    </button>
+                                  );
+                                })}
+                              </div>
+                            </div>
+
+                            {/* Kontrol & İpucu Butonları */}
+                            <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-100 dark:border-slate-800">
+                              <div className="flex items-center gap-2">
+                                <button
+                                  onClick={() => handleCheckPractice(topic.id, currentPractice, pState.activeIdx)}
+                                  disabled={!pState.userSelection}
+                                  className={`px-4 py-2 rounded-xl text-xs font-black transition flex items-center gap-1.5 cursor-pointer shadow-xs ${
+                                    pState.userSelection
+                                      ? 'bg-teal-600 hover:bg-teal-700 text-white active:scale-95'
+                                      : 'bg-slate-200 dark:bg-slate-800 text-slate-400 cursor-not-allowed'
+                                  }`}
+                                >
+                                  <Check className="w-3.5 h-3.5" />
+                                  <span>Kontrol Et</span>
+                                </button>
+
+                                {currentPractice.hint && !pState.isSubmitted && (
+                                  <button
+                                    onClick={() => setShowPracticeHint(prev => ({ ...prev, [currentPractice.id]: !prev[currentPractice.id] }))}
+                                    className="px-3 py-2 rounded-xl text-xs font-bold text-amber-700 dark:text-amber-400 bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 transition flex items-center gap-1 cursor-pointer"
+                                  >
+                                    <Lightbulb className="w-3.5 h-3.5" />
+                                    <span>İpucu</span>
+                                  </button>
+                                )}
+                              </div>
+
+                              {pState.userSelection && (
+                                <button
+                                  onClick={() => {
+                                    updatePracticeState(topic.id, {
+                                      userSelection: '',
+                                      isSubmitted: false
+                                    });
+                                  }}
+                                  className="text-xs text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 flex items-center gap-1 cursor-pointer"
+                                >
+                                  <RotateCcw className="w-3 h-3" />
+                                  <span>Temizle</span>
+                                </button>
+                              )}
+                            </div>
+
+                            {/* İpucu Kutusu */}
+                            {showPracticeHint[currentPractice.id] && !pState.isSubmitted && (
+                              <div className="p-3 rounded-xl bg-amber-500/15 border border-amber-400/40 text-xs text-amber-900 dark:text-amber-200 flex items-start gap-2 animate-fadeIn">
+                                <Lightbulb className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+                                <div>
+                                  <span className="font-black">İpucu:</span> {currentPractice.hint}
+                                </div>
+                              </div>
+                            )}
+
+                            {/* Kontrol Sonucu Bildirimi */}
+                            {pState.isSubmitted && (
+                              <div className={`p-4 rounded-xl border text-xs sm:text-sm space-y-2.5 animate-fadeIn ${
+                                isCorrect
+                                  ? 'bg-emerald-500/15 border-emerald-500/50 text-emerald-950 dark:text-emerald-100'
+                                  : 'bg-rose-500/15 border-rose-500/50 text-rose-950 dark:text-rose-100'
+                              }`}>
+                                <div className="flex items-center justify-between gap-2 font-black">
+                                  <span className="flex items-center gap-1.5">
+                                    {isCorrect ? (
+                                      <>
+                                        <CheckCircle className="w-4 h-4 text-emerald-600 shrink-0" />
+                                        <span>🎉 Harika! Doğru Cevap: "{currentPractice.blankAnswer}"</span>
+                                      </>
+                                    ) : (
+                                      <>
+                                        <AlertCircle className="w-4 h-4 text-rose-600 shrink-0" />
+                                        <span>❌ Henüz doğru değil, tekrar deneyin!</span>
+                                      </>
+                                    )}
+                                  </span>
+                                  {isCorrect && (
+                                    <button
+                                      onClick={() => speak(currentPractice.sentence.replace(/___\s*(?:\([^)]*\))?/, currentPractice.blankAnswer))}
+                                      className="p-1.5 rounded-lg bg-emerald-600 text-white hover:bg-emerald-700 transition flex items-center gap-1 text-[11px] cursor-pointer"
+                                      title="Sesli Dinle"
+                                    >
+                                      <Volume2 className="w-3.5 h-3.5" />
+                                      <span className="hidden sm:inline">Dinle</span>
+                                    </button>
+                                  )}
+                                </div>
+
+                                {/* Açıklama & Çeviri */}
+                                <div className="pt-1 text-xs space-y-1.5 leading-relaxed">
+                                  <p><span className="font-black">💡 Dilbilgisi Açıklaması:</span> {currentPractice.explanation}</p>
+                                  <p><span className="font-black">🇹🇷 Türkçe Çeviri:</span> {currentPractice.tr}</p>
+                                </div>
+
+                                {/* Sonraki Soru Butonu */}
+                                {isCorrect && pState.activeIdx < topic.practices.length - 1 && (
+                                  <div className="pt-1">
+                                    <button
+                                      onClick={() => {
+                                        updatePracticeState(topic.id, {
+                                          activeIdx: pState.activeIdx + 1,
+                                          userSelection: '',
+                                          isSubmitted: false
+                                        });
+                                      }}
+                                      className="px-4 py-2 rounded-xl bg-teal-600 hover:bg-teal-700 text-white text-xs font-black transition flex items-center gap-1.5 cursor-pointer shadow-xs active:scale-95"
+                                    >
+                                      <span>Sonraki Soruya Geç ({pState.activeIdx + 2} / {topic.practices.length})</span>
+                                      <ChevronRight className="w-3.5 h-3.5" />
+                                    </button>
+                                  </div>
+                                )}
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      );
+                    })()}
 
                     {/* 10. Pro Tip */}
                     <div className="p-3 rounded-2xl bg-amber-500/15 border border-amber-400/40 text-xs text-amber-900 dark:text-amber-200 flex items-center gap-2.5">
