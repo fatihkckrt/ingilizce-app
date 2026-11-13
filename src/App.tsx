@@ -33,6 +33,7 @@ import { VocabTestView } from "./components/VocabTestView";
 import { PuzzleView } from "./components/PuzzleView";
 import { BackupModal } from "./components/BackupModal";
 import { WordTranslationModal } from "./components/WordTranslationModal";
+import { AppGuideModal } from "./components/AppGuideModal";
 import { 
   isMaleVoice, 
   isFemaleVoice, 
@@ -196,6 +197,7 @@ function MainApp() {
   const [showTypeSettings, setShowTypeSettings] = useState(false);
   const [showBackupModal, setShowBackupModal] = useState(false);
   const [showStatsModal, setShowStatsModal] = useState(false);
+  const [showGuideModal, setShowGuideModal] = useState(false);
 
   // Eski/yeni tüm kullanıcılarda varsayılanların uygulanması (isteyen ayarlardan dilediğince değiştirebilir)
   useEffect(() => {
@@ -1477,6 +1479,7 @@ function MainApp() {
             onOpenVocabMemoryHub={() => navigateTo('vocabHub')}
             onOpenGrammar={() => navigateTo('grammar')}
             onOpenPuzzle={() => navigateTo('puzzle')}
+            onOpenGuide={() => setShowGuideModal(true)}
             handleOpenSettingsFromBottom={handleOpenSettingsFromBottom}
             showTypeSettings={showTypeSettings}
             readerTheme={readerTheme}
@@ -1789,6 +1792,18 @@ function MainApp() {
         isWordSaved={isWordSaved}
       />
 
+      {/* UYGULAMA REHBERİ & WHATSAPP PAYLAŞIM PAKETİ */}
+      <AppGuideModal
+        isOpen={showGuideModal}
+        onClose={() => setShowGuideModal(false)}
+        onNavigateFeature={(target) => {
+          if (target === 'sentenceTranslate') navigateTo('sentenceTranslate');
+          else if (target === 'vocabMemory') navigateTo('vocabHub');
+          else if (target === 'grammar') navigateTo('grammar');
+          else if (target === 'puzzle') navigateTo('puzzle');
+          else if (target === 'aiGenerate') navigateTo('aiGenerate');
+        }}
+      />
 
     </div>
   );

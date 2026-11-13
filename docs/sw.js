@@ -90,7 +90,7 @@ define(['./workbox-7e5eb42b'], (function (workbox) { 'use strict';
     "revision": "1297f4945bc714388cb5761d984d026d"
   }, {
     "url": "index.html",
-    "revision": "f83b0b5852c4cd9c04c7c57ecb4f1256"
+    "revision": "98126a19278a491ef97062453fceb7ba"
   }, {
     "url": "favicon.ico",
     "revision": "42102188842781ecd501600044ac208d"
@@ -98,10 +98,28 @@ define(['./workbox-7e5eb42b'], (function (workbox) { 'use strict';
     "url": "apple-touch-icon.png",
     "revision": "980238664110ece9b88da0f98795f872"
   }, {
-    "url": "assets/index-DBqOHuZQ.css",
+    "url": "guide/rehber-6-kurulum.png",
+    "revision": "82df8fdb0ba5a3f666d74bee8a4fe948"
+  }, {
+    "url": "guide/rehber-5-bulmaca-ai.png",
+    "revision": "fe1bf66dbe227208b6bb825a7015db4b"
+  }, {
+    "url": "guide/rehber-4-gramer.png",
+    "revision": "e85217f6d0c55fd33f375b66dc2ad089"
+  }, {
+    "url": "guide/rehber-3-kelime.png",
+    "revision": "76647771d82c5055058e064be8a7fe6c"
+  }, {
+    "url": "guide/rehber-2-okuma.png",
+    "revision": "862a8d05cb3f833f14dbc59c89e6a923"
+  }, {
+    "url": "guide/rehber-1-genel.png",
+    "revision": "a6022da7c15099d935b2e1d01a780c23"
+  }, {
+    "url": "assets/index-DNt6vJ8p.css",
     "revision": null
   }, {
-    "url": "assets/index-CchrA68t.js",
+    "url": "assets/index-Bn2i6N4J.js",
     "revision": null
   }, {
     "url": "apple-touch-icon.png",

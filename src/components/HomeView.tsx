@@ -13,6 +13,7 @@ interface HomeViewProps {
   onOpenVocabMemoryHub: () => void;
   onOpenGrammar: () => void;
   onOpenPuzzle: () => void;
+  onOpenGuide: () => void;
   handleOpenSettingsFromBottom: () => void;
   showTypeSettings: boolean;
   readerTheme: string;
@@ -31,6 +32,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
   onOpenVocabMemoryHub,
   onOpenGrammar,
   onOpenPuzzle,
+  onOpenGuide,
   handleOpenSettingsFromBottom,
   showTypeSettings,
 }) => {
@@ -169,33 +171,53 @@ export const HomeView: React.FC<HomeViewProps> = ({
         </button>
       </div>
 
-      {/* UYGULAMA & OKUMA AYARLARI KARTI */}
-      <button
-        onClick={handleOpenSettingsFromBottom}
-        className={`w-full ${themeStyle.card} border p-3.5 sm:p-4 rounded-2xl flex items-center justify-between hover:shadow-md transition active:scale-[0.98] cursor-pointer ${
-          showTypeSettings ? 'ring-2 ring-indigo-500 border-indigo-400' : ''
-        }`}
-      >
-        <div className="flex items-center gap-3 min-w-0 flex-1">
-          <span className="text-2xl p-2 bg-black/5 dark:bg-white/5 rounded-xl shrink-0">⚙️</span>
-          <div className="text-left min-w-0 flex-1">
-            <div className="flex items-center gap-2">
-              <span className="font-bold text-sm sm:text-base block truncate">Okuma & Ses Ayarları</span>
-              {showTypeSettings && (
-                <span className="bg-indigo-600 text-white text-[10px] font-extrabold px-2 py-0.5 rounded-full animate-pulse whitespace-nowrap">
-                  AÇIK ↑
-                </span>
-              )}
+      {/* ALT REHBER & AYAR KARTLARI */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+        <button
+          onClick={onOpenGuide}
+          className={`w-full ${themeStyle.card} border p-3.5 rounded-2xl flex items-center justify-between hover:shadow-md transition active:scale-[0.98] cursor-pointer`}
+        >
+          <div className="flex items-center gap-3 min-w-0 flex-1">
+            <span className="text-2xl p-2 bg-indigo-500/10 rounded-xl shrink-0">📖</span>
+            <div className="text-left min-w-0 flex-1">
+              <span className="font-bold text-sm block truncate">Uygulama Rehberi</span>
+              <p className="text-xs opacity-60 font-medium truncate mt-0.5">
+                Video, 6 Görsel & WhatsApp Paylaşımı
+              </p>
             </div>
-            <p className="text-xs opacity-60 font-medium truncate mt-0.5">
-              Tema, Ses Hızı, Doğal Sesler ve Font Ayarları
-            </p>
           </div>
-        </div>
-        <div className="w-8 h-8 rounded-xl bg-black/5 dark:bg-white/5 flex items-center justify-center shrink-0 opacity-60">
-          <ArrowRight className="w-4 h-4" />
-        </div>
-      </button>
+          <div className="w-8 h-8 rounded-xl bg-black/5 dark:bg-white/5 flex items-center justify-center shrink-0 opacity-60">
+            <ArrowRight className="w-4 h-4" />
+          </div>
+        </button>
+
+        <button
+          onClick={handleOpenSettingsFromBottom}
+          className={`w-full ${themeStyle.card} border p-3.5 rounded-2xl flex items-center justify-between hover:shadow-md transition active:scale-[0.98] cursor-pointer ${
+            showTypeSettings ? 'ring-2 ring-indigo-500 border-indigo-400' : ''
+          }`}
+        >
+          <div className="flex items-center gap-3 min-w-0 flex-1">
+            <span className="text-2xl p-2 bg-black/5 dark:bg-white/5 rounded-xl shrink-0">⚙️</span>
+            <div className="text-left min-w-0 flex-1">
+              <div className="flex items-center gap-2">
+                <span className="font-bold text-sm block truncate">Okuma & Ses Ayarları</span>
+                {showTypeSettings && (
+                  <span className="bg-indigo-600 text-white text-[10px] font-extrabold px-2 py-0.5 rounded-full animate-pulse whitespace-nowrap">
+                    AÇIK ↑
+                  </span>
+                )}
+              </div>
+              <p className="text-xs opacity-60 font-medium truncate mt-0.5">
+                Tema, Ses Hızı, Doğal Sesler & Font
+              </p>
+            </div>
+          </div>
+          <div className="w-8 h-8 rounded-xl bg-black/5 dark:bg-white/5 flex items-center justify-center shrink-0 opacity-60">
+            <ArrowRight className="w-4 h-4" />
+          </div>
+        </button>
+      </div>
     </div>
   );
 };
