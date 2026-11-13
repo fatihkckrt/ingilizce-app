@@ -159,14 +159,21 @@ Yan\u0131t\u0131 SADECE ve YALNIZCA ge\xE7erli bir JSON format\u0131nda d\xF6nd\
   });
   if (process.env.NODE_ENV !== "production") {
     const isHmrDisabled = process.env.DISABLE_HMR === "true";
-    const vite = await (0, import_vite.createServer)({
+    const vitePromise = (0, import_vite.createServer)({
       server: {
         middlewareMode: true,
         hmr: isHmrDisabled ? false : { server }
       },
       appType: "spa"
     });
-    app.use(vite.middlewares);
+    app.use(async (req, res, next) => {
+      try {
+        const vite = await vitePromise;
+        vite.middlewares(req, res, next);
+      } catch (err) {
+        next(err);
+      }
+    });
   } else {
     const distPath = import_path.default.join(process.cwd(), "dist");
     app.use(import_express.default.static(distPath));
@@ -178,5 +185,8 @@ Yan\u0131t\u0131 SADECE ve YALNIZCA ge\xE7erli bir JSON format\u0131nda d\xF6nd\
     console.log(`Server running on http://${HOST}:${PORT}`);
   });
 }
-startServer();
+startServer().catch((err) => {
+  console.error("Failed to start server:", err);
+  process.exit(1);
+});
 //# sourceMappingURL=server.cjs.map
