@@ -1,21 +1,33 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { ThemeClasses } from '../utils/themeUtils';
-import { GRAMMAR_TOPICS, SENTENCE_SCRAMBLE_DATA, GrammarTopic, SentenceScrambleItem, GrammarExample, GrammarPracticeItem } from '../grammarData';
-import { 
-  ArrowLeft, 
-  BookOpen, 
-  Sparkles, 
-  CheckCircle2, 
-  HelpCircle, 
-  Volume2, 
-  RotateCcw, 
-  ChevronRight, 
-  AlertCircle, 
-  Check, 
-  X, 
-  Clock, 
-  Table, 
-  Lightbulb, 
+import {
+  GRAMMAR_TOPICS,
+  SENTENCE_SCRAMBLE_DATA,
+  IRREGULAR_VERBS,
+  ERROR_SPOTTING_DATA,
+  GrammarTopic,
+  SentenceScrambleItem,
+  GrammarExample,
+  GrammarPracticeItem,
+} from '../grammarData';
+import { IrregularVerbsModal } from './IrregularVerbsModal';
+import { ErrorSpottingView } from './ErrorSpottingView';
+import { GrammarFinalExam } from './GrammarFinalExam';
+import {
+  ArrowLeft,
+  BookOpen,
+  Sparkles,
+  CheckCircle2,
+  HelpCircle,
+  Volume2,
+  RotateCcw,
+  ChevronRight,
+  AlertCircle,
+  Check,
+  X,
+  Clock,
+  Table,
+  Lightbulb,
   Award,
   Filter,
   Eye,
@@ -23,7 +35,12 @@ import {
   Edit3,
   CheckCircle,
   ChevronDown,
-  ChevronUp
+  ChevronUp,
+  BookMarked,
+  Keyboard,
+  Trophy,
+  Target,
+  ShieldAlert,
 } from 'lucide-react';
 
 interface GrammarHubViewProps {
@@ -32,15 +49,68 @@ interface GrammarHubViewProps {
   speak: (text: string) => void;
 }
 
+interface GrammarProgressStorage {
+  practiceSolvedIds: Record<string, boolean>;
+  practiceWrongIds: Record<string, boolean>;
+  completedTopicIds: Record<string, boolean>;
+  scrambleSolvedIds: Record<string, boolean>;
+  scrambleWrongIds: Record<string, boolean>;
+  scrambleScore: number;
+  errorSolvedIds: string[];
+  errorWrongIds: string[];
+  finalExamBestScores: Record<string, number>;
+}
+
+const GRAMMAR_STORAGE_KEY = 'english_app_grammar_progress_v1';
+
+const DEFAULT_PROGRESS: GrammarProgressStorage = {
+  practiceSolvedIds: {},
+  practiceWrongIds: {},
+  completedTopicIds: {},
+  scrambleSolvedIds: {},
+  scrambleWrongIds: {},
+  scrambleScore: 0,
+  errorSolvedIds: [],
+  errorWrongIds: [],
+  finalExamBestScores: {},
+};
+
+function loadGrammarProgress(): GrammarProgressStorage {
+  try {
+    const raw = localStorage.getItem(GRAMMAR_STORAGE_KEY);
+    if (!raw) return DEFAULT_PROGRESS;
+    const parsed = JSON.parse(raw);
+    return {
+      ...DEFAULT_PROGRESS,
+      ...parsed,
+    };
+  } catch {
+    return DEFAULT_PROGRESS;
+  }
+}
+
 export const GrammarHubView: React.FC<GrammarHubViewProps> = ({
   themeStyle,
   onBackToHome,
   speak,
 }) => {
-  // Aktif sekme: 'guide' (Gramer Rehberi) veya 'scramble' (Cümle Kurma & Sözcük Sıralama)
-  const [activeTab, setActiveTab] = useState<'guide' | 'scramble'>('guide');
+  // Aktif sekme: 'guide' | 'scramble' | 'errorSpotting' | 'finalExam'
+  const [activeTab, setActiveTab] = useState<'guide' | 'scramble' | 'errorSpotting' | 'finalExam'>('guide');
   // Seviye filtresi: 'A1' | 'A2' | 'B1' | 'B2'
   const [selectedLevel, setSelectedLevel] = useState<'A1' | 'A2' | 'B1' | 'B2'>('A1');
+  // Düzensiz Fiiller Sözlüğü Modalı
+  const [showIrregularVerbsModal, setShowIrregularVerbsModal] = useState(false);
+
+  // Kalıcı İlerleme Durumu
+  const [progress, setProgress] = useState<GrammarProgressStorage>(() => loadGrammarProgress());
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(GRAMMAR_STORAGE_KEY, JSON.stringify(progress));
+    } catch {
+      // Storage quota ignore
+    }
+  }, [progress]);
 
   // Rehberde seçili detay konusu
   const [selectedTopic, setSelectedTopic] = useState<GrammarTopic | null>(null);
@@ -68,18 +138,18 @@ export const GrammarHubView: React.FC<GrammarHubViewProps> = ({
     });
   };
 
-  // Boşluk doldurma pratiği durumu (her konu için aktif soru ve çözümler)
+  // Boşluk doldurma pratiği durumu (aktif soru & yazarak cevaplama modu)
   interface PracticeState {
     activeIdx: number;
     userSelection: string;
     isSubmitted: boolean;
-    solved: Record<number, boolean>;
   }
 
   const [practiceStates, setPracticeStates] = useState<Record<string, PracticeState>>({});
   const [showPracticeHint, setShowPracticeHint] = useState<Record<string, boolean>>({});
-  // Her konunun test bölümünün açık/kapalı durumu (varsayılan kapalı, butonla açılır)
   const [openedPractices, setOpenedPractices] = useState<Record<string, boolean>>({});
+  const [practiceKeyboardMode, setPracticeKeyboardMode] = useState<boolean>(false);
+  const [practiceMistakesOnly, setPracticeMistakesOnly] = useState<Record<string, boolean>>({});
 
   const togglePracticeOpen = (topicId: string) => {
     setOpenedPractices(prev => ({
@@ -88,12 +158,21 @@ export const GrammarHubView: React.FC<GrammarHubViewProps> = ({
     }));
   };
 
+  const toggleTopicCompleted = (topicId: string) => {
+    setProgress(prev => ({
+      ...prev,
+      completedTopicIds: {
+        ...prev.completedTopicIds,
+        [topicId]: !prev.completedTopicIds[topicId]
+      }
+    }));
+  };
+
   const getPracticeState = (topicId: string): PracticeState => {
     return practiceStates[topicId] || {
       activeIdx: 0,
       userSelection: '',
       isSubmitted: false,
-      solved: {}
     };
   };
 
@@ -103,7 +182,6 @@ export const GrammarHubView: React.FC<GrammarHubViewProps> = ({
         activeIdx: 0,
         userSelection: '',
         isSubmitted: false,
-        solved: {}
       };
       return {
         ...prev,
@@ -112,18 +190,36 @@ export const GrammarHubView: React.FC<GrammarHubViewProps> = ({
     });
   };
 
-  const handleCheckPractice = (topicId: string, practice: GrammarPracticeItem, activeIdx: number) => {
+  const handleCheckPractice = (topicId: string, practice: GrammarPracticeItem) => {
     const currentState = getPracticeState(topicId);
-    const isCorrect = currentState.userSelection.trim().toLowerCase() === practice.blankAnswer.trim().toLowerCase();
-    
-    updatePracticeState(topicId, {
-      isSubmitted: true,
-      solved: isCorrect ? { ...currentState.solved, [activeIdx]: true } : currentState.solved
+    const normalizedUser = currentState.userSelection.trim().toLowerCase();
+    const normalizedAnswer = practice.blankAnswer.trim().toLowerCase();
+    // "had / left" gibi çoklu boşluklu cevaplarda "had left" veya "had / left" kabul edilir
+    const isCorrect =
+      normalizedUser === normalizedAnswer ||
+      normalizedUser === normalizedAnswer.replace(/\s*\/\s*/g, ' ');
+
+    updatePracticeState(topicId, { isSubmitted: true });
+
+    setProgress(prev => {
+      if (isCorrect) {
+        const updatedWrong = { ...prev.practiceWrongIds };
+        delete updatedWrong[practice.id];
+        return {
+          ...prev,
+          practiceSolvedIds: { ...prev.practiceSolvedIds, [practice.id]: true },
+          practiceWrongIds: updatedWrong,
+        };
+      } else {
+        return {
+          ...prev,
+          practiceWrongIds: { ...prev.practiceWrongIds, [practice.id]: true },
+        };
+      }
     });
   };
 
   const renderSentenceWithBlank = (sentence: string, userValue: string) => {
-    // Matches "___ (verb)" or "___"
     const parts = sentence.split(/___(?:\s*\([^)]*\))?/);
     if (parts.length < 2) return <span>{sentence}</span>;
 
@@ -134,8 +230,8 @@ export const GrammarHubView: React.FC<GrammarHubViewProps> = ({
       <span className="inline leading-relaxed">
         {parts[0]}
         <span className={`inline-flex items-center px-2.5 py-0.5 mx-1 rounded-lg border-b-2 font-black transition ${
-          userValue 
-            ? 'bg-teal-500/20 text-teal-800 dark:text-teal-200 border-teal-600' 
+          userValue
+            ? 'bg-teal-500/20 text-teal-800 dark:text-teal-200 border-teal-600'
             : 'bg-amber-500/15 text-amber-700 dark:text-amber-300 border-amber-500 animate-pulse'
         }`}>
           {userValue || '_______'}
@@ -145,36 +241,57 @@ export const GrammarHubView: React.FC<GrammarHubViewProps> = ({
             {verbHint}
           </span>
         )}
-        {parts[1]}
+        {parts.slice(1).join(' ___ ')}
       </span>
     );
   };
 
-  // Cümle kurma durumu
-  const levelScrambles = useMemo(() => {
+  // Cümle kurma durumu & Konu / Hata Filtresi
+  const [scrambleTopicFilter, setScrambleTopicFilter] = useState<string>('all');
+
+  const allLevelScrambles = useMemo(() => {
     return SENTENCE_SCRAMBLE_DATA.filter(item => item.level === selectedLevel);
   }, [selectedLevel]);
+
+  const scrambleTopicsInLevel = useMemo(() => {
+    const map = new Map<string, string>();
+    allLevelScrambles.forEach(item => {
+      if (!map.has(item.grammarTopicId)) {
+        const topicMatch = GRAMMAR_TOPICS.find(t => t.id === item.grammarTopicId);
+        map.set(item.grammarTopicId, topicMatch ? topicMatch.title.split('(')[0].trim() : item.topicName);
+      }
+    });
+    return Array.from(map.entries()).map(([id, label]) => ({ id, label }));
+  }, [allLevelScrambles]);
+
+  const levelScrambles = useMemo(() => {
+    if (scrambleTopicFilter === 'all') return allLevelScrambles;
+    if (scrambleTopicFilter === 'mistakes') {
+      const onlyMistakes = allLevelScrambles.filter(item => progress.scrambleWrongIds[item.id]);
+      return onlyMistakes.length > 0 ? onlyMistakes : allLevelScrambles;
+    }
+    const filtered = allLevelScrambles.filter(item => item.grammarTopicId === scrambleTopicFilter);
+    return filtered.length > 0 ? filtered : allLevelScrambles;
+  }, [allLevelScrambles, scrambleTopicFilter, progress.scrambleWrongIds]);
 
   const [currentScrambleIdx, setCurrentScrambleIdx] = useState(0);
   const currentScramble = levelScrambles[currentScrambleIdx] || levelScrambles[0];
 
-  // Kullanıcının sıraladığı kelimeler ve kalan kelimeler
-  const [selectedWords, setSelectedWords] = useState<string[]>([]);
+  // Kullanıcının sıraladığı kelimeler ({ id, text } nesneleri ile aynı kelimeler çakışmaz)
+  const [selectedWords, setSelectedWords] = useState<{ id: string; text: string }[]>([]);
   const [availableWords, setAvailableWords] = useState<{ id: string; text: string }[]>(() => {
     if (!currentScramble) return [];
     const shuffled = [...currentScramble.tokens].sort(() => Math.random() - 0.5);
-    return shuffled.map((w, idx) => ({ id: `${idx}-${w}`, text: w }));
+    return shuffled.map((w, idx) => ({ id: `${currentScramble.id}-${idx}-${w}`, text: w }));
   });
 
   const [scrambleStatus, setScrambleStatus] = useState<'in_progress' | 'correct' | 'wrong'>('in_progress');
   const [showHint, setShowHint] = useState(false);
-  const [score, setScore] = useState(0);
 
-  // Seviye veya soru değiştiğinde cümle kurma alanını sıfırla
   const resetScrambleQuestion = (item: SentenceScrambleItem) => {
     setSelectedWords([]);
     const shuffled = [...item.tokens].sort(() => Math.random() - 0.5);
-    setAvailableWords(shuffled.map((w, idx) => ({ id: `${idx}-${w}`, text: w })));
+    setAvailableWords(shuffled.map((w, idx) => ({ id: `${item.id}-${idx}-${w}`, text: w })));
     setScrambleStatus('in_progress');
     setShowHint(false);
   };
@@ -183,6 +300,7 @@ export const GrammarHubView: React.FC<GrammarHubViewProps> = ({
     setSelectedLevel(lvl);
     setSelectedTopic(null);
     setPronounFilter('all');
+    setScrambleTopicFilter('all');
     setCurrentScrambleIdx(0);
     const newItems = SENTENCE_SCRAMBLE_DATA.filter(item => item.level === lvl);
     if (newItems.length > 0) {
@@ -190,34 +308,79 @@ export const GrammarHubView: React.FC<GrammarHubViewProps> = ({
     }
   };
 
+  const handleSelectScrambleFilter = (filterId: string) => {
+    setScrambleTopicFilter(filterId);
+    setCurrentScrambleIdx(0);
+    let filtered = allLevelScrambles;
+    if (filterId === 'mistakes') {
+      const m = allLevelScrambles.filter(item => progress.scrambleWrongIds[item.id]);
+      if (m.length > 0) filtered = m;
+    } else if (filterId !== 'all') {
+      const f = allLevelScrambles.filter(item => item.grammarTopicId === filterId);
+      if (f.length > 0) filtered = f;
+    }
+    if (filtered.length > 0) {
+      resetScrambleQuestion(filtered[0]);
+    }
+  };
+
+  const handleJumpToTopicScramble = (topicId: string) => {
+    setActiveTab('scramble');
+    setScrambleTopicFilter(topicId);
+    setCurrentScrambleIdx(0);
+    const items = SENTENCE_SCRAMBLE_DATA.filter(
+      item => item.level === selectedLevel && item.grammarTopicId === topicId
+    );
+    if (items.length > 0) {
+      resetScrambleQuestion(items[0]);
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   // Kelimeye tıklandığında seçilenlere ekle
   const handlePickWord = (wordObj: { id: string; text: string }) => {
     if (scrambleStatus === 'correct') return;
     setAvailableWords(prev => prev.filter(w => w.id !== wordObj.id));
-    setSelectedWords(prev => [...prev, wordObj.text]);
+    setSelectedWords(prev => [...prev, wordObj]);
+    setScrambleStatus('in_progress');
   };
 
   // Seçilen kelimeden kaldırıp geri havuza at
   const handleRemoveWord = (index: number) => {
     if (scrambleStatus === 'correct') return;
-    const removedText = selectedWords[index];
+    const removedObj = selectedWords[index];
+    if (!removedObj) return;
     setSelectedWords(prev => prev.filter((_, i) => i !== index));
-    setAvailableWords(prev => [...prev, { id: `${Date.now()}-${removedText}`, text: removedText }]);
+    setAvailableWords(prev => [...prev, removedObj]);
     setScrambleStatus('in_progress');
   };
 
   // Sıralamayı Kontrol Et
   const handleCheckAnswer = () => {
     if (!currentScramble) return;
-    const userSentence = selectedWords.join(' ').trim();
+    const userSentence = selectedWords.map(w => w.text).join(' ').trim();
     const targetSentence = currentScramble.targetEng.trim();
 
     if (userSentence.toLowerCase() === targetSentence.toLowerCase()) {
       setScrambleStatus('correct');
-      setScore(prev => prev + 10);
       speak(targetSentence);
+      setProgress(prev => {
+        const alreadySolved = !!prev.scrambleSolvedIds[currentScramble.id];
+        const updatedWrong = { ...prev.scrambleWrongIds };
+        delete updatedWrong[currentScramble.id];
+        return {
+          ...prev,
+          scrambleSolvedIds: { ...prev.scrambleSolvedIds, [currentScramble.id]: true },
+          scrambleWrongIds: updatedWrong,
+          scrambleScore: alreadySolved ? prev.scrambleScore : prev.scrambleScore + 10,
+        };
+      });
     } else {
       setScrambleStatus('wrong');
+      setProgress(prev => ({
+        ...prev,
+        scrambleWrongIds: { ...prev.scrambleWrongIds, [currentScramble.id]: true },
+      }));
     }
   };
 
@@ -289,61 +452,124 @@ export const GrammarHubView: React.FC<GrammarHubViewProps> = ({
     return examples;
   };
 
+  const levelStats = useMemo(() => {
+    const totalPractices = filteredTopics.reduce((sum, t) => sum + (t.practices?.length || 0), 0);
+    const solvedPractices = filteredTopics.reduce((sum, t) => {
+      return sum + (t.practices || []).filter(p => progress.practiceSolvedIds[p.id]).length;
+    }, 0);
+    const completedTopics = filteredTopics.filter(t => {
+      const prCount = t.practices?.length || 0;
+      const prSolved = (t.practices || []).filter(p => progress.practiceSolvedIds[p.id]).length;
+      return progress.completedTopicIds[t.id] || (prCount > 0 && prSolved === prCount);
+    }).length;
+    const solvedScrambles = allLevelScrambles.filter(s => progress.scrambleSolvedIds[s.id]).length;
+    const levelErrorsTotal = ERROR_SPOTTING_DATA.filter(e => e.level === selectedLevel).length;
+    const solvedErrors = ERROR_SPOTTING_DATA.filter(
+      e => e.level === selectedLevel && progress.errorSolvedIds.includes(e.id)
+    ).length;
+
+    const totalTasks = totalPractices + allLevelScrambles.length + levelErrorsTotal;
+    const doneTasks = solvedPractices + solvedScrambles + solvedErrors;
+    const percent = totalTasks > 0 ? Math.round((doneTasks / totalTasks) * 100) : 0;
+
+    return {
+      totalPractices,
+      solvedPractices,
+      completedTopics,
+      solvedScrambles,
+      levelErrorsTotal,
+      solvedErrors,
+      percent,
+    };
+  }, [filteredTopics, allLevelScrambles, selectedLevel, progress]);
+
   return (
     <div className="flex-1 p-3.5 sm:p-5 flex flex-col space-y-4 overflow-y-auto">
-      {/* ÜST BAŞLIK & GERİ DÖNÜŞ */}
-      <div className="flex items-center justify-between pb-2 border-b border-black/5 dark:border-white/5">
+      {/* Düzensiz Fiiller Sözlüğü Modalı */}
+      <IrregularVerbsModal
+        isOpen={showIrregularVerbsModal}
+        onClose={() => setShowIrregularVerbsModal(false)}
+        themeStyle={themeStyle}
+        speak={speak}
+        initialLevel={selectedLevel}
+      />
+
+      {/* ÜST BAŞLIK & GERİ DÖNÜŞ + DÜZENSİZ FİİLLER BUTONU */}
+      <div className="flex items-center justify-between gap-2 pb-2 border-b border-black/5 dark:border-white/5">
         <button
           onClick={onBackToHome}
-          className="flex items-center gap-1.5 text-xs font-bold text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 transition py-1 px-2.5 rounded-xl hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer"
+          className="flex items-center gap-1.5 text-xs font-bold text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 transition py-1.5 px-2.5 rounded-xl hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Ana Menü</span>
         </button>
 
-        <div className="text-right">
-          <span className="text-[10px] uppercase font-black tracking-wider text-teal-700 dark:text-teal-400">
-            Gramer & Cümle Kurma
-          </span>
-          <span className="text-xs text-slate-400 font-semibold block">
-            CEFR A1 • A2 • B1 • B2
-          </span>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => setShowIrregularVerbsModal(true)}
+            className="flex items-center gap-1.5 text-xs font-black px-3 py-1.5 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 text-amber-800 dark:text-amber-300 border border-amber-500/30 transition cursor-pointer shadow-2xs"
+          >
+            <BookMarked className="w-3.5 h-3.5" />
+            <span>Düzensiz Fiiller ({IRREGULAR_VERBS.length})</span>
+          </button>
         </div>
       </div>
 
-      {/* KARŞILAMA VE ANA SEKMELER */}
+      {/* KARŞILAMA VE 4 ANA SEKME */}
       <div className="text-center my-0.5">
-        <div className="bg-teal-600/10 w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-2 border border-teal-500/20 shadow-inner">
-          <span className="text-3xl">📐</span>
+        <div className="bg-teal-600/10 w-12 h-12 rounded-2xl flex items-center justify-center mx-auto mb-1.5 border border-teal-500/20 shadow-inner">
+          <span className="text-2xl">📐</span>
         </div>
-        <h2 className="text-xl sm:text-2xl font-black">Gramer & Cümle Kurma</h2>
-        <p className="text-xs opacity-75 mt-0.5 font-medium max-w-sm mx-auto">
-          Şematik zamir kutucukları, bol örnekler ve etkileşimli sözcük sıralama atölyesi
+        <h2 className="text-xl sm:text-2xl font-black">Gramer & Pratik Merkezi</h2>
+        <p className="text-xs opacity-75 mt-0.5 font-medium max-w-md mx-auto">
+          30 kapsamlı konu anlatımı, boşluk doldurma, cümle kurma, hata avı ve kur bitirme sınavları
         </p>
 
-        {/* 2 ANA SEKME: GRAMER REHBERİ VS. CÜMLE KURMA */}
-        <div className="flex p-1 bg-black/5 dark:bg-white/10 rounded-2xl max-w-sm mx-auto mt-3 border border-black/5 dark:border-white/10">
+        {/* 4 SEKME NAVİGASYONU */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-1 p-1 bg-black/5 dark:bg-white/10 rounded-2xl max-w-2xl mx-auto mt-3 border border-black/5 dark:border-white/10">
           <button
             onClick={() => setActiveTab('guide')}
-            className={`flex-1 py-2 rounded-xl text-xs font-black transition flex items-center justify-center gap-1.5 cursor-pointer ${
+            className={`py-2 px-2 rounded-xl text-[11px] sm:text-xs font-black transition flex items-center justify-center gap-1 cursor-pointer ${
               activeTab === 'guide'
                 ? 'bg-white dark:bg-slate-800 text-teal-700 dark:text-teal-300 shadow-sm'
                 : 'text-slate-600 dark:text-slate-300 hover:text-slate-900'
             }`}
           >
-            <BookOpen className="w-3.5 h-3.5" />
-            <span>Gramer Rehberi ({filteredTopics.length} Konu)</span>
+            <BookOpen className="w-3.5 h-3.5 shrink-0" />
+            <span>Rehber ({filteredTopics.length})</span>
           </button>
           <button
             onClick={() => setActiveTab('scramble')}
-            className={`flex-1 py-2 rounded-xl text-xs font-black transition flex items-center justify-center gap-1.5 cursor-pointer ${
+            className={`py-2 px-2 rounded-xl text-[11px] sm:text-xs font-black transition flex items-center justify-center gap-1 cursor-pointer ${
               activeTab === 'scramble'
                 ? 'bg-white dark:bg-slate-800 text-teal-700 dark:text-teal-300 shadow-sm'
                 : 'text-slate-600 dark:text-slate-300 hover:text-slate-900'
             }`}
           >
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>Cümle Kurma ({levelScrambles.length})</span>
+            <Sparkles className="w-3.5 h-3.5 shrink-0" />
+            <span>Cümle Kur ({allLevelScrambles.length})</span>
+          </button>
+          <button
+            onClick={() => setActiveTab('errorSpotting')}
+            className={`py-2 px-2 rounded-xl text-[11px] sm:text-xs font-black transition flex items-center justify-center gap-1 cursor-pointer ${
+              activeTab === 'errorSpotting'
+                ? 'bg-white dark:bg-slate-800 text-amber-700 dark:text-amber-300 shadow-sm'
+                : 'text-slate-600 dark:text-slate-300 hover:text-slate-900'
+            }`}
+          >
+            <Target className="w-3.5 h-3.5 shrink-0" />
+            <span>Hata Avı ({levelStats.levelErrorsTotal})</span>
+          </button>
+          <button
+            onClick={() => setActiveTab('finalExam')}
+            className={`py-2 px-2 rounded-xl text-[11px] sm:text-xs font-black transition flex items-center justify-center gap-1 cursor-pointer ${
+              activeTab === 'finalExam'
+                ? 'bg-white dark:bg-slate-800 text-indigo-700 dark:text-indigo-300 shadow-sm'
+                : 'text-slate-600 dark:text-slate-300 hover:text-slate-900'
+            }`}
+          >
+            <Trophy className="w-3.5 h-3.5 shrink-0" />
+            <span>Kur Finali</span>
           </button>
         </div>
       </div>
@@ -365,6 +591,36 @@ export const GrammarHubView: React.FC<GrammarHubViewProps> = ({
         ))}
       </div>
 
+      {/* KUR İLERLEME ÇUBUĞU (KALICI TAKİP) */}
+      <div className={`p-3 rounded-2xl ${themeStyle.card} border border-teal-500/20 shadow-2xs space-y-1.5`}>
+        <div className="flex items-center justify-between flex-wrap gap-2 text-[11px] font-black">
+          <span className="text-teal-700 dark:text-teal-300">
+            📊 {selectedLevel} Kuru İlerlemesi: %{levelStats.percent}
+          </span>
+          <div className="flex items-center gap-2 flex-wrap opacity-80 font-bold">
+            <span>Konu: {levelStats.completedTopics}/{filteredTopics.length}</span>
+            <span>•</span>
+            <span>Boşluk: {levelStats.solvedPractices}/{levelStats.totalPractices}</span>
+            <span>•</span>
+            <span>Cümle: {levelStats.solvedScrambles}/{allLevelScrambles.length}</span>
+            {typeof progress.finalExamBestScores[selectedLevel] === 'number' && (
+              <>
+                <span>•</span>
+                <span className="text-indigo-600 dark:text-indigo-300">
+                  Final: %{progress.finalExamBestScores[selectedLevel]}
+                </span>
+              </>
+            )}
+          </div>
+        </div>
+        <div className="w-full h-2 rounded-full bg-black/10 dark:bg-white/10 overflow-hidden">
+          <div
+            className="h-full bg-gradient-to-r from-teal-500 via-emerald-500 to-indigo-500 transition-all duration-500"
+            style={{ width: `${levelStats.percent}%` }}
+          />
+        </div>
+      </div>
+
       {/* ---------------------------------------------------------------- */}
       {/* 1. SEKME: SEVİYELİ VE ŞEMATİK GRAMER REHBERİ */}
       {/* ---------------------------------------------------------------- */}
@@ -373,12 +629,24 @@ export const GrammarHubView: React.FC<GrammarHubViewProps> = ({
           {filteredTopics.map((topic) => {
             const isExpanded = selectedTopic?.id === topic.id;
             const displayedExamples = filterExamples(topic.examples || []);
+            const topicPracticeCount = topic.practices?.length || 0;
+            const topicSolvedCount = (topic.practices || []).filter(p => progress.practiceSolvedIds[p.id]).length;
+            const isTopicDone =
+              !!progress.completedTopicIds[topic.id] ||
+              (topicPracticeCount > 0 && topicSolvedCount === topicPracticeCount);
+            const hasMatchingScrambles = SENTENCE_SCRAMBLE_DATA.some(
+              s => s.level === topic.level && s.grammarTopicId === topic.id
+            );
 
             return (
               <div
                 key={topic.id}
                 className={`w-full ${themeStyle.card} border rounded-2xl overflow-hidden transition shadow-xs ${
-                  isExpanded ? 'border-teal-500 shadow-md ring-1 ring-teal-400/30' : 'hover:border-teal-400/60'
+                  isExpanded
+                    ? 'border-teal-500 shadow-md ring-1 ring-teal-400/30'
+                    : isTopicDone
+                    ? 'border-emerald-500/40'
+                    : 'hover:border-teal-400/60'
                 }`}
               >
                 {/* Kart Başlığı */}
@@ -387,8 +655,12 @@ export const GrammarHubView: React.FC<GrammarHubViewProps> = ({
                   className="w-full p-4 flex items-center justify-between text-left cursor-pointer"
                 >
                   <div className="flex items-center gap-3 min-w-0 flex-1">
-                    <span className="w-9 h-9 rounded-xl font-bold flex items-center justify-center text-base border shadow-xs bg-teal-500/10 text-teal-700 dark:text-teal-300 border-teal-500/20 shrink-0">
-                      📖
+                    <span className={`w-9 h-9 rounded-xl font-bold flex items-center justify-center text-base border shadow-xs shrink-0 ${
+                      isTopicDone
+                        ? 'bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border-emerald-500/40'
+                        : 'bg-teal-500/10 text-teal-700 dark:text-teal-300 border-teal-500/20'
+                    }`}>
+                      {isTopicDone ? '✓' : '📖'}
                     </span>
                     <div className="min-w-0 flex-1 pr-2">
                       <div className="flex items-center gap-2 flex-wrap">
@@ -398,13 +670,19 @@ export const GrammarHubView: React.FC<GrammarHubViewProps> = ({
                         <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-teal-500/15 text-teal-700 dark:text-teal-300 uppercase whitespace-nowrap">
                           {topic.badge}
                         </span>
-                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300">
-                          {topic.examples?.length || 0} Örnek
-                        </span>
-                        {topic.practices && topic.practices.length > 0 && (
-                          <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30 flex items-center gap-1">
+                        {topicPracticeCount > 0 && (
+                          <span className={`text-[10px] font-black px-2 py-0.5 rounded-full border flex items-center gap-1 ${
+                            topicSolvedCount === topicPracticeCount
+                              ? 'bg-emerald-500/20 text-emerald-800 dark:text-emerald-200 border-emerald-500/40'
+                              : 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border-emerald-500/30'
+                          }`}>
                             <Edit3 className="w-2.5 h-2.5" />
-                            <span>{topic.practices.length} Boşluk Doldurma</span>
+                            <span>{topicSolvedCount}/{topicPracticeCount} Çözüldü</span>
+                          </span>
+                        )}
+                        {isTopicDone && (
+                          <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-emerald-600 text-white">
+                            Tamamlandı
                           </span>
                         )}
                       </div>
@@ -419,27 +697,51 @@ export const GrammarHubView: React.FC<GrammarHubViewProps> = ({
                 {/* DETAYLI & ŞEMATİK REHBER AÇILIR İÇERİĞİ */}
                 {isExpanded && (
                   <div className="px-3.5 sm:px-5 pb-5 pt-1 space-y-4 border-t border-black/5 dark:border-white/5 animate-fadeIn">
-                    
-                    {/* Hızlı Atlama: Konu Sonu Boşluk Doldurma Pratiğine Git */}
-                    {topic.practices && topic.practices.length > 0 && (
-                      <div className="pt-2 pb-1 flex flex-wrap items-center gap-2">
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setOpenedPractices(prev => ({ ...prev, [topic.id]: true }));
-                            setTimeout(() => {
-                              const el = document.getElementById(`practice-${topic.id}`);
-                              if (el) el.scrollIntoView({ behavior: 'smooth' });
-                            }, 50);
-                          }}
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-black text-xs shadow-xs transition active:scale-95 cursor-pointer"
-                        >
-                          <Edit3 className="w-3.5 h-3.5" />
-                          <span>🎯 Boşluk Doldurma Testine Git ({topic.practices.length} Soru)</span>
-                          <ChevronDown className="w-3.5 h-3.5" />
-                        </button>
+
+                    {/* Hızlı Atlama, Konu Tamamlandı ve Cümle Kurma Geçişi */}
+                    <div className="pt-2 pb-1 flex flex-wrap items-center justify-between gap-2">
+                      <div className="flex flex-wrap items-center gap-2">
+                        {topic.practices && topic.practices.length > 0 && (
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setOpenedPractices(prev => ({ ...prev, [topic.id]: true }));
+                              setTimeout(() => {
+                                const el = document.getElementById(`practice-${topic.id}`);
+                                if (el) el.scrollIntoView({ behavior: 'smooth' });
+                              }, 50);
+                            }}
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-black text-xs shadow-xs transition active:scale-95 cursor-pointer"
+                          >
+                            <Edit3 className="w-3.5 h-3.5" />
+                            <span>🎯 Testine Git ({topic.practices.length})</span>
+                          </button>
+                        )}
+                        {hasMatchingScrambles && (
+                          <button
+                            type="button"
+                            onClick={() => handleJumpToTopicScramble(topic.id)}
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-black text-xs shadow-xs transition active:scale-95 cursor-pointer"
+                          >
+                            <Sparkles className="w-3.5 h-3.5" />
+                            <span>Cümle Kurma Pratiği</span>
+                          </button>
+                        )}
                       </div>
-                    )}
+
+                      <button
+                        type="button"
+                        onClick={() => toggleTopicCompleted(topic.id)}
+                        className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-black border transition cursor-pointer ${
+                          progress.completedTopicIds[topic.id]
+                            ? 'bg-emerald-600 text-white border-emerald-700'
+                            : 'bg-black/5 dark:bg-white/10 text-slate-700 dark:text-slate-200 border-black/10 dark:border-white/10 hover:border-emerald-500'
+                        }`}
+                      >
+                        <CheckCircle2 className="w-3.5 h-3.5" />
+                        <span>{progress.completedTopicIds[topic.id] ? 'Tamamlandı İşaretli' : 'Konuyu Tamamladım'}</span>
+                      </button>
+                    </div>
 
                     {/* 1. Giriş & Temel Mantık */}
                     <div className="p-3.5 bg-teal-50/80 dark:bg-teal-950/40 border border-teal-200 dark:border-teal-800 rounded-2xl">
@@ -860,9 +1162,15 @@ export const GrammarHubView: React.FC<GrammarHubViewProps> = ({
                     {/* 9. ÖRNEK CÜMLELERDEN SONRA: AÇILIR / KAPANIR BOŞLUK DOLDURMA TESTİ */}
                     {topic.practices && topic.practices.length > 0 && (() => {
                       const pState = getPracticeState(topic.id);
+                      const showWrongOnly = !!practiceMistakesOnly[topic.id];
+                      const wrongPracticesCount = topic.practices.filter(p => progress.practiceWrongIds[p.id]).length;
                       const currentPractice = topic.practices[pState.activeIdx] || topic.practices[0];
-                      const isCorrect = pState.userSelection.trim().toLowerCase() === currentPractice.blankAnswer.trim().toLowerCase();
-                      const completedCount = Object.keys(pState.solved).length;
+                      const normalizedUser = pState.userSelection.trim().toLowerCase();
+                      const normalizedAns = currentPractice.blankAnswer.trim().toLowerCase();
+                      const isCorrect =
+                        normalizedUser === normalizedAns ||
+                        normalizedUser === normalizedAns.replace(/\s*\/\s*/g, ' ');
+                      const completedCount = topic.practices.filter(p => progress.practiceSolvedIds[p.id]).length;
                       const isOpen = !!openedPractices[topic.id];
 
                       if (!isOpen) {
@@ -885,7 +1193,7 @@ export const GrammarHubView: React.FC<GrammarHubViewProps> = ({
                                     </span>
                                   </div>
                                   <p className="text-[11px] text-teal-100 font-medium mt-0.5">
-                                    Örnek cümleleri incelediniz! Şimdi testi açarak bilginizi sınayın ({completedCount}/{topic.practices.length} Tamamlandı)
+                                    Şıklı veya Klavye moduyla çözün ({completedCount}/{topic.practices.length} Tamamlandı)
                                   </p>
                                 </div>
                               </div>
@@ -900,7 +1208,7 @@ export const GrammarHubView: React.FC<GrammarHubViewProps> = ({
 
                       return (
                         <div id={`practice-${topic.id}`} className="scroll-mt-4 p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-teal-500/15 via-emerald-500/10 to-transparent border-2 border-teal-500/40 space-y-4 shadow-sm animate-fadeIn">
-                          {/* Pratik Başlığı & Kapatma Butonu */}
+                          {/* Pratik Başlığı & Kapatma Butonu & Mod Seçici */}
                           <div className="flex flex-wrap items-center justify-between gap-2 border-b border-teal-500/20 pb-3">
                             <div className="flex items-center gap-2.5">
                               <div className="w-9 h-9 rounded-xl bg-teal-600 text-white flex items-center justify-center shrink-0 shadow-xs">
@@ -916,24 +1224,57 @@ export const GrammarHubView: React.FC<GrammarHubViewProps> = ({
                                   </span>
                                 </div>
                                 <p className="text-[11px] text-slate-500 dark:text-slate-400 font-medium">
-                                  Örnek cümlelerden sonra bilginizi test edin • Boşlukları doğru seçeneklerle doldurun
+                                  {practiceKeyboardMode ? 'Klavye Modu: Cevabı kendiniz yazın' : 'Şıklı Mod: Doğru seçeneğe tıklayın'}
                                 </p>
                               </div>
                             </div>
 
-                            {/* Çözülen Soru Sayacı & Testi Kapat Butonu */}
-                            <div className="flex items-center gap-2">
-                              <span className="text-[11px] font-black px-3 py-1 rounded-xl bg-white dark:bg-slate-800 text-teal-700 dark:text-teal-300 border border-teal-500/30 shadow-2xs">
-                                {completedCount === topic.practices.length ? '🎉 Hepsi Tamamlandı!' : `İlerleme: ${completedCount} / ${topic.practices.length}`}
+                            {/* Mod Değiştirici + İlerleme + Testi Kapat */}
+                            <div className="flex items-center gap-2 flex-wrap">
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  setPracticeKeyboardMode(!practiceKeyboardMode);
+                                  updatePracticeState(topic.id, { userSelection: '', isSubmitted: false });
+                                }}
+                                className={`px-2.5 py-1 rounded-xl text-[11px] font-black border flex items-center gap-1 transition cursor-pointer ${
+                                  practiceKeyboardMode
+                                    ? 'bg-indigo-600 text-white border-indigo-700 shadow-xs'
+                                    : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border-slate-300 dark:border-slate-700 hover:border-indigo-400'
+                                }`}
+                                title="Yazarak cevaplama modunu aç/kapat"
+                              >
+                                <Keyboard className="w-3.5 h-3.5" />
+                                <span>{practiceKeyboardMode ? 'Şıklı Moda Dön' : 'Yazarak Çöz'}</span>
+                              </button>
+
+                              {wrongPracticesCount > 0 && (
+                                <button
+                                  type="button"
+                                  onClick={() => setPracticeMistakesOnly(prev => ({ ...prev, [topic.id]: !prev[topic.id] }))}
+                                  className={`px-2.5 py-1 rounded-xl text-[11px] font-black border flex items-center gap-1 transition cursor-pointer ${
+                                    showWrongOnly
+                                      ? 'bg-rose-600 text-white border-rose-700'
+                                      : 'bg-rose-500/10 text-rose-700 dark:text-rose-300 border-rose-500/30'
+                                  }`}
+                                >
+                                  <ShieldAlert className="w-3 h-3" />
+                                  <span>Hatalarım ({wrongPracticesCount})</span>
+                                </button>
+                              )}
+
+                              <span className="text-[11px] font-black px-2.5 py-1 rounded-xl bg-white dark:bg-slate-800 text-teal-700 dark:text-teal-300 border border-teal-500/30 shadow-2xs">
+                                {completedCount === topic.practices.length ? '🎉 Tamamlandı!' : `${completedCount} / ${topic.practices.length}`}
                               </span>
+
                               <button
                                 type="button"
                                 onClick={() => togglePracticeOpen(topic.id)}
-                                className="px-3 py-1.5 rounded-xl bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-black text-xs flex items-center gap-1.5 transition cursor-pointer"
+                                className="px-2.5 py-1 rounded-xl bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-black text-xs flex items-center gap-1 transition cursor-pointer"
                                 title="Test bölümünü gizle"
                               >
-                                <span>Testi Kapat</span>
-                                <ChevronUp className="w-4 h-4" />
+                                <span>Kapat</span>
+                                <ChevronUp className="w-3.5 h-3.5" />
                               </button>
                             </div>
                           </div>
@@ -941,8 +1282,10 @@ export const GrammarHubView: React.FC<GrammarHubViewProps> = ({
                           {/* Soru Seçici Tab Butonları */}
                           <div className="flex items-center gap-2 overflow-x-auto pb-1">
                             {topic.practices.map((p, pIdx) => {
+                              const isWrong = !!progress.practiceWrongIds[p.id];
+                              if (showWrongOnly && !isWrong) return null;
                               const isCurrent = pState.activeIdx === pIdx;
-                              const isSolved = !!pState.solved[pIdx];
+                              const isSolved = !!progress.practiceSolvedIds[p.id];
                               return (
                                 <button
                                   key={p.id}
@@ -953,11 +1296,13 @@ export const GrammarHubView: React.FC<GrammarHubViewProps> = ({
                                       isSubmitted: false
                                     });
                                   }}
-                                  className={`px-3.5 py-1.5 rounded-xl text-xs font-black transition flex items-center gap-1.5 cursor-pointer shrink-0 ${
+                                  className={`px-3 py-1.5 rounded-xl text-xs font-black transition flex items-center gap-1.5 cursor-pointer shrink-0 ${
                                     isCurrent
                                       ? 'bg-teal-600 text-white shadow-xs ring-2 ring-teal-500/40'
                                       : isSolved
                                       ? 'bg-emerald-500/20 text-emerald-800 dark:text-emerald-300 border border-emerald-500/40'
+                                      : isWrong
+                                      ? 'bg-rose-500/15 text-rose-700 dark:text-rose-300 border border-rose-400/40'
                                       : 'bg-white/90 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700 hover:border-teal-400'
                                   }`}
                                 >
@@ -977,44 +1322,69 @@ export const GrammarHubView: React.FC<GrammarHubViewProps> = ({
                               </p>
                             </div>
 
-                            {/* Seçenek Butonları */}
-                            <div>
-                              <div className="text-[11px] font-bold text-slate-500 dark:text-slate-400 mb-2">
-                                Doğru seçeneğe tıklayarak boşluğu doldurun:
+                            {/* Seçenek Butonları VEYA Klavye Giriş Alanı */}
+                            {practiceKeyboardMode ? (
+                              <div className="space-y-1.5">
+                                <label className="text-[11px] font-bold text-slate-500 dark:text-slate-400 block">
+                                  Boşluğa gelecek doğru ifadeyi yazın (Enter ile kontrol edebilirsiniz):
+                                </label>
+                                <input
+                                  type="text"
+                                  value={pState.userSelection}
+                                  onChange={(e) => {
+                                    updatePracticeState(topic.id, {
+                                      userSelection: e.target.value,
+                                      isSubmitted: false,
+                                    });
+                                  }}
+                                  onKeyDown={(e) => {
+                                    if (e.key === 'Enter' && pState.userSelection.trim()) {
+                                      handleCheckPractice(topic.id, currentPractice);
+                                    }
+                                  }}
+                                  placeholder="Cevabınızı buraya yazın..."
+                                  className="w-full px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border-2 border-indigo-400/50 focus:border-indigo-600 focus:outline-none text-sm font-black text-slate-900 dark:text-white"
+                                />
                               </div>
-                              <div className="flex flex-wrap gap-2">
-                                {currentPractice.options.map((opt) => {
-                                  const isSelected = pState.userSelection === opt;
-                                  return (
-                                    <button
-                                      key={opt}
-                                      onClick={() => {
-                                        updatePracticeState(topic.id, {
-                                          userSelection: opt,
-                                          isSubmitted: false
-                                        });
-                                      }}
-                                      className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm font-black border transition cursor-pointer active:scale-95 ${
-                                        isSelected
-                                          ? 'bg-teal-600 text-white border-teal-600 shadow-md ring-2 ring-teal-500/40'
-                                          : 'bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-700 hover:border-teal-400'
-                                      }`}
-                                    >
-                                      {opt}
-                                    </button>
-                                  );
-                                })}
+                            ) : (
+                              <div>
+                                <div className="text-[11px] font-bold text-slate-500 dark:text-slate-400 mb-2">
+                                  Doğru seçeneğe tıklayarak boşluğu doldurun:
+                                </div>
+                                <div className="flex flex-wrap gap-2">
+                                  {currentPractice.options.map((opt) => {
+                                    const isSelected = pState.userSelection === opt;
+                                    return (
+                                      <button
+                                        key={opt}
+                                        onClick={() => {
+                                          updatePracticeState(topic.id, {
+                                            userSelection: opt,
+                                            isSubmitted: false
+                                          });
+                                        }}
+                                        className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm font-black border transition cursor-pointer active:scale-95 ${
+                                          isSelected
+                                            ? 'bg-teal-600 text-white border-teal-600 shadow-md ring-2 ring-teal-500/40'
+                                            : 'bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-700 hover:border-teal-400'
+                                        }`}
+                                      >
+                                        {opt}
+                                      </button>
+                                    );
+                                  })}
+                                </div>
                               </div>
-                            </div>
+                            )}
 
                             {/* Kontrol & İpucu Butonları */}
                             <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-100 dark:border-slate-800">
                               <div className="flex items-center gap-2">
                                 <button
-                                  onClick={() => handleCheckPractice(topic.id, currentPractice, pState.activeIdx)}
-                                  disabled={!pState.userSelection}
+                                  onClick={() => handleCheckPractice(topic.id, currentPractice)}
+                                  disabled={!pState.userSelection.trim()}
                                   className={`px-4 py-2 rounded-xl text-xs font-black transition flex items-center gap-1.5 cursor-pointer shadow-xs ${
-                                    pState.userSelection
+                                    pState.userSelection.trim()
                                       ? 'bg-teal-600 hover:bg-teal-700 text-white active:scale-95'
                                       : 'bg-slate-200 dark:bg-slate-800 text-slate-400 cursor-not-allowed'
                                   }`}
@@ -1135,28 +1505,47 @@ export const GrammarHubView: React.FC<GrammarHubViewProps> = ({
             );
           })}
 
-          {/* Kur Sonu Cümle Kurma Pratiği Çağrısı */}
-          <div className="p-4 rounded-3xl bg-gradient-to-r from-teal-500/15 via-emerald-500/15 to-teal-500/15 border-2 border-teal-500/40 text-center space-y-2 mt-4 shadow-sm">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-500/20 text-teal-800 dark:text-teal-200 text-xs font-black">
-              <Sparkles className="w-3.5 h-3.5 text-teal-600 dark:text-teal-400" />
-              <span>{selectedLevel} Kuru Pratik Atölyesi</span>
+          {/* Kur Sonu Pratik & Final Çağrısı */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
+            <div className="p-4 rounded-3xl bg-gradient-to-br from-teal-500/15 to-emerald-500/10 border-2 border-teal-500/40 text-center space-y-2 shadow-sm">
+              <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-teal-500/20 text-teal-800 dark:text-teal-200 text-[11px] font-black">
+                <Sparkles className="w-3.5 h-3.5" />
+                <span>{selectedLevel} Cümle Kurma</span>
+              </div>
+              <h4 className="text-sm font-black text-slate-900 dark:text-white">
+                {allLevelScrambles.length} Cümlelik Sözcük Sıralama
+              </h4>
+              <button
+                onClick={() => {
+                  setActiveTab('scramble');
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+                className="w-full py-2.5 rounded-2xl bg-teal-600 hover:bg-teal-500 text-white font-black text-xs shadow-md transition active:scale-95 cursor-pointer inline-flex items-center justify-center gap-1.5"
+              >
+                <span>Cümle Kurmaya Geç</span>
+                <ChevronRight className="w-4 h-4" />
+              </button>
             </div>
-            <h4 className="text-sm sm:text-base font-black text-slate-900 dark:text-white">
-              {selectedLevel} Seviyesi Gramer Konularını Pekiştir!
-            </h4>
-            <p className="text-xs text-slate-600 dark:text-slate-300 font-medium max-w-md mx-auto">
-              Öğrendiğiniz tüm kuralları test etmek için bu kur sonundaki {levelScrambles.length} cümlelik sözcük sıralama atölyesine geçebilirsiniz.
-            </p>
-            <button
-              onClick={() => {
-                setActiveTab('scramble');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              }}
-              className="mt-1 w-full sm:w-auto px-6 py-2.5 rounded-2xl bg-teal-600 hover:bg-teal-500 text-white font-black text-xs sm:text-sm shadow-md transition active:scale-95 cursor-pointer inline-flex items-center justify-center gap-2"
-            >
-              <span>{selectedLevel} Cümle Kurma Kısmına Geç ({levelScrambles.length} Cümle)</span>
-              <ChevronRight className="w-4 h-4" />
-            </button>
+
+            <div className="p-4 rounded-3xl bg-gradient-to-br from-indigo-500/15 to-purple-500/10 border-2 border-indigo-500/40 text-center space-y-2 shadow-sm">
+              <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-indigo-500/20 text-indigo-800 dark:text-indigo-200 text-[11px] font-black">
+                <Trophy className="w-3.5 h-3.5" />
+                <span>{selectedLevel} Kur Finali</span>
+              </div>
+              <h4 className="text-sm font-black text-slate-900 dark:text-white">
+                15 Soruluk Karışık Değerlendirme
+              </h4>
+              <button
+                onClick={() => {
+                  setActiveTab('finalExam');
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+                className="w-full py-2.5 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white font-black text-xs shadow-md transition active:scale-95 cursor-pointer inline-flex items-center justify-center gap-1.5"
+              >
+                <span>Final Sınavını Aç</span>
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
           </div>
         </div>
       )}
@@ -1166,18 +1555,63 @@ export const GrammarHubView: React.FC<GrammarHubViewProps> = ({
       {/* ---------------------------------------------------------------- */}
       {activeTab === 'scramble' && currentScramble && (
         <div className="space-y-4 animate-fadeIn">
+          {/* Konu ve Hata Filtresi */}
+          <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5">
+            <button
+              onClick={() => handleSelectScrambleFilter('all')}
+              className={`px-3 py-1 rounded-xl text-[11px] font-black shrink-0 border transition cursor-pointer ${
+                scrambleTopicFilter === 'all'
+                  ? 'bg-teal-600 text-white border-teal-700'
+                  : 'bg-white/70 dark:bg-slate-800/70 text-slate-600 dark:text-slate-300 border-black/10 dark:border-white/10'
+              }`}
+            >
+              Tümü ({allLevelScrambles.length})
+            </button>
+            {allLevelScrambles.some(item => progress.scrambleWrongIds[item.id]) && (
+              <button
+                onClick={() => handleSelectScrambleFilter('mistakes')}
+                className={`px-3 py-1 rounded-xl text-[11px] font-black shrink-0 border transition cursor-pointer flex items-center gap-1 ${
+                  scrambleTopicFilter === 'mistakes'
+                    ? 'bg-rose-600 text-white border-rose-700'
+                    : 'bg-rose-500/10 text-rose-700 dark:text-rose-300 border-rose-500/30'
+                }`}
+              >
+                <ShieldAlert className="w-3 h-3" />
+                <span>
+                  Hatalarım ({allLevelScrambles.filter(item => progress.scrambleWrongIds[item.id]).length})
+                </span>
+              </button>
+            )}
+            {scrambleTopicsInLevel.map(t => (
+              <button
+                key={t.id}
+                onClick={() => handleSelectScrambleFilter(t.id)}
+                className={`px-3 py-1 rounded-xl text-[11px] font-black shrink-0 border transition cursor-pointer ${
+                  scrambleTopicFilter === t.id
+                    ? 'bg-indigo-600 text-white border-indigo-700'
+                    : 'bg-white/70 dark:bg-slate-800/70 text-slate-600 dark:text-slate-300 border-black/10 dark:border-white/10'
+                }`}
+              >
+                {t.label}
+              </button>
+            ))}
+          </div>
+
           {/* İlerleme ve Soru Sayacı */}
           <div className="flex items-center justify-between px-1">
             <span className="text-xs font-black text-slate-500 dark:text-slate-400">
               Soru {currentScrambleIdx + 1} / {levelScrambles.length} ({selectedLevel})
             </span>
             <div className="flex items-center gap-2">
+              <span className="text-xs font-extrabold text-emerald-700 dark:text-emerald-300 bg-emerald-500/10 px-2 py-0.5 rounded-lg border border-emerald-500/20">
+                ✓ {levelStats.solvedScrambles}/{allLevelScrambles.length}
+              </span>
               <span className="text-xs font-extrabold text-teal-600 dark:text-teal-400 bg-teal-500/10 px-2 py-0.5 rounded-lg border border-teal-500/20">
-                Puan: {score}
+                Puan: {progress.scrambleScore}
               </span>
               <button
                 onClick={handleRestartQuestion}
-                className="p-1 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition"
+                className="p-1 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition cursor-pointer"
                 title="Yeniden Başlat"
               >
                 <RotateCcw className="w-4 h-4" />
@@ -1185,25 +1619,35 @@ export const GrammarHubView: React.FC<GrammarHubViewProps> = ({
             </div>
           </div>
 
-          {/* Soru Seçim Çubuğu (1 - 15) */}
+          {/* Soru Seçim Çubuğu (Yeşil Tik + Hata İndikatörü) */}
           <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1 px-0.5">
-            {levelScrambles.map((item, idx) => (
-              <button
-                key={item.id}
-                onClick={() => {
-                  setCurrentScrambleIdx(idx);
-                  resetScrambleQuestion(item);
-                }}
-                className={`w-7 h-7 shrink-0 rounded-lg text-xs font-black transition cursor-pointer flex items-center justify-center ${
-                  currentScrambleIdx === idx
-                    ? 'bg-teal-600 text-white shadow-sm ring-2 ring-teal-400/40'
-                    : 'bg-black/5 dark:bg-white/10 text-slate-600 dark:text-slate-300 hover:bg-black/10'
-                }`}
-                title={`Soru ${idx + 1}: ${item.topicName}`}
-              >
-                {idx + 1}
-              </button>
-            ))}
+            {levelScrambles.map((item, idx) => {
+              const isSolved = !!progress.scrambleSolvedIds[item.id];
+              const isWrong = !!progress.scrambleWrongIds[item.id];
+              const isCurrent = currentScrambleIdx === idx;
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => {
+                    setCurrentScrambleIdx(idx);
+                    resetScrambleQuestion(item);
+                  }}
+                  className={`h-7 min-w-[28px] px-2 shrink-0 rounded-lg text-xs font-black transition cursor-pointer flex items-center justify-center gap-0.5 ${
+                    isCurrent
+                      ? 'bg-teal-600 text-white shadow-sm ring-2 ring-teal-400/40'
+                      : isSolved
+                      ? 'bg-emerald-500/20 text-emerald-800 dark:text-emerald-200 border border-emerald-500/40'
+                      : isWrong
+                      ? 'bg-rose-500/15 text-rose-700 dark:text-rose-300 border border-rose-400/40'
+                      : 'bg-black/5 dark:bg-white/10 text-slate-600 dark:text-slate-300 hover:bg-black/10'
+                  }`}
+                  title={`Soru ${idx + 1}: ${item.topicName}`}
+                >
+                  {isSolved && !isCurrent && <span className="text-[10px]">✓</span>}
+                  <span>{idx + 1}</span>
+                </button>
+              );
+            })}
           </div>
 
           {/* TÜRKÇE HEDEF CÜMLE KARTI */}
@@ -1226,14 +1670,14 @@ export const GrammarHubView: React.FC<GrammarHubViewProps> = ({
                 Aşağıdaki kelimelere dokunarak buraya yerleştirin...
               </span>
             ) : (
-              selectedWords.map((word, index) => (
+              selectedWords.map((wordObj, index) => (
                 <button
-                  key={index}
+                  key={wordObj.id}
                   onClick={() => handleRemoveWord(index)}
                   className="px-3 py-1.5 rounded-xl font-bold text-xs sm:text-sm bg-teal-600 text-white shadow-md hover:bg-rose-600 active:scale-95 transition cursor-pointer flex items-center gap-1 group"
                   title="Geri almak için dokunun"
                 >
-                  <span>{word}</span>
+                  <span>{wordObj.text}</span>
                   <X className="w-3 h-3 opacity-60 group-hover:opacity-100" />
                 </button>
               ))
@@ -1328,6 +1772,58 @@ export const GrammarHubView: React.FC<GrammarHubViewProps> = ({
             )}
           </div>
         </div>
+      )}
+
+      {/* ---------------------------------------------------------------- */}
+      {/* 3. SEKME: HATA AVI (ERROR SPOTTING) */}
+      {/* ---------------------------------------------------------------- */}
+      {activeTab === 'errorSpotting' && (
+        <ErrorSpottingView
+          selectedLevel={selectedLevel}
+          themeStyle={themeStyle}
+          speak={speak}
+          solvedErrorIds={progress.errorSolvedIds}
+          wrongErrorIds={progress.errorWrongIds}
+          onSolveError={(id) => {
+            setProgress(prev => ({
+              ...prev,
+              errorSolvedIds: prev.errorSolvedIds.includes(id)
+                ? prev.errorSolvedIds
+                : [...prev.errorSolvedIds, id],
+              errorWrongIds: prev.errorWrongIds.filter(wId => wId !== id),
+            }));
+          }}
+          onMistakeError={(id) => {
+            setProgress(prev => ({
+              ...prev,
+              errorWrongIds: prev.errorWrongIds.includes(id)
+                ? prev.errorWrongIds
+                : [...prev.errorWrongIds, id],
+            }));
+          }}
+        />
+      )}
+
+      {/* ---------------------------------------------------------------- */}
+      {/* 4. SEKME: KUR BİTİRME KARIŞIK FİNAL SINAVI */}
+      {/* ---------------------------------------------------------------- */}
+      {activeTab === 'finalExam' && (
+        <GrammarFinalExam
+          key={selectedLevel}
+          selectedLevel={selectedLevel}
+          themeStyle={themeStyle}
+          speak={speak}
+          bestScorePercent={progress.finalExamBestScores[selectedLevel]}
+          onExamCompleted={(lvl, pct) => {
+            setProgress(prev => ({
+              ...prev,
+              finalExamBestScores: {
+                ...prev.finalExamBestScores,
+                [lvl]: Math.max(prev.finalExamBestScores[lvl] || 0, pct),
+              },
+            }));
+          }}
+        />
       )}
     </div>
   );

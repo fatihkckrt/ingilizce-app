@@ -1,6 +1,17 @@
 // src/grammarData.ts
 // Kapsamlı Seviyeli İngilizce Gramer Rehberi & Cümle Kurma / Sözcük Sıralama Veri Tabanı
 
+import {
+  EXTRA_GRAMMAR_TOPICS,
+  IRREGULAR_VERBS,
+  ERROR_SPOTTING_DATA,
+  type IrregularVerbItem,
+  type ErrorSpottingItem,
+} from './data/grammarTopicsExtra';
+
+export { IRREGULAR_VERBS, ERROR_SPOTTING_DATA };
+export type { IrregularVerbItem, ErrorSpottingItem };
+
 export interface GrammarExample {
   pronoun: 'I' | 'You' | 'He' | 'She' | 'It' | 'We' | 'They' | 'Wh- / Soru' | 'Diğer';
   sentenceType: 'positive' | 'negative' | 'question';
@@ -81,7 +92,7 @@ export interface SentenceScrambleItem {
   ruleExplanation: string;
 }
 
-export const GRAMMAR_TOPICS: GrammarTopic[] = [
+const BASE_GRAMMAR_TOPICS: GrammarTopic[] = [
   {
     "id": "a1-to-be",
     "level": "A1",
@@ -4499,6 +4510,17 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
   }
 ];
 
+const LEVEL_ORDER: Record<'A1' | 'A2' | 'B1' | 'B2', number> = {
+  A1: 1,
+  A2: 2,
+  B1: 3,
+  B2: 4,
+};
+
+export const GRAMMAR_TOPICS: GrammarTopic[] = [...BASE_GRAMMAR_TOPICS, ...EXTRA_GRAMMAR_TOPICS].sort(
+  (a, b) => LEVEL_ORDER[a.level] - LEVEL_ORDER[b.level]
+);
+
 export const SENTENCE_SCRAMBLE_DATA: SentenceScrambleItem[] = [
   {
     "id": "scramble-a1-1",
@@ -5239,7 +5261,7 @@ export const SENTENCE_SCRAMBLE_DATA: SentenceScrambleItem[] = [
   {
     "id": "scramble-b1-7",
     "level": "B1",
-    "grammarTopicId": "b1-perfect-vs-past",
+    "grammarTopicId": "b1-past-perfect",
     "topicName": "Past Perfect (Geçmişin Geçmişi)",
     "tr": "Ambulans vardığında hasta çoktan stabil hale gelmişti.",
     "targetEng": "By the time the ambulance arrived, the patient had already stabilized.",
@@ -5378,7 +5400,7 @@ export const SENTENCE_SCRAMBLE_DATA: SentenceScrambleItem[] = [
   {
     "id": "scramble-b1-13",
     "level": "B1",
-    "grammarTopicId": "b1-present-perfect",
+    "grammarTopicId": "b1-modals-deduction",
     "topicName": "Modals of Deduction (Güçlü Çıkarım)",
     "tr": "Tam bir maraton koştuktan sonra çok bitkin olmalı.",
     "targetEng": "He must be very exhausted after running a full marathon.",
@@ -5400,7 +5422,7 @@ export const SENTENCE_SCRAMBLE_DATA: SentenceScrambleItem[] = [
   {
     "id": "scramble-b1-14",
     "level": "B1",
-    "grammarTopicId": "b1-present-perfect",
+    "grammarTopicId": "b1-modals-deduction",
     "topicName": "Modals of Deduction (İmkansızlık)",
     "tr": "Ofiste olması imkansız çünkü şu anda tatilde.",
     "targetEng": "She cannot be at the office because she is currently on vacation.",
@@ -5545,7 +5567,7 @@ export const SENTENCE_SCRAMBLE_DATA: SentenceScrambleItem[] = [
   {
     "id": "scramble-b2-5",
     "level": "B2",
-    "grammarTopicId": "b2-third-mixed-conditionals",
+    "grammarTopicId": "b2-inversion",
     "topicName": "Inversion (Devrik Şart)",
     "tr": "Yoğun trafik sıkışıklığını bilseydim metroya binerdim.",
     "targetEng": "Had I known about the severe traffic jam, I would have taken the subway.",
@@ -5571,7 +5593,7 @@ export const SENTENCE_SCRAMBLE_DATA: SentenceScrambleItem[] = [
   {
     "id": "scramble-b2-6",
     "level": "B2",
-    "grammarTopicId": "b2-third-mixed-conditionals",
+    "grammarTopicId": "b2-inversion",
     "topicName": "Inversion with Seldom",
     "tr": "Böylesine olağanüstü bir müzik performansına nadiren şahit oldum.",
     "targetEng": "Seldom have I witnessed such an extraordinary musical performance.",
@@ -5766,7 +5788,7 @@ export const SENTENCE_SCRAMBLE_DATA: SentenceScrambleItem[] = [
   {
     "id": "scramble-b2-14",
     "level": "B2",
-    "grammarTopicId": "b2-third-mixed-conditionals",
+    "grammarTopicId": "b2-inversion",
     "topicName": "Inversion (Not only... but also)",
     "tr": "Projeyi planlanandan önce tamamlamakla kalmadı, aynı zamanda maliyetleri de düşürdü.",
     "targetEng": "Not only did he complete the project ahead of schedule, but he also cut costs.",
@@ -5793,7 +5815,7 @@ export const SENTENCE_SCRAMBLE_DATA: SentenceScrambleItem[] = [
   {
     "id": "scramble-b2-15",
     "level": "B2",
-    "grammarTopicId": "b2-third-mixed-conditionals",
+    "grammarTopicId": "b2-inversion",
     "topicName": "Inversion (Under no circumstances)",
     "tr": "Gizli müşteri verileri hiçbir koşulda üçüncü şahıslarla paylaşılmamalıdır.",
     "targetEng": "Under no circumstances should confidential customer data be shared with third parties.",
