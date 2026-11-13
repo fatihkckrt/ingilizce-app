@@ -160,17 +160,25 @@ Yanıtı SADECE ve YALNIZCA geçerli bir JSON formatında döndür:
     }
   });
 
-  // Vite middleware in development
+  // Vite middleware in development (bind port 3000 immediately while Vite warms up)
   if (process.env.NODE_ENV !== 'production') {
     const isHmrDisabled = process.env.DISABLE_HMR === 'true';
-    const vite = await createViteServer({
-      server: { 
+    const vitePromise = createViteServer({
+      server: {
         middlewareMode: true,
-        hmr: isHmrDisabled ? false : { server }
+        hmr: isHmrDisabled ? false : { server },
       },
       appType: 'spa',
     });
-    app.use(vite.middlewares);
+
+    app.use(async (req, res, next) => {
+      try {
+        const vite = await vitePromise;
+        vite.middlewares(req, res, next);
+      } catch (err) {
+        next(err);
+      }
+    });
   } else {
     const distPath = path.join(process.cwd(), 'dist');
     app.use(express.static(distPath));
@@ -184,4 +192,7 @@ Yanıtı SADECE ve YALNIZCA geçerli bir JSON formatında döndür:
   });
 }
 
-startServer();
+startServer().catch((err) => {
+  console.error('Failed to start server:', err);
+  process.exit(1);
+});

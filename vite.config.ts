@@ -52,7 +52,7 @@ export default defineConfig(({ command }) => {
           navigateFallbackDenylist: [/^\/assets\//, /assets\//, /\.[a-z0-9]+$/i],
         },
         devOptions: {
-          enabled: true,
+          enabled: false,
           type: 'module',
         },
       }),
@@ -65,9 +65,9 @@ export default defineConfig(({ command }) => {
     server: {
       // HMR is disabled in AI Studio via DISABLE_HMR env var.
       // Do not modifyâfile watching is disabled to prevent flickering during agent edits.
-      hmr: process.env.DISABLE_HMR !== 'true',
+      hmr: process.env.DISABLE_HMR === 'true' ? false : undefined,
       // Disable file watching when DISABLE_HMR is true to save CPU during agent edits.
-      watch: process.env.DISABLE_HMR === 'true' ? null : {},
+      watch: process.env.DISABLE_HMR === 'true' ? null : { ignored: ['**/docs/**', '**/dist/**', '**/.git/**'] },
     },
   };
 });

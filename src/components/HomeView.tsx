@@ -182,7 +182,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
             <div className="text-left min-w-0 flex-1">
               <span className="font-bold text-sm block truncate">Uygulama Rehberi</span>
               <p className="text-xs opacity-60 font-medium truncate mt-0.5">
-                Video, 6 Görsel & WhatsApp Paylaşımı
+                Detaylı Kullanım Rehberi & Video
               </p>
             </div>
           </div>

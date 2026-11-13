@@ -3,14 +3,12 @@ import {
   X,
   BookOpen,
   Video,
-  Image as ImageIcon,
   Download,
   Copy,
   Check,
   ArrowRight,
   Smartphone,
-  Clock,
-  Share2,
+  SlidersHorizontal,
 } from 'lucide-react';
 import guideHeroImg from '../assets/images/guide_hero_showcase_1794572891268.jpg';
 
@@ -26,51 +24,6 @@ interface AppGuideModalProps {
   onClose: () => void;
   onNavigateFeature?: (target: GuideFeatureTarget) => void;
 }
-
-const GUIDE_CARDS = [
-  {
-    id: '1',
-    file: './guide/rehber-1-genel.png',
-    downloadName: '1-ingilizce-ogren-genel-bakis.png',
-    title: '1. Genel Bakış & Modüller',
-    summary: '4 ana bölümün tek bakışta özeti',
-  },
-  {
-    id: '2',
-    file: './guide/rehber-2-okuma.png',
-    downloadName: '2-cumle-ceviri-karaoke.png',
-    title: '2. Cümle Çeviri & Karaoke',
-    summary: 'Sesli takip, kelime tıklama ve testler',
-  },
-  {
-    id: '3',
-    file: './guide/rehber-3-kelime.png',
-    downloadName: '3-kelime-leitner-hafiza.png',
-    title: '3. Kelime & Hafıza (Leitner)',
-    summary: '5 kutulu aralıklı tekrar sistemi',
-  },
-  {
-    id: '4',
-    file: './guide/rehber-4-gramer.png',
-    downloadName: '4-gramer-atolyesi.png',
-    title: '4. Gramer & Cümle Kurma',
-    summary: '30 konu, 211 test, Hata Avı & Final',
-  },
-  {
-    id: '5',
-    file: './guide/rehber-5-bulmaca-ai.png',
-    downloadName: '5-kare-bulmaca-ai.png',
-    title: '5. Kare Bulmaca & AI Stüdyo',
-    summary: '180 bulmaca ve yapay zeka metinleri',
-  },
-  {
-    id: '6',
-    file: './guide/rehber-6-kurulum.png',
-    downloadName: '6-telefona-kurulum-ve-plan.png',
-    title: '6. Telefona Kurulum & 15 Dk Plan',
-    summary: 'Android/iOS PWA kurulumu ve günlük rutin',
-  },
-];
 
 const APP_LIVE_URL = 'https://fatihkckrt.github.io/ingilizce-app/';
 const VIDEO_FILE = './guide/ingilizce-ogren-tanitim.mp4';
@@ -107,7 +60,7 @@ export const AppGuideModal: React.FC<AppGuideModalProps> = ({
   onClose,
   onNavigateFeature,
 }) => {
-  const [activeTab, setActiveTab] = useState<'guide' | 'video' | 'images'>('guide');
+  const [activeTab, setActiveTab] = useState<'guide' | 'video'>('guide');
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [heroError, setHeroError] = useState(false);
 
@@ -156,7 +109,7 @@ export const AppGuideModal: React.FC<AppGuideModalProps> = ({
                 id="guide-modal-title"
                 className="text-base sm:text-lg font-bold tracking-tight truncate"
               >
-                Uygulama Rehberi & WhatsApp Paylaşım Paketi
+                Detaylı Uygulama Rehberi & Video
               </h2>
               <p className="text-xs text-slate-500 dark:text-slate-400 truncate">
                 A1–B2 Okuma · Leitner Hafıza · 30 Gramer Konusu · 180 Bulmaca
@@ -172,23 +125,23 @@ export const AppGuideModal: React.FC<AppGuideModalProps> = ({
           </button>
         </div>
 
-        {/* Segmented Tab Controls */}
+        {/* 2 Segmented Tab Controls */}
         <div className="px-5 py-3 bg-slate-50 dark:bg-slate-950/50 border-b border-slate-200 dark:border-slate-800 shrink-0">
-          <div className="grid grid-cols-3 gap-1.5 p-1 bg-slate-200/70 dark:bg-slate-800/80 rounded-xl">
+          <div className="grid grid-cols-2 gap-1.5 p-1 bg-slate-200/70 dark:bg-slate-800/80 rounded-xl">
             <button
               onClick={() => setActiveTab('guide')}
-              className={`min-h-[40px] px-3 py-2 rounded-lg text-xs sm:text-sm font-semibold flex items-center justify-center gap-2 transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
+              className={`min-h-[42px] px-3 py-2 rounded-lg text-xs sm:text-sm font-semibold flex items-center justify-center gap-2 transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
                 activeTab === 'guide'
                   ? 'bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shadow-sm'
                   : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
               <BookOpen className="w-4 h-4 shrink-0" />
-              <span className="truncate">Kullanım Rehberi</span>
+              <span className="truncate">Detaylı Rehber</span>
             </button>
             <button
               onClick={() => setActiveTab('video')}
-              className={`min-h-[40px] px-3 py-2 rounded-lg text-xs sm:text-sm font-semibold flex items-center justify-center gap-2 transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
+              className={`min-h-[42px] px-3 py-2 rounded-lg text-xs sm:text-sm font-semibold flex items-center justify-center gap-2 transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
                 activeTab === 'video'
                   ? 'bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shadow-sm'
                   : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
@@ -196,17 +149,6 @@ export const AppGuideModal: React.FC<AppGuideModalProps> = ({
             >
               <Video className="w-4 h-4 shrink-0" />
               <span className="truncate">Tanıtım Videosu</span>
-            </button>
-            <button
-              onClick={() => setActiveTab('images')}
-              className={`min-h-[40px] px-3 py-2 rounded-lg text-xs sm:text-sm font-semibold flex items-center justify-center gap-2 transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
-                activeTab === 'images'
-                  ? 'bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shadow-sm'
-                  : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
-              }`}
-            >
-              <ImageIcon className="w-4 h-4 shrink-0" />
-              <span className="truncate">6 Rehber Görseli</span>
             </button>
           </div>
         </div>
@@ -217,10 +159,10 @@ export const AppGuideModal: React.FC<AppGuideModalProps> = ({
           <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div className="min-w-0">
               <p className="text-sm font-bold text-slate-900 dark:text-white">
-                WhatsApp üzerinden paylaşmaya hazır paket
+                Arkadaşlarınla paylaşmaya hazır
               </p>
               <p className="text-xs text-slate-600 dark:text-slate-300 mt-0.5">
-                Tanıtım metnini kopyala, videoyu veya 6 görsel rehber kartını indirip arkadaşlarına ilet.
+                Uygulama linkini veya tanıtım özetini kopyalayıp doğrudan WhatsApp’tan gönderebilirsin.
               </p>
             </div>
             <div className="flex flex-wrap items-center gap-2 shrink-0">
@@ -228,7 +170,7 @@ export const AppGuideModal: React.FC<AppGuideModalProps> = ({
                 onClick={() => handleCopy(WHATSAPP_SHARE_TEXT, 'wa_text')}
                 className="min-h-[42px] px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold flex items-center gap-2 transition-colors whitespace-nowrap shrink-0 cursor-pointer"
               >
-                {copiedId === 'wa_text' ? <Check className="w-4 h-4" /> : <Share2 className="w-4 h-4" />}
+                {copiedId === 'wa_text' ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
                 <span>{copiedId === 'wa_text' ? 'Mesaj Kopyalandı' : 'WhatsApp Metnini Kopyala'}</span>
               </button>
               <button
@@ -241,10 +183,10 @@ export const AppGuideModal: React.FC<AppGuideModalProps> = ({
             </div>
           </div>
 
-          {/* TAB 1: TAM REHBER */}
+          {/* TAB 1: DETAYLI REHBER (BUTON & MEKANİK REHBERİ) */}
           {activeTab === 'guide' && (
             <div className="space-y-6">
-              {/* Hero Showcase */}
+              {/* Hero Overview */}
               <div className="grid grid-cols-1 md:grid-cols-12 gap-5 items-stretch rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/60">
                 <div className="md:col-span-5 min-h-[190px] bg-slate-200 dark:bg-slate-800 relative">
                   {!heroError ? (
@@ -264,17 +206,19 @@ export const AppGuideModal: React.FC<AppGuideModalProps> = ({
                 </div>
                 <div className="md:col-span-7 p-5 flex flex-col justify-center space-y-3">
                   <div className="text-xs font-semibold text-indigo-600 dark:text-indigo-400">
-                    4 Seviye (A1–B2) · Çevrimdışı PWA · Ücretsiz
+                    Tüm Modüller · Adım Adım Mekanik & Buton Rehberi
                   </div>
                   <h3 className="text-xl sm:text-2xl font-bold tracking-tight">
-                    Her şey tek çatı altında nasıl kullanılır?
+                    Hangi buton ne işe yarar, nasıl çalışılır?
                   </h3>
                   <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                    Uygulama; okuma, dinleme, aralıklı kelime tekrarı, gramer alıştırmaları ve bulmacaları
-                    birbirine bağlı şekilde çalıştırır. Metinde öğrendiğin kelimeyi tek dokunuşla deftere
-                    ekleyip her gün tekrar edebilirsin.
+                    Uygulamadaki okuma, kelime ezberi, gramer ve bulmaca ekranları birbirine bağlı çalışır.
+                    Okurken veya bulmaca çözerken öğrendiğin her kelimeyi tek dokunuşla Leitner hafıza
+                    defterine aktarabilir, sesli tekrarlarla kalıcı hale getirebilirsin.
                   </p>
                   <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs font-semibold text-slate-700 dark:text-slate-200 tabular-nums pt-1">
+                    <span>4 Seviye (A1–B2)</span>
+                    <span>·</span>
                     <span>30 Gramer Konusu</span>
                     <span>·</span>
                     <span>211+ Boşluk Doldurma</span>
@@ -286,131 +230,257 @@ export const AppGuideModal: React.FC<AppGuideModalProps> = ({
                 </div>
               </div>
 
-              {/* 4 Modules Detailed Walkthrough */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {/* 1 */}
-                <div className="p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex flex-col justify-between space-y-4">
-                  <div className="space-y-2.5">
+              {/* 1. CÜMLE ÇEVİRİ & OKUMA EKRANI */}
+              <div className="p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-4">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-100 dark:border-slate-800">
+                  <div>
                     <div className="text-xs font-bold text-indigo-600 dark:text-indigo-400">
-                      01 · OKUMA & DİNLEME
+                      01 · CÜMLE ÇEVİRİ & OKUMA EKRANI
                     </div>
-                    <h4 className="text-base font-bold">Cümle Çeviri & Karaoke Okuma</h4>
-                    <ul className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 space-y-1.5 leading-relaxed">
-                      <li>• A1–B2 seviyesinden bir metin seç veya AI Metin Stüdyosu ile yeni metin üret.</li>
-                      <li>• Oynat tuşuyla cümle ve kelime bazlı anlık karaoke takibiyle dinle; hız ve ses seç.</li>
-                      <li>• Bilmediğin kelimeye dokun, anlamını gör ve tek tıkla Leitner defterine kaydet.</li>
-                      <li>• Kalıp Avcısı ile deyimleri vurgula, okuma bitiminde anlama testini çöz.</li>
-                    </ul>
+                    <h4 className="text-base sm:text-lg font-bold mt-0.5">
+                      Karaoke Dinleme, Anlık Sözlük, Kalıp Avcısı & Okuma Sınavı
+                    </h4>
                   </div>
                   {onNavigateFeature && (
                     <button
                       onClick={() => handleTryFeature('sentenceTranslate')}
-                      className="min-h-[42px] px-4 py-2 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 hover:bg-indigo-100 dark:hover:bg-indigo-900/60 text-xs font-semibold flex items-center justify-between transition-colors cursor-pointer"
+                      className="min-h-[40px] px-3.5 py-2 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 hover:bg-indigo-100 dark:hover:bg-indigo-900/60 text-xs font-semibold flex items-center gap-2 transition-colors whitespace-nowrap shrink-0 cursor-pointer self-start sm:self-auto"
                     >
-                      <span>Cümle Çeviriyi Aç</span>
+                      <span>Bölüme Git</span>
                       <ArrowRight className="w-4 h-4" />
                     </button>
                   )}
                 </div>
 
-                {/* 2 */}
-                <div className="p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex flex-col justify-between space-y-4">
-                  <div className="space-y-2.5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                  <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/40 space-y-1">
+                    <p className="font-bold text-slate-900 dark:text-white">🔊 Karaoke Sesli Takip</p>
+                    <p>
+                      Her cümlenin sağındaki <strong>🔊</strong> butonuna bastığında cümle seslendirilir ve o an okunan
+                      kelime sarı karaoke vurgusuyla canlı takip edilir. Konuşma hızını ve ses tonunu ayarlardan
+                      değiştirebilirsin.
+                    </p>
+                  </div>
+                  <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/40 space-y-1">
+                    <p className="font-bold text-slate-900 dark:text-white">🌐 Tekli & Tam Çeviri Kontrolü</p>
+                    <p>
+                      Sadece tek bir cümlenin Türkçesini görmek için cümle yanındaki <strong>🌐</strong> ikonuna bas.
+                      Tüm metnin çevirisini aynı anda açıp kapatmak için ekranın altındaki <strong>🌐 Tam Çeviri / Gizle</strong> butonunu kullan.
+                    </p>
+                  </div>
+                  <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/40 space-y-1">
+                    <p className="font-bold text-slate-900 dark:text-white">👆 Kelimeye Dokunma & Deftere Ekleme</p>
+                    <p>
+                      Metindeki herhangi bir İngilizce kelimeye dokunduğunda çeviri penceresi açılır. Buradan kelimenin
+                      seviyesini (<strong>A1–B2</strong>) seçebilir, istersen kendi özel Türkçe notunu yazabilir ve cümle
+                      bağlamıyla birlikte tek tıkla <strong>Leitner 1. Kutuya</strong> kaydedebilirsin.
+                    </p>
+                  </div>
+                  <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/40 space-y-1">
+                    <p className="font-bold text-slate-900 dark:text-white">⚡ Kalıp Avcısı & Okuma Sonu Sınavı</p>
+                    <p>
+                      Ayarlardan <strong>Kalıp Avcısı</strong> açıkken deyimler ve <em>phrasal verb</em>’ler cümle içinde
+                      vurgulanır, altlarında rozet çıkar ve üstteki <strong>⚡ Kalıp / Deyim</strong> kartına tıklayarak tüm
+                      kalıpları inceleyebilirsin. Okuma bitince <strong>✅ Sınava Geç</strong> ile 3 soruluk anlama testini çöz.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* 2. KELİME & HAFIZA MERKEZİ (LEİTNER SİSTEMİ) */}
+              <div className="p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-4">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-100 dark:border-slate-800">
+                  <div>
                     <div className="text-xs font-bold text-orange-600 dark:text-orange-400">
-                      02 · KELİME & HAFIZA
+                      02 · KELİME & HAFIZA MERKEZİ (LEITNER SRS)
                     </div>
-                    <h4 className="text-base font-bold">Leitner 5 Kutulu Hafıza Merkezi</h4>
-                    <ul className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 space-y-1.5 leading-relaxed">
-                      <li>• Kaydettiğin kelimeler 1. Kutudan başlar; doğru bildikçe 5. Kutuya (kalıcı hafıza) yükselir.</li>
-                      <li>• Tekrar zamanı gelen kelimeler ana ekranda kırmızı uyarıyla hatırlatılır.</li>
-                      <li>• Testleri ister şıklı ister sadece telaffuzu dinleyerek (Listening) çözebilirsin.</li>
-                      <li>• Kalıp/Deyim kartları ve Eş/Zıt anlamlı sözcük bağlantılarıyla kelime dağarcığını geliştir.</li>
-                    </ul>
+                    <h4 className="text-base sm:text-lg font-bold mt-0.5">
+                      5 Kutulu Akıllı Tekrar, Dinleme Testi, Kalıp Kartları & Yedekleme
+                    </h4>
                   </div>
                   {onNavigateFeature && (
                     <button
                       onClick={() => handleTryFeature('vocabMemory')}
-                      className="min-h-[42px] px-4 py-2 rounded-xl bg-orange-50 dark:bg-orange-950/50 text-orange-700 dark:text-orange-300 hover:bg-orange-100 dark:hover:bg-orange-900/60 text-xs font-semibold flex items-center justify-between transition-colors cursor-pointer"
+                      className="min-h-[40px] px-3.5 py-2 rounded-xl bg-orange-50 dark:bg-orange-950/50 text-orange-700 dark:text-orange-300 hover:bg-orange-100 dark:hover:bg-orange-900/60 text-xs font-semibold flex items-center gap-2 transition-colors whitespace-nowrap shrink-0 cursor-pointer self-start sm:self-auto"
                     >
-                      <span>Kelime Merkezini Aç</span>
+                      <span>Bölüme Git</span>
                       <ArrowRight className="w-4 h-4" />
                     </button>
                   )}
                 </div>
 
-                {/* 3 */}
-                <div className="p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex flex-col justify-between space-y-4">
-                  <div className="space-y-2.5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                  <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/40 space-y-1">
+                    <p className="font-bold text-slate-900 dark:text-white">📦 1’den 5’e Leitner Kutu Mantığı</p>
+                    <p>
+                      Eklenen her kelime <strong>1. Kutudan</strong> başlar. Testte doğru bildikçe kelime bir üst kutuya
+                      (2 → 3 → 4 → 5) geçer ve tekrar süresi uzar; yanlış cevap verdiğin kelime daha sık çalışman için
+                      yeniden <strong>1. Kutuya</strong> döner.
+                    </p>
+                  </div>
+                  <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/40 space-y-1">
+                    <p className="font-bold text-slate-900 dark:text-white">⚡ Vakti Gelenler vs 🎲 Tümünden Test</p>
+                    <p>
+                      <strong>Vakti Gelenleri Tekrar Et</strong> butonu sadece tekrar saati dolmuş kelimeleri karşına
+                      getirir. <strong>🎲 Test</strong> butonu ise kutu ayrımı yapmadan tüm kayıtlı kelimelerinden karma
+                      sınav başlatır. Kutu ve A1–B2 filtreleriyle listeni süzebilirsin.
+                    </p>
+                  </div>
+                  <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/40 space-y-1">
+                    <p className="font-bold text-slate-900 dark:text-white">🎧 Dinleme Modu & Kart Koleksiyonları</p>
+                    <p>
+                      Kelime testi ekranında <strong>Dinleme (Listening)</strong> modunu açarak yazıyı görmeden sadece
+                      telaffuzu duyarak kelimeyi tahmin edebilirsin. Merkezdeki <strong>Kalıp & Deyimler</strong> ve
+                      <strong>Eş / Zıt Anlamlar</strong> pencerelerinden de tek tıkla defterine kelime ekleyebilirsin.
+                    </p>
+                  </div>
+                  <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/40 space-y-1">
+                    <p className="font-bold text-slate-900 dark:text-white">💾 JSON Yedek & Anki (.tsv) Aktarımı</p>
+                    <p>
+                      Verilerin tarayıcındaki <strong>IndexedDB</strong> veritabanında saklanır. Kelime listendeki
+                      <strong>💾 Yedek</strong> butonundan tüm kelimelerini ve özel metinlerini <strong>JSON</strong> olarak
+                      indirebilir, başka cihaza geri yükleyebilir veya <strong>Anki (.tsv)</strong> destesi çıkarabilirsin.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* 3. GRAMER & CÜMLE KURMA ATÖLYESİ */}
+              <div className="p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-4">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-100 dark:border-slate-800">
+                  <div>
                     <div className="text-xs font-bold text-teal-600 dark:text-teal-400">
-                      03 · GRAMER ATÖLYESİ
+                      03 · GRAMER & CÜMLE KURMA ATÖLYESİ
                     </div>
-                    <h4 className="text-base font-bold">Gramer, Cümle Kurma & Final Sınavı</h4>
-                    <ul className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 space-y-1.5 leading-relaxed">
-                      <li>• 30 konu anlatımı; cümlelerin Türkçesini tek tıkla gizleyip gösterme imkânı.</li>
-                      <li>• 211+ boşluk doldurma sorusu (hem şıklı mod hem klavyeyle yazma modu).</li>
-                      <li>• Kur sonlarında 60 Cümle Kurma (seviye başı 15) ve 28 Hata Avı sorusu.</li>
-                      <li>• Sesli 101 Düzensiz Fiil sözlüğü, Hatalarım filtresi ve %70 barajlı Karışık Final Sınavı.</li>
-                    </ul>
+                    <h4 className="text-base sm:text-lg font-bold mt-0.5">
+                      Konu Anlatımı, Şıklı/Yazmalı Test, Cümle Kurma, Hata Avı & Final Sınavı
+                    </h4>
                   </div>
                   {onNavigateFeature && (
                     <button
                       onClick={() => handleTryFeature('grammar')}
-                      className="min-h-[42px] px-4 py-2 rounded-xl bg-teal-50 dark:bg-teal-950/50 text-teal-700 dark:text-teal-300 hover:bg-teal-100 dark:hover:bg-teal-900/60 text-xs font-semibold flex items-center justify-between transition-colors cursor-pointer"
+                      className="min-h-[40px] px-3.5 py-2 rounded-xl bg-teal-50 dark:bg-teal-950/50 text-teal-700 dark:text-teal-300 hover:bg-teal-100 dark:hover:bg-teal-900/60 text-xs font-semibold flex items-center gap-2 transition-colors whitespace-nowrap shrink-0 cursor-pointer self-start sm:self-auto"
                     >
-                      <span>Gramer Merkezini Aç</span>
+                      <span>Bölüme Git</span>
                       <ArrowRight className="w-4 h-4" />
                     </button>
                   )}
                 </div>
 
-                {/* 4 */}
-                <div className="p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex flex-col justify-between space-y-4">
-                  <div className="space-y-2.5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                  <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/40 space-y-1">
+                    <p className="font-bold text-slate-900 dark:text-white">📖 Gizle/Göster Örnekler & Boşluk Doldurma</p>
+                    <p>
+                      30 gramer konusunun altında örnek cümleleri <strong>🔊</strong> ile dinleyebilir, Türkçelerini
+                      <strong>Çeviriyi Göster / Gizle</strong> butonlarıyla gizleyip kendini test edebilirsin. Konu sonundaki
+                      butondan <strong>Boşluk Doldurma</strong> testini açıp <strong>Şıklı Mod ↔ Yazarak Çöz</strong> arasında geçebilirsin.
+                    </p>
+                  </div>
+                  <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/40 space-y-1">
+                    <p className="font-bold text-slate-900 dark:text-white">🎯 İlerleme Takibi & Hatalarım Filtresi</p>
+                    <p>
+                      Çözdüğün sorular otomatik kaydedilir; konular <strong>Tamamlandı</strong> olarak işaretlenir ve
+                      yanlış yaptığın soruları <strong>Hatalarım</strong> filtresiyle ayırıp tekrar çözebilirsin.
+                    </p>
+                  </div>
+                  <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/40 space-y-1">
+                    <p className="font-bold text-slate-900 dark:text-white">🧩 Cümle Kurma & 🔍 Hata Avı</p>
+                    <p>
+                      <strong>Cümle Kurma</strong> sekmesinde karışık verilen kelime kutucuklarına sırayla dokunarak anlamlı
+                      cümle kurarsın (konu içinden doğrudan ilgili cümle pratiğine atlayabilirsin). <strong>Hata Avı</strong>
+                      sekmesinde ise cümledeki hatalı sözcüğe tıklayarak hatayı bulup açıklamasını okursun.
+                    </p>
+                  </div>
+                  <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/40 space-y-1">
+                    <p className="font-bold text-slate-900 dark:text-white">📚 101 Düzensiz Fiil & 🎓 Final Sınavı</p>
+                    <p>
+                      Üstteki sözlük butonundan <strong>101 Düzensiz Fiilin</strong> V1-V2-V3 hallerini arayıp sesli
+                      dinleyebilirsin. Hazır hissettiğinde <strong>Final Sınavı</strong> sekmesinden %70 geçme barajlı 15
+                      soruluk karışık değerlendirmeye girip en yüksek skorunu kaydedebilirsin.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* 4. KARE BULMACA & AI METİN STÜDYOSU */}
+              <div className="p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-4">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-100 dark:border-slate-800">
+                  <div>
                     <div className="text-xs font-bold text-emerald-600 dark:text-emerald-400">
-                      04 · BULMACA & KİŞİSELLEŞTİRME
+                      04 · KARE BULMACA & AI METİN STÜDYOSU
                     </div>
-                    <h4 className="text-base font-bold">180 Kare Bulmaca & Ayarlar</h4>
-                    <ul className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 space-y-1.5 leading-relaxed">
-                      <li>• A1–B2 seviyelerinde 5×5’ten 10×10’a kadar 180 çengel bulmaca; bilmediğin kelimeyi deftere ekle.</li>
-                      <li>• Kendi metnini ekle veya yapay zekâ ile seviyene göre özgün metinler oluştur.</li>
-                      <li>• Okuma & Ses Ayarlarından Sepya, Orman veya OLED temasını ve konuşma hızını ayarla.</li>
-                      <li>• JSON Dışa Aktar özelliğiyle kelime defterini dilediğin zaman yedekle.</li>
-                    </ul>
+                    <h4 className="text-base sm:text-lg font-bold mt-0.5">
+                      180 Seviyeli Bulmaca Mekanikleri, Yapay Zekâ Metni & Kendi Metnin
+                    </h4>
                   </div>
                   {onNavigateFeature && (
                     <button
                       onClick={() => handleTryFeature('puzzle')}
-                      className="min-h-[42px] px-4 py-2 rounded-xl bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-100 dark:hover:bg-emerald-900/60 text-xs font-semibold flex items-center justify-between transition-colors cursor-pointer"
+                      className="min-h-[40px] px-3.5 py-2 rounded-xl bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-100 dark:hover:bg-emerald-900/60 text-xs font-semibold flex items-center gap-2 transition-colors whitespace-nowrap shrink-0 cursor-pointer self-start sm:self-auto"
                     >
-                      <span>Kare Bulmacayı Aç</span>
+                      <span>Bulmacaya Git</span>
                       <ArrowRight className="w-4 h-4" />
                     </button>
                   )}
                 </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                  <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/40 space-y-1">
+                    <p className="font-bold text-slate-900 dark:text-white">🟩 Bulmaca Filtreleri & Oynanış</p>
+                    <p>
+                      Bulmacaları <strong>Seviye (A1–B2)</strong>, <strong>Boyut (5×5 – 10×10)</strong> ve <strong>Kelime Sıklığı</strong>na
+                      göre filtrele. Oynarken kutucuğa dokunup harf yazabilir, ipucuna dokunarak yatay/dikey yönü
+                      değiştirebilir, takıldığında harf veya kelime ipucu alabilirsin.
+                    </p>
+                  </div>
+                  <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/40 space-y-1">
+                    <p className="font-bold text-slate-900 dark:text-white">🔖 Bulmacadan Deftere Aktarım</p>
+                    <p>
+                      Çözdüğün veya önizlediğin bulmacadaki kelimeleri <strong>🔊</strong> ile dinleyip yanındaki kaydet
+                      butonuyla doğrudan <strong>Leitner Kelime Defterine</strong> gönderebilirsin.
+                    </p>
+                  </div>
+                  <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/40 space-y-1">
+                    <p className="font-bold text-slate-900 dark:text-white">✨ AI Metin Stüdyosu</p>
+                    <p>
+                      Cümle Çeviri içindeki <strong>AI Metin Stüdyosu</strong>, seçtiğin seviye ve konuya ek olarak
+                      defterindeki zayıf/tekrar bekleyen kelimeleri otomatik içine yerleştirerek sana özel okuma parçası ve
+                      3 soruluk test üretir.
+                    </p>
+                  </div>
+                  <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/40 space-y-1">
+                    <p className="font-bold text-slate-900 dark:text-white">✍️ Kendi Metnini Ekle</p>
+                    <p>
+                      Dışarıdan beğendiğin bir İngilizce makaleyi, haberi veya hikâyeyi Türkçe karşılığıyla yapıştırarak
+                      uygulama içinde Karaoke, sözlük ve tekrar özellikleriyle çalışabileceğin kendi dersini oluşturabilirsin.
+                    </p>
+                  </div>
+                </div>
               </div>
 
-              {/* 15 Min Routine & Phone Install */}
+              {/* 5. AYARLAR, TEMA & TELEFONA KURULUM (PWA) */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-800 space-y-2.5">
                   <div className="flex items-center gap-2 font-bold text-sm">
-                    <Clock className="w-4 h-4 text-amber-500" />
-                    <span>Örnek 15 Dakikalık Günlük Rutin</span>
+                    <SlidersHorizontal className="w-4 h-4 text-indigo-500" />
+                    <span>Okuma, Ses & Tema Ayarları (⚙️)</span>
                   </div>
-                  <ol className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 space-y-1.5 leading-relaxed list-decimal list-inside">
-                    <li><strong>5 dk:</strong> Kelime Merkezinde günü gelen Leitner tekrarlarını çöz.</li>
-                    <li><strong>5 dk:</strong> Seviyenden 1 metni Karaoke ile dinle, yeni kelimeleri kaydet.</li>
-                    <li><strong>5 dk:</strong> 1 Gramer konusu testi veya 1 Kare Bulmaca tamamla.</li>
-                  </ol>
+                  <ul className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 space-y-1.5 leading-relaxed">
+                    <li><strong>Tema:</strong> Doğa/Glass, Sepya (Kitap), Orman veya karanlık OLED Gece teması seçilebilir.</li>
+                    <li><strong>Ses Motoru:</strong> Erkek/kadın cihaz sesleri veya HD Doğal Sesler seçilir; hız <strong>0.5x–1.5x</strong> ayarlanır.</li>
+                    <li><strong>Yazı & Kalıp Avcısı:</strong> Yazı boyutu, font tipi (Sans/Serif/Mono) ve Kalıp Avcısı buradan yönetilir.</li>
+                  </ul>
                 </div>
 
                 <div className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-800 space-y-2.5">
                   <div className="flex items-center gap-2 font-bold text-sm">
-                    <Smartphone className="w-4 h-4 text-indigo-500" />
+                    <Smartphone className="w-4 h-4 text-emerald-500" />
                     <span>Telefona Uygulama Gibi Kurma (PWA)</span>
                   </div>
                   <div className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 space-y-1.5 leading-relaxed">
                     <p><strong>Android (Chrome):</strong> Sağ üstteki 3 nokta menüsü → <em>Uygulamayı yükle / Ana ekrana ekle</em>.</p>
                     <p><strong>iPhone (Safari):</strong> Alt ortadaki Paylaş (↑) ikonu → <em>Ana Ekrana Ekle</em>.</p>
+                    <p>Kurulduktan sonra uygulama mağazasına gerek duymadan tam ekran ve çevrimdışı önbellekle açılır.</p>
                   </div>
                 </div>
               </div>
@@ -454,54 +524,6 @@ export const AppGuideModal: React.FC<AppGuideModalProps> = ({
                     <span>{copiedId === 'video_url' ? 'Link Kopyalandı' : 'Video Linkini Kopyala'}</span>
                   </button>
                 </div>
-              </div>
-            </div>
-          )}
-
-          {/* TAB 3: 6 REHBER GÖRSELİ */}
-          {activeTab === 'images' && (
-            <div className="space-y-4">
-              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300">
-                Her modülü adım adım anlatan 6 adet WhatsApp uyumlu yüksek çözünürlüklü görsel kartı aşağıdan tek tek indirebilirsin.
-              </p>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                {GUIDE_CARDS.map((card) => (
-                  <div
-                    key={card.id}
-                    className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden flex flex-col justify-between"
-                  >
-                    <a
-                      href={card.file}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block bg-slate-950 aspect-[4/5] overflow-hidden"
-                    >
-                      <img
-                        src={card.file}
-                        alt={card.title}
-                        loading="lazy"
-                        className="w-full h-full object-cover hover:scale-[1.02] transition-transform duration-200"
-                      />
-                    </a>
-                    <div className="p-3.5 space-y-2.5">
-                      <div>
-                        <h4 className="text-sm font-bold truncate">{card.title}</h4>
-                        <p className="text-xs text-slate-500 dark:text-slate-400 truncate mt-0.5">
-                          {card.summary}
-                        </p>
-                      </div>
-                      <a
-                        href={card.file}
-                        download={card.downloadName}
-                        className="w-full min-h-[42px] px-3 py-2 rounded-xl bg-slate-900 dark:bg-indigo-600 hover:bg-slate-800 dark:hover:bg-indigo-500 text-white text-xs font-semibold flex items-center justify-center gap-2 transition-colors whitespace-nowrap"
-                      >
-                        <Download className="w-4 h-4" />
-                        <span>Görseli İndir (PNG)</span>
-                      </a>
-                    </div>
-                  </div>
-                ))}
               </div>
             </div>
           )}
